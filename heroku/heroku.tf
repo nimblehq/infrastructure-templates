@@ -23,12 +23,13 @@ resource "heroku_addon" "papertrail" {
   app = "${heroku_app.default.name}"
   plan = "${terraform.workspace == "staging" ? var.papertrail_plan_staging : var.papertrail_plan}"
 }
-/* Only enable Sentry for Production
+
+# Only enable Sentry for Production
 resource "heroku_addon" "sentry" {
+  count = "${terraform.workspace == "staging" ? 0 : 1}"
   app = "${heroku_app.default.name}"
   plan = "${var.sentry_plan}"
 }
-*/
 
 resource "heroku_addon" "redis" {
   app = "${heroku_app.default.name}"
