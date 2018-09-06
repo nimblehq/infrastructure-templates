@@ -5,7 +5,7 @@ provider "heroku" {
 }
 
 resource "heroku_app" "default" {
-  name = "${var.app_name}"
+  name = "${var.app_name}-${terraform.workspace}"
   region = "${var.region}"
 }
 

@@ -8,7 +8,7 @@ variable "heroku_token" {
 
 variable "app_name" {
   description = "Application name"
-  default = "nimbl3-terraform-test-app"
+  default = "nimbl3-terra-app"
 }
 
 variable "region" {
