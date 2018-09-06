@@ -1,6 +1,6 @@
 provider "heroku" {
   version = "~> 1.3"
-  email = "${var.email}"
+  email = "${var.heroku_account_email}"
   api_key = "${var.heroku_token}"
 }
 
@@ -11,25 +11,25 @@ resource "heroku_app" "default" {
 
 resource "heroku_addon" "database" {
   app = "${heroku_app.default.name}"
-  plan = "heroku-postgresql:hobby-dev"
+  plan = "${var.postgres_plan}"
 }
 
 resource "heroku_addon" "newrelic" {
   app = "${heroku_app.default.name}"
-  plan = "newrelic:wayne"
+  plan = "${var.newrelic_plan}"
 }
 
 resource "heroku_addon" "papertrail" {
   app = "${heroku_app.default.name}"
-  plan = "papertrail:choklad"
+  plan = "${var.papertrail_plan}"
 }
 
 resource "heroku_addon" "sentry" {
   app = "${heroku_app.default.name}"
-  plan = "sentry:f1"
+  plan = "${var.sentry_plan}"
 }
 
 resource "heroku_addon" "redis" {
   app = "${heroku_app.default.name}"
-  plan = "heroku-redis:hobby-dev"
+  plan = "${var.redis_plan}"
 }
