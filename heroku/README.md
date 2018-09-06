@@ -16,35 +16,37 @@ Having these installed:
   $ heroku login
 ```
 
-- After successfully login, generate a short term Heroku Token and export it for our usage:
+- After successfully login, generate a short term Heroku Email & Token and export them for our usage:
 
 ```bash
+  $ export HEROKU_EMAIL=`heroku auth:whoami`
   # This token will last for 5 mins (300sec) only
   $ export HEROKU_TOKEN=`heroku authorizations:create -S -e 300`
+  
 ```
 
 - Init Terraform with the above granted token:
 
 ```bash
-  $ TF_VAR_heroku_token=$HEROKU_TOKEN terraform init
+  $ TF_VAR_heroku_token=$HEROKU_TOKEN TF_VAR_heroku_email=$HEROKU_EMAIL terraform init
   # or
-  # terraform init -var heroku_token=$HEROKU_TOKEN
+  # terraform init -var heroku_token=$HEROKU_TOKEN -var heroku_email=$HEROKU_EMAIL
 ```
 
 - `Plan` to check for hardware preparation:
 
 ```bash
-  $ TF_VAR_heroku_token=$HEROKU_TOKEN terraform plan
+  $ TF_VAR_heroku_token=$HEROKU_TOKEN TF_VAR_heroku_email=$HEROKU_EMAIL terraform plan
   # or
-  # terraform plan -var heroku_token=$HEROKU_TOKEN
+  # terraform plan -var heroku_token=$HEROKU_TOKEN -var heroku_email=$HEROKU_EMAIL
 ```
 
 - `Apply` the Terraform configuration:
 
 ```bash
-  $ TF_VAR_heroku_token=$HEROKU_TOKEN terraform apply
+  $ TF_VAR_heroku_token=$HEROKU_TOKEN TF_VAR_heroku_email=$HEROKU_EMAIL terraform apply
   # or
-  # terraform apply -var heroku_token=$HEROKU_TOKEN
+  # terraform apply -var heroku_token=$HEROKU_TOKEN -var heroku_email=$HEROKU_EMAIL
 ```
 
 ### TODO: list all the components/add-ons we are currently having in this setup

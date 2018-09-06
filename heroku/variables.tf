@@ -1,9 +1,10 @@
-variable "heroku_account_email" {
+variable "heroku_email" {
   description = "Heroku Access Email"
-  default = "dev@nimbl3.com"
 }
 
-variable "heroku_token" { }
+variable "heroku_token" { 
+  description = "Heroku Access Token"
+}
 
 variable "app_name" {
   description = "Application name"
