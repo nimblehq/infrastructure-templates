@@ -1,4 +1,4 @@
-output "public_dns" {
-  description = "Print out the instance IP after configuration for convenient accessibility"
-  value = "${aws_instance.main.public_dns}"
+output "aws_public_dns" {
+  description = "This ${var.name} instance public IP"
+  value = "${aws_instance.hadex.public_dns}"
 }
