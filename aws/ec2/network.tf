@@ -57,5 +57,5 @@ resource "aws_lb" "hadex-alb" {
   load_balancer_type = "application"
   security_groups = ["${module.security_group.this_security_group_id}"]
   subnets            = ["${module.hadex_vpc.public_subnets}"]
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 }
