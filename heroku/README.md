@@ -142,6 +142,22 @@ Now that you have configured your architecture via the Terraform configuration y
 
 #### On Heroku
 
+## Nifty Checklist
+
+I know, that's a long list of instruction up here. To make sure you're not forgetting anything, make sure you check all the boxes below when setting up your Terraform project.
+
+- [ ] (Optional) Log into Heroku CLI
+- [ ] (Optional) Export your Heroku credentials
+- [ ] Set your application's name
+- [ ] Check (update if necessary) the project variables
+- [ ] Initialize Terraform
+- [ ] Create the `staging` workspace
+- [ ] Create the `production` workspace
+- [ ] Plan and confirm `staging`
+- [ ] Apply `staging`
+- [ ] Plan and confirm `production`
+- [ ] Apply `production`
+
 ![][app_flavors]
 
 [flavor_list]: <screenshots/flavor_list.png>
