@@ -19,9 +19,9 @@ Having these installed:
 - After successfully login, generate a short term Heroku Email & Token and export them for our usage:
 
 ```bash
-  $ export HEROKU_EMAIL=`heroku auth:whoami`
+  $ export TF_VAR_heroku_email=`heroku auth:whoami`
   # This token will last for 5 mins (300sec) only
-  $ export HEROKU_TOKEN=`heroku authorizations:create -S -e 300`
+  $ export TF_VAR_heroku_token=`heroku authorizations:create -S -e 300`
 ```
 
 - Configuring application flavor: usually we have `staging` and `production` flavor, so, to separate the setup we are using [Workspace](https://www.terraform.io/docs/state/workspaces.html) to differentiate the 2 different setup state.
