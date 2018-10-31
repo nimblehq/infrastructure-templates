@@ -15,16 +15,6 @@ resource "heroku_addon" "database" {
   plan = "${terraform.workspace == "staging" ? var.postgres_plan_staging : var.postgres_plan}"
 }
 
-resource "heroku_addon" "newrelic" {
-  app = "${heroku_app.default.name}"
-  plan = "${terraform.workspace == "staging" ? var.newrelic_plan_staging : var.newrelic_plan}"
-}
-
-resource "heroku_addon" "papertrail" {
-  app = "${heroku_app.default.name}"
-  plan = "${terraform.workspace == "staging" ? var.papertrail_plan_staging : var.papertrail_plan}"
-}
-
 # Only enable Sentry for Production
 resource "heroku_addon" "sentry" {
   count = "${terraform.workspace == "staging" ? 0 : 1}"
