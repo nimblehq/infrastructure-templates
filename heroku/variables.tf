@@ -11,6 +11,11 @@ variable "app_name" {
   default = "nimbl3-terra-app"
 }
 
+variable "app_organization" {
+  description = "Name of the organization the app will be under"
+  default = "nimbl3"
+}
+
 variable "region" {
   description = "Heroku hosting region"
   default = "us"
