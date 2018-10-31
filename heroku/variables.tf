@@ -21,16 +21,6 @@ variable "postgres_plan" {
   default = "heroku-postgresql:hobby-dev"
 }
 
-variable "newrelic_plan" {
-  description = "Heroku Newrelic add-on plan (FREE)"
-  default = "newrelic:wayne"
-}
-
-variable "papertrail_plan" {
-  description = "Heroku Papertrail add-on plan (FREE)"
-  default = "papertrail:choklad"
-}
-
 variable "sentry_plan" {
   description = "Heroku Sentry add-on plan (FREE)"
   default = "sentry:f1"
