@@ -5,6 +5,9 @@ provider "heroku" {
 resource "heroku_app" "default" {
   name = "${var.app_name}-${terraform.workspace}"
   region = "${var.region}"
+  organization = {
+    name = "nimbl3"
+  }
 }
 
 resource "heroku_addon" "database" {
