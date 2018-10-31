@@ -128,7 +128,7 @@ $ terraform plan
 
 ## Applying Terraforms
 
-Now that you have configured your architecture via the Terraform configuration 
+Now that you have configured your architecture via the Terraform configuration you're ready to apply it. Applying the Terraform config will execute all that's been define previously: creating the apps and provisioning the addons.
 
 ### Results
 
