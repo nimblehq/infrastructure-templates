@@ -164,6 +164,8 @@ Now that you have configured your architecture via the Terraform configuration y
 
 #### On Heroku
 
+![][app_flavors]
+
 ## Nifty Checklist
 
 I know, that's a long list of instruction up here. To make sure you're not forgetting anything, make sure you check all the boxes below when setting up your Terraform project.
@@ -179,8 +181,6 @@ I know, that's a long list of instruction up here. To make sure you're not forge
 - [ ] Apply `staging`
 - [ ] Plan and confirm `production`
 - [ ] Apply `production`
-
-![][app_flavors]
 
 [flavor_list]: <screenshots/flavor_list.png>
 [app_flavors]: <screenshots/app_flavors.png>
