@@ -15,9 +15,7 @@ resource "heroku_addon" "database" {
   plan = "${terraform.workspace == "staging" ? var.postgres_plan_staging : var.postgres_plan}"
 }
 
-# Only enable Sentry for Production
 resource "heroku_addon" "sentry" {
-  count = "${terraform.workspace == "staging" ? 0 : 1}"
   app = "${heroku_app.default.name}"
   plan = "${var.sentry_plan}"
 }
