@@ -6,7 +6,7 @@ resource "heroku_app" "default" {
   name = "${var.app_name}-${terraform.workspace}"
   region = "${var.region}"
   organization = {
-    name = "nimbl3"
+    name = "${var.app_organization}"
   }
 }
 
