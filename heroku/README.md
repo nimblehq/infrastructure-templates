@@ -2,6 +2,28 @@
 
 This Terraform template corresponds to the setup that we have for most of the applications that we develop and host on Heroku. The goal is to be able to spin up a new Heroku project (including staging and production) in 10 minutes.
 
+# Table of Contents
+
+  * [Heroku via Terraform](#heroku-via-terraform)
+      * [Prerequisites](#prerequisites)
+      * [Getting Started](#getting-started)
+         * [Logging Into Heroku](#logging-into-heroku)
+            * [Exporting Your Heroku Credentials](#exporting-your-heroku-credentials)
+         * [Setting Your Application's Name](#setting-your-applications-name)
+         * [Checking Your Variables](#checking-your-variables)
+         * [Initializing Terraform](#initializing-terraform)
+         * [Setting Up Your Workspaces](#setting-up-your-workspaces)
+            * [Listing Workspaces](#listing-workspaces)
+            * [Changing Workspaces](#changing-workspaces)
+            * [Creating a Workspace](#creating-a-workspace)
+      * [Planning Terraforms](#planning-terraforms)
+      * [Applying Terraforms](#applying-terraforms)
+         * [Results](#results)
+            * [Staging](#staging)
+            * [Production](#production)
+            * [On Heroku](#on-heroku)
+      * [Nifty Checklist](#nifty-checklist)
+
 ## Prerequisites
 
 Before getting started, please make sure that you have the following tools installed and ready.
