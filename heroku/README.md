@@ -29,7 +29,7 @@ This Terraform template corresponds to the setup that we have for most of the ap
 Before getting started, please make sure that you have the following tools installed and ready.
 
 - [Heroku CLI](https://devcenter.heroku.com/categories/command-line)
-- [Terroform CLI](https://www.terraform.io/downloads.html)
+- [Terraform CLI](https://www.terraform.io/downloads.html)
 - [Vault](https://www.vaultproject.io/downloads.html) (optional)
 
 ## Getting Started
