@@ -5,12 +5,12 @@
 # Crash log files
 crash.log
 
-# REMOVE EVERYTHING THAT FOLLOWS THIS LINE IF YOU ARE NOT USING A REMOTE BACKEND
-# AND PLAN ON COMMITTING YOUR TERRAFORM CONFIGURATION AND STATE TO A GIT REPOSITORY.
+# IF YOU ARE USING A REMOVE BACKEND LIKE AWS S3 YOUR SHOULD UNCOMMENT THE FOLLOWING LINES.
+# WHEN USING A REMOTE BACKEND YOU DO NOT NEED TO COMMIT THE .tfstate FILE TO THE GIT REPOSITORY.
 
 # .tfstate files
-*.tfstate
-*.tfstate.*
+# *.tfstate
+# *.tfstate.*
 
 # Ignore any .tfvars files that are generated automatically for each Terraform run. Most
 # .tfvars files are managed as part of configuration and so should be included in
