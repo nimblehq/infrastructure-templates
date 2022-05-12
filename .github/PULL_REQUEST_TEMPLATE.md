@@ -1,13 +1,13 @@
-https://github.com/nimble/git-template/issues/??
+https://github.com/nimblehq/git-template/issues/??
 
-## What happened
+## What happened 👀
 
-Describe the big picture of your changes here to communicate to the team why we should accept this pull request. 
- 
-## Insight
+Describe the big picture of your changes here to communicate to the team why we should accept this pull request.
 
-Describe in details how to test the changes; referenced documentation is welcome as well.
- 
-## Proof Of Work
+## Insight 📝
 
-Show us the implementation: screenshots, gif, etc.
+Describe in detail how to test the changes, which solution you tried but did not go with, referenced documentation is welcome as well.
+
+## Proof Of Work 📹
+
+Show us the implementation: screenshots, GIFs, etc.
