@@ -41,18 +41,6 @@ export default class Hello extends Command {
     if (platformChoice.platform === 'aws') {
       const questions = [
         {
-          type: 'input',
-          name: 'organization',
-          message: "What's your organization name?",
-          validate: (answer:any) => {
-            if (!answer) {
-              return 'Please input the organization name.'
-            }
-
-            return true
-          },
-        },
-        {
           type: 'list',
           name: 'infrastructureType',
           message: 'What kind of infrastructure you need?',
@@ -68,7 +56,7 @@ export default class Hello extends Command {
               name: 'Complete infrastructure (VPC + RDS + LOG + S3 + FARGATE + LOG + Security groups + ALB)',
             },
           ],
-        },
+        }
       ]
 
       const infrastructureType = await inquirer.prompt(questions)
