@@ -4,7 +4,7 @@
 /.idea
 /coverage/
 /InstalledFiles
-/node-modules
+/node_modules
 /pkg/
 /spec/reports/
 /spec/examples.txt
