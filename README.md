@@ -6,7 +6,7 @@ Project repository template to set up all public projects at [Nimble](https://ni
 
 Clone the repository
 
-`git clone git@github.com:nimblehq/git-template.git`
+`git clone git@github.com:nimblehq/infrastructure-templates.git`
 
 ## License
 
