@@ -1,5 +1,6 @@
 import {Command} from '@oclif/core'
 import * as inquirer from 'inquirer'
+import Advanced from '../../templates/aws/advanced'
 
 export default class Generator extends Command {
   static description = 'Generate infrastructure template command'
@@ -61,6 +62,8 @@ export default class Generator extends Command {
       const infrastructureType = await inquirer.prompt(questions)
 
       console.log(infrastructureType, platformChoice)
+      
+      Advanced.run()
     }
   }
 }
