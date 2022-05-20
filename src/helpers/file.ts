@@ -31,6 +31,11 @@ const copyFile = (
 ): void => {
   const sourcePath = path.join(TEMPLATE_PATH, source);
   const targetPath = getTargetPath(target, options);
+  const targetDir = path.dirname(targetPath);
+  const targetExists = fs.existsSync(targetPath);
+  if (!targetExists) {
+    fs.mkdirSync(targetDir, { recursive: true });
+  }
 
   fs.copyFileSync(sourcePath, targetPath);
 };
@@ -69,6 +74,24 @@ const createFile = (
 
   if (!targetExists) {
     fs.writeFileSync(targetPath, content);
+  }
+};
+
+const deleteFile = (target: string, options: GenerateOption): void => {
+  const targetPath = getTargetPath(target, options);
+  const targetExists = fs.existsSync(targetPath);
+
+  if (targetExists) {
+    fs.unlinkSync(targetPath);
+  }
+};
+
+const deleteDir = (target: string, options: GenerateOption): void => {
+  const targetPath = getTargetPath(target, options);
+  const targetExists = fs.existsSync(targetPath);
+
+  if (targetExists) {
+    fs.rmdirSync(targetPath, { recursive: true });
   }
 };
 
@@ -125,6 +148,8 @@ export {
   appendToFile,
   copyDir,
   copyFile,
+  deleteDir,
+  deleteFile,
   createFile,
   injectToFile,
   renameFile,

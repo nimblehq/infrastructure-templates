@@ -1,16 +1,50 @@
 import * as fs from 'fs';
 import path = require('path');
+import { GenerateOption } from '../../commands/generate';
+import { appendToFile, copyDir, copyFile, injectToFile } from '../../helpers/file';
 
 export default class Advanced {
-  static run():void {
-    this.copyFileSync('skeleton/aws/main.tf', 'main.tf');
-    this.copyFileSync('skeleton/aws/outputs.tf', 'outputs.tf');
-    this.copyFileSync('skeleton/aws/variables.tf', 'variables.tf');
+  options: GenerateOption;
+
+  constructor(options: GenerateOption) {
+    this.options = options;
   }
-  
-  static copyFileSync(source: string, target: string): void {
-    const skeletonPath = path.join(require('app-root-path').path, 'node_modules', 'nimble-infra', 'dist', source);
-    
-    fs.copyFileSync(skeletonPath, target);
-  };
+
+  static run(options: GenerateOption): void {
+    const advanced = new Advanced(options);
+    advanced.applyTemplate();
+  }
+
+  private applyTemplate(): void {
+    this.applyCommon();
+    this.applyVPC();
+  }
+
+  private applyCommon(): void {
+    copyFile('aws/main.tf', 'main.tf', this.options);
+    copyFile('aws/outputs.tf', 'outputs.tf', this.options);
+    copyFile('aws/variables.tf', 'variables.tf', this.options);
+  }
+
+  private applyVPC(): void {
+    copyDir('aws/modules/vpc', 'modules/vpc', this.options);
+
+    const vpcOutputContent = `
+    output "vpc_id" {
+      description = "VPC ID"
+      value       = "module.vpc.vpc_id"
+    }`;
+    appendToFile('outputs.tf', vpcOutputContent, this.options);
+
+    const vpcModuleContent = `
+    module "vpc" {
+      source = "./modules/vpc"
+
+      namespace   = var.app_name
+      owner       = var.owner
+      environment = var.environment
+    }`;
+
+    appendToFile('main.tf', vpcModuleContent, this.options);
+  }
 }
