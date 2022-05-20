@@ -2,6 +2,12 @@ import {Command} from '@oclif/core'
 import * as inquirer from 'inquirer'
 import Advanced from '../../templates/aws/advanced'
 
+type GenerateOption = {
+  projectName: string;
+  platform: string;
+  infrastructureType: string;
+};
+
 export default class Hello extends Command {
   static description = 'Generate infrastructure template command'
 
@@ -70,7 +76,7 @@ export default class Hello extends Command {
 
       const infrastructureType = await inquirer.prompt(questions)
 
-      const options = {
+      const options: GenerateOption = {
         projectName: args.projectName,
         platform: platformChoice.platform,
         infrastructureType: infrastructureType.infrastructureType,
@@ -78,9 +84,11 @@ export default class Hello extends Command {
 
       console.log(options)
 
-      console.log(infrastructureType, platformChoice)
+      console.log(infrastructureType)
 
       Advanced.run()
     }
   }
 }
+
+export type {GenerateOption}

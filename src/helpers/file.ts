@@ -1,26 +1,50 @@
 import * as fs from 'fs';
 import path = require('path');
+import { GenerateOption } from '../commands/generate';
 
 const ROOT_DIR = path.join(__dirname, '..', '..');
 const TEMPLATE_DIR =
   process.env.NODE_ENV === 'development' ? 'skeleton' : 'dist/skeleton';
 const TEMPLATE_PATH = path.join(ROOT_DIR, TEMPLATE_DIR);
 
-const appendToFile = (target: string, content: string): void => {
-  fs.appendFileSync(target, content);
+const getTargetPath = (file: string, options: GenerateOption): string => {
+  const { projectName } = options;
+  const targetPath = path.join(process.cwd(), projectName);
+
+  return path.join(targetPath, file);
 };
 
-const copyFile = (source: string, target: string): void => {
-  const sourcePath = path.join(TEMPLATE_PATH, source);
+const appendToFile = (
+  target: string,
+  content: string,
+  options: GenerateOption
+): void => {
+  const targetPath = getTargetPath(target, options);
 
-  fs.copyFileSync(sourcePath, target);
+  fs.appendFileSync(targetPath, content);
 };
 
-const copyDir = (source: string, target: string): void => {
+const copyFile = (
+  source: string,
+  target: string,
+  options: GenerateOption
+): void => {
   const sourcePath = path.join(TEMPLATE_PATH, source);
-  const targetExists = fs.existsSync(target);
+  const targetPath = getTargetPath(target, options);
+
+  fs.copyFileSync(sourcePath, targetPath);
+};
+
+const copyDir = (
+  source: string,
+  target: string,
+  options: GenerateOption
+): void => {
+  const sourcePath = path.join(TEMPLATE_PATH, source);
+  const targetPath = getTargetPath(target, options);
+  const targetExists = fs.existsSync(targetPath);
   if (!targetExists) {
-    fs.mkdirSync(target, { recursive: true });
+    fs.mkdirSync(targetPath, { recursive: true });
   }
 
   const files = fs.readdirSync(sourcePath);
@@ -28,29 +52,40 @@ const copyDir = (source: string, target: string): void => {
     const sourceFile = path.join(source, file);
     const targetFile = path.join(target, file);
     if (fs.lstatSync(path.join(TEMPLATE_PATH, sourceFile)).isDirectory()) {
-      copyDir(sourceFile, targetFile);
+      copyDir(sourceFile, targetFile, options);
     } else {
-      copyFile(sourceFile, targetFile);
+      copyFile(sourceFile, targetFile, options);
     }
   });
 };
 
-const createFile = (target: string, content: string): void => {
-  const targetExists = fs.existsSync(target);
+const createFile = (
+  target: string,
+  content: string,
+  options: GenerateOption
+): void => {
+  const targetPath = getTargetPath(target, options);
+  const targetExists = fs.existsSync(targetPath);
+
   if (!targetExists) {
-    fs.writeFileSync(target, content);
+    fs.writeFileSync(targetPath, content);
   }
 };
+
+interface InjectToFileOptions {
+  options?: GenerateOption;
+  insert_before?: string;
+  insert_after?: string;
+}
 
 const injectToFile = (
   target: string,
   content: string,
-  {
-    insert_before = '',
-    insert_after = '',
-  }: { insert_before?: string; insert_after?: string } = {}
+  { insert_before = '', insert_after = '', options }: InjectToFileOptions = {}
 ): void => {
-  fs.readFile(target, (err, data) => {
+  const targetPath = options ? getTargetPath(target, options) : target;
+
+  fs.readFile(targetPath, (err, data) => {
     if (err) {
       throw err;
     }
@@ -72,13 +107,17 @@ const injectToFile = (
     }
 
     const newContent = lines.join('\n');
-    fs.writeFileSync(target, newContent);
+    fs.writeFileSync(targetPath, newContent);
   });
 };
 
-const renameFile = (source: string, target: string): void => {
-  const sourcePath = path.join(TEMPLATE_PATH, source);
-  const targetPath = path.join(TEMPLATE_PATH, target);
+const renameFile = (
+  source: string,
+  target: string,
+  options: GenerateOption
+): void => {
+  const sourcePath = getTargetPath(source, options);
+  const targetPath = getTargetPath(target, options);
   fs.renameSync(sourcePath, targetPath);
 };
 
