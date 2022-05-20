@@ -1,7 +1,11 @@
-import * as fs from 'fs';
-import path = require('path');
+import * as dedent from 'dedent';
 import { GenerateOption } from '../../commands/generate';
-import { appendToFile, copyDir, copyFile, injectToFile } from '../../helpers/file';
+import {
+  appendToFile,
+  copyDir,
+  copyFile,
+  injectToFile,
+} from '../../helpers/file';
 
 export default class Advanced {
   options: GenerateOption;
@@ -29,14 +33,14 @@ export default class Advanced {
   private applyVPC(): void {
     copyDir('aws/modules/vpc', 'modules/vpc', this.options);
 
-    const vpcOutputContent = `
+    const vpcOutputContent = dedent`
     output "vpc_id" {
       description = "VPC ID"
       value       = "module.vpc.vpc_id"
     }`;
     appendToFile('outputs.tf', vpcOutputContent, this.options);
 
-    const vpcModuleContent = `
+    const vpcModuleContent = dedent`
     module "vpc" {
       source = "./modules/vpc"
 
