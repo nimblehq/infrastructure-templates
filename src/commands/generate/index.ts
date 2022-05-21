@@ -1,8 +1,8 @@
 import {Command} from '@oclif/core'
 import * as inquirer from 'inquirer'
 
-export default class Hello extends Command {
-  static description = 'Generate'
+export default class Generator extends Command {
+  static description = 'Generate infrastructure template command'
 
   static examples = [
     `$ nimble-infra generate
@@ -61,7 +61,7 @@ export default class Hello extends Command {
 
       const infrastructureType = await inquirer.prompt(questions)
 
-      console.log(infrastructureType)
+      console.log(infrastructureType, platformChoice)
     }
   }
 }

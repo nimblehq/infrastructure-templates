@@ -3,15 +3,15 @@ import * as inquirer from 'inquirer'
 import * as sinon from 'sinon'
 
 describe('running command generate', () => {
-  const stubResp = sinon.stub()
+  const stubResponse = sinon.stub()
   .onFirstCall()
-  .resolves({name: 'aws'})
+  .resolves({platform: 'aws'})
   .onSecondCall()
-  .resolves({infrastructureType: 'basic'})
+  .resolves({infrastructureType: 'advance'})
 
   test
   .stdout()
-  .stub(inquirer, 'prompt', stubResp)
+  .stub(inquirer, 'prompt', stubResponse)
   .command(['generate'])
   .it('lists cloud provider', async (_, done) => {
     done()
