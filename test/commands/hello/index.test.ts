@@ -1,4 +1,4 @@
-import {expect, test} from '@oclif/test'
+import {test} from '@oclif/test'
 import * as inquirer from 'inquirer'
 import * as sinon from 'sinon'
 
