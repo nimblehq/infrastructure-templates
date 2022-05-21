@@ -1,4 +1,4 @@
-import {Command, Flags} from '@oclif/core'
+import {Command} from '@oclif/core'
 import * as inquirer from 'inquirer'
 
 export default class Hello extends Command {
@@ -56,7 +56,7 @@ export default class Hello extends Command {
               name: 'Complete infrastructure (VPC + RDS + LOG + S3 + FARGATE + LOG + Security groups + ALB)',
             },
           ],
-        }
+        },
       ]
 
       const infrastructureType = await inquirer.prompt(questions)
