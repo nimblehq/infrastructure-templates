@@ -52,7 +52,7 @@ export default class Generator extends Command {
             {
               key: 'advanced',
               value: 'advanced',
-              name: 'Complete infrastructure (VPC + RDS + LOG + S3 + FARGATE + LOG + Security groups + ALB)',
+              name: 'Complete infrastructure (VPC + RDS + S3 + FARGATE + LOG + Security groups + ALB)',
             },
           ],
         },

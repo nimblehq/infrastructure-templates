@@ -21,8 +21,7 @@
     "@oclif/plugin-help": "^5",
     "@oclif/plugin-plugins": "^2.0.1",
     "generate-template-files": "^3.2.0",
-    "inquirer": "^8.2.4",
-    "inquirer-test": "^2.0.1"
+    "inquirer": "^8.2.4"
   },
   "devDependencies": {
     "@oclif/test": "^2",

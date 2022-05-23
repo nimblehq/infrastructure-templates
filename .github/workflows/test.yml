@@ -8,6 +8,7 @@ on:
 
 jobs:
   test:
+    name: Run Tests
     strategy:
       matrix:
         node-version: [14.x, 16.x]
