@@ -5,8 +5,7 @@ export default class Generator extends Command {
   static description = 'Generate infrastructure template command'
 
   static examples = [
-    `$ nimble-infra generate
-    `,
+    '$ nimble-infra generate',
   ]
 
   static flags = {}
@@ -18,7 +17,7 @@ export default class Generator extends Command {
       {
         type: 'list',
         name: 'platform',
-        message: 'What cloud provider you would like to use?',
+        message: 'Which cloud provider would you like to use?',
         choices: [
           {
             value: 'aws',
@@ -43,7 +42,7 @@ export default class Generator extends Command {
         {
           type: 'list',
           name: 'infrastructureType',
-          message: 'What kind of infrastructure you need?',
+          message: 'What kind of infrastructure do you need?',
           choices: [
             {
               key: 'basic',
@@ -51,8 +50,8 @@ export default class Generator extends Command {
               name: 'Basic infrastructure (VPC + RDS + LOG + ECS)',
             },
             {
-              key: 'advance',
-              value: 'advance',
+              key: 'advanced',
+              value: 'advanced',
               name: 'Complete infrastructure (VPC + RDS + LOG + S3 + FARGATE + LOG + Security groups + ALB)',
             },
           ],
