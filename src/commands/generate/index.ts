@@ -6,6 +6,7 @@ type GenerateOption = {
   projectName: string;
   platform: string;
   infrastructureType: string;
+  awsRegion: string;
 };
 
 export default class Hello extends Command {
@@ -70,14 +71,20 @@ export default class Hello extends Command {
             },
           ],
         },
+        {
+          type: 'input',
+          name: 'awsRegion',
+          message: 'AWS Region?',
+        },
       ]
 
-      const infrastructureType = await inquirer.prompt(questions)
+      const awsUserInput = await inquirer.prompt(questions)
 
       const options: GenerateOption = {
         projectName: args.projectName,
         platform: platformChoice.platform,
-        infrastructureType: infrastructureType.infrastructureType,
+        infrastructureType: awsUserInput.infrastructureType,
+        awsRegion: awsUserInput.awsRegion,
       }
 
       switch (options.infrastructureType) {
