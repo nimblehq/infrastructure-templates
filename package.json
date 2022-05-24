@@ -1,6 +1,6 @@
 {
   "name": "nimble-infra",
-  "version": "0.1.0",
+  "version": "0.2.9",
   "description": "Nimble Infrastructure Template generator",
   "author": "Nimblehq",
   "bin": {
@@ -20,8 +20,12 @@
     "@oclif/core": "^1",
     "@oclif/plugin-help": "^5",
     "@oclif/plugin-plugins": "^2.0.1",
+    "@types/dedent": "^0.7.0",
+    "app-root-path": "^3.0.0",
+    "dedent": "^0.7.0",
     "generate-template-files": "^3.2.0",
-    "inquirer": "^8.2.4"
+    "inquirer": "^8.2.4",
+    "inquirer-test": "^2.0.1"
   },
   "devDependencies": {
     "@oclif/test": "^2",
@@ -55,7 +59,7 @@
     "topics": {}
   },
   "scripts": {
-    "build": "shx rm -rf dist && tsc -b",
+    "build": "shx rm -rf dist && tsc -b && shx cp -r skeleton dist",
     "lint": "eslint . --ext .ts --config .eslintrc",
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "yarn lint",

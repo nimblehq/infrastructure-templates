@@ -1,18 +1,34 @@
 import {Command} from '@oclif/core'
 import * as inquirer from 'inquirer'
+import Advanced from '../../templates/aws/advanced'
 
-export default class Generator extends Command {
+type GenerateOption = {
+  projectName: string;
+  platform: string;
+  infrastructureType: string;
+};
+
+export default class Hello extends Command {
   static description = 'Generate infrastructure template command'
 
   static examples = [
     '$ nimble-infra generate',
   ]
 
-  static flags = {}
+  static flags = {};
 
-  static args = []
+  static args = [
+    {
+      name: 'projectName',
+      required: true,
+      description: 'directory name of new project',
+      default: '.',
+    },
+  ];
 
   async run(): Promise<void> {
+    const {args} = await this.parse(Hello)
+
     const questions = [
       {
         type: 'list',
@@ -60,7 +76,23 @@ export default class Generator extends Command {
 
       const infrastructureType = await inquirer.prompt(questions)
 
-      console.log(infrastructureType, platformChoice)
+      const options: GenerateOption = {
+        projectName: args.projectName,
+        platform: platformChoice.platform,
+        infrastructureType: infrastructureType.infrastructureType,
+      }
+
+      switch (options.infrastructureType) {
+      case 'advanced':
+        Advanced.run(options)
+        break
+      case 'basic':
+      default:
+        console.log('This type has not been implemented!')
+        break
+      }
     }
   }
 }
+
+export type {GenerateOption}

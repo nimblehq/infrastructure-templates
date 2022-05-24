@@ -4,9 +4,17 @@ Project repository template to set up all public projects at [Nimble](https://ni
 
 ## Usage
 
-Clone the repository
+1. Create a folder name and cd into that folder
 
-`git clone git@github.com:nimblehq/infrastructure-templates.git`
+```bash
+mkdir awesome-infra && cd awesome-infra
+```
+
+2. Start the CLI
+
+```bash
+npx nimble-infra@latest generate
+```
 
 ## License
 
