@@ -13,9 +13,4 @@ module "vpc" {
   single_nat_gateway     = var.single_nat_gateway
   one_nat_gateway_per_az = var.one_nat_gateway_per_az
   enable_dns_hostnames   = var.enable_dns_hostnames
-
-  tags = {
-    Owner       = var.owner
-    Environment = var.environment
-  }
 }

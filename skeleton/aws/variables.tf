@@ -15,11 +15,11 @@ variable "region" {
 }
 
 variable "environment" {
-  description = "The environment tag"
+  description = "The application environment, used to tag the resources, e.g. `acme-web-staging`"
   type        = string
 }
 
 variable "owner" {
-  description = "The owner tag"
+  description = "The owner of the infrastructure, used to tag the resources, e.g. `acme-web`"
   type        = string
 }

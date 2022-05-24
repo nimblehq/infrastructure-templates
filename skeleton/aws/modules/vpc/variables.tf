@@ -1,5 +1,6 @@
 variable "namespace" {
-  description = "Namespace for the Terraform code"
+  description = "Namespace for the VPCs, used as the prefix for the VPC names, e.g. acme-web-staging"
+  type        = string
 }
 
 variable "cidr" {
@@ -41,12 +42,4 @@ variable "enable_dns_hostnames" {
   description = "VPC DNS hostnames flag"
   type    = bool
   default = true
-}
-
-variable "environment" {
-  description = "The environment of the app, e.g. `acme-staging`"
-}
-
-variable "owner" {
-  description = "The owner of the infrastructure, e.g. `acme-web`"
 }
