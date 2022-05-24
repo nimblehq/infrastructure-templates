@@ -85,12 +85,12 @@ export default class Hello extends Command {
       console.log(options)
 
       switch (options.infrastructureType) {
-      case 'advance':
+      case 'advanced':
         Advanced.run(options)
         break
       case 'basic':
       default:
-        console.log('Not implemented this type yet')
+        console.log('This type has not been implemented!')
         break
       }
     }
