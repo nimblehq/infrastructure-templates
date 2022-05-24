@@ -82,8 +82,6 @@ export default class Hello extends Command {
         infrastructureType: infrastructureType.infrastructureType,
       }
 
-      console.log(options)
-
       switch (options.infrastructureType) {
       case 'advanced':
         Advanced.run(options)

@@ -4,6 +4,7 @@ import {
   appendToFile,
   copyDir,
   copyFile,
+  injectToFile,
 } from '../../helpers/file'
 
 export default class Advanced {
@@ -48,6 +49,9 @@ export default class Advanced {
       environment = var.environment
     }`
 
-    appendToFile('main.tf', vpcModuleContent, this.options)
+    injectToFile('main.tf', vpcModuleContent, {
+      insertAfter: '# VPC',
+      options: this.options,
+    })
   }
 }
