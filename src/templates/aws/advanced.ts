@@ -21,7 +21,9 @@ export default class Advanced {
 
   private applyTemplate(): void {
     this.applyCommon()
-    this.applyVPC()
+    this.applyVpc()
+    this.applyS3()
+    this.applySsm()
   }
 
   private applyCommon(): void {
@@ -30,7 +32,7 @@ export default class Advanced {
     copyFile('aws/variables.tf', 'variables.tf', this.options)
   }
 
-  private applyVPC(): void {
+  private applyVpc(): void {
     copyDir('aws/modules/vpc', 'modules/vpc', this.options)
 
     const vpcOutputContent = dedent`
@@ -66,7 +68,7 @@ export default class Advanced {
     appendToFile('outputs.tf', s3OutputContent, this.options)
 
     const s3ModuleContent = dedent`
-    module "vpc" {
+    module "s3" {
       source = "./modules/s3"
 
       namespace   = var.namespace
@@ -74,6 +76,64 @@ export default class Advanced {
 
     injectToFile('main.tf', s3ModuleContent, {
       insertAfter: '# S3',
+      options: this.options,
+    })
+  }
+
+  private applySsm(): void {
+    copyDir('aws/modules/ssm', 'modules/ssm', this.options)
+
+    const ssmVariablesContent = dedent`
+    variable "secret_key_base" {
+      description = "The Secret key base for the application"
+      type = string
+    }
+
+    variable "aws_access_key_id" {
+      description = "AWS access key ID"
+      type        = string
+    }
+    
+    variable "aws_secret_access_key" {
+      description = "AWS secret access key"
+      type        = string
+    }
+
+    variable "rds_database_name" {
+      description = "RDS database name"
+      type        = string
+    }
+    
+    variable "rds_username" {
+      description = "RDS username"
+      type        = string
+    }
+    
+    variable "rds_password" {
+      description = "RDS password"
+      type        = string
+    }
+    `
+    appendToFile('variables.tf', ssmVariablesContent, this.options)
+
+    const ssmModuleContent = dedent`
+    module "ssm" {
+      source = "../modules/ssm"
+    
+      namespace = var.namespace
+      secret_key_base       = var.secret_key_base
+    
+      aws_access_key_id     = var.aws_access_key_id
+      aws_secret_access_key = var.aws_secret_access_key
+    
+      rds_username      = var.rds_username
+      rds_password      = var.rds_password
+      rds_database_name = var.rds_database_name
+      rds_endpoint      = module.db.db_endpoint
+    }`
+
+    injectToFile('main.tf', ssmModuleContent, {
+      insertAfter: '# SSM',
       options: this.options,
     })
   }
