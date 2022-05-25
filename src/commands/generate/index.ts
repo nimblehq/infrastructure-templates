@@ -9,8 +9,8 @@ type GenerateOption = {
   awsRegion: string;
 };
 
-export default class Hello extends Command {
-  static description = 'Generate infrastructure template command';
+export default class Generator extends Command {
+  static description = 'Generate infrastructure template command'
 
   static examples = ['$ nimble-infra generate'];
 
@@ -26,7 +26,7 @@ export default class Hello extends Command {
   ];
 
   async run(): Promise<void> {
-    const {args} = await this.parse(Hello)
+    const {args} = await this.parse(Generator)
 
     const questions = [
       {
