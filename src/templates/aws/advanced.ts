@@ -41,7 +41,7 @@ export default class Advanced {
     output "vpc_id" {
       description = "VPC ID"
       value       = "module.vpc.vpc_id"
-    }`
+    }\n\n`
     appendToFile('outputs.tf', vpcOutputContent, this.options)
 
     const vpcModuleContent = dedent`
@@ -64,8 +64,7 @@ export default class Advanced {
     output "s3_alb_log_bucket_name" {
       description = "S3 bucket name for ALB log"
       value       = "module.s3.aws_alb_log_bucket_name"
-    }
-    `
+    }\n\n`
 
     appendToFile('outputs.tf', s3OutputContent, this.options)
 
@@ -114,8 +113,7 @@ export default class Advanced {
     variable "rds_password" {
       description = "RDS password"
       type        = string
-    }
-    `
+    }\n\n`
     appendToFile('variables.tf', ssmVariablesContent, this.options)
 
     const ssmModuleContent = dedent`
@@ -151,8 +149,7 @@ export default class Advanced {
     
     variable "nimble_office_ip" {
       description = "Nimble Office IP"
-    }
-    `
+    }\n\n`
     appendToFile('variables.tf', ssmVariablesContent, this.options)
 
     const ssmModuleContent = dedent`
@@ -201,8 +198,7 @@ export default class Advanced {
     variable "bastion_min_instance_count" {
       description = "The minimum number of the instance"
       default = 1
-    }
-    `
+    }\n\n`
     appendToFile('variables.tf', bastionVariablesContent, this.options)
 
     const bastionModuleContent = dedent`

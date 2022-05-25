@@ -20,3 +20,19 @@ provider "aws" {
 }
 
 # VPC
+
+# Security groups
+
+# Log
+
+# S3
+
+# ALB
+
+# RDS
+
+# Bastion instance
+
+# SSM
+
+# ECS
