@@ -24,6 +24,7 @@ export default class Advanced {
     this.applyVpc()
     this.applyS3()
     this.applySsm()
+    this.applySecurityGroup()
   }
 
   private applyCommon(): void {
@@ -134,6 +135,40 @@ export default class Advanced {
 
     injectToFile('main.tf', ssmModuleContent, {
       insertAfter: '# SSM',
+      options: this.options,
+    })
+  }
+
+  private applySecurityGroup(): void {
+    copyDir('aws/modules/security_group', 'modules/security_group', this.options)
+
+    const ssmVariablesContent = dedent`
+    variable "app_port" {
+      description = "Application running port"
+      type        = number
+    }
+    
+    variable "nimble_office_ip" {
+      description = "Nimble Office IP"
+    }
+    `
+    appendToFile('variables.tf', ssmVariablesContent, this.options)
+
+    const ssmModuleContent = dedent`
+    module "security_group" {
+      source = "../modules/security_group"
+    
+      namespace                   = var.app_name
+      vpc_id                      = module.vpc.vpc_id
+      app_port                    = var.app_port
+      private_subnets_cidr_blocks = module.vpc.private_subnets_cidr_blocks
+    
+      nimble_office_ip = var.nimble_office_ip
+    }
+    `
+
+    injectToFile('main.tf', ssmModuleContent, {
+      insertAfter: '# Security groups',
       options: this.options,
     })
   }
