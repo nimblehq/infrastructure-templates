@@ -24,7 +24,7 @@ resource "aws_lb_target_group" "target_group" {
   protocol             = "HTTP"
   vpc_id               = var.vpc_id
   target_type          = "ip"
-  deregistration_delay = 100 # Given the instance 100 seconds to finish the queued requests before removing out the ALB
+  deregistration_delay = 100
 
   health_check {
     healthy_threshold   = 3
