@@ -1,5 +1,5 @@
 variable "namespace" {
-  description = "The namespace for the security groups"
+  description = "The namespace for the security groups, used as the prefix for the VPC security group names, e.g. acme-web-staging"
   type        = string
 }
 

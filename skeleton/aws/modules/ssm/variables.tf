@@ -1,5 +1,5 @@
 variable "namespace" {
-  description = "The namespace for the SSM Parameters"
+  description = "The namespace for the SSM Parameters, e.g. acme-web-staging"
   type        = string
 }
 
