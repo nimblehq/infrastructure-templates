@@ -74,7 +74,7 @@ export default class Generator extends Command {
         {
           type: 'input',
           name: 'awsRegion',
-          message: 'AWS Region?',
+          message: 'Which AWS Region do you choose? ',
         },
       ]
 
@@ -96,6 +96,8 @@ export default class Generator extends Command {
         console.log('This type has not been implemented!')
         break
       }
+    } else {
+      console.log('This provider has not been implemented!')
     }
   }
 }
