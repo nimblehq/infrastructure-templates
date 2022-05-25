@@ -44,13 +44,36 @@ export default class Advanced {
     module "vpc" {
       source = "./modules/vpc"
 
-      namespace   = var.app_name
-      owner       = var.owner
-      environment = var.environment
+      namespace   = var.namespace
     }`
 
     injectToFile('main.tf', vpcModuleContent, {
       insertAfter: '# VPC',
+      options: this.options,
+    })
+  }
+
+  private applyS3(): void {
+    copyDir('aws/modules/s3', 'modules/s3', this.options)
+
+    const s3OutputContent = dedent`
+    output "s3_alb_log_bucket_name" {
+      description = "S3 bucket name for ALB log"
+      value       = "module.s3.aws_alb_log_bucket_name"
+    }
+    `
+
+    appendToFile('outputs.tf', s3OutputContent, this.options)
+
+    const s3ModuleContent = dedent`
+    module "vpc" {
+      source = "./modules/s3"
+
+      namespace   = var.namespace
+    }`
+
+    injectToFile('main.tf', s3ModuleContent, {
+      insertAfter: '# S3',
       options: this.options,
     })
   }
