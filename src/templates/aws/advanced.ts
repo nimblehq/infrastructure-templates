@@ -93,16 +93,6 @@ export default class Advanced {
       type = string
     }
 
-    variable "aws_access_key_id" {
-      description = "AWS access key ID"
-      type        = string
-    }
-
-    variable "aws_secret_access_key" {
-      description = "AWS secret access key"
-      type        = string
-    }
-
     variable "rds_database_name" {
       description = "RDS database name"
       type        = string
