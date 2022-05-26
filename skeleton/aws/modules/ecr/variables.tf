@@ -1,9 +1,6 @@
 variable "namespace" {
-  type = string
-}
-
-variable "owner" {
-  type = string
+  description = "The namespace for the ECR"
+  type        = string
 }
 
 variable "image_limit" {

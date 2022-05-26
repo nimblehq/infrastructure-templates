@@ -23,14 +23,6 @@
     "environment": [
     ],
     "secrets": [
-      {
-        "name": "DATABASE_URL",
-        "valueFrom": "${database_url_ssm_arn}"
-      },
-      {
-        "name": "SECRET_KEY_BASE",
-        "ValueFrom": "${secret_base_ssm_arn}"
-      }
     ],
     "ulimits": [
       {
