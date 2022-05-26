@@ -74,7 +74,8 @@ export default class Generator extends Command {
         {
           type: 'input',
           name: 'awsRegion',
-          message: 'Which AWS Region do you choose? ',
+          default: 'ap-southeast-1',
+          message: 'Which AWS Region do you choose?',
         },
       ]
 
