@@ -23,7 +23,7 @@ export default class Advanced {
     this.applyCommon();
     this.applyVpc();
     this.applySecurityGroup();
-    // this.applyEcr();
+    this.applyEcr();
     // this.applyLog();
     this.applyS3();
     this.applyAlb();
@@ -171,6 +171,31 @@ export default class Advanced {
     });
   }
 
+  private applyEcr(): void {
+    copyDir("aws/modules/ecr", "modules/ecr", this.options);
+
+    const ecrVariablesContent = dedent`
+    variable "image_limit" {
+      description = "Sets max amount of the latest develop images to be kept"
+      type        = number
+    }\n\n`;
+    appendToFile("variables.tf", ecrVariablesContent, this.options);
+
+    const ecrModuleContent = dedent`
+    module "ecr" {
+      source = "../ecr"
+
+      namespace   = var.app_name
+      owner       = var.owner
+      image_limit = var.image_limit
+    }
+    `;
+
+    injectToFile("main.tf", ecrModuleContent, this.options, {
+      insertAfter: "# ECR",
+    });
+  }
+
   private applyAlb(): void {
     copyDir("aws/modules/alb", "modules/alb", this.options);
 
@@ -201,7 +226,7 @@ export default class Advanced {
     `;
 
     injectToFile("main.tf", albModuleContent, this.options, {
-      insertAfter: "# S3",
+      insertAfter: "# ALB",
     });
   }
 
