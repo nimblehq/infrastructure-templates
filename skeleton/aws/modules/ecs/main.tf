@@ -15,24 +15,6 @@ locals {
     aws_ecr_repository                 = data.aws_ecr_repository.repo.repository_url
     aws_ecr_tag                        = var.ecr_tag
     aws_cloudwatch_log_group_name      = var.aws_cloudwatch_log_group_name
-
-    health_check_path           = var.container_envs.health_check_path
-    environment                 = var.container_envs.environment
-    verification_subdomain      = var.container_envs.verification_subdomain
-    deeplink_email_verification = var.container_envs.deeplink_email_verification
-
-    mailgun_domain                        = var.container_envs.mailgun_domain
-    mailgun_template_account_verification = var.container_envs.mailgun_template.account_verification
-    mailer_sender_email                   = var.container_envs.mailer_sender_email
-    mailer_sender_name                    = var.container_envs.mailer_sender_name
-
-    token_ttl_auth_code      = var.container_envs.token_ttl.auth_code
-    token_ttl_client_access  = var.container_envs.token_ttl.client_access
-    token_ttl_client_refresh = var.container_envs.token_ttl.client_refresh
-    token_ttl_user_access    = var.container_envs.token_ttl.user_access
-    token_ttl_user_refresh   = var.container_envs.token_ttl.user_refresh
-
-    aws_sns_sender_id = var.container_envs.aws_sns_sender_id
   }
 
   container_definitions = templatefile("${path.module}/service.json.tftpl", merge(local.container_vars, var.aws_parameter_store))

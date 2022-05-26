@@ -21,74 +21,6 @@
       }
     },
     "environment": [
-      {
-        "name": "PHX_HOST",
-        "value": "${app_host}"
-      },
-      {
-        "name": "PORT",
-        "value": "${app_port}"
-      },
-      {
-        "name": "HEALTH_PATH",
-        "value": "${health_check_path}"
-      },
-      {
-        "name": "SERVER_ENV",
-        "value": "${environment}"
-      },
-      {
-        "name": "MAILGUN_DOMAIN",
-        "value": "${mailgun_domain}"
-      },
-      {
-        "name": "MAILGUN_TEMPLATE_ACCOUNT_VERIFICATION",
-        "value": "${mailgun_template_account_verification}"
-      },
-      {
-        "name": "MAILER_SENDER_EMAIL",
-        "value": "${mailer_sender_email}"
-      },
-      {
-        "name": "MAILER_SENDER_NAME",
-        "value": "${mailer_sender_name}"
-      },
-      {
-        "name": "VERIFICATION_SUBDOMAIN",
-        "value": "${verification_subdomain}"
-      },
-      {
-        "name": "DEEPLINK_EMAIL_VERIFICATION",
-        "value": "${deeplink_email_verification}"
-      },
-      {
-        "name": "TOKEN_TTL_USER_ACCESS",
-        "value": "${token_ttl_user_access}"
-      },
-      {
-        "name": "TOKEN_TTL_USER_REFRESH",
-        "value": "${token_ttl_user_refresh}"
-      },
-      {
-        "name": "TOKEN_TTL_AUTH_CODE",
-        "value": "${token_ttl_auth_code}"
-      },
-      {
-        "name": "TOKEN_TTL_CLIENT_ACCESS",
-        "value": "${token_ttl_client_access}"
-      },
-      {
-        "name": "TOKEN_TTL_CLIENT_REFRESH",
-        "value": "${token_ttl_client_refresh}"
-      },
-      {
-        "name": "AWS_SNS_SENDER_ID",
-        "value": "${aws_sns_sender_id}"
-      },
-      {
-        "name": "AWS_REGION",
-        "value": "${region}"
-      }
     ],
     "secrets": [
       {
@@ -98,26 +30,6 @@
       {
         "name": "SECRET_KEY_BASE",
         "ValueFrom": "${secret_base_ssm_arn}"
-      },
-      {
-        "name": "APPSIGNAL_API_KEY",
-        "ValueFrom": "${appsignal_api_key_ssm_arn}"
-      },
-      {
-        "name": "JWT_SECRET_KEY",
-        "ValueFrom": "${jwt_secret_key_ssm_arn}"
-      },
-      {
-        "name": "MAILGUN_API_KEY",
-        "ValueFrom": "${mailgun_api_key_ssm_arn}"
-      },
-      {
-        "name": "AWS_ACCESS_KEY_ID",
-        "ValueFrom": "${aws_access_key_id_ssm_arn}"
-      },
-      {
-        "name": "AWS_SECRET_ACCESS_KEY",
-        "ValueFrom": "${aws_secret_access_key_ssm_arn}"
       }
     ],
     "ulimits": [
