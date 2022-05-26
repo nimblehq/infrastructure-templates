@@ -23,11 +23,11 @@ export default class Advanced {
     this.applyCommon();
     this.applyVpc();
     this.applySecurityGroup();
-    this.applyEcr();
-    this.applyLog();
+    // this.applyEcr();
+    // this.applyLog();
     this.applyS3();
     this.applyAlb();
-    this.applyRds();
+    // this.applyRds();
     this.applyBastionInstance();
     this.applySsm();
     this.applySsm();
@@ -180,26 +180,28 @@ export default class Advanced {
       type = string
     }
 
-    variable "nimble_office_ip" {
-      description = "Nimble Office IP"
+    variable "domain" {
+      description = "Application domain"
+      type        = string
     }\n\n`;
     appendToFile("variables.tf", albVariablesContent, this.options);
 
-    const ssmModuleContent = dedent`
-    module "security_group" {
-      source = "../modules/security_group"
+    const albModuleContent = dedent`
+    module "alb" {
+      source = "../modules/alb"
 
-      namespace                   = var.app_name
-      vpc_id                      = module.vpc.vpc_id
-      app_port                    = var.app_port
-      private_subnets_cidr_blocks = module.vpc.private_subnets_cidr_blocks
-
-      nimble_office_ip = var.nimble_office_ip
+      vpc_id             = module.vpc.vpc_id
+      namespace          = var.app_name
+      app_port           = var.app_port
+      subnet_ids         = module.vpc.public_subnet_ids
+      security_group_ids = module.security_group.alb_security_group_ids
+      domain  = var.domain
+      health_check_path  = var.health_check_path
     }
     `;
 
-    injectToFile("main.tf", ssmModuleContent, this.options, {
-      insertAfter: "# Security groups",
+    injectToFile("main.tf", albModuleContent, this.options, {
+      insertAfter: "# S3",
     });
   }
 
