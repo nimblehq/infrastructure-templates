@@ -1,6 +1,6 @@
-# Git Repository Template
+# Introduction
 
-Project repository template to set up all public projects at [Nimble](https://nimblehq.co/)
+Infrastructure (Terraform) configuration template for projects at Nimble.
 
 ## Usage
 
@@ -10,7 +10,7 @@ Project repository template to set up all public projects at [Nimble](https://ni
 mkdir awesome-infra && cd awesome-infra
 ```
 
-2. Start the CLI
+2. Start the CLI to generate the infrastructure configuration in Terraform
 
 ```bash
 npx nimble-infra@latest generate

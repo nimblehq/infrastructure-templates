@@ -96,7 +96,6 @@ const deleteDir = (target: string, options: GenerateOption): void => {
 }
 
 interface InjectToFileOptions {
-  options?: GenerateOption;
   insertBefore?: string;
   insertAfter?: string;
 }
@@ -104,34 +103,30 @@ interface InjectToFileOptions {
 const injectToFile = (
   target: string,
   content: string,
-  {insertBefore = '', insertAfter = '', options}: InjectToFileOptions = {},
+  options: GenerateOption,
+  {insertBefore = '', insertAfter = ''}: InjectToFileOptions = {},
 ): void => {
   const targetPath = options ? getTargetPath(target, options) : target
 
-  fs.readFile(targetPath, (err, data) => {
-    if (err) {
-      throw err
+  const data = fs.readFileSync(targetPath, 'utf8')
+  const lines = data.toString().split('\n')
+
+  if (insertBefore) {
+    const index = lines.findIndex(line => line.includes(insertBefore))
+    if (index !== -1) {
+      lines.splice(index, 0, content)
     }
+  }
 
-    const lines = data.toString().split('\n')
-
-    if (insertBefore) {
-      const index = lines.findIndex(line => line.includes(insertBefore))
-      if (index !== -1) {
-        lines.splice(index, 0, content)
-      }
+  if (insertAfter) {
+    const index = lines.findIndex(line => line.includes(insertAfter))
+    if (index !== -1) {
+      lines.splice(index + 1, 0, content)
     }
+  }
 
-    if (insertAfter) {
-      const index = lines.findIndex(line => line.includes(insertAfter))
-      if (index !== -1) {
-        lines.splice(index + 1, 0, content)
-      }
-    }
-
-    const newContent = lines.join('\n')
-    fs.writeFileSync(targetPath, newContent)
-  })
+  const newContent = lines.join('\n')
+  fs.writeFileSync(targetPath, newContent)
 }
 
 const renameFile = (
