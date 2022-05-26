@@ -21,6 +21,7 @@ export default class Advanced {
 
   private applyTemplate(): void {
     this.applyCommon()
+    this.applyRegion()
     this.applyVpc()
     this.applySecurityGroup()
     this.applyEcr()
@@ -37,6 +38,16 @@ export default class Advanced {
     copyFile('aws/main.tf', 'main.tf', this.options)
     copyFile('aws/outputs.tf', 'outputs.tf', this.options)
     copyFile('aws/variables.tf', 'variables.tf', this.options)
+  }
+
+  private applyRegion(): void {
+    const regionVariableContent = dedent`
+    variable "region" {
+      description = "AWS region"
+      type        = string
+      default     = "${this.options.awsRegion}"
+    }\n\n`
+    appendToFile('variables.tf', regionVariableContent, this.options)
   }
 
   private applyVpc(): void {
@@ -289,7 +300,7 @@ export default class Advanced {
     }
 
     variable "bastion_instance_type" {
-      description = "The bastance instance type"
+      description = "The bastion instance type"
       default = "t3.nano"
     }
 
