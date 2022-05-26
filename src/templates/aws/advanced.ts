@@ -30,7 +30,7 @@ export default class Advanced {
     this.applyRds();
     this.applyBastionInstance();
     this.applySsm();
-    this.applySsm();
+    this.applyEcs();
   }
 
   private applyCommon(): void {
@@ -201,7 +201,7 @@ export default class Advanced {
 
     const logModuleContent = dedent`
     module "log" {
-      source = "../modules/log"
+      source = "./modules/log"
 
       namespace = var.app_name
     }
@@ -283,7 +283,7 @@ export default class Advanced {
 
     const albModuleContent = dedent`
     module "rds" {
-      source = "../modules/rds"
+      source = "./modules/rds"
 
       namespace = var.app_name
 
@@ -356,6 +356,96 @@ export default class Advanced {
 
     injectToFile("main.tf", bastionModuleContent, this.options, {
       insertAfter: "# Bastion instance",
+    });
+  }
+
+  private applyEcs(): void {
+    copyDir("aws/modules/ecs", "modules/ecs", this.options);
+
+    const bastionVariablesContent = dedent`
+    variable "ecr_repo_name" {
+      description = "ECR repo name"
+      type = string
+    }
+
+    variable "ecr_tag" {
+      description = "ECR tag to deploy"
+      type     = string
+    }
+
+    variable "ecs" {
+      description = "ECS input variables"
+      type = object({
+        task_cpu                           = number
+        task_memory                        = number
+        task_desired_count                 = number
+        task_container_memory              = number
+        deployment_maximum_percent         = number
+        deployment_minimum_healthy_percent = number
+      })
+    }
+
+    variable "bastion_max_instance_count" {
+      description = "The maximum number of the instance"
+      default = 1
+    }
+
+    variable "bastion_min_instance_count" {
+      description = "The minimum number of the instance"
+      default = 1
+    }\n\n`;
+    appendToFile("variables.tf", bastionVariablesContent, this.options);
+
+    const ecsContainerContent = dedent`
+    locals {
+      container_envs = {
+        aws_sns_sender_id           = var.aws_sns_sender_id
+        deeplink_email_verification = var.deeplink_email_verification
+        environment                 = var.environment
+        fireblocks_api_base_url     = var.fireblocks_api_base_url
+        health_check_path           = var.health_check_path
+        mailer_sender_email         = var.mailer_sender_email
+        mailer_sender_name          = var.mailer_sender_name
+        mailgun_domain              = var.mailgun_domain
+        mailgun_template            = var.mailgun_template
+        token_ttl                   = var.token_ttl
+        verification_subdomain      = var.verification_subdomain
+      }
+    }\n
+    `;
+
+    const ecsModuleContent = dedent`
+    module "ecs" {
+      source = "./modules/ecs"
+
+      subnets                            = module.vpc.private_subnet_ids
+      namespace                          = var.app_name
+      region                             = var.region
+      app_host                           = module.alb.alb_dns_name
+      app_port                           = var.app_port
+      ecr_repo_name                      = var.ecr_repo_name
+      ecr_tag                            = var.ecr_tag
+      security_groups                    = module.security_group.ecs_security_group_ids
+      alb_target_group_arn               = module.alb.alb_target_group_arn
+      aws_cloudwatch_log_group_name      = module.log.aws_cloudwatch_log_group_name
+      desired_count                      = var.ecs.task_desired_count
+      cpu                                = var.ecs.task_cpu
+      memory                             = var.ecs.task_memory
+      deployment_maximum_percent         = var.ecs.deployment_maximum_percent
+      deployment_minimum_healthy_percent = var.ecs.deployment_minimum_healthy_percent
+      container_memory                   = var.ecs.task_container_memory
+
+      container_envs      = local.container_envs
+      aws_parameter_store = module.ssm.parameter_store
+    }
+    `;
+
+    injectToFile("main.tf", ecsContainerContent, this.options, {
+      insertBefore: "# ECS",
+    });
+
+    injectToFile("main.tf", ecsModuleContent, this.options, {
+      insertAfter: "# ECS",
     });
   }
 }

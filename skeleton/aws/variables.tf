@@ -33,4 +33,3 @@ variable "app_port" {
   description = "Application running port"
   type        = number
 }
-
