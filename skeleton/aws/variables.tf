@@ -23,3 +23,14 @@ variable "owner" {
   description = "The owner of the infrastructure, used to tag the resources, e.g. `acme-web`"
   type        = string
 }
+
+variable "app_name" {
+  description = "Application name"
+  type        = string
+}
+
+variable "app_port" {
+  description = "Application running port"
+  type        = number
+}
+
