@@ -51,10 +51,7 @@ export default class Advanced {
       namespace   = var.namespace
     }`
 
-    injectToFile('main.tf', vpcModuleContent, {
-      insertAfter: '# VPC',
-      options: this.options,
-    })
+    injectToFile('main.tf', vpcModuleContent, this.options, {insertAfter: '# VPC'})
   }
 
   private applyS3(): void {
@@ -75,10 +72,7 @@ export default class Advanced {
       namespace   = var.namespace
     }`
 
-    injectToFile('main.tf', s3ModuleContent, {
-      insertAfter: '# S3',
-      options: this.options,
-    })
+    injectToFile('main.tf', s3ModuleContent, this.options, {insertAfter: '# S3'})
   }
 
   private applySsm(): void {
@@ -132,10 +126,7 @@ export default class Advanced {
       rds_endpoint      = module.db.db_endpoint
     }`
 
-    injectToFile('main.tf', ssmModuleContent, {
-      insertAfter: '# SSM',
-      options: this.options,
-    })
+    injectToFile('main.tf', ssmModuleContent, this.options, {insertAfter: '# SSM'})
   }
 
   private applySecurityGroup(): void {
@@ -165,10 +156,7 @@ export default class Advanced {
     }
     `
 
-    injectToFile('main.tf', ssmModuleContent, {
-      insertAfter: '# Security groups',
-      options: this.options,
-    })
+    injectToFile('main.tf', ssmModuleContent, this.options, {insertAfter: '# Security groups'})
   }
 
   private applyBastionInstance(): void {
@@ -218,9 +206,6 @@ export default class Advanced {
     }
     `
 
-    injectToFile('main.tf', bastionModuleContent, {
-      insertAfter: '# Bastion instance',
-      options: this.options,
-    })
+    injectToFile('main.tf', bastionModuleContent, this.options, {insertAfter: '# Bastion instance'})
   }
 }

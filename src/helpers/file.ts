@@ -96,7 +96,6 @@ const deleteDir = (target: string, options: GenerateOption): void => {
 }
 
 interface InjectToFileOptions {
-  options?: GenerateOption;
   insertBefore?: string;
   insertAfter?: string;
 }
@@ -104,7 +103,8 @@ interface InjectToFileOptions {
 const injectToFile = (
   target: string,
   content: string,
-  {insertBefore = '', insertAfter = '', options}: InjectToFileOptions = {},
+  options: GenerateOption,
+  {insertBefore = '', insertAfter = ''}: InjectToFileOptions = {},
 ): void => {
   const targetPath = options ? getTargetPath(target, options) : target
 
