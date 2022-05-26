@@ -121,7 +121,7 @@ export default class Advanced {
 
     const ssmModuleContent = dedent`
     module "ssm" {
-      source = "../modules/ssm"
+      source = "./modules/ssm"
 
       namespace = var.namespace
       secret_key_base       = var.secret_key_base
@@ -155,7 +155,7 @@ export default class Advanced {
 
     const ssmModuleContent = dedent`
     module "security_group" {
-      source = "../modules/security_group"
+      source = "./modules/security_group"
 
       namespace                   = var.app_name
       vpc_id                      = module.vpc.vpc_id
@@ -183,7 +183,7 @@ export default class Advanced {
 
     const ecrModuleContent = dedent`
     module "ecr" {
-      source = "../ecr"
+      source = "./ecr"
 
       namespace   = var.app_name
       owner       = var.owner
@@ -213,7 +213,7 @@ export default class Advanced {
 
     const albModuleContent = dedent`
     module "alb" {
-      source = "../modules/alb"
+      source = "./modules/alb"
 
       vpc_id             = module.vpc.vpc_id
       namespace          = var.app_name
@@ -262,7 +262,7 @@ export default class Advanced {
 
     const bastionModuleContent = dedent`
     module "bastion" {
-      source = "../modules/bastion"
+      source = "./modules/bastion"
 
       subnet_ids                  = module.vpc.public_subnet_ids
       instance_security_group_ids = module.security_group.bastion_security_group_ids
