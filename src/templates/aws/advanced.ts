@@ -225,7 +225,7 @@ export default class Advanced {
     injectToFile('main.tf', albModuleContent, this.options, {
       insertAfter: '# ALB',
     })
-    
+
     const vpcOutputContent = dedent`
     output "alb_dns_name" {
       description = "ALB DNS"
