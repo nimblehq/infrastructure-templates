@@ -147,7 +147,7 @@ export default class Advanced {
     module "security_group" {
       source = "./modules/security_group"
 
-      namespace                   = var.app_name
+      namespace                   = var.namespace
       vpc_id                      = module.vpc.vpc_id
       app_port                    = var.app_port
       private_subnets_cidr_blocks = module.vpc.private_subnets_cidr_blocks
@@ -175,7 +175,7 @@ export default class Advanced {
     module "ecr" {
       source = "./ecr"
 
-      namespace   = var.app_name
+      namespace   = var.namespace
       owner       = var.owner
       image_limit = var.image_limit
     }
@@ -193,7 +193,7 @@ export default class Advanced {
     module "log" {
       source = "./modules/log"
 
-      namespace = var.app_name
+      namespace = var.namespace
     }
     `
 
@@ -222,7 +222,7 @@ export default class Advanced {
       source = "./modules/alb"
 
       vpc_id             = module.vpc.vpc_id
-      namespace          = var.app_name
+      namespace          = var.namespace
       app_port           = var.app_port
       subnet_ids         = module.vpc.public_subnet_ids
       security_group_ids = module.security_group.alb_security_group_ids
@@ -275,7 +275,7 @@ export default class Advanced {
     module "rds" {
       source = "./modules/rds"
 
-      namespace = var.app_name
+      namespace = var.namespace
 
       vpc_security_group_ids = module.security_group.rds_security_group_ids
       vpc_id                 = module.vpc.vpc_id
@@ -401,7 +401,7 @@ export default class Advanced {
       source = "./modules/ecs"
 
       subnets                            = module.vpc.private_subnet_ids
-      namespace                          = var.app_name
+      namespace                          = var.namespace
       region                             = var.region
       app_host                           = module.alb.alb_dns_name
       app_port                           = var.app_port

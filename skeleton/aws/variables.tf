@@ -24,8 +24,8 @@ variable "owner" {
   type        = string
 }
 
-variable "app_name" {
-  description = "Application name"
+variable "namespace" {
+  description = "The namespace for the application infrastructure on AWS, e.g. acme-web"
   type        = string
 }
 

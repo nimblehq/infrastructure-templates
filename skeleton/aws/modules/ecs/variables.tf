@@ -77,22 +77,6 @@ variable "aws_cloudwatch_log_group_name" {
   type        = string
 }
 
-variable "container_envs" {
-  description = "Environment variables for running container"
-  type = object({
-    health_check_path           = string
-    environment                 = string
-    mailgun_domain              = string
-    mailgun_template            = map(string)
-    mailer_sender_email         = string
-    mailer_sender_name          = string
-    token_ttl                   = map(string)
-    verification_subdomain      = string
-    deeplink_email_verification = string
-    aws_sns_sender_id           = string
-  })
-}
-
 variable "aws_parameter_store" {
   description = "AWS parameter store"
   type        = map(any)
