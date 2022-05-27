@@ -91,21 +91,6 @@ export default class Advanced {
     variable "secret_key_base" {
       description = "The Secret key base for the application"
       type = string
-    }
-
-    variable "rds_database_name" {
-      description = "RDS database name"
-      type        = string
-    }
-
-    variable "rds_username" {
-      description = "RDS username"
-      type        = string
-    }
-
-    variable "rds_password" {
-      description = "RDS password"
-      type        = string
     }\n\n`
     appendToFile('variables.tf', ssmVariablesContent, this.options)
 
@@ -115,9 +100,6 @@ export default class Advanced {
 
       namespace = var.namespace
       secret_key_base       = var.secret_key_base
-
-      aws_access_key_id     = var.aws_access_key_id
-      aws_secret_access_key = var.aws_secret_access_key
 
       rds_username      = var.rds_username
       rds_password      = var.rds_password
@@ -373,26 +355,6 @@ export default class Advanced {
         deployment_maximum_percent         = number
         deployment_minimum_healthy_percent = number
       })
-    }
-
-    variable "deeplink_email_verification" {
-      description = "Email Verification Deeplink"
-      type        = string
-    }
-
-    variable "aws_sns_sender_id" {
-      description = "AWS SNS sender ID"
-      type        = string
-    }
-
-    variable "aws_access_key_id" {
-      description = "AWS access key ID"
-      type        = string
-    }
-
-    variable "aws_secret_access_key" {
-      description = "AWS secret access key"
-      type        = string
     }\n\n`
     appendToFile('variables.tf', bastionVariablesContent, this.options)
 
