@@ -6,10 +6,11 @@ type GenerateOption = {
   projectName: string;
   platform: string;
   infrastructureType: string;
+  awsRegion: string;
 };
 
-export default class Hello extends Command {
-  static description = 'Generate infrastructure template command';
+export default class Generator extends Command {
+  static description = 'Generate infrastructure template command'
 
   static examples = ['$ nimble-infra generate'];
 
@@ -25,7 +26,7 @@ export default class Hello extends Command {
   ];
 
   async run(): Promise<void> {
-    const {args} = await this.parse(Hello)
+    const {args} = await this.parse(Generator)
 
     const questions = [
       {
@@ -70,14 +71,21 @@ export default class Hello extends Command {
             },
           ],
         },
+        {
+          type: 'input',
+          name: 'awsRegion',
+          default: 'ap-southeast-1',
+          message: 'Which AWS Region do you choose?',
+        },
       ]
 
-      const infrastructureType = await inquirer.prompt(questions)
+      const awsUserInput = await inquirer.prompt(questions)
 
       const options: GenerateOption = {
         projectName: args.projectName,
         platform: platformChoice.platform,
-        infrastructureType: infrastructureType.infrastructureType,
+        infrastructureType: awsUserInput.infrastructureType,
+        awsRegion: awsUserInput.awsRegion,
       }
 
       switch (options.infrastructureType) {
@@ -89,6 +97,8 @@ export default class Hello extends Command {
         console.log('This type has not been implemented!')
         break
       }
+    } else {
+      console.log('This provider has not been implemented!')
     }
   }
 }

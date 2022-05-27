@@ -11,7 +11,7 @@ jobs:
     name: Run Tests
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [16.x]
     runs-on: ubuntu-20.04
 
     steps:
@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
+          cache: 'npm'
 
       - name: Cache Node npm
         uses: actions/cache@v2
