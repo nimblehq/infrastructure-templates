@@ -137,13 +137,13 @@ export default class Advanced {
       this.options,
     )
 
-    const ssmVariablesContent = dedent`
+    const securityGroupVariablesContent = dedent`
     variable "nimble_office_ip" {
       description = "Nimble Office IP"
     }\n\n`
-    appendToFile('variables.tf', ssmVariablesContent, this.options)
+    appendToFile('variables.tf', securityGroupVariablesContent, this.options)
 
-    const ssmModuleContent = dedent`
+    const securityGroupModuleContent = dedent`
     module "security_group" {
       source = "./modules/security_group"
 
@@ -156,7 +156,7 @@ export default class Advanced {
     }
     `
 
-    injectToFile('main.tf', ssmModuleContent, this.options, {
+    injectToFile('main.tf', securityGroupModuleContent, this.options, {
       insertAfter: '# Security groups',
     })
   }
