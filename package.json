@@ -1,15 +1,18 @@
 {
-  "name": "nimble-infra",
-  "version": "0.2.9",
+  "name": "@nimblehq/infra-template",
+  "version": "0.1.0",
   "description": "Nimble Infrastructure Template generator",
   "author": "Nimblehq",
   "bin": {
-    "nimble-infra": "./bin/run"
+    "nimble-infra": "bin/run"
   },
   "homepage": "https://github.com/nimblehq/infrastructure-templates",
   "license": "MIT",
   "main": "dist/index.js",
-  "repository": "nimblehq/infrastructure-templates",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nimblehq/infrastructure-templates.git"
+  },
   "files": [
     "/bin",
     "/dist",
@@ -70,9 +73,14 @@
   "engines": {
     "node": ">=12.0.0"
   },
-  "bugs": "https://github.com/nimblehq/infrastructure-templates/issues",
+  "bugs": {
+    "url": "https://github.com/nimblehq/infrastructure-templates/issues"
+  },
   "keywords": [
     "oclif"
   ],
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "directories": {
+    "test": "test"
+  }
 }
