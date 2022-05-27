@@ -56,7 +56,7 @@ export default class Advanced {
     const vpcOutputContent = dedent`
     output "vpc_id" {
       description = "VPC ID"
-      value       = "module.vpc.vpc_id"
+      value       = module.vpc.vpc_id
     }\n\n`
     appendToFile('outputs.tf', vpcOutputContent, this.options)
 
@@ -78,7 +78,7 @@ export default class Advanced {
     const s3OutputContent = dedent`
     output "s3_alb_log_bucket_name" {
       description = "S3 bucket name for ALB log"
-      value       = "module.s3.aws_alb_log_bucket_name"
+      value       = module.s3.aws_alb_log_bucket_name
     }\n\n`
 
     appendToFile('outputs.tf', s3OutputContent, this.options)
@@ -115,7 +115,7 @@ export default class Advanced {
       rds_username      = var.rds_username
       rds_password      = var.rds_password
       rds_database_name = var.rds_database_name
-      rds_endpoint      = module.db.db_endpoint
+      rds_endpoint      = module.rds.db_endpoint
     }`
 
     injectToFile('main.tf', ssmModuleContent, this.options, {
@@ -166,10 +166,9 @@ export default class Advanced {
 
     const ecrModuleContent = dedent`
     module "ecr" {
-      source = "./ecr"
+      source = "./modules/ecr"
 
       namespace   = var.namespace
-      owner       = var.owner
       image_limit = var.image_limit
     }
     `
@@ -219,7 +218,6 @@ export default class Advanced {
       app_port           = var.app_port
       subnet_ids         = module.vpc.public_subnet_ids
       security_group_ids = module.security_group.alb_security_group_ids
-      domain  = var.domain
       health_check_path  = var.health_check_path
     }
     `
@@ -227,6 +225,13 @@ export default class Advanced {
     injectToFile('main.tf', albModuleContent, this.options, {
       insertAfter: '# ALB',
     })
+    
+    const vpcOutputContent = dedent`
+    output "alb_dns_name" {
+      description = "ALB DNS"
+      value       = module.alb.alb_dns_name
+    }\n\n`
+    appendToFile('outputs.tf', vpcOutputContent, this.options)
   }
 
   private applyRds(): void {

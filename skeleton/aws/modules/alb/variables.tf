@@ -27,8 +27,3 @@ variable "app_port" {
   description = "Application running port"
   type        = number
 }
-
-variable "domain" {
-  description = "Application domain"
-  type        = string
-}
