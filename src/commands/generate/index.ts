@@ -9,11 +9,9 @@ type GenerateOption = {
 };
 
 export default class Hello extends Command {
-  static description = 'Generate infrastructure template command'
+  static description = 'Generate infrastructure template command';
 
-  static examples = [
-    '$ nimble-infra generate',
-  ]
+  static examples = ['$ nimble-infra generate'];
 
   static flags = {};
 
@@ -68,7 +66,7 @@ export default class Hello extends Command {
             {
               key: 'advanced',
               value: 'advanced',
-              name: 'Complete infrastructure (VPC + RDS + S3 + FARGATE + LOG + Security groups + ALB)',
+              name: 'Complete infrastructure (VPC + ECR + RDS + S3 + FARGATE + LOG + Security groups + ALB)',
             },
           ],
         },
