@@ -13,7 +13,14 @@ mkdir awesome-infra && cd awesome-infra
 2. Start the CLI to generate the infrastructure configuration in Terraform
 
 ```bash
-npx nimble-infra@latest generate
+npm install -g @nimblehq/infra-template
+
+nimble-infra generate {project-name}
+```
+
+* With npx:
+```bash
+npx @nimblehq/infra-template generate {project-name}
 ```
 
 ## License
