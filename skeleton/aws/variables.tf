@@ -1,13 +1,3 @@
-variable "terraform_organization" {
-  description = "Organization name on Terraform Cloud"
-  type        = string
-}
-
-variable "terraform_workspace" {
-  description = "Workspace name on Terraform cloud"
-  type        = string
-}
-
 variable "environment" {
   description = "The application environment, used to tag the resources, e.g. `acme-web-staging`"
   type        = string
