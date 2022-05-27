@@ -260,7 +260,7 @@ export default class Advanced {
 
     variable "rds_autoscaling_max_capacity" {
       description = "Maximum number of RDS read replicas when autoscaling is enabled"
-      type =
+      type = number
     }\n\n`
     appendToFile('variables.tf', rdsVariablesContent, this.options)
 
