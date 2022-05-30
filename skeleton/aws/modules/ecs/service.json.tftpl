@@ -1,0 +1,35 @@
+[
+  {
+    "name": "${namespace}",
+    "image": "${aws_ecr_repository}:${aws_ecr_tag}",
+    "essential": true,
+    "memory": ${memory},
+    "cpu": ${cpu},
+    "portMappings": [
+      {
+        "containerPort": ${app_port},
+        "hostPort": ${app_port},
+        "protocol": "tcp"
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region": "${region}",
+        "awslogs-stream-prefix": "${namespace}-service-web",
+        "awslogs-group": "${aws_cloudwatch_log_group_name}"
+      }
+    },
+    "environment": [
+    ],
+    "secrets": [
+    ],
+    "ulimits": [
+      {
+        "name": "nofile",
+        "softLimit": 65536,
+        "hardLimit": 65536
+      }
+    ]
+  }
+]
