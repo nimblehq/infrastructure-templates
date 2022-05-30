@@ -33,7 +33,7 @@ jobs:
             ${{ runner.os }}-infrastructure-templates
 
       - name: Install modules
-        run: yarn
+        run: npm ci
 
       - name: Run tests
-        run: yarn test
+        run: npm run test
