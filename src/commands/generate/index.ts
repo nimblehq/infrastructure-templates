@@ -1,6 +1,7 @@
-import {Command} from '@oclif/core'
-import * as inquirer from 'inquirer'
-import Advanced from '../../templates/aws/advanced'
+import { Command } from '@oclif/core';
+import * as inquirer from 'inquirer';
+
+import Advanced from '../../templates/aws/advanced';
 
 type GenerateOption = {
   projectName: string;
@@ -10,7 +11,7 @@ type GenerateOption = {
 };
 
 export default class Generator extends Command {
-  static description = 'Generate infrastructure template command'
+  static description = 'Generate infrastructure template command';
 
   static examples = ['$ nimble-infra generate'];
 
@@ -26,9 +27,9 @@ export default class Generator extends Command {
   ];
 
   async run(): Promise<void> {
-    const {args} = await this.parse(Generator)
+    const { args } = await this.parse(Generator);
 
-    const questions = [
+    const platformChoices = [
       {
         type: 'list',
         name: 'platform',
@@ -48,12 +49,12 @@ export default class Generator extends Command {
           },
         ],
       },
-    ]
+    ];
 
-    const platformChoice = await inquirer.prompt(questions)
+    const platformChoice = await inquirer.prompt(platformChoices);
 
     if (platformChoice.platform === 'aws') {
-      const questions = [
+      const awsTypeChoices = [
         {
           type: 'list',
           name: 'infrastructureType',
@@ -77,30 +78,30 @@ export default class Generator extends Command {
           default: 'ap-southeast-1',
           message: 'Which AWS Region do you choose?',
         },
-      ]
+      ];
 
-      const awsUserInput = await inquirer.prompt(questions)
+      const awsUserInput = await inquirer.prompt(awsTypeChoices);
 
       const options: GenerateOption = {
         projectName: args.projectName,
         platform: platformChoice.platform,
         infrastructureType: awsUserInput.infrastructureType,
         awsRegion: awsUserInput.awsRegion,
-      }
+      };
 
       switch (options.infrastructureType) {
-      case 'advanced':
-        Advanced.run(options)
-        break
-      case 'basic':
-      default:
-        console.log('This type has not been implemented!')
-        break
+        case 'advanced':
+          Advanced.run(options);
+          break;
+        case 'basic':
+        default:
+          console.log('This type has not been implemented!');
+          break;
       }
     } else {
-      console.log('This provider has not been implemented!')
+      console.log('This provider has not been implemented!');
     }
   }
 }
 
-export type {GenerateOption}
+export type { GenerateOption };
