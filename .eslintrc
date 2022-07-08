@@ -1,6 +1,3 @@
 {
-  "extends": ["oclif", "oclif-typescript"],
-  "rules": {
-    "unicorn/prefer-module": 0
-  }
+  "extends": ["@nimblehq/eslint-config-nimble"]
 }
