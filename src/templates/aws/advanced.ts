@@ -1,43 +1,44 @@
-import * as dedent from 'dedent'
-import {GenerateOption} from '../../commands/generate'
+import * as dedent from 'dedent';
+
+import { GenerateOption } from '../../commands/generate';
 import {
   appendToFile,
   copyDir,
   copyFile,
   injectToFile,
-} from '../../helpers/file'
+} from '../../helpers/file';
 
 export default class Advanced {
   options: GenerateOption;
 
   constructor(options: GenerateOption) {
-    this.options = options
+    this.options = options;
   }
 
   static run(options: GenerateOption): void {
-    const advanced = new Advanced(options)
-    advanced.applyTemplate()
+    const advanced = new Advanced(options);
+    advanced.applyTemplate();
   }
 
   private applyTemplate(): void {
-    this.applyCommon()
-    this.applyRegion()
-    this.applyVpc()
-    this.applySecurityGroup()
-    this.applyEcr()
-    this.applyLog()
-    this.applyS3()
-    this.applyAlb()
-    this.applyRds()
-    this.applyBastionInstance()
-    this.applySsm()
-    this.applyEcs()
+    this.applyCommon();
+    this.applyRegion();
+    this.applyVpc();
+    this.applySecurityGroup();
+    this.applyEcr();
+    this.applyLog();
+    this.applyS3();
+    this.applyAlb();
+    this.applyRds();
+    this.applyBastionInstance();
+    this.applySsm();
+    this.applyEcs();
   }
 
   private applyCommon(): void {
-    copyFile('aws/main.tf', 'main.tf', this.options)
-    copyFile('aws/outputs.tf', 'outputs.tf', this.options)
-    copyFile('aws/variables.tf', 'variables.tf', this.options)
+    copyFile('aws/main.tf', 'main.tf', this.options);
+    copyFile('aws/outputs.tf', 'outputs.tf', this.options);
+    copyFile('aws/variables.tf', 'variables.tf', this.options);
   }
 
   private applyRegion(): void {
@@ -46,64 +47,64 @@ export default class Advanced {
       description = "AWS region"
       type        = string
       default     = "${this.options.awsRegion}"
-    }\n\n`
-    appendToFile('variables.tf', regionVariableContent, this.options)
+    }\n\n`;
+    appendToFile('variables.tf', regionVariableContent, this.options);
   }
 
   private applyVpc(): void {
-    copyDir('aws/modules/vpc', 'modules/vpc', this.options)
+    copyDir('aws/modules/vpc', 'modules/vpc', this.options);
 
     const vpcOutputContent = dedent`
     output "vpc_id" {
       description = "VPC ID"
       value       = module.vpc.vpc_id
-    }\n\n`
-    appendToFile('outputs.tf', vpcOutputContent, this.options)
+    }\n\n`;
+    appendToFile('outputs.tf', vpcOutputContent, this.options);
 
     const vpcModuleContent = dedent`
     module "vpc" {
       source = "./modules/vpc"
 
       namespace   = var.namespace
-    }`
+    }`;
 
     injectToFile('main.tf', vpcModuleContent, this.options, {
       insertAfter: '# VPC',
-    })
+    });
   }
 
   private applyS3(): void {
-    copyDir('aws/modules/s3', 'modules/s3', this.options)
+    copyDir('aws/modules/s3', 'modules/s3', this.options);
 
     const s3OutputContent = dedent`
     output "s3_alb_log_bucket_name" {
       description = "S3 bucket name for ALB log"
       value       = module.s3.aws_alb_log_bucket_name
-    }\n\n`
+    }\n\n`;
 
-    appendToFile('outputs.tf', s3OutputContent, this.options)
+    appendToFile('outputs.tf', s3OutputContent, this.options);
 
     const s3ModuleContent = dedent`
     module "s3" {
       source = "./modules/s3"
 
       namespace   = var.namespace
-    }`
+    }`;
 
     injectToFile('main.tf', s3ModuleContent, this.options, {
       insertAfter: '# S3',
-    })
+    });
   }
 
   private applySsm(): void {
-    copyDir('aws/modules/ssm', 'modules/ssm', this.options)
+    copyDir('aws/modules/ssm', 'modules/ssm', this.options);
 
     const ssmVariablesContent = dedent`
     variable "secret_key_base" {
       description = "The Secret key base for the application"
       type = string
-    }\n\n`
-    appendToFile('variables.tf', ssmVariablesContent, this.options)
+    }\n\n`;
+    appendToFile('variables.tf', ssmVariablesContent, this.options);
 
     const ssmModuleContent = dedent`
     module "ssm" {
@@ -116,11 +117,11 @@ export default class Advanced {
       rds_password      = var.rds_password
       rds_database_name = var.rds_database_name
       rds_endpoint      = module.rds.db_endpoint
-    }`
+    }`;
 
     injectToFile('main.tf', ssmModuleContent, this.options, {
       insertAfter: '# SSM',
-    })
+    });
   }
 
   private applySecurityGroup(): void {
@@ -128,13 +129,13 @@ export default class Advanced {
       'aws/modules/security_group',
       'modules/security_group',
       this.options,
-    )
+    );
 
     const securityGroupVariablesContent = dedent`
     variable "nimble_office_ip" {
       description = "Nimble Office IP"
-    }\n\n`
-    appendToFile('variables.tf', securityGroupVariablesContent, this.options)
+    }\n\n`;
+    appendToFile('variables.tf', securityGroupVariablesContent, this.options);
 
     const securityGroupModuleContent = dedent`
     module "security_group" {
@@ -147,22 +148,22 @@ export default class Advanced {
 
       nimble_office_ip = var.nimble_office_ip
     }
-    `
+    `;
 
     injectToFile('main.tf', securityGroupModuleContent, this.options, {
       insertAfter: '# Security groups',
-    })
+    });
   }
 
   private applyEcr(): void {
-    copyDir('aws/modules/ecr', 'modules/ecr', this.options)
+    copyDir('aws/modules/ecr', 'modules/ecr', this.options);
 
     const ecrVariablesContent = dedent`
     variable "image_limit" {
       description = "Sets max amount of the latest develop images to be kept"
       type        = number
-    }\n\n`
-    appendToFile('variables.tf', ecrVariablesContent, this.options)
+    }\n\n`;
+    appendToFile('variables.tf', ecrVariablesContent, this.options);
 
     const ecrModuleContent = dedent`
     module "ecr" {
@@ -171,15 +172,15 @@ export default class Advanced {
       namespace   = var.namespace
       image_limit = var.image_limit
     }
-    `
+    `;
 
     injectToFile('main.tf', ecrModuleContent, this.options, {
       insertAfter: '# ECR',
-    })
+    });
   }
 
   private applyLog(): void {
-    copyDir('aws/modules/log', 'modules/log', this.options)
+    copyDir('aws/modules/log', 'modules/log', this.options);
 
     const logModuleContent = dedent`
     module "log" {
@@ -187,15 +188,15 @@ export default class Advanced {
 
       namespace = var.namespace
     }
-    `
+    `;
 
     injectToFile('main.tf', logModuleContent, this.options, {
       insertAfter: '# Log',
-    })
+    });
   }
 
   private applyAlb(): void {
-    copyDir('aws/modules/alb', 'modules/alb', this.options)
+    copyDir('aws/modules/alb', 'modules/alb', this.options);
 
     const albVariablesContent = dedent`
     variable "health_check_path" {
@@ -206,8 +207,8 @@ export default class Advanced {
     variable "domain" {
       description = "Application domain"
       type        = string
-    }\n\n`
-    appendToFile('variables.tf', albVariablesContent, this.options)
+    }\n\n`;
+    appendToFile('variables.tf', albVariablesContent, this.options);
 
     const albModuleContent = dedent`
     module "alb" {
@@ -220,22 +221,22 @@ export default class Advanced {
       security_group_ids = module.security_group.alb_security_group_ids
       health_check_path  = var.health_check_path
     }
-    `
+    `;
 
     injectToFile('main.tf', albModuleContent, this.options, {
       insertAfter: '# ALB',
-    })
+    });
 
     const vpcOutputContent = dedent`
     output "alb_dns_name" {
       description = "ALB DNS"
       value       = module.alb.alb_dns_name
-    }\n\n`
-    appendToFile('outputs.tf', vpcOutputContent, this.options)
+    }\n\n`;
+    appendToFile('outputs.tf', vpcOutputContent, this.options);
   }
 
   private applyRds(): void {
-    copyDir('aws/modules/rds', 'modules/rds', this.options)
+    copyDir('aws/modules/rds', 'modules/rds', this.options);
 
     const rdsVariablesContent = dedent`
     variable "rds_instance_type" {
@@ -266,8 +267,8 @@ export default class Advanced {
     variable "rds_autoscaling_max_capacity" {
       description = "Maximum number of RDS read replicas when autoscaling is enabled"
       type = number
-    }\n\n`
-    appendToFile('variables.tf', rdsVariablesContent, this.options)
+    }\n\n`;
+    appendToFile('variables.tf', rdsVariablesContent, this.options);
 
     const albModuleContent = dedent`
     module "rds" {
@@ -288,15 +289,15 @@ export default class Advanced {
       autoscaling_min_capacity = var.rds_autoscaling_min_capacity
       autoscaling_max_capacity = var.rds_autoscaling_max_capacity
     }
-    `
+    `;
 
     injectToFile('main.tf', albModuleContent, this.options, {
       insertAfter: '# RDS',
-    })
+    });
   }
 
   private applyBastionInstance(): void {
-    copyDir('aws/modules/bastion', 'modules/bastion', this.options)
+    copyDir('aws/modules/bastion', 'modules/bastion', this.options);
 
     const bastionVariablesContent = dedent`
     variable "bastion_image_id" {
@@ -322,8 +323,8 @@ export default class Advanced {
     variable "bastion_min_instance_count" {
       description = "The minimum number of the instance"
       default = 1
-    }\n\n`
-    appendToFile('variables.tf', bastionVariablesContent, this.options)
+    }\n\n`;
+    appendToFile('variables.tf', bastionVariablesContent, this.options);
 
     const bastionModuleContent = dedent`
     module "bastion" {
@@ -340,15 +341,15 @@ export default class Advanced {
       max_instance_count     = var.bastion_max_instance_count
       instance_desired_count = var.bastion_instance_desired_count
     }
-    `
+    `;
 
     injectToFile('main.tf', bastionModuleContent, this.options, {
       insertAfter: '# Bastion instance',
-    })
+    });
   }
 
   private applyEcs(): void {
-    copyDir('aws/modules/ecs', 'modules/ecs', this.options)
+    copyDir('aws/modules/ecs', 'modules/ecs', this.options);
 
     const bastionVariablesContent = dedent`
     variable "ecr_repo_name" {
@@ -371,8 +372,8 @@ export default class Advanced {
         deployment_maximum_percent         = number
         deployment_minimum_healthy_percent = number
       })
-    }\n\n`
-    appendToFile('variables.tf', bastionVariablesContent, this.options)
+    }\n\n`;
+    appendToFile('variables.tf', bastionVariablesContent, this.options);
 
     const ecsModuleContent = dedent`
     module "ecs" {
@@ -397,10 +398,10 @@ export default class Advanced {
 
       aws_parameter_store = module.ssm.parameter_store
     }
-    `
+    `;
 
     injectToFile('main.tf', ecsModuleContent, this.options, {
       insertAfter: '# ECS',
-    })
+    });
   }
 }
