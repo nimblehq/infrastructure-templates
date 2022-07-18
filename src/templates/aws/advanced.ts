@@ -37,6 +37,7 @@ export default class Advanced {
 
   private applyCommon(): void {
     copyFile('aws/main.tf', 'main.tf', this.options);
+    copyFile('aws/providers.tf', 'providers.tf', this.options);
     copyFile('aws/outputs.tf', 'outputs.tf', this.options);
     copyFile('aws/variables.tf', 'variables.tf', this.options);
   }
