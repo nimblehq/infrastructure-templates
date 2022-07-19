@@ -18,7 +18,8 @@ describe('running command generate', () => {
     .stdout()
     .stub(inquirer, 'prompt', stubResponse)
     .command(['generate', projectName])
-    .it('creates a new project folder', () => {
+    .it('creates a new project folder', (ctx) => {
+      expect(ctx.stdout).to.contains('The infrastructure has been generated!');
       expect(fs.existsSync(projectName)).to.eq(true);
     });
 });
