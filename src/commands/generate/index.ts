@@ -1,6 +1,8 @@
 import { Command } from '@oclif/core';
 import { prompt } from 'inquirer';
 
+import { getTargetDir } from '../../helpers/file';
+import { detectTerraform, formatCode } from '../../helpers/terraform';
 import Aws from '../../templates/aws';
 
 type GeneralOptions = {
@@ -58,7 +60,7 @@ export default class Generator extends Command {
     try {
       switch (generalOptions.provider) {
         case 'aws':
-          new Aws(generalOptions).run();
+          await new Aws(generalOptions).run();
           break;
         case 'gcp':
         case 'heroku':
@@ -66,9 +68,17 @@ export default class Generator extends Command {
           this.error('This provider has not been implemented!');
       }
 
+      await this.postProcess(generalOptions);
+
       this.log('The infrastructure has been generated!');
     } catch (error) {
       this.error(error as Error);
+    }
+  }
+
+  private async postProcess(generalOptions: GeneralOptions): Promise<void> {
+    if (await detectTerraform()) {
+      formatCode(getTargetDir(generalOptions.projectName));
     }
   }
 }

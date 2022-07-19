@@ -10,10 +10,12 @@ const TEMPLATE_DIR =
   process.env.NODE_ENV === 'development' ? 'skeleton' : 'dist/skeleton';
 const TEMPLATE_PATH = path.join(ROOT_DIR, TEMPLATE_DIR);
 
-const getTargetPath = (file: string, projectName: string): string => {
-  const targetPath = path.join(process.cwd(), projectName);
+const getTargetDir = (projectName: string): string => {
+  return path.join(process.cwd(), projectName);
+};
 
-  return path.join(targetPath, file);
+const getTargetPath = (file: string, projectName: string): string => {
+  return path.join(getTargetDir(projectName), file);
 };
 
 const appendToFile = (
@@ -142,6 +144,7 @@ const renameFile = (
 };
 
 export {
+  getTargetDir,
   appendToFile,
   copyDir,
   copyFile,
