@@ -92,14 +92,15 @@ export default class Generator extends Command {
       switch (options.infrastructureType) {
         case 'advanced':
           Advanced.run(options);
+          this.log('The infrastructure has been generated!');
+
           break;
         case 'basic':
         default:
-          console.log('This type has not been implemented!');
-          break;
+          this.log('This type has not been implemented!');
       }
     } else {
-      console.log('This provider has not been implemented!');
+      this.log('This provider has not been implemented!');
     }
   }
 }

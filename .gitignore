@@ -4,6 +4,7 @@
 /dist
 /lib
 /tmp
-node_modules
+/node_modules
 oclif.manifest.json
 yarn.lock
+/coverage
