@@ -75,7 +75,7 @@ export default class Generator extends Command {
 
       this.log('The infrastructure has been generated!');
     } catch (error) {
-      this.error(error as Error);
+      console.error(error);
     }
   }
 
