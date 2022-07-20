@@ -5,6 +5,7 @@ const applyCommon = ({ projectName }: AwsOptions) => {
   const filesToCopy = [
     'main.tf',
     'outputs.tf',
+    'providers.tf',
     'variables.tf',
   ];
 
