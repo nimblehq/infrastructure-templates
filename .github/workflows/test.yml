@@ -34,7 +34,7 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npm run test -- --coverage --watchAll=false --ci
+        run: npm run test '--ignore-scripts' -- --watchAll=false --coverage --ci
 
       - name: Upload test coverage
         uses: actions/upload-artifact@v3
