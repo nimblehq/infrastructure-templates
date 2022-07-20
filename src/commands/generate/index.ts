@@ -22,11 +22,13 @@ const providerChoices = [
       },
       {
         value: 'gcp',
-        name: 'GCP',
+        name: 'GCP (NOT IMPLEMENTED YET)',
+        disabled: true,
       },
       {
         value: 'heroku',
-        name: 'Heroku',
+        name: 'Heroku (NOT IMPLEMENTED YET)',
+        disabled: true,
       },
     ],
   },

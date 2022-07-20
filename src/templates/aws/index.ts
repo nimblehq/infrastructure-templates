@@ -12,7 +12,8 @@ const awsChoices = [
       {
         key: 'basic',
         value: 'basic',
-        name: 'Basic infrastructure (VPC + RDS + LOG + ECS)',
+        name: 'Basic infrastructure (VPC + RDS + LOG + ECS) (NOT IMPLEMENTED YET)',
+        disabled: true,
       },
       {
         key: 'advanced',
