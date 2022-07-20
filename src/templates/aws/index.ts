@@ -1,7 +1,7 @@
 import * as inquirer from 'inquirer';
 
 import { GeneralOptions } from '../../commands/generate';
-import Advanced from './advanced';
+import { applyAdvancedTemplate } from './advanced';
 
 const awsChoices = [
   {
@@ -34,32 +34,24 @@ type AwsOptions = GeneralOptions & {
   awsRegion: string;
 }
 
-export default class Aws {
-  generalOptions: GeneralOptions;
+const generateAwsTemplate = async(generalOptions: GeneralOptions): Promise<void> => {
+  const awsOptionsPrompt = await inquirer.prompt(awsChoices);
+  const awsOptions: AwsOptions = {
+    ...generalOptions,
+    infrastructureType: awsOptionsPrompt.infrastructureType,
+    awsRegion: awsOptionsPrompt.awsRegion,
+  };
 
-  constructor(generalOptions: GeneralOptions) {
-    this.generalOptions = generalOptions;
+  switch (awsOptions.infrastructureType) {
+    case 'advanced':
+      applyAdvancedTemplate(awsOptions);
+
+      break;
+    case 'basic':
+    default:
+      throw Error('This type has not been implemented!');
   }
-
-  async run(): Promise<void> {
-    const awsOptionsPrompt = await inquirer.prompt(awsChoices);
-    const awsOptions: AwsOptions = {
-      ...this.generalOptions,
-      infrastructureType: awsOptionsPrompt.infrastructureType,
-      awsRegion: awsOptionsPrompt.awsRegion,
-    };
-
-    switch (awsOptions.infrastructureType) {
-      case 'advanced':
-        Advanced.run(awsOptions);
-        break;
-      case 'basic':
-      default:
-        throw Error('This type has not been implemented!');
-    }
-  }
-}
-
-export type {
-  AwsOptions,
 };
+
+export type { AwsOptions};
+export { generateAwsTemplate };

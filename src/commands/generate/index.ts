@@ -3,7 +3,7 @@ import { prompt } from 'inquirer';
 
 import { getTargetDir } from '../../helpers/file';
 import { detectTerraform, formatCode } from '../../helpers/terraform';
-import Aws from '../../templates/aws';
+import { generateAwsTemplate } from '../../templates/aws';
 
 type GeneralOptions = {
   projectName: string;
@@ -60,7 +60,8 @@ export default class Generator extends Command {
     try {
       switch (generalOptions.provider) {
         case 'aws':
-          await new Aws(generalOptions).run();
+          await generateAwsTemplate(generalOptions);
+
           break;
         case 'gcp':
         case 'heroku':
