@@ -1,7 +1,7 @@
 import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
-import { appendToFile, copyDir } from '../../../helpers/file';
+import { appendToFile, copy } from '../../../helpers/file';
 
 const applyRds = ({ projectName }: AwsOptions) => {
   const rdsVariablesContent = dedent`
@@ -56,7 +56,7 @@ const applyRds = ({ projectName }: AwsOptions) => {
     }
   \n`;
 
-  copyDir('aws/modules/rds', 'modules/rds', projectName);
+  copy('aws/modules/rds', 'modules/rds', projectName);
   appendToFile('variables.tf', rdsVariablesContent, projectName);
   appendToFile('main.tf', rdsModuleContent, projectName);
 };

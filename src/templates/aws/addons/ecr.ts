@@ -1,7 +1,7 @@
 import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
-import { appendToFile, copyDir } from '../../../helpers/file';
+import { appendToFile, copy } from '../../../helpers/file';
 
 const applyEcr = ({ projectName }: AwsOptions) => {
   const ecrVariablesContent = dedent`
@@ -19,7 +19,7 @@ const applyEcr = ({ projectName }: AwsOptions) => {
     }
   \n`;
 
-  copyDir('aws/modules/ecr', 'modules/ecr', projectName);
+  copy('aws/modules/ecr', 'modules/ecr', projectName);
   appendToFile('variables.tf', ecrVariablesContent, projectName);
   appendToFile('main.tf', ecrModuleContent, projectName);
 };

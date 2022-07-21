@@ -1,7 +1,7 @@
 import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
-import { appendToFile, copyDir } from '../../../helpers/file';
+import { appendToFile, copy } from '../../../helpers/file';
 
 const applyBastion = ({ projectName }: AwsOptions) => {
   const bastionVariablesContent = dedent`
@@ -47,7 +47,7 @@ const applyBastion = ({ projectName }: AwsOptions) => {
     }
   \n`;
 
-  copyDir('aws/modules/bastion', 'modules/bastion', projectName);
+  copy('aws/modules/bastion', 'modules/bastion', projectName);
   appendToFile('variables.tf', bastionVariablesContent, projectName);
   appendToFile('main.tf', bastionModuleContent, projectName);
 };

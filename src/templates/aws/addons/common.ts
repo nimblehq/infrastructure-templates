@@ -1,5 +1,5 @@
 import { AwsOptions } from '..';
-import { copyFile } from '../../../helpers/file';
+import { copy } from '../../../helpers/file';
 
 const applyCommon = ({ projectName }: AwsOptions) => {
   const filesToCopy = [
@@ -10,7 +10,7 @@ const applyCommon = ({ projectName }: AwsOptions) => {
   ];
 
   filesToCopy.forEach(fileName => {
-    copyFile(`aws/${fileName}`, fileName, projectName);
+    copy(`aws/${fileName}`, fileName, projectName);
   });
 };
 

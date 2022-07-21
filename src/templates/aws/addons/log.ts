@@ -1,7 +1,7 @@
 import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
-import { appendToFile, copyDir } from '../../../helpers/file';
+import { appendToFile, copy } from '../../../helpers/file';
 
 const applyLog = ({ projectName }: AwsOptions) => {
   const logModuleContent = dedent`
@@ -12,7 +12,7 @@ const applyLog = ({ projectName }: AwsOptions) => {
     }
   \n`;
 
-  copyDir('aws/modules/log', 'modules/log', projectName);
+  copy('aws/modules/log', 'modules/log', projectName);
   appendToFile('main.tf', logModuleContent, projectName);
 };
 

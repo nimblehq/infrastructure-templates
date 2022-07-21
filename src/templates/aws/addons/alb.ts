@@ -1,7 +1,7 @@
 import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
-import { appendToFile, copyDir } from '../../../helpers/file';
+import { appendToFile, copy } from '../../../helpers/file';
 
 const applyAlb = ({ projectName }: AwsOptions) => {
   const albVariablesContent = dedent`
@@ -34,7 +34,7 @@ const applyAlb = ({ projectName }: AwsOptions) => {
     }
   \n`;
 
-  copyDir('aws/modules/alb', 'modules/alb', projectName);
+  copy('aws/modules/alb', 'modules/alb', projectName);
   appendToFile('main.tf', albModuleContent, projectName);
   appendToFile('variables.tf', albVariablesContent, projectName);
   appendToFile('outputs.tf', vpcOutputContent, projectName);

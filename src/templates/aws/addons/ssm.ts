@@ -1,7 +1,7 @@
 import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
-import { appendToFile, copyDir } from '../../../helpers/file';
+import { appendToFile, copy } from '../../../helpers/file';
 
 const applySsm = ({ projectName }: AwsOptions) => {
   const ssmVariablesContent = dedent`
@@ -24,7 +24,7 @@ const applySsm = ({ projectName }: AwsOptions) => {
     }
   \n`;
 
-  copyDir('aws/modules/ssm', 'modules/ssm', projectName);
+  copy('aws/modules/ssm', 'modules/ssm', projectName);
   appendToFile('variables.tf', ssmVariablesContent, projectName);
   appendToFile('main.tf', ssmModuleContent, projectName);
 };

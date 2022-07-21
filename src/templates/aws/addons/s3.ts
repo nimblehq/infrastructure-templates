@@ -1,7 +1,7 @@
 import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
-import { appendToFile, copyDir } from '../../../helpers/file';
+import { appendToFile, copy } from '../../../helpers/file';
 
 const applyS3 = ({ projectName }: AwsOptions) => {
   const s3OutputContent = dedent`
@@ -19,7 +19,7 @@ const applyS3 = ({ projectName }: AwsOptions) => {
     }
   \n`;
 
-  copyDir('aws/modules/s3', 'modules/s3', projectName);
+  copy('aws/modules/s3', 'modules/s3', projectName);
   appendToFile('outputs.tf', s3OutputContent, projectName);
   appendToFile('main.tf', s3ModuleContent, projectName);
 };

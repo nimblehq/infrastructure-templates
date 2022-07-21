@@ -1,7 +1,7 @@
 import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
-import { appendToFile, copyDir } from '../../../helpers/file';
+import { appendToFile, copy } from '../../../helpers/file';
 
 const applyEcs = ({ projectName }: AwsOptions) => {
   const bastionVariablesContent = dedent`
@@ -52,7 +52,7 @@ const applyEcs = ({ projectName }: AwsOptions) => {
     }
   \n`;
 
-  copyDir('aws/modules/ecs', 'modules/ecs', projectName);
+  copy('aws/modules/ecs', 'modules/ecs', projectName);
   appendToFile('variables.tf', bastionVariablesContent, projectName);
   appendToFile('main.tf', ecsModuleContent, projectName);
 };

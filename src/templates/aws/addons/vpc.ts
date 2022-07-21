@@ -1,7 +1,7 @@
 import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
-import { appendToFile, copyDir } from '../../../helpers/file';
+import { appendToFile, copy } from '../../../helpers/file';
 
 const applyVpc = ({projectName}: AwsOptions) => {
   const vpcOutputContent = dedent`
@@ -18,7 +18,7 @@ const applyVpc = ({projectName}: AwsOptions) => {
     }
   \n`;
 
-  copyDir('aws/modules/vpc', 'modules/vpc', projectName);
+  copy('aws/modules/vpc', 'modules/vpc', projectName);
   appendToFile('outputs.tf', vpcOutputContent, projectName);
   appendToFile('main.tf', vpcModuleContent, projectName);
 };

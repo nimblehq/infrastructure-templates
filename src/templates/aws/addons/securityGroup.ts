@@ -1,7 +1,7 @@
 import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
-import { appendToFile, copyDir } from '../../../helpers/file';
+import { appendToFile, copy } from '../../../helpers/file';
 
 const applySecurityGroup = ({ projectName }: AwsOptions) => {
   const securityGroupVariablesContent = dedent`
@@ -22,7 +22,7 @@ const applySecurityGroup = ({ projectName }: AwsOptions) => {
     }
   \n`;
 
-  copyDir('aws/modules/security_group', 'modules/security_group', projectName);
+  copy('aws/modules/security_group', 'modules/security_group', projectName);
   appendToFile('variables.tf', securityGroupVariablesContent, projectName);
   appendToFile('main.tf', securityGroupModuleContent, projectName);
 };
