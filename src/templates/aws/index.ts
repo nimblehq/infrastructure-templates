@@ -31,7 +31,7 @@ const awsChoices = [
 ];
 
 type AwsOptions = GeneralOptions & {
-  infrastructureType: string;
+  infrastructureType: 'basic' | 'advanced';
   awsRegion: string;
 }
 

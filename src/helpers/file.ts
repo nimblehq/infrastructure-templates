@@ -17,7 +17,7 @@ interface InjectToFileOptions {
 
 const ROOT_DIR = path.join(__dirname, '..', '..');
 const TEMPLATE_DIR =
-  process.env.NODE_ENV === 'development' ? 'skeleton' : 'dist/skeleton';
+  process.env.NODE_ENV === 'production' ? 'dist/skeleton' : 'skeleton';
 const TEMPLATE_PATH = path.join(ROOT_DIR, TEMPLATE_DIR);
 
 const getTargetDir = (projectName: string): string => {

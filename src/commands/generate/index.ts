@@ -7,7 +7,7 @@ import { generateAwsTemplate } from '../../templates/aws';
 
 type GeneralOptions = {
   projectName: string;
-  provider: string;
+  provider: 'aws' | 'gcp' | 'heroku';
 };
 
 const providerChoices = [
