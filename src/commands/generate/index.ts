@@ -71,7 +71,7 @@ export default class Generator extends Command {
           this.error('This provider has not been implemented!');
       }
 
-      // await this.postProcess(generalOptions);
+      await this.postProcess(generalOptions);
 
       this.log('The infrastructure has been generated!');
     } catch (error) {

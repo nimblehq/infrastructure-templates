@@ -1,13 +1,15 @@
 import { runCommand } from './child-process';
 
 const detectTerraform = async() => {
-  const terraformPath = await runCommand('which', ['terraform']);
-  if (terraformPath) {
-    return true;
-  }
+  try {
+    await runCommand('which', ['terraform']);
 
-  console.log('Terraform not found. Please install terraform.');
-  return false;
+    return true;
+  } catch (error) {
+    console.error('Terraform not found. Please install terraform.');
+
+    return false;
+  }
 };
 
 const formatCode = (projectDir: string) => {
