@@ -1,7 +1,8 @@
-import { existsSync, removeSync } from 'fs-extra';
+import { existsSync } from 'fs-extra';
 import { prompt } from 'inquirer';
 
 import Generator from '.';
+import { remove } from '../../helpers/file';
 
 jest.mock('inquirer');
 
@@ -19,7 +20,7 @@ describe('running command generate directly', () => {
 
   afterEach(() => {
     jest.resetAllMocks();
-    removeSync(projectDir);
+    remove('/', projectDir);
   });
 
   it('creates a new project folder', () => {
