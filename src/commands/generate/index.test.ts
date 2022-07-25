@@ -6,29 +6,27 @@ import Generator from '.';
 jest.mock('inquirer');
 
 describe('running command generate directly', () => {
-  const projectName = 'app-name';
+  const projectDir = 'app-name';
   const stdoutSpy = jest.spyOn(process.stdout, 'write');
 
-  beforeEach(() => {
+  beforeEach(async() => {
     (prompt as unknown as jest.Mock)
       .mockResolvedValueOnce({ provider: 'aws' })
       .mockResolvedValueOnce({ infrastructureType: 'advanced' });
+
+    await Generator.run([projectDir]);
   });
 
   afterEach(() => {
     jest.resetAllMocks();
-    removeSync(projectName);
+    removeSync(projectDir);
   });
 
-  it('creates a new project folder', async() => {
-    await Generator.run([projectName]);
-
-    expect(existsSync(projectName)).toBe(true);
+  it('creates a new project folder', () => {
+    expect(existsSync(projectDir)).toBe(true);
   });
 
-  it('displays the success message', async() => {
-    await Generator.run([projectName]);
-
+  it('displays the success message', () => {
     expect(stdoutSpy).toHaveBeenCalledWith('The infrastructure has been generated!\n');
   });
 });
