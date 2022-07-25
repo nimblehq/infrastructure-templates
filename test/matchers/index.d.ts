@@ -5,7 +5,7 @@ declare global {
       toHaveFiles: (expectedFiles: string[]) => R;
       toHaveDirectory: (expectedDirectory: string) => R;
       toHaveDirectories: (expectedDirectories: string[]) => R;
-      toHaveContentInFile: (expectedFile: string, expectedContent: string) => R;
+      toHaveContentInFile: (expectedFile: string, expectedContent: string | string[]) => R;
     }
   }
 }
