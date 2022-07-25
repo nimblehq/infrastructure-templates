@@ -2,7 +2,7 @@ import { test, expect } from '@oclif/test';
 import { existsSync, removeSync } from 'fs-extra';
 import * as inquirer from 'inquirer';
 
-xdescribe('running command generate', () => {
+describe('running command generate', () => {
   const projectName = 'app-name';
 
   afterEach(() => {
@@ -18,7 +18,7 @@ xdescribe('running command generate', () => {
     .stdout()
     .stub(inquirer, 'prompt', stubResponse)
     .command(['generate', projectName])
-    .it('creates a new project folder', (ctx) => {
+    .it('creates a new project folder', async(ctx) => {
       expect(ctx.stdout).to.contains('The infrastructure has been generated!');
       expect(existsSync(projectName)).to.eq(true);
     });

@@ -5,6 +5,12 @@ module.exports = {
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   setupFilesAfterEnv: ['<rootDir>/test/jest.setup.ts'],
   verbose: true,
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    '!src/**/*.d.ts',
+    '!src/index.ts',
+    'test/commands/**/*.ts',
+  ],
   globals: {
     "ts-jest": {
       diagnostics: false
