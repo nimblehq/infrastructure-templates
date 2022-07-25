@@ -9,11 +9,10 @@ module.exports = {
     'src/**/*.ts',
     '!src/**/*.d.ts',
     '!src/index.ts',
-    'test/commands/**/*.ts',
   ],
   globals: {
     "ts-jest": {
       diagnostics: false
     }
-  }
+  },
 };
