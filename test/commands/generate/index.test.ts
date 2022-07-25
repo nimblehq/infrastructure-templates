@@ -2,7 +2,7 @@ import { test, expect } from '@oclif/test';
 import { existsSync, removeSync } from 'fs-extra';
 import * as inquirer from 'inquirer';
 
-describe('running command generate', () => {
+xdescribe('running command generate', () => {
   const projectName = 'app-name';
 
   afterEach(() => {
