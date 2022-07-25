@@ -82,7 +82,7 @@ export default class Generator extends Command {
   private async postProcess(generalOptions: GeneralOptions): Promise<void> {
     try {
       if (await detectTerraform()) {
-        formatCode(getTargetDir(generalOptions.projectName));
+        await formatCode(getTargetDir(generalOptions.projectName));
       }
     } catch (error) {
       console.error(error);

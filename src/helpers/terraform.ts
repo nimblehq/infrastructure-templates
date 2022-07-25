@@ -12,9 +12,9 @@ const detectTerraform = async() => {
   }
 };
 
-const formatCode = (projectDir: string) => {
+const formatCode = async(projectDir: string) => {
   try {
-    runCommand('terraform', [' fmt'], projectDir);
+    await runCommand('terraform', [' fmt'], projectDir);
   } catch (error) {
     console.error(error);
   }
