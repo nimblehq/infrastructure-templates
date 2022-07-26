@@ -1,5 +1,18 @@
 import { AwsOptions } from '.';
-import { applyAlb, applyBastion, applyCommon, applyEcr, applyEcs, applyLog, applyRds, applyRegion, applyS3, applySecurityGroup, applySsm, applyVpc } from './addons';
+import {
+  applyAlb,
+  applyBastion,
+  applyCommon,
+  applyEcr,
+  applyEcs,
+  applyLog,
+  applyRds,
+  applyRegion,
+  applyS3,
+  applySecurityGroup,
+  applySsm,
+  applyVpc,
+} from './addons';
 
 const applyAdvancedTemplate = (options: AwsOptions) => {
   applyCommon(options);
