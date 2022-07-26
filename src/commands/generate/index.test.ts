@@ -13,7 +13,7 @@ describe('Generator command', () => {
     describe('given provider is AWS', () => {
       describe('given infrastructure type is basic', () => {
         const projectDir = 'aws-basic-test';
-        const consoleSpy = jest.spyOn(global.console, 'error');
+        const consoleErrorSpy = jest.spyOn(global.console, 'error');
 
         beforeAll(async() => {
           (prompt as unknown as jest.Mock)
@@ -29,7 +29,7 @@ describe('Generator command', () => {
         });
 
         it('displays the error message', () => {
-          expect(consoleSpy).toHaveBeenCalledWith(Error('This type has not been implemented!'));
+          expect(consoleErrorSpy).toHaveBeenCalledWith(Error('This type has not been implemented!'));
         });
       });
 
@@ -62,7 +62,7 @@ describe('Generator command', () => {
 
     describe('given provider is GCP', () => {
       const projectDir = 'gcp-test';
-      const consoleSpy = jest.spyOn(global.console, 'error');
+      const consoleErrorSpy = jest.spyOn(global.console, 'error');
 
       beforeAll(async() => {
         (prompt as unknown as jest.Mock)
@@ -77,13 +77,13 @@ describe('Generator command', () => {
       });
 
       it('displays the error message', () => {
-        expect(consoleSpy).toHaveBeenCalledWith(Error('This provider has not been implemented!'));
+        expect(consoleErrorSpy).toHaveBeenCalledWith(Error('This provider has not been implemented!'));
       });
     });
 
     describe('given provider is Heroku', () => {
       const projectDir = 'heroku-test';
-      const consoleSpy = jest.spyOn(global.console, 'error');
+      const consoleErrorSpy = jest.spyOn(global.console, 'error');
 
       beforeAll(async() => {
         (prompt as unknown as jest.Mock)
@@ -98,7 +98,7 @@ describe('Generator command', () => {
       });
 
       it('displays the error message', () => {
-        expect(consoleSpy).toHaveBeenCalledWith(Error('This provider has not been implemented!'));
+        expect(consoleErrorSpy).toHaveBeenCalledWith(Error('This provider has not been implemented!'));
       });
     });
 
@@ -127,6 +127,8 @@ describe('Generator command', () => {
       });
 
       describe('given current machine did not have terraform', () => {
+        const consoleErrorSpy = jest.spyOn(global.console, 'error');
+
         beforeAll(async() => {
           (prompt as unknown as jest.Mock)
             .mockResolvedValueOnce({ provider: 'aws' })
@@ -149,7 +151,7 @@ describe('Generator command', () => {
         });
 
         it('displays the error message', () => {
-          expect(console.error).toHaveBeenCalledWith(Error('terraform not found'));
+          expect(consoleErrorSpy).toHaveBeenCalledWith(Error('terraform not found'));
         });
       });
     });
