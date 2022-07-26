@@ -2,23 +2,25 @@ import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
 import applyCommon from './common';
 
-describe('common add-on', () => {
-  const projectDir = 'projectDir';
-
-  afterEach(() => {
-    jest.clearAllMocks();
-    remove('/', projectDir);
-  });
-
+describe('Common add-on', () => {
   describe('given valid AwsOptions', () => {
-    beforeEach(() => {
+    const projectDir = 'common-addon-test';
+
+    beforeAll(() => {
       const awsOptions: AwsOptions = { projectName: projectDir, provider: 'aws', infrastructureType: 'basic', awsRegion: 'ap-southeast-1' };
 
       applyCommon(awsOptions);
     });
 
+    afterAll(() => {
+      jest.clearAllMocks();
+      remove('/', projectDir);
+    });
+
     it('creates expected files', () => {
-      expect(projectDir).toHaveFiles(['main.tf', 'providers.tf', 'outputs.tf', 'variables.tf']);
+      const expectedFiles = ['main.tf', 'providers.tf', 'outputs.tf', 'variables.tf'];
+
+      expect(projectDir).toHaveFiles(expectedFiles);
     });
   });
 });

@@ -3,8 +3,7 @@ import * as dedent from 'dedent';
 import { AwsOptions } from '..';
 import { appendToFile, copy } from '../../../helpers/file';
 
-const applyAlb = ({ projectName }: AwsOptions) => {
-  const albVariablesContent = dedent`
+const albVariablesContent = dedent`
     variable "health_check_path" {
       description = "Application health check path"
       type = string
@@ -15,7 +14,7 @@ const applyAlb = ({ projectName }: AwsOptions) => {
       type        = string
     }
   \n`;
-  const albModuleContent = dedent`
+const albModuleContent = dedent`
     module "alb" {
       source = "./modules/alb"
 
@@ -27,17 +26,19 @@ const applyAlb = ({ projectName }: AwsOptions) => {
       health_check_path  = var.health_check_path
     }
   \n`;
-  const vpcOutputContent = dedent`
+const albOutputsContent = dedent`
     output "alb_dns_name" {
       description = "ALB DNS"
       value       = module.alb.alb_dns_name
     }
   \n`;
 
+const applyAlb = ({ projectName }: AwsOptions) => {
   copy('aws/modules/alb', 'modules/alb', projectName);
   appendToFile('main.tf', albModuleContent, projectName);
   appendToFile('variables.tf', albVariablesContent, projectName);
-  appendToFile('outputs.tf', vpcOutputContent, projectName);
+  appendToFile('outputs.tf', albOutputsContent, projectName);
 };
 
 export default applyAlb;
+export { albVariablesContent, albModuleContent, albOutputsContent };
