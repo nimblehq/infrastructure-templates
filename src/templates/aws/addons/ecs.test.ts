@@ -8,7 +8,12 @@ describe('ECS add-on', () => {
     const projectDir = 'ecs-addon-test';
 
     beforeAll(() => {
-      const awsOptions: AwsOptions = { projectName: projectDir, provider: 'aws', infrastructureType: 'advanced', awsRegion: 'ap-southeast-1' };
+      const awsOptions: AwsOptions = {
+        projectName: projectDir,
+        provider: 'aws',
+        infrastructureType: 'advanced',
+        awsRegion: 'ap-southeast-1',
+      };
 
       applyCommon(awsOptions);
       applyEcs(awsOptions);
@@ -20,7 +25,15 @@ describe('ECS add-on', () => {
     });
 
     it('creates expected files', () => {
-      const expectedFiles = ['main.tf', 'providers.tf', 'outputs.tf', 'variables.tf', 'modules/ecs/main.tf', 'modules/ecs/variables.tf', 'modules/ecs/service.json.tftpl'];
+      const expectedFiles = [
+        'main.tf',
+        'providers.tf',
+        'outputs.tf',
+        'variables.tf',
+        'modules/ecs/main.tf',
+        'modules/ecs/variables.tf',
+        'modules/ecs/service.json.tftpl',
+      ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });
@@ -34,7 +47,10 @@ describe('ECS add-on', () => {
     });
 
     it('adds ECS variables to variables.tf', () => {
-      expect(projectDir).toHaveContentInFile('variables.tf', ecsVariablesContent);
+      expect(projectDir).toHaveContentInFile(
+        'variables.tf',
+        ecsVariablesContent
+      );
     });
   });
 });

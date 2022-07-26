@@ -1,6 +1,9 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
-import applyBastion, { bastionModuleContent, bastionVariablesContent } from './bastion';
+import applyBastion, {
+  bastionModuleContent,
+  bastionVariablesContent,
+} from './bastion';
 import applyCommon from './common';
 
 describe('Bastion add-on', () => {
@@ -8,7 +11,12 @@ describe('Bastion add-on', () => {
     const projectDir = 'bastion-addon-test';
 
     beforeAll(() => {
-      const awsOptions: AwsOptions = { projectName: projectDir, provider: 'aws', infrastructureType: 'advanced', awsRegion: 'ap-southeast-1' };
+      const awsOptions: AwsOptions = {
+        projectName: projectDir,
+        provider: 'aws',
+        infrastructureType: 'advanced',
+        awsRegion: 'ap-southeast-1',
+      };
 
       applyCommon(awsOptions);
       applyBastion(awsOptions);
@@ -20,7 +28,14 @@ describe('Bastion add-on', () => {
     });
 
     it('creates expected files', () => {
-      const expectedFiles = ['main.tf', 'providers.tf', 'outputs.tf', 'variables.tf', 'modules/bastion/main.tf', 'modules/bastion/variables.tf'];
+      const expectedFiles = [
+        'main.tf',
+        'providers.tf',
+        'outputs.tf',
+        'variables.tf',
+        'modules/bastion/main.tf',
+        'modules/bastion/variables.tf',
+      ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });
@@ -34,7 +49,10 @@ describe('Bastion add-on', () => {
     });
 
     it('adds bastion variables to variables.tf', () => {
-      expect(projectDir).toHaveContentInFile('variables.tf', bastionVariablesContent);
+      expect(projectDir).toHaveContentInFile(
+        'variables.tf',
+        bastionVariablesContent
+      );
     });
   });
 });

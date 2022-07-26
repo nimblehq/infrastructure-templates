@@ -8,7 +8,12 @@ describe('RDS add-on', () => {
     const projectDir = 'rds-addon-test';
 
     beforeAll(() => {
-      const awsOptions: AwsOptions = { projectName: projectDir, provider: 'aws', infrastructureType: 'advanced', awsRegion: 'ap-southeast-1' };
+      const awsOptions: AwsOptions = {
+        projectName: projectDir,
+        provider: 'aws',
+        infrastructureType: 'advanced',
+        awsRegion: 'ap-southeast-1',
+      };
 
       applyCommon(awsOptions);
       applyRds(awsOptions);
@@ -20,7 +25,15 @@ describe('RDS add-on', () => {
     });
 
     it('creates expected files', () => {
-      const expectedFiles = ['main.tf', 'providers.tf', 'outputs.tf', 'variables.tf', 'modules/rds/main.tf', 'modules/rds/variables.tf', 'modules/rds/outputs.tf'];
+      const expectedFiles = [
+        'main.tf',
+        'providers.tf',
+        'outputs.tf',
+        'variables.tf',
+        'modules/rds/main.tf',
+        'modules/rds/variables.tf',
+        'modules/rds/outputs.tf',
+      ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });
@@ -34,7 +47,10 @@ describe('RDS add-on', () => {
     });
 
     it('adds RDS variables to variables.tf', () => {
-      expect(projectDir).toHaveContentInFile('variables.tf', rdsVariablesContent);
+      expect(projectDir).toHaveContentInFile(
+        'variables.tf',
+        rdsVariablesContent
+      );
     });
   });
 });

@@ -3,7 +3,7 @@ import { spawn } from 'node:child_process';
 const runCommand = (
   command: string,
   args: string[],
-  cwd = './',
+  cwd = './'
 ): Promise<string> => {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, { cwd });
@@ -15,6 +15,4 @@ const runCommand = (
   });
 };
 
-export {
-  runCommand,
-};
+export { runCommand };

@@ -28,7 +28,7 @@
     "inquirer": "^8.2.4"
   },
   "devDependencies": {
-    "@nimblehq/eslint-config-nimble": "^2.3.0",
+    "@nimblehq/eslint-config-nimble": "^2.4.0",
     "@types/fs-extra": "^9.0.13",
     "@types/glob": "^7.2.0",
     "@types/inquirer": "^8.2.1",

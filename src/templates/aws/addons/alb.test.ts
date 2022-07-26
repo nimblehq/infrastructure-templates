@@ -1,6 +1,10 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
-import applyAlb, { albModuleContent, albOutputsContent, albVariablesContent } from './alb';
+import applyAlb, {
+  albModuleContent,
+  albOutputsContent,
+  albVariablesContent,
+} from './alb';
 import applyCommon from './common';
 
 describe('ALB add-on', () => {
@@ -8,7 +12,12 @@ describe('ALB add-on', () => {
     const projectDir = 'alb-addon-test';
 
     beforeAll(() => {
-      const awsOptions: AwsOptions = { projectName: projectDir, provider: 'aws', infrastructureType: 'advanced', awsRegion: 'ap-southeast-1' };
+      const awsOptions: AwsOptions = {
+        projectName: projectDir,
+        provider: 'aws',
+        infrastructureType: 'advanced',
+        awsRegion: 'ap-southeast-1',
+      };
 
       applyCommon(awsOptions);
       applyAlb(awsOptions);
@@ -20,7 +29,14 @@ describe('ALB add-on', () => {
     });
 
     it('creates expected files', () => {
-      const expectedFiles = ['main.tf', 'providers.tf', 'outputs.tf', 'variables.tf', 'modules/alb/main.tf', 'modules/alb/variables.tf'];
+      const expectedFiles = [
+        'main.tf',
+        'providers.tf',
+        'outputs.tf',
+        'variables.tf',
+        'modules/alb/main.tf',
+        'modules/alb/variables.tf',
+      ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });
@@ -34,7 +50,10 @@ describe('ALB add-on', () => {
     });
 
     it('adds ALB variables to variables.tf', () => {
-      expect(projectDir).toHaveContentInFile('variables.tf', albVariablesContent);
+      expect(projectDir).toHaveContentInFile(
+        'variables.tf',
+        albVariablesContent
+      );
     });
 
     it('adds ALB outputs to outputs.tf', () => {

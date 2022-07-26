@@ -27,7 +27,7 @@ const getTargetPath = (file: string, projectName: string): string => {
 
 const getTemplatePath = (): string => {
   const templateDir =
-  process.env.NODE_ENV === 'production' ? 'dist/skeleton' : 'skeleton';
+    process.env.NODE_ENV === 'production' ? 'dist/skeleton' : 'skeleton';
   return path.join(ROOT_DIR, templateDir);
 };
 
@@ -38,18 +38,14 @@ const getSourcePath = (file: string): string => {
 const appendToFile = (
   target: string,
   content: string,
-  projectName: string,
+  projectName: string
 ): void => {
   const targetPath = getTargetPath(target, projectName);
 
   appendFileSync(targetPath, content);
 };
 
-const copy = (
-  source: string,
-  target: string,
-  projectName: string,
-): void => {
+const copy = (source: string, target: string, projectName: string): void => {
   const sourcePath = path.join(getTemplatePath(), source);
   const targetPath = getTargetPath(target, projectName);
 
@@ -59,7 +55,7 @@ const copy = (
 const createFile = (
   target: string,
   content: string,
-  projectName: string,
+  projectName: string
 ): void => {
   const targetPath = getTargetPath(target, projectName);
   const targetExists = existsSync(targetPath);
@@ -78,7 +74,7 @@ const remove = (target: string, projectName: string): void => {
 const renameFile = (
   source: string,
   target: string,
-  projectName: string,
+  projectName: string
 ): void => {
   const sourcePath = getTargetPath(source, projectName);
   const targetPath = getTargetPath(target, projectName);
@@ -90,22 +86,23 @@ const injectToFile = (
   target: string,
   content: string,
   projectName: string,
-  { insertBefore = '', insertAfter = '' }: InjectToFileOptions = {},
+  { insertBefore = '', insertAfter = '' }: InjectToFileOptions = {}
 ): void => {
-  const targetPath = projectName !== '' ? getTargetPath(target, projectName) : target;
+  const targetPath =
+    projectName !== '' ? getTargetPath(target, projectName) : target;
 
   const data = readFileSync(targetPath, 'utf8');
   const lines = data.toString().split('\n');
 
   if (insertBefore) {
-    const index = lines.findIndex(line => line.includes(insertBefore));
+    const index = lines.findIndex((line) => line.includes(insertBefore));
     if (index !== -1) {
       lines.splice(index, 0, content);
     }
   }
 
   if (insertAfter) {
-    const index = lines.findIndex(line => line.includes(insertAfter));
+    const index = lines.findIndex((line) => line.includes(insertAfter));
     if (index !== -1) {
       lines.splice(index + 1, 0, content);
     }

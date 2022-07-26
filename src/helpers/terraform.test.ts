@@ -10,7 +10,7 @@ describe('Terraform helper', () => {
 
   describe('detectTerraform', () => {
     describe('given terraform is installed', () => {
-      it('returns true', async() => {
+      it('returns true', async () => {
         (runCommand as jest.Mock).mockResolvedValueOnce('');
 
         const result = await detectTerraform();
@@ -20,28 +20,34 @@ describe('Terraform helper', () => {
     });
 
     describe('given terraform is not installed', () => {
-      it('returns false', async() => {
-        (runCommand as jest.Mock).mockRejectedValueOnce(new Error('terraform not found'));
+      it('returns false', async () => {
+        (runCommand as jest.Mock).mockRejectedValueOnce(
+          new Error('terraform not found')
+        );
 
         const result = await detectTerraform();
 
         expect(result).toBe(false);
       });
 
-      it('displays the error message', async() => {
-        (runCommand as jest.Mock).mockRejectedValueOnce(new Error('terraform not found'));
+      it('displays the error message', async () => {
+        (runCommand as jest.Mock).mockRejectedValueOnce(
+          new Error('terraform not found')
+        );
         const consoleSpy = jest.spyOn(global.console, 'error');
 
         await detectTerraform();
 
-        expect(consoleSpy).toHaveBeenCalledWith('Terraform not found. Please install terraform.');
+        expect(consoleSpy).toHaveBeenCalledWith(
+          'Terraform not found. Please install terraform.'
+        );
       });
     });
   });
 
   describe('formatCode', () => {
     describe('given terraform is installed', () => {
-      it('runs terraform fmt', async() => {
+      it('runs terraform fmt', async () => {
         (runCommand as jest.Mock).mockResolvedValueOnce('');
 
         await formatCode('/');
@@ -51,8 +57,10 @@ describe('Terraform helper', () => {
     });
 
     describe('given terraform is not installed', () => {
-      it('displays the error message', async() => {
-        (runCommand as jest.Mock).mockRejectedValueOnce(new Error('terraform not found'));
+      it('displays the error message', async () => {
+        (runCommand as jest.Mock).mockRejectedValueOnce(
+          new Error('terraform not found')
+        );
         const consoleSpy = jest.spyOn(global.console, 'error');
 
         await formatCode('/');

@@ -8,7 +8,12 @@ describe('S3 add-on', () => {
     const projectDir = 's3-addon-test';
 
     beforeAll(() => {
-      const awsOptions: AwsOptions = { projectName: projectDir, provider: 'aws', infrastructureType: 'advanced', awsRegion: 'ap-southeast-1' };
+      const awsOptions: AwsOptions = {
+        projectName: projectDir,
+        provider: 'aws',
+        infrastructureType: 'advanced',
+        awsRegion: 'ap-southeast-1',
+      };
 
       applyCommon(awsOptions);
       applyS3(awsOptions);
@@ -20,7 +25,15 @@ describe('S3 add-on', () => {
     });
 
     it('creates expected files', () => {
-      const expectedFiles = ['main.tf', 'providers.tf', 'outputs.tf', 'variables.tf', 'modules/s3/main.tf', 'modules/s3/variables.tf', 'modules/s3/outputs.tf'];
+      const expectedFiles = [
+        'main.tf',
+        'providers.tf',
+        'outputs.tf',
+        'variables.tf',
+        'modules/s3/main.tf',
+        'modules/s3/variables.tf',
+        'modules/s3/outputs.tf',
+      ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });

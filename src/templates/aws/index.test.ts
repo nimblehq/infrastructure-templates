@@ -11,12 +11,16 @@ jest.mock('inquirer');
 describe('AWS template', () => {
   describe('generateAwsTemplate', () => {
     const projectDir = 'aws-advanced-test';
-    const options: GeneralOptions = { projectName: projectDir, provider: 'aws' };
+    const options: GeneralOptions = {
+      projectName: projectDir,
+      provider: 'aws',
+    };
 
     describe('given infrastructureType is basic', () => {
       beforeAll(() => {
-        (prompt as unknown as jest.Mock)
-          .mockResolvedValueOnce({ infrastructureType: 'basic' });
+        (prompt as unknown as jest.Mock).mockResolvedValueOnce({
+          infrastructureType: 'basic',
+        });
       });
 
       afterAll(() => {
@@ -24,15 +28,18 @@ describe('AWS template', () => {
         remove('/', projectDir);
       });
 
-      it('throws the error message', async() => {
-        await expect(generateAwsTemplate(options)).rejects.toThrow('This type has not been implemented!');
+      it('throws the error message', async () => {
+        await expect(generateAwsTemplate(options)).rejects.toThrow(
+          'This type has not been implemented!'
+        );
       });
     });
 
     describe('given infrastructureType is advanced', () => {
       beforeAll(() => {
-        (prompt as unknown as jest.Mock)
-          .mockResolvedValueOnce({ infrastructureType: 'advanced' });
+        (prompt as unknown as jest.Mock).mockResolvedValueOnce({
+          infrastructureType: 'advanced',
+        });
       });
 
       afterAll(() => {
@@ -40,7 +47,7 @@ describe('AWS template', () => {
         remove('/', projectDir);
       });
 
-      it('applies advanced add-ons', async() => {
+      it('applies advanced add-ons', async () => {
         await generateAwsTemplate(options);
 
         expect(applyAdvancedTemplate).toHaveBeenCalled();

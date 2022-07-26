@@ -15,7 +15,7 @@ describe('Generator command', () => {
         const projectDir = 'aws-basic-test';
         const consoleErrorSpy = jest.spyOn(global.console, 'error');
 
-        beforeAll(async() => {
+        beforeAll(async () => {
           (prompt as unknown as jest.Mock)
             .mockResolvedValueOnce({ provider: 'aws' })
             .mockResolvedValueOnce({ infrastructureType: 'basic' });
@@ -29,7 +29,9 @@ describe('Generator command', () => {
         });
 
         it('displays the error message', () => {
-          expect(consoleErrorSpy).toHaveBeenCalledWith(Error('This type has not been implemented!'));
+          expect(consoleErrorSpy).toHaveBeenCalledWith(
+            Error('This type has not been implemented!')
+          );
         });
       });
 
@@ -37,7 +39,7 @@ describe('Generator command', () => {
         const projectDir = 'aws-advanced-test';
         const stdoutSpy = jest.spyOn(process.stdout, 'write');
 
-        beforeAll(async() => {
+        beforeAll(async () => {
           (prompt as unknown as jest.Mock)
             .mockResolvedValueOnce({ provider: 'aws' })
             .mockResolvedValueOnce({ infrastructureType: 'advanced' });
@@ -55,7 +57,9 @@ describe('Generator command', () => {
         });
 
         it('displays the success message', () => {
-          expect(stdoutSpy).toHaveBeenCalledWith('The infrastructure has been generated!\n');
+          expect(stdoutSpy).toHaveBeenCalledWith(
+            'The infrastructure has been generated!\n'
+          );
         });
       });
     });
@@ -64,9 +68,10 @@ describe('Generator command', () => {
       const projectDir = 'gcp-test';
       const consoleErrorSpy = jest.spyOn(global.console, 'error');
 
-      beforeAll(async() => {
-        (prompt as unknown as jest.Mock)
-          .mockResolvedValueOnce({ provider: 'gcp' });
+      beforeAll(async () => {
+        (prompt as unknown as jest.Mock).mockResolvedValueOnce({
+          provider: 'gcp',
+        });
 
         await Generator.run([projectDir]);
       });
@@ -77,7 +82,9 @@ describe('Generator command', () => {
       });
 
       it('displays the error message', () => {
-        expect(consoleErrorSpy).toHaveBeenCalledWith(Error('This provider has not been implemented!'));
+        expect(consoleErrorSpy).toHaveBeenCalledWith(
+          Error('This provider has not been implemented!')
+        );
       });
     });
 
@@ -85,9 +92,10 @@ describe('Generator command', () => {
       const projectDir = 'heroku-test';
       const consoleErrorSpy = jest.spyOn(global.console, 'error');
 
-      beforeAll(async() => {
-        (prompt as unknown as jest.Mock)
-          .mockResolvedValueOnce({ provider: 'heroku' });
+      beforeAll(async () => {
+        (prompt as unknown as jest.Mock).mockResolvedValueOnce({
+          provider: 'heroku',
+        });
 
         await Generator.run([projectDir]);
       });
@@ -98,7 +106,9 @@ describe('Generator command', () => {
       });
 
       it('displays the error message', () => {
-        expect(consoleErrorSpy).toHaveBeenCalledWith(Error('This provider has not been implemented!'));
+        expect(consoleErrorSpy).toHaveBeenCalledWith(
+          Error('This provider has not been implemented!')
+        );
       });
     });
 
@@ -106,7 +116,7 @@ describe('Generator command', () => {
       const projectDir = 'postProcess-test';
 
       describe('given current machine had terraform', () => {
-        beforeAll(async() => {
+        beforeAll(async () => {
           (prompt as unknown as jest.Mock)
             .mockResolvedValueOnce({ provider: 'aws' })
             .mockResolvedValueOnce({ infrastructureType: 'advanced' });
@@ -121,7 +131,7 @@ describe('Generator command', () => {
           remove('/', projectDir);
         });
 
-        it('runs formatCode', async() => {
+        it('runs formatCode', async () => {
           await expect(formatCode).toHaveBeenCalled();
         });
       });
@@ -129,7 +139,7 @@ describe('Generator command', () => {
       describe('given current machine did not have terraform', () => {
         const consoleErrorSpy = jest.spyOn(global.console, 'error');
 
-        beforeAll(async() => {
+        beforeAll(async () => {
           (prompt as unknown as jest.Mock)
             .mockResolvedValueOnce({ provider: 'aws' })
             .mockResolvedValueOnce({ infrastructureType: 'advanced' });
@@ -146,12 +156,14 @@ describe('Generator command', () => {
           remove('/', projectDir);
         });
 
-        it('does NOT run formatCode', async() => {
+        it('does NOT run formatCode', async () => {
           await expect(formatCode).not.toHaveBeenCalled();
         });
 
         it('displays the error message', () => {
-          expect(consoleErrorSpy).toHaveBeenCalledWith(Error('terraform not found'));
+          expect(consoleErrorSpy).toHaveBeenCalledWith(
+            Error('terraform not found')
+          );
         });
       });
     });

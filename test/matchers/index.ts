@@ -1,4 +1,10 @@
-import { toHaveFile, toHaveFiles, toHaveDirectory, toHaveDirectories, toHaveContentInFile } from './file';
+import {
+  toHaveFile,
+  toHaveFiles,
+  toHaveDirectory,
+  toHaveDirectories,
+  toHaveContentInFile,
+} from './file';
 
 const matchers = {
   toHaveFile,

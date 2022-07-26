@@ -9,7 +9,12 @@ describe('Region add-on', () => {
     const awsRegion = 'ap-southeast-1';
 
     beforeAll(() => {
-      const awsOptions: AwsOptions = { projectName: projectDir, provider: 'aws', infrastructureType: 'advanced', awsRegion };
+      const awsOptions: AwsOptions = {
+        projectName: projectDir,
+        provider: 'aws',
+        infrastructureType: 'advanced',
+        awsRegion,
+      };
 
       applyCommon(awsOptions);
       applyRegion(awsOptions);
@@ -21,13 +26,21 @@ describe('Region add-on', () => {
     });
 
     it('creates expected files', () => {
-      const expectedFiles = ['main.tf', 'providers.tf', 'outputs.tf', 'variables.tf'];
+      const expectedFiles = [
+        'main.tf',
+        'providers.tf',
+        'outputs.tf',
+        'variables.tf',
+      ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });
 
     it('adds region variables to variables.tf', () => {
-      expect(projectDir).toHaveContentInFile('variables.tf', regionVariablesContent(awsRegion));
+      expect(projectDir).toHaveContentInFile(
+        'variables.tf',
+        regionVariablesContent(awsRegion)
+      );
     });
   });
 });

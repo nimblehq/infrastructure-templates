@@ -8,7 +8,12 @@ describe('Log add-on', () => {
     const projectDir = 'log-addon-test';
 
     beforeAll(() => {
-      const awsOptions: AwsOptions = { projectName: projectDir, provider: 'aws', infrastructureType: 'advanced', awsRegion: 'ap-southeast-1' };
+      const awsOptions: AwsOptions = {
+        projectName: projectDir,
+        provider: 'aws',
+        infrastructureType: 'advanced',
+        awsRegion: 'ap-southeast-1',
+      };
 
       applyCommon(awsOptions);
       applyLog(awsOptions);
@@ -20,7 +25,15 @@ describe('Log add-on', () => {
     });
 
     it('creates expected files', () => {
-      const expectedFiles = ['main.tf', 'providers.tf', 'outputs.tf', 'variables.tf', 'modules/log/main.tf', 'modules/log/variables.tf', 'modules/log/outputs.tf'];
+      const expectedFiles = [
+        'main.tf',
+        'providers.tf',
+        'outputs.tf',
+        'variables.tf',
+        'modules/log/main.tf',
+        'modules/log/variables.tf',
+        'modules/log/outputs.tf',
+      ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });

@@ -21,7 +21,12 @@ jest.mock('./addons');
 describe('AWS advanced template', () => {
   describe('applyAdvancedTemplate', () => {
     const projectDir = 'aws-advanced-test';
-    const options: AwsOptions = { projectName: projectDir, provider: 'aws', infrastructureType: 'advanced', awsRegion: 'ap-southeast-1' };
+    const options: AwsOptions = {
+      projectName: projectDir,
+      provider: 'aws',
+      infrastructureType: 'advanced',
+      awsRegion: 'ap-southeast-1',
+    };
 
     beforeAll(() => {
       applyAdvancedTemplate(options);

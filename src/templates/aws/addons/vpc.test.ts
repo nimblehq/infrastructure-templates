@@ -8,7 +8,12 @@ describe('VPC add-on', () => {
     const projectDir = 'vpc-addon-test';
 
     beforeAll(() => {
-      const awsOptions: AwsOptions = { projectName: projectDir, provider: 'aws', infrastructureType: 'advanced', awsRegion: 'ap-southeast-1' };
+      const awsOptions: AwsOptions = {
+        projectName: projectDir,
+        provider: 'aws',
+        infrastructureType: 'advanced',
+        awsRegion: 'ap-southeast-1',
+      };
 
       applyCommon(awsOptions);
       applyVpc(awsOptions);
@@ -20,7 +25,15 @@ describe('VPC add-on', () => {
     });
 
     it('creates expected files', () => {
-      const expectedFiles = ['main.tf', 'providers.tf', 'outputs.tf', 'variables.tf', 'modules/vpc/main.tf', 'modules/vpc/variables.tf', 'modules/vpc/outputs.tf'];
+      const expectedFiles = [
+        'main.tf',
+        'providers.tf',
+        'outputs.tf',
+        'variables.tf',
+        'modules/vpc/main.tf',
+        'modules/vpc/variables.tf',
+        'modules/vpc/outputs.tf',
+      ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });

@@ -3,7 +3,7 @@ import { runCommand } from './childProcess';
 describe('ChildProcess helper', () => {
   describe('runCommand', () => {
     describe('given a valid command', () => {
-      it('runs the command', async() => {
+      it('runs the command', async () => {
         const result = await runCommand('echo', ['hello']);
 
         expect(result).toBe('hello');
@@ -11,7 +11,7 @@ describe('ChildProcess helper', () => {
     });
 
     describe('given an INVALID command', () => {
-      it('throws an error', async() => {
+      it('throws an error', async () => {
         let result: string;
         const invalidCommand = 'invalid-command';
 

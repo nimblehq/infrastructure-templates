@@ -8,7 +8,12 @@ describe('SSM add-on', () => {
     const projectDir = 'ssm-addon-test';
 
     beforeAll(() => {
-      const awsOptions: AwsOptions = { projectName: projectDir, provider: 'aws', infrastructureType: 'advanced', awsRegion: 'ap-southeast-1' };
+      const awsOptions: AwsOptions = {
+        projectName: projectDir,
+        provider: 'aws',
+        infrastructureType: 'advanced',
+        awsRegion: 'ap-southeast-1',
+      };
 
       applyCommon(awsOptions);
       applySsm(awsOptions);
@@ -20,7 +25,15 @@ describe('SSM add-on', () => {
     });
 
     it('creates expected files', () => {
-      const expectedFiles = ['main.tf', 'providers.tf', 'outputs.tf', 'variables.tf', 'modules/ssm/main.tf', 'modules/ssm/variables.tf', 'modules/ssm/outputs.tf'];
+      const expectedFiles = [
+        'main.tf',
+        'providers.tf',
+        'outputs.tf',
+        'variables.tf',
+        'modules/ssm/main.tf',
+        'modules/ssm/variables.tf',
+        'modules/ssm/outputs.tf',
+      ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });
@@ -34,7 +47,10 @@ describe('SSM add-on', () => {
     });
 
     it('adds SSM variables to variables.tf', () => {
-      expect(projectDir).toHaveContentInFile('variables.tf', ssmVariablesContent);
+      expect(projectDir).toHaveContentInFile(
+        'variables.tf',
+        ssmVariablesContent
+      );
     });
   });
 });

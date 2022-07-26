@@ -8,7 +8,12 @@ describe('ECR add-on', () => {
     const projectDir = 'ecr-addon-test';
 
     beforeAll(() => {
-      const awsOptions: AwsOptions = { projectName: projectDir, provider: 'aws', infrastructureType: 'advanced', awsRegion: 'ap-southeast-1' };
+      const awsOptions: AwsOptions = {
+        projectName: projectDir,
+        provider: 'aws',
+        infrastructureType: 'advanced',
+        awsRegion: 'ap-southeast-1',
+      };
 
       applyCommon(awsOptions);
       applyEcr(awsOptions);
@@ -20,7 +25,14 @@ describe('ECR add-on', () => {
     });
 
     it('creates expected files', () => {
-      const expectedFiles = ['main.tf', 'providers.tf', 'outputs.tf', 'variables.tf', 'modules/ecr/main.tf', 'modules/ecr/variables.tf'];
+      const expectedFiles = [
+        'main.tf',
+        'providers.tf',
+        'outputs.tf',
+        'variables.tf',
+        'modules/ecr/main.tf',
+        'modules/ecr/variables.tf',
+      ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });
@@ -34,7 +46,10 @@ describe('ECR add-on', () => {
     });
 
     it('adds ECR variables to variables.tf', () => {
-      expect(projectDir).toHaveContentInFile('variables.tf', ecrVariablesContent);
+      expect(projectDir).toHaveContentInFile(
+        'variables.tf',
+        ecrVariablesContent
+      );
     });
   });
 });

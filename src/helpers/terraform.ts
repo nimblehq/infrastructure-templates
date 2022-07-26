@@ -1,6 +1,6 @@
 import { runCommand } from './childProcess';
 
-const detectTerraform = async() => {
+const detectTerraform = async () => {
   try {
     await runCommand('which', ['terraform']);
 
@@ -12,7 +12,7 @@ const detectTerraform = async() => {
   }
 };
 
-const formatCode = async(projectDir: string) => {
+const formatCode = async (projectDir: string) => {
   try {
     await runCommand('terraform', ['fmt'], projectDir);
   } catch (error) {
@@ -20,7 +20,4 @@ const formatCode = async(projectDir: string) => {
   }
 };
 
-export {
-  detectTerraform,
-  formatCode,
-};
+export { detectTerraform, formatCode };

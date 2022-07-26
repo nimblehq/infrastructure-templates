@@ -199,7 +199,7 @@ describe('File helpers', () => {
 
         expect(appendSpy).toHaveBeenCalledWith(
           path.join(targetPath, target),
-          content,
+          content
         );
       });
     });
@@ -219,11 +219,13 @@ describe('File helpers', () => {
 
           (readFileSync as jest.Mock).mockReturnValue(initialContent);
 
-          injectToFile(target, content, projectName, { insertBefore: initialContent });
+          injectToFile(target, content, projectName, {
+            insertBefore: initialContent,
+          });
 
           expect(injectSpy).toHaveBeenCalledWith(
             path.join(targetPath, target),
-            `${content}\n${initialContent}`,
+            `${content}\n${initialContent}`
           );
         });
       });
@@ -240,11 +242,13 @@ describe('File helpers', () => {
 
           (readFileSync as jest.Mock).mockReturnValue(initialContent);
 
-          injectToFile(target, content, projectName, { insertAfter: initialContent });
+          injectToFile(target, content, projectName, {
+            insertAfter: initialContent,
+          });
 
           expect(injectSpy).toHaveBeenCalledWith(
             path.join(targetPath, target),
-            `${initialContent}\n${content}`,
+            `${initialContent}\n${content}`
           );
         });
       });
@@ -265,7 +269,7 @@ describe('File helpers', () => {
 
           expect(injectSpy).toHaveBeenCalledWith(
             path.join(targetPath, target),
-            initialContent,
+            initialContent
           );
         });
       });
@@ -283,11 +287,13 @@ describe('File helpers', () => {
 
           (readFileSync as jest.Mock).mockReturnValue(initialContent);
 
-          injectToFile(target, content, projectName, { insertBefore: initialContent });
+          injectToFile(target, content, projectName, {
+            insertBefore: initialContent,
+          });
 
           expect(injectSpy).toHaveBeenCalledWith(
             'targetFile.txt',
-            `${content}\n${initialContent}`,
+            `${content}\n${initialContent}`
           );
         });
       });
@@ -303,11 +309,13 @@ describe('File helpers', () => {
 
           (readFileSync as jest.Mock).mockReturnValue(initialContent);
 
-          injectToFile(target, content, projectName, { insertAfter: initialContent });
+          injectToFile(target, content, projectName, {
+            insertAfter: initialContent,
+          });
 
           expect(injectSpy).toHaveBeenCalledWith(
             'targetFile.txt',
-            `${initialContent}\n${content}`,
+            `${initialContent}\n${content}`
           );
         });
       });

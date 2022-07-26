@@ -17,7 +17,7 @@ const vpcModuleContent = dedent`
   }
 \n`;
 
-const applyVpc = ({projectName}: AwsOptions) => {
+const applyVpc = ({ projectName }: AwsOptions) => {
   copy('aws/modules/vpc', 'modules/vpc', projectName);
   appendToFile('outputs.tf', vpcOutputsContent, projectName);
   appendToFile('main.tf', vpcModuleContent, projectName);
