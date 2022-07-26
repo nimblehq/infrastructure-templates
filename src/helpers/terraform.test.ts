@@ -1,7 +1,7 @@
-import { runCommand } from './child-process';
+import { runCommand } from './childProcess';
 import { detectTerraform, formatCode } from './terraform';
 
-jest.mock('./child-process');
+jest.mock('./childProcess');
 
 describe('Terraform helper', () => {
   afterEach(() => {

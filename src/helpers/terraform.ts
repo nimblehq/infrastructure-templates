@@ -1,4 +1,4 @@
-import { runCommand } from './child-process';
+import { runCommand } from './childProcess';
 
 const detectTerraform = async() => {
   try {
