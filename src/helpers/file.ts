@@ -16,9 +16,6 @@ interface InjectToFileOptions {
 }
 
 const ROOT_DIR = path.join(__dirname, '..', '..');
-const TEMPLATE_DIR =
-  process.env.NODE_ENV === 'production' ? 'dist/skeleton' : 'skeleton';
-const TEMPLATE_PATH = path.join(ROOT_DIR, TEMPLATE_DIR);
 
 const getTargetDir = (projectName: string): string => {
   return path.join(process.cwd(), projectName);
@@ -28,8 +25,14 @@ const getTargetPath = (file: string, projectName: string): string => {
   return path.join(getTargetDir(projectName), file);
 };
 
+const getTemplatePath = (): string => {
+  const templateDir =
+  process.env.NODE_ENV === 'production' ? 'dist/skeleton' : 'skeleton';
+  return path.join(ROOT_DIR, templateDir);
+};
+
 const getSourcePath = (file: string): string => {
-  return path.join(TEMPLATE_PATH, file);
+  return path.join(getTemplatePath(), file);
 };
 
 const appendToFile = (
@@ -47,7 +50,7 @@ const copy = (
   target: string,
   projectName: string,
 ): void => {
-  const sourcePath = path.join(TEMPLATE_PATH, source);
+  const sourcePath = path.join(getTemplatePath(), source);
   const targetPath = getTargetPath(target, projectName);
 
   copySync(sourcePath, targetPath);
@@ -113,9 +116,9 @@ const injectToFile = (
 };
 
 export {
-  TEMPLATE_PATH,
   getTargetDir,
   getTargetPath,
+  getTemplatePath,
   getSourcePath,
   appendToFile,
   copy,

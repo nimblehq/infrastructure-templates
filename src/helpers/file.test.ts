@@ -10,10 +10,10 @@ import {
   getSourcePath,
   getTargetDir,
   getTargetPath,
+  getTemplatePath,
   injectToFile,
   remove,
   renameFile,
-  TEMPLATE_PATH,
 } from './file';
 
 jest.mock('fs-extra');
@@ -48,14 +48,56 @@ describe('File helpers', () => {
     });
   });
 
+  describe('getTemplatePath', () => {
+    describe('given NODE_ENV is production', () => {
+      const OLD_ENV = process.env;
+
+      beforeEach(() => {
+        jest.resetModules();
+        process.env = { ...OLD_ENV };
+        process.env.NODE_ENV = 'production';
+      });
+
+      afterAll(() => {
+        process.env = OLD_ENV;
+      });
+
+      it('returns the correct source path', () => {
+        const sourcePath = getTemplatePath();
+
+        expect(sourcePath).toContain('/dist/skeleton');
+      });
+    });
+
+    describe('given NODE_ENV is not production', () => {
+      const OLD_ENV = process.env;
+
+      beforeEach(() => {
+        jest.resetModules();
+        process.env = { ...OLD_ENV };
+        process.env.NODE_ENV = 'development';
+      });
+
+      afterAll(() => {
+        process.env = OLD_ENV;
+      });
+
+      it('returns the correct source path', () => {
+        const sourcePath = getTemplatePath();
+
+        expect(sourcePath).toContain('/skeleton');
+      });
+    });
+  });
+
   describe('getSourcePath', () => {
     describe('given file name', () => {
       it('returns the correct source path', () => {
-        const file = 'file';
+        const file = 'example.txt';
 
         const sourcePath = getSourcePath(file);
 
-        expect(sourcePath).toBe(path.join(TEMPLATE_PATH, file));
+        expect(sourcePath).toBe(path.join(getTemplatePath(), file));
       });
     });
   });
@@ -164,45 +206,110 @@ describe('File helpers', () => {
   });
 
   describe('injectToFile', () => {
-    describe('given target file, content and insert before initial content', () => {
-      it('injects content to the target file', () => {
-        const target = 'targetFile.txt';
-        const initialContent = 'initial content';
-        const content = 'injecting content';
-        const projectName = 'projectName';
-        const targetPath = getTargetDir(projectName);
+    describe('given a non-empty project name', () => {
+      describe('given target file, content and insert before initial content', () => {
+        it('injects content to the target file', () => {
+          const target = 'targetFile.txt';
+          const initialContent = 'initial content';
+          const content = 'injecting content';
+          const projectName = 'projectName';
+          const targetPath = getTargetDir(projectName);
 
-        const injectSpy = jest.spyOn(fs, 'writeFileSync');
+          const injectSpy = jest.spyOn(fs, 'writeFileSync');
 
-        (readFileSync as jest.Mock).mockReturnValue(initialContent);
+          (readFileSync as jest.Mock).mockReturnValue(initialContent);
 
-        injectToFile(target, content, projectName, { insertBefore: initialContent });
+          injectToFile(target, content, projectName, { insertBefore: initialContent });
 
-        expect(injectSpy).toHaveBeenCalledWith(
-          path.join(targetPath, target),
-          `${content}\n${initialContent}`,
-        );
+          expect(injectSpy).toHaveBeenCalledWith(
+            path.join(targetPath, target),
+            `${content}\n${initialContent}`,
+          );
+        });
+      });
+
+      describe('given target file, content and insert after initial content', () => {
+        it('injects content to the target file', () => {
+          const target = 'targetFile.txt';
+          const initialContent = 'initial content';
+          const content = 'injecting content';
+          const projectName = 'projectName';
+          const targetPath = getTargetDir(projectName);
+
+          const injectSpy = jest.spyOn(fs, 'writeFileSync');
+
+          (readFileSync as jest.Mock).mockReturnValue(initialContent);
+
+          injectToFile(target, content, projectName, { insertAfter: initialContent });
+
+          expect(injectSpy).toHaveBeenCalledWith(
+            path.join(targetPath, target),
+            `${initialContent}\n${content}`,
+          );
+        });
+      });
+
+      describe('given no InjectToFile options', () => {
+        it('does NOT inject content to the target file', () => {
+          const target = 'targetFile.txt';
+          const initialContent = 'initial content';
+          const content = 'injecting content';
+          const projectName = 'projectName';
+          const targetPath = getTargetDir(projectName);
+
+          const injectSpy = jest.spyOn(fs, 'writeFileSync');
+
+          (readFileSync as jest.Mock).mockReturnValue(initialContent);
+
+          injectToFile(target, content, projectName);
+
+          expect(injectSpy).toHaveBeenCalledWith(
+            path.join(targetPath, target),
+            initialContent,
+          );
+        });
       });
     });
 
-    describe('given target file, content and insert after initial content', () => {
-      it('injects content to the target file', () => {
-        const target = 'targetFile.txt';
-        const initialContent = 'initial content';
-        const content = 'injecting content';
-        const projectName = 'projectName';
-        const targetPath = getTargetDir(projectName);
+    describe('given an empty project name', () => {
+      describe('given target file, content and insert before initial content', () => {
+        it('injects content to the target file', () => {
+          const target = 'targetFile.txt';
+          const initialContent = 'initial content';
+          const content = 'injecting content';
+          const projectName = '';
 
-        const injectSpy = jest.spyOn(fs, 'writeFileSync');
+          const injectSpy = jest.spyOn(fs, 'writeFileSync');
 
-        (readFileSync as jest.Mock).mockReturnValue(initialContent);
+          (readFileSync as jest.Mock).mockReturnValue(initialContent);
 
-        injectToFile(target, content, projectName, { insertAfter: initialContent });
+          injectToFile(target, content, projectName, { insertBefore: initialContent });
 
-        expect(injectSpy).toHaveBeenCalledWith(
-          path.join(targetPath, target),
-          `${initialContent}\n${content}`,
-        );
+          expect(injectSpy).toHaveBeenCalledWith(
+            'targetFile.txt',
+            `${content}\n${initialContent}`,
+          );
+        });
+      });
+
+      describe('given target file, content and insert after initial content', () => {
+        it('injects content to the target file', () => {
+          const target = 'targetFile.txt';
+          const initialContent = 'initial content';
+          const content = 'injecting content';
+          const projectName = '';
+
+          const injectSpy = jest.spyOn(fs, 'writeFileSync');
+
+          (readFileSync as jest.Mock).mockReturnValue(initialContent);
+
+          injectToFile(target, content, projectName, { insertAfter: initialContent });
+
+          expect(injectSpy).toHaveBeenCalledWith(
+            'targetFile.txt',
+            `${initialContent}\n${content}`,
+          );
+        });
       });
     });
   });
