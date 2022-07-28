@@ -1,16 +1,18 @@
-# Introduction
+# Nimble Infrastructure Template
 
-Infrastructure (Terraform) configuration template for projects at Nimble.
+An infrastructure template for web applications, and powered by Terraform.
 
-## Usage
+**Supported cloud:** AWS. We are looking for contributions to implement support for GCP, Heroku and Azure!
 
-1. Create a folder name and cd into that folder
+**Supported flavors:**
+- A `Basic` flavor is in the plan, but not available yet
+- The `Complete` flavor generates the following infrastructure:
 
-```bash
-mkdir awesome-infra && cd awesome-infra
-```
+![Diagram of the Complete Infrastructure](https://github.com/nimblehq/infrastructure-templates/blob/feature/55-add-documentation/img/diagram_complete.png?raw=true)
 
-2. Start the CLI to generate the infrastructure configuration in Terraform
+# Usage
+
+## Generate a new project
 
 ```bash
 npm install -g @nimblehq/infra-template
@@ -18,10 +20,19 @@ npm install -g @nimblehq/infra-template
 nimble-infra generate {project-name}
 ```
 
-* With npx:
+or
+
 ```bash
 npx @nimblehq/infra-template generate {project-name}
 ```
+
+## Deploy your infrastructure
+
+> TODO: Describe the steps needed to move from a fresh new project, to a deployed infrastructure.
+
+## Add environment Variables
+
+> TODO: Describe how to add env variables using the file `service.json.tftpl` in the ECS module.
 
 ## License
 
@@ -35,7 +46,7 @@ This project is Copyright (c) 2014 and onwards Nimble. It is free software and m
 
 This project is maintained and funded by Nimble.
 
-We love open source and do our part in sharing our work with the community!
+We ❤️ open source and do our part in sharing our work with the community!
 See [our other projects][community] or [hire our team][hire] to help build your product.
 
 [community]: https://github.com/nimblehq
