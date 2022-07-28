@@ -9,7 +9,7 @@ variable "secret_key_base" {
 }
 
 variable "rds_username" {
-  description = "The DB username for building DB URL"
+  description = "The DB master username: 1–16 alphanumeric characters and underscores, first character must be a letter, can't be a word reserved by the database engine."
   type        = string
 }
 
