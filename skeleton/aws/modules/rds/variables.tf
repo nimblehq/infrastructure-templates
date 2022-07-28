@@ -10,9 +10,9 @@ variable "engine" {
 }
 
 variable "engine_version" {
-  description = "The Aurora DB Engine version"
+  description = "The Aurora PostgreSQL DB Engine version"
   type        = string
-  default     = "13.6"
+  default     = "14.3"
 }
 
 variable "instance_type" {
