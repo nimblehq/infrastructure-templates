@@ -1,20 +1,23 @@
-import { runCommand } from './child-process';
+import { runCommand } from './childProcess';
 
-const detectTerraform = async() => {
-  const terraformPath = await runCommand('which', ['terraform']);
-  if (terraformPath) {
+const detectTerraform = async () => {
+  try {
+    await runCommand('which', ['terraform']);
+
     return true;
+  } catch (error) {
+    console.error('Terraform not found. Please install terraform.');
+
+    return false;
   }
-
-  console.log('Terraform not found. Please install terraform.');
-  return false;
 };
 
-const formatCode = (projectDir: string) => {
-  runCommand('terraform', ['fmt'], projectDir);
+const formatCode = async (projectDir: string) => {
+  try {
+    await runCommand('terraform', ['fmt'], projectDir);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-export {
-  detectTerraform,
-  formatCode,
-};
+export { detectTerraform, formatCode };

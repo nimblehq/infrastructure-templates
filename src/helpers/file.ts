@@ -1,79 +1,62 @@
 import path = require('path');
 
 import {
-  appendFileSync, copyFileSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, renameSync, rmdirSync, unlinkSync, writeFileSync,
-
+  appendFileSync,
+  copySync,
+  existsSync,
+  readFileSync,
+  removeSync,
+  writeFileSync,
 } from 'fs-extra';
 
-const ROOT_DIR = path.join(__dirname, '..', '..');
-const TEMPLATE_DIR =
-  process.env.NODE_ENV === 'development' ? 'skeleton' : 'dist/skeleton';
-const TEMPLATE_PATH = path.join(ROOT_DIR, TEMPLATE_DIR);
+interface InjectToFileOptions {
+  insertBefore?: string;
+  insertAfter?: string;
+}
 
-const getTargetDir = (projectName: string): string => {
+const ROOT_DIR = path.join(__dirname, '..', '..');
+
+const getProjectPath = (projectName: string): string => {
   return path.join(process.cwd(), projectName);
 };
 
-const getTargetPath = (file: string, projectName: string): string => {
-  return path.join(getTargetDir(projectName), file);
+const getProjectFilePath = (file: string, projectName: string): string => {
+  return path.join(getProjectPath(projectName), file);
+};
+
+const getTemplatePath = (): string => {
+  const templateDir =
+    process.env.NODE_ENV === 'production' ? 'dist/skeleton' : 'skeleton';
+  return path.join(ROOT_DIR, templateDir);
+};
+
+const getTemplateFilePath = (file: string): string => {
+  return path.join(getTemplatePath(), file);
 };
 
 const appendToFile = (
   target: string,
   content: string,
-  projectName: string,
+  projectName: string
 ): void => {
-  const targetPath = getTargetPath(target, projectName);
+  const targetPath = getProjectFilePath(target, projectName);
 
   appendFileSync(targetPath, content);
 };
 
-const copyFile = (
-  source: string,
-  target: string,
-  projectName: string,
-): void => {
-  const sourcePath = path.join(TEMPLATE_PATH, source);
-  const targetPath = getTargetPath(target, projectName);
-  const targetDir = path.dirname(targetPath);
-  const targetExists = existsSync(targetPath);
-  if (!targetExists) {
-    mkdirSync(targetDir, { recursive: true });
-  }
+const copy = (source: string, target: string, projectName: string): void => {
+  const sourcePath = path.join(getTemplatePath(), source);
+  const targetPath = getProjectFilePath(target, projectName);
 
-  copyFileSync(sourcePath, targetPath);
-};
-
-const copyDir = (
-  source: string,
-  target: string,
-  projectName: string,
-): void => {
-  const sourcePath = path.join(TEMPLATE_PATH, source);
-  const targetPath = getTargetPath(target, projectName);
-  const targetExists = existsSync(targetPath);
-  if (!targetExists) {
-    mkdirSync(targetPath, { recursive: true });
-  }
-
-  const files = readdirSync(sourcePath);
-  for (const file of files) {
-    const sourceFile = path.join(source, file);
-    const targetFile = path.join(target, file);
-    if (lstatSync(path.join(TEMPLATE_PATH, sourceFile)).isDirectory()) {
-      copyDir(sourceFile, targetFile, projectName);
-    } else {
-      copyFile(sourceFile, targetFile, projectName);
-    }
-  }
+  copySync(sourcePath, targetPath);
 };
 
 const createFile = (
   target: string,
   content: string,
-  projectName: string,
+  projectName: string
 ): void => {
-  const targetPath = getTargetPath(target, projectName);
+  const targetPath = getProjectFilePath(target, projectName);
   const targetExists = existsSync(targetPath);
 
   if (!targetExists) {
@@ -81,49 +64,33 @@ const createFile = (
   }
 };
 
-const deleteFile = (target: string, projectName: string): void => {
-  const targetPath = getTargetPath(target, projectName);
-  const targetExists = existsSync(targetPath);
+const remove = (target: string, projectName: string): void => {
+  const targetPath = getProjectFilePath(target, projectName);
 
-  if (targetExists) {
-    unlinkSync(targetPath);
-  }
+  removeSync(targetPath);
 };
-
-const deleteDir = (target: string, projectName: string): void => {
-  const targetPath = getTargetPath(target, projectName);
-  const targetExists = existsSync(targetPath);
-
-  if (targetExists) {
-    rmdirSync(targetPath, { recursive: true });
-  }
-};
-
-interface InjectToFileOptions {
-  insertBefore?: string;
-  insertAfter?: string;
-}
 
 const injectToFile = (
   target: string,
   content: string,
   projectName: string,
-  { insertBefore = '', insertAfter = '' }: InjectToFileOptions = {},
+  { insertBefore = '', insertAfter = '' }: InjectToFileOptions = {}
 ): void => {
-  const targetPath = projectName !== '' ? getTargetPath(target, projectName) : target;
+  const targetPath =
+    projectName !== '' ? getProjectFilePath(target, projectName) : target;
 
   const data = readFileSync(targetPath, 'utf8');
   const lines = data.toString().split('\n');
 
   if (insertBefore) {
-    const index = lines.findIndex(line => line.includes(insertBefore));
+    const index = lines.findIndex((line) => line.includes(insertBefore));
     if (index !== -1) {
       lines.splice(index, 0, content);
     }
   }
 
   if (insertAfter) {
-    const index = lines.findIndex(line => line.includes(insertAfter));
+    const index = lines.findIndex((line) => line.includes(insertAfter));
     if (index !== -1) {
       lines.splice(index + 1, 0, content);
     }
@@ -133,24 +100,14 @@ const injectToFile = (
   writeFileSync(targetPath, newContent);
 };
 
-const renameFile = (
-  source: string,
-  target: string,
-  projectName: string,
-): void => {
-  const sourcePath = getTargetPath(source, projectName);
-  const targetPath = getTargetPath(target, projectName);
-  renameSync(sourcePath, targetPath);
-};
-
 export {
-  getTargetDir,
   appendToFile,
-  copyDir,
-  copyFile,
-  deleteDir,
-  deleteFile,
+  copy,
   createFile,
+  getProjectFilePath,
+  getProjectPath,
+  getTemplateFilePath,
+  getTemplatePath,
   injectToFile,
-  renameFile,
+  remove,
 };

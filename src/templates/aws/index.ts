@@ -31,11 +31,13 @@ const awsChoices = [
 ];
 
 type AwsOptions = GeneralOptions & {
-  infrastructureType: string;
+  infrastructureType: 'basic' | 'advanced';
   awsRegion: string;
-}
+};
 
-const generateAwsTemplate = async(generalOptions: GeneralOptions): Promise<void> => {
+const generateAwsTemplate = async (
+  generalOptions: GeneralOptions
+): Promise<void> => {
   const awsOptionsPrompt = await inquirer.prompt(awsChoices);
   const awsOptions: AwsOptions = {
     ...generalOptions,
@@ -54,5 +56,5 @@ const generateAwsTemplate = async(generalOptions: GeneralOptions): Promise<void>
   }
 };
 
-export type { AwsOptions};
+export type { AwsOptions };
 export { generateAwsTemplate };

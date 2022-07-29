@@ -1,13 +1,13 @@
 import { Command } from '@oclif/core';
 import { prompt } from 'inquirer';
 
-import { getTargetDir } from '../../helpers/file';
+import { getProjectPath } from '../../helpers/file';
 import { detectTerraform, formatCode } from '../../helpers/terraform';
 import { generateAwsTemplate } from '../../templates/aws';
 
 type GeneralOptions = {
   projectName: string;
-  provider: string;
+  provider: 'aws' | 'gcp' | 'heroku';
 };
 
 const providerChoices = [
@@ -80,8 +80,12 @@ export default class Generator extends Command {
   }
 
   private async postProcess(generalOptions: GeneralOptions): Promise<void> {
-    if (await detectTerraform()) {
-      formatCode(getTargetDir(generalOptions.projectName));
+    try {
+      if (await detectTerraform()) {
+        await formatCode(getProjectPath(generalOptions.projectName));
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 }
