@@ -41,10 +41,6 @@ describe('ALB add-on', () => {
       expect(projectDir).toHaveFiles(expectedFiles);
     });
 
-    it('creates expected folders', () => {
-      expect(projectDir).toHaveDirectory('modules/alb/');
-    });
-
     it('adds ALB module to main.tf', () => {
       expect(projectDir).toHaveContentInFile('main.tf', albModuleContent);
     });

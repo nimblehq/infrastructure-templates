@@ -38,10 +38,6 @@ describe('ECS add-on', () => {
       expect(projectDir).toHaveFiles(expectedFiles);
     });
 
-    it('creates expected folders', () => {
-      expect(projectDir).toHaveDirectory('modules/ecs/');
-    });
-
     it('adds ECS module to main.tf', () => {
       expect(projectDir).toHaveContentInFile('main.tf', ecsModuleContent);
     });

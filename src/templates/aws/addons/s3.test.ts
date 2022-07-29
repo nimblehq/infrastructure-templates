@@ -38,10 +38,6 @@ describe('S3 add-on', () => {
       expect(projectDir).toHaveFiles(expectedFiles);
     });
 
-    it('creates expected folders', () => {
-      expect(projectDir).toHaveDirectory('modules/s3/');
-    });
-
     it('adds S3 module to main.tf', () => {
       expect(projectDir).toHaveContentInFile('main.tf', s3ModuleContent);
     });

@@ -38,10 +38,6 @@ describe('SSM add-on', () => {
       expect(projectDir).toHaveFiles(expectedFiles);
     });
 
-    it('creates expected folders', () => {
-      expect(projectDir).toHaveDirectory('modules/ssm/');
-    });
-
     it('adds SSM module to main.tf', () => {
       expect(projectDir).toHaveContentInFile('main.tf', ssmModuleContent);
     });

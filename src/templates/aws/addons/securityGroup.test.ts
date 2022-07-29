@@ -41,10 +41,6 @@ describe('Security group add-on', () => {
       expect(projectDir).toHaveFiles(expectedFiles);
     });
 
-    it('creates expected folders', () => {
-      expect(projectDir).toHaveDirectory('modules/security_group/');
-    });
-
     it('adds security group module to main.tf', () => {
       expect(projectDir).toHaveContentInFile(
         'main.tf',

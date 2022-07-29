@@ -38,10 +38,6 @@ describe('Log add-on', () => {
       expect(projectDir).toHaveFiles(expectedFiles);
     });
 
-    it('creates expected folders', () => {
-      expect(projectDir).toHaveDirectory('modules/log/');
-    });
-
     it('adds log module to main.tf', () => {
       expect(projectDir).toHaveContentInFile('main.tf', logModuleContent);
     });

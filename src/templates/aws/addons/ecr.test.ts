@@ -37,10 +37,6 @@ describe('ECR add-on', () => {
       expect(projectDir).toHaveFiles(expectedFiles);
     });
 
-    it('creates expected folders', () => {
-      expect(projectDir).toHaveDirectory('modules/ecr/');
-    });
-
     it('adds ECR module to main.tf', () => {
       expect(projectDir).toHaveContentInFile('main.tf', ecrModuleContent);
     });
