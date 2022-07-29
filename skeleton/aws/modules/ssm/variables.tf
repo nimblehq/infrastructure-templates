@@ -9,7 +9,7 @@ variable "secret_key_base" {
 }
 
 variable "rds_username" {
-  description = "RDS username"
+  description = "The DB username for building DB URL"
   type        = string
 }
 
