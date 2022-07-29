@@ -1,152 +1,113 @@
-import * as fs from 'node:fs';
 import path = require('path');
 
-import { GenerateOption } from '../commands/generate';
-
-const ROOT_DIR = path.join(__dirname, '..', '..');
-const TEMPLATE_DIR =
-  process.env.NODE_ENV === 'development' ? 'skeleton' : 'dist/skeleton';
-const TEMPLATE_PATH = path.join(ROOT_DIR, TEMPLATE_DIR);
-
-const getTargetPath = (file: string, options: GenerateOption): string => {
-  const { projectName } = options;
-  const targetPath = path.join(process.cwd(), projectName);
-
-  return path.join(targetPath, file);
-};
-
-const appendToFile = (
-  target: string,
-  content: string,
-  options: GenerateOption,
-): void => {
-  const targetPath = getTargetPath(target, options);
-
-  fs.appendFileSync(targetPath, content);
-};
-
-const copyFile = (
-  source: string,
-  target: string,
-  options: GenerateOption,
-): void => {
-  const sourcePath = path.join(TEMPLATE_PATH, source);
-  const targetPath = getTargetPath(target, options);
-  const targetDir = path.dirname(targetPath);
-  const targetExists = fs.existsSync(targetPath);
-  if (!targetExists) {
-    fs.mkdirSync(targetDir, { recursive: true });
-  }
-
-  fs.copyFileSync(sourcePath, targetPath);
-};
-
-const copyDir = (
-  source: string,
-  target: string,
-  options: GenerateOption,
-): void => {
-  const sourcePath = path.join(TEMPLATE_PATH, source);
-  const targetPath = getTargetPath(target, options);
-  const targetExists = fs.existsSync(targetPath);
-  if (!targetExists) {
-    fs.mkdirSync(targetPath, { recursive: true });
-  }
-
-  const files = fs.readdirSync(sourcePath);
-  for (const file of files) {
-    const sourceFile = path.join(source, file);
-    const targetFile = path.join(target, file);
-    if (fs.lstatSync(path.join(TEMPLATE_PATH, sourceFile)).isDirectory()) {
-      copyDir(sourceFile, targetFile, options);
-    } else {
-      copyFile(sourceFile, targetFile, options);
-    }
-  }
-};
-
-const createFile = (
-  target: string,
-  content: string,
-  options: GenerateOption,
-): void => {
-  const targetPath = getTargetPath(target, options);
-  const targetExists = fs.existsSync(targetPath);
-
-  if (!targetExists) {
-    fs.writeFileSync(targetPath, content);
-  }
-};
-
-const deleteFile = (target: string, options: GenerateOption): void => {
-  const targetPath = getTargetPath(target, options);
-  const targetExists = fs.existsSync(targetPath);
-
-  if (targetExists) {
-    fs.unlinkSync(targetPath);
-  }
-};
-
-const deleteDir = (target: string, options: GenerateOption): void => {
-  const targetPath = getTargetPath(target, options);
-  const targetExists = fs.existsSync(targetPath);
-
-  if (targetExists) {
-    fs.rmdirSync(targetPath, { recursive: true });
-  }
-};
+import {
+  appendFileSync,
+  copySync,
+  existsSync,
+  readFileSync,
+  removeSync,
+  writeFileSync,
+} from 'fs-extra';
 
 interface InjectToFileOptions {
   insertBefore?: string;
   insertAfter?: string;
 }
 
+const ROOT_DIR = path.join(__dirname, '..', '..');
+
+const getProjectPath = (projectName: string): string => {
+  return path.join(process.cwd(), projectName);
+};
+
+const getProjectFilePath = (file: string, projectName: string): string => {
+  return path.join(getProjectPath(projectName), file);
+};
+
+const getTemplatePath = (): string => {
+  const templateDir =
+    process.env.NODE_ENV === 'production' ? 'dist/skeleton' : 'skeleton';
+  return path.join(ROOT_DIR, templateDir);
+};
+
+const getTemplateFilePath = (file: string): string => {
+  return path.join(getTemplatePath(), file);
+};
+
+const appendToFile = (
+  target: string,
+  content: string,
+  projectName: string
+): void => {
+  const targetPath = getProjectFilePath(target, projectName);
+
+  appendFileSync(targetPath, content);
+};
+
+const copy = (source: string, target: string, projectName: string): void => {
+  const sourcePath = path.join(getTemplatePath(), source);
+  const targetPath = getProjectFilePath(target, projectName);
+
+  copySync(sourcePath, targetPath);
+};
+
+const createFile = (
+  target: string,
+  content: string,
+  projectName: string
+): void => {
+  const targetPath = getProjectFilePath(target, projectName);
+  const targetExists = existsSync(targetPath);
+
+  if (!targetExists) {
+    writeFileSync(targetPath, content);
+  }
+};
+
+const remove = (target: string, projectName: string): void => {
+  const targetPath = getProjectFilePath(target, projectName);
+
+  removeSync(targetPath);
+};
+
 const injectToFile = (
   target: string,
   content: string,
-  options: GenerateOption,
-  { insertBefore = '', insertAfter = '' }: InjectToFileOptions = {},
+  projectName: string,
+  { insertBefore = '', insertAfter = '' }: InjectToFileOptions = {}
 ): void => {
-  const targetPath = options ? getTargetPath(target, options) : target;
+  const targetPath =
+    projectName !== '' ? getProjectFilePath(target, projectName) : target;
 
-  const data = fs.readFileSync(targetPath, 'utf8');
+  const data = readFileSync(targetPath, 'utf8');
   const lines = data.toString().split('\n');
 
   if (insertBefore) {
-    const index = lines.findIndex(line => line.includes(insertBefore));
+    const index = lines.findIndex((line) => line.includes(insertBefore));
     if (index !== -1) {
       lines.splice(index, 0, content);
     }
   }
 
   if (insertAfter) {
-    const index = lines.findIndex(line => line.includes(insertAfter));
+    const index = lines.findIndex((line) => line.includes(insertAfter));
     if (index !== -1) {
       lines.splice(index + 1, 0, content);
     }
   }
 
   const newContent = lines.join('\n');
-  fs.writeFileSync(targetPath, newContent);
-};
-
-const renameFile = (
-  source: string,
-  target: string,
-  options: GenerateOption,
-): void => {
-  const sourcePath = getTargetPath(source, options);
-  const targetPath = getTargetPath(target, options);
-  fs.renameSync(sourcePath, targetPath);
+  writeFileSync(targetPath, newContent);
 };
 
 export {
   appendToFile,
-  copyDir,
-  copyFile,
-  deleteDir,
-  deleteFile,
+  copy,
   createFile,
+  getProjectFilePath,
+  getProjectPath,
+  getTemplateFilePath,
+  getTemplatePath,
   injectToFile,
-  renameFile,
+  remove,
 };
