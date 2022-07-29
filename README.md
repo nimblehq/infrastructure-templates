@@ -105,6 +105,8 @@ This project is maintained and funded by Nimble.
 
 We ❤️ open source and do our part in sharing our work with the community!
 See [our other projects][community] or [hire our team][hire] to help build your product.
+Want to join? [Check out our jobs][jobs]!
 
 [community]: https://github.com/nimblehq
 [hire]: https://nimblehq.co/
+[jobs]: https://jobs.nimblehq.co/
