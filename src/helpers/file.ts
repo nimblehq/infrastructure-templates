@@ -6,7 +6,6 @@ import {
   existsSync,
   readFileSync,
   removeSync,
-  renameSync,
   writeFileSync,
 } from 'fs-extra';
 
@@ -17,12 +16,12 @@ interface InjectToFileOptions {
 
 const ROOT_DIR = path.join(__dirname, '..', '..');
 
-const getTargetDir = (projectName: string): string => {
+const getProjectPath = (projectName: string): string => {
   return path.join(process.cwd(), projectName);
 };
 
-const getTargetPath = (file: string, projectName: string): string => {
-  return path.join(getTargetDir(projectName), file);
+const getProjectFilePath = (file: string, projectName: string): string => {
+  return path.join(getProjectPath(projectName), file);
 };
 
 const getTemplatePath = (): string => {
@@ -31,7 +30,7 @@ const getTemplatePath = (): string => {
   return path.join(ROOT_DIR, templateDir);
 };
 
-const getSourcePath = (file: string): string => {
+const getTemplateFilePath = (file: string): string => {
   return path.join(getTemplatePath(), file);
 };
 
@@ -40,14 +39,14 @@ const appendToFile = (
   content: string,
   projectName: string
 ): void => {
-  const targetPath = getTargetPath(target, projectName);
+  const targetPath = getProjectFilePath(target, projectName);
 
   appendFileSync(targetPath, content);
 };
 
 const copy = (source: string, target: string, projectName: string): void => {
   const sourcePath = path.join(getTemplatePath(), source);
-  const targetPath = getTargetPath(target, projectName);
+  const targetPath = getProjectFilePath(target, projectName);
 
   copySync(sourcePath, targetPath);
 };
@@ -57,7 +56,7 @@ const createFile = (
   content: string,
   projectName: string
 ): void => {
-  const targetPath = getTargetPath(target, projectName);
+  const targetPath = getProjectFilePath(target, projectName);
   const targetExists = existsSync(targetPath);
 
   if (!targetExists) {
@@ -66,20 +65,9 @@ const createFile = (
 };
 
 const remove = (target: string, projectName: string): void => {
-  const targetPath = getTargetPath(target, projectName);
+  const targetPath = getProjectFilePath(target, projectName);
 
   removeSync(targetPath);
-};
-
-const renameFile = (
-  source: string,
-  target: string,
-  projectName: string
-): void => {
-  const sourcePath = getTargetPath(source, projectName);
-  const targetPath = getTargetPath(target, projectName);
-
-  renameSync(sourcePath, targetPath);
 };
 
 const injectToFile = (
@@ -89,7 +77,7 @@ const injectToFile = (
   { insertBefore = '', insertAfter = '' }: InjectToFileOptions = {}
 ): void => {
   const targetPath =
-    projectName !== '' ? getTargetPath(target, projectName) : target;
+    projectName !== '' ? getProjectFilePath(target, projectName) : target;
 
   const data = readFileSync(targetPath, 'utf8');
   const lines = data.toString().split('\n');
@@ -113,14 +101,13 @@ const injectToFile = (
 };
 
 export {
-  getTargetDir,
-  getTargetPath,
-  getTemplatePath,
-  getSourcePath,
   appendToFile,
   copy,
-  remove,
   createFile,
+  getProjectFilePath,
+  getProjectPath,
+  getTemplateFilePath,
+  getTemplatePath,
   injectToFile,
-  renameFile,
+  remove,
 };

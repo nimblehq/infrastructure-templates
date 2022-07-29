@@ -7,13 +7,12 @@ import {
   appendToFile,
   copy,
   createFile,
-  getSourcePath,
-  getTargetDir,
-  getTargetPath,
+  getTemplateFilePath,
+  getProjectPath,
+  getProjectFilePath,
   getTemplatePath,
   injectToFile,
   remove,
-  renameFile,
 } from './file';
 
 jest.mock('fs-extra');
@@ -23,25 +22,25 @@ describe('File helpers', () => {
     jest.clearAllMocks();
   });
 
-  describe('getTargetDir', () => {
+  describe('getProjectPath', () => {
     describe('given projectName', () => {
       it('returns the correct target directory', () => {
         const projectName = 'projectName';
 
-        const targetDir = getTargetDir(projectName);
+        const targetDir = getProjectPath(projectName);
 
         expect(targetDir).toBe(path.join(process.cwd(), projectName));
       });
     });
   });
 
-  describe('getTargetPath', () => {
+  describe('getProjectFilePath', () => {
     describe('given file name and projectName', () => {
       it('returns the correct target path', () => {
         const file = 'file';
         const projectName = 'projectName';
 
-        const targetPath = getTargetPath(file, projectName);
+        const targetPath = getProjectFilePath(file, projectName);
 
         expect(targetPath).toBe(path.join(process.cwd(), projectName, file));
       });
@@ -90,12 +89,12 @@ describe('File helpers', () => {
     });
   });
 
-  describe('getSourcePath', () => {
+  describe('getTemplateFilePath', () => {
     describe('given file name', () => {
       it('returns the correct source path', () => {
         const file = 'example.txt';
 
-        const sourcePath = getSourcePath(file);
+        const sourcePath = getTemplateFilePath(file);
 
         expect(sourcePath).toBe(path.join(getTemplatePath(), file));
       });
@@ -108,8 +107,8 @@ describe('File helpers', () => {
         const source = 'sourceDir';
         const target = 'targetDir';
         const projectName = 'projectName';
-        const sourcePath = getSourcePath(source);
-        const targetPath = getTargetPath(target, projectName);
+        const sourcePath = getTemplateFilePath(source);
+        const targetPath = getProjectFilePath(target, projectName);
 
         const copySpy = jest.spyOn(fs, 'copySync');
 
@@ -126,7 +125,7 @@ describe('File helpers', () => {
         const target = 'targetFile.txt';
         const content = 'creating content';
         const projectName = 'projectName';
-        const targetPath = getTargetPath(target, projectName);
+        const targetPath = getProjectFilePath(target, projectName);
 
         const createSpy = jest.spyOn(fs, 'writeFileSync');
 
@@ -142,7 +141,7 @@ describe('File helpers', () => {
       it('removes the target file', () => {
         const target = 'targetFile.txt';
         const projectName = 'projectName';
-        const targetPath = getTargetPath(target, projectName);
+        const targetPath = getProjectFilePath(target, projectName);
 
         const removeSpy = jest.spyOn(fs, 'removeSync');
 
@@ -156,7 +155,7 @@ describe('File helpers', () => {
       it('removes the target directory', () => {
         const target = 'targetDir';
         const projectName = 'projectName';
-        const targetPath = getTargetPath(target, projectName);
+        const targetPath = getProjectFilePath(target, projectName);
 
         const removeSpy = jest.spyOn(fs, 'removeSync');
 
@@ -167,31 +166,13 @@ describe('File helpers', () => {
     });
   });
 
-  describe('renameFile', () => {
-    describe('given source and target', () => {
-      it('renames the source file to the target file', () => {
-        const source = 'sourceFile.txt';
-        const target = 'targetFile.txt';
-        const projectName = 'projectName';
-        const sourcePath = getTargetPath(source, projectName);
-        const targetPath = getTargetPath(target, projectName);
-
-        const renameSpy = jest.spyOn(fs, 'renameSync');
-
-        renameFile(source, target, projectName);
-
-        expect(renameSpy).toHaveBeenCalledWith(sourcePath, targetPath);
-      });
-    });
-  });
-
   describe('appendToFile', () => {
     describe('given target file and content', () => {
       it('appends content to the target file', () => {
         const target = 'targetFile.txt';
         const content = 'appending content';
         const projectName = 'projectName';
-        const targetPath = getTargetDir(projectName);
+        const targetPath = getProjectPath(projectName);
 
         const appendSpy = jest.spyOn(fs, 'appendFileSync');
 
@@ -213,7 +194,7 @@ describe('File helpers', () => {
           const initialContent = 'initial content';
           const content = 'injecting content';
           const projectName = 'projectName';
-          const targetPath = getTargetDir(projectName);
+          const targetPath = getProjectPath(projectName);
 
           const injectSpy = jest.spyOn(fs, 'writeFileSync');
 
@@ -236,7 +217,7 @@ describe('File helpers', () => {
           const initialContent = 'initial content';
           const content = 'injecting content';
           const projectName = 'projectName';
-          const targetPath = getTargetDir(projectName);
+          const targetPath = getProjectPath(projectName);
 
           const injectSpy = jest.spyOn(fs, 'writeFileSync');
 
@@ -259,7 +240,7 @@ describe('File helpers', () => {
           const initialContent = 'initial content';
           const content = 'injecting content';
           const projectName = 'projectName';
-          const targetPath = getTargetDir(projectName);
+          const targetPath = getProjectPath(projectName);
 
           const injectSpy = jest.spyOn(fs, 'writeFileSync');
 
