@@ -1,14 +1,38 @@
 import { Command } from '@oclif/core';
-import * as inquirer from 'inquirer';
+import { prompt } from 'inquirer';
 
-import Advanced from '../../templates/aws/advanced';
+import { getProjectPath } from '../../helpers/file';
+import { detectTerraform, formatCode } from '../../helpers/terraform';
+import { generateAwsTemplate } from '../../templates/aws';
 
-type GenerateOption = {
+type GeneralOptions = {
   projectName: string;
-  platform: string;
-  infrastructureType: string;
-  awsRegion: string;
+  provider: 'aws' | 'gcp' | 'heroku';
 };
+
+const providerChoices = [
+  {
+    type: 'list',
+    name: 'provider',
+    message: 'Which cloud provider would you like to use?',
+    choices: [
+      {
+        value: 'aws',
+        name: 'AWS',
+      },
+      {
+        value: 'gcp',
+        name: 'GCP (NOT IMPLEMENTED YET)',
+        disabled: true,
+      },
+      {
+        value: 'heroku',
+        name: 'Heroku (NOT IMPLEMENTED YET)',
+        disabled: true,
+      },
+    ],
+  },
+];
 
 export default class Generator extends Command {
   static description = 'Generate infrastructure template command';
@@ -29,79 +53,41 @@ export default class Generator extends Command {
   async run(): Promise<void> {
     const { args } = await this.parse(Generator);
 
-    const platformChoices = [
-      {
-        type: 'list',
-        name: 'platform',
-        message: 'Which cloud provider would you like to use?',
-        choices: [
-          {
-            value: 'aws',
-            name: 'AWS',
-          },
-          {
-            value: 'gcp',
-            name: 'GCP',
-          },
-          {
-            value: 'heroku',
-            name: 'Heroku',
-          },
-        ],
-      },
-    ];
+    const providerPrompt = await prompt(providerChoices);
+    const generalOptions: GeneralOptions = {
+      projectName: args.projectName,
+      provider: providerPrompt.provider,
+    };
 
-    const platformChoice = await inquirer.prompt(platformChoices);
+    try {
+      switch (generalOptions.provider) {
+        case 'aws':
+          await generateAwsTemplate(generalOptions);
 
-    if (platformChoice.platform === 'aws') {
-      const awsTypeChoices = [
-        {
-          type: 'list',
-          name: 'infrastructureType',
-          message: 'What kind of infrastructure do you need?',
-          choices: [
-            {
-              key: 'basic',
-              value: 'basic',
-              name: 'Basic infrastructure (VPC + RDS + LOG + ECS)',
-            },
-            {
-              key: 'advanced',
-              value: 'advanced',
-              name: 'Complete infrastructure (VPC + ECR + RDS + S3 + FARGATE + LOG + Security groups + ALB)',
-            },
-          ],
-        },
-        {
-          type: 'input',
-          name: 'awsRegion',
-          default: 'ap-southeast-1',
-          message: 'Which AWS Region do you choose?',
-        },
-      ];
-
-      const awsUserInput = await inquirer.prompt(awsTypeChoices);
-
-      const options: GenerateOption = {
-        projectName: args.projectName,
-        platform: platformChoice.platform,
-        infrastructureType: awsUserInput.infrastructureType,
-        awsRegion: awsUserInput.awsRegion,
-      };
-
-      switch (options.infrastructureType) {
-        case 'advanced':
-          Advanced.run(options);
           break;
-        case 'basic':
+        case 'gcp':
+        case 'heroku':
         default:
-          console.log('This type has not been implemented!');
-          break;
+          this.error('This provider has not been implemented!');
       }
-    } else {
-      console.log('This provider has not been implemented!');
+
+      await this.postProcess(generalOptions);
+
+      this.log('The infrastructure has been generated!');
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  private async postProcess(generalOptions: GeneralOptions): Promise<void> {
+    try {
+      if (await detectTerraform()) {
+        await formatCode(getProjectPath(generalOptions.projectName));
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 }
 
-export type { GenerateOption };
+export type { GeneralOptions };
