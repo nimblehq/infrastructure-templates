@@ -1,8 +1,8 @@
 # Nimble Infrastructure Template
 
-An infrastructure template for web applications, and powered by Terraform.
+An infrastructure template for web applications powered by Terraform.
 
-**Supported cloud:** AWS. We are looking for contributions to implement support for GCP, Heroku and Azure!
+**Supported cloud:** AWS. We are looking for contributions to implement support for GCP, Heroku, and Azure!
 
 **Supported flavors:**
 - A `Basic` flavor is in the plan, but not available yet
@@ -32,27 +32,30 @@ You can deploy your infrastructure with the [terraform CLI](https://learn.hashic
 
 This template remains generic to provide more flexibility.
 A workspace and folder strategy needs to be defined first:
-What workspaces will you need?
-What needs to be global versus specific to an environment?
+- What resources need to be global?
+- What resources need to be specific to an environment?
+- What workspaces will you need?
 
-While advanced users won't need it, the next part provides a "starter kit" architecture that suits most of the projects.
+While advanced users won't need it, the next part provides a "starter kit" architecture that suits most of the new projects.
 
 ## Starter kit
 
-> TODO: High level description of the starter kit
+The starter kit has 3 workspaces:
+- **Shared**, that handles a single ECR (Elastic Container Registry) for the whole infrastructure
+- **Staging** and **Prod**: Both workspaces are similar but use different resource names (using the suffixes `-staging` and `-prod`)
 
 ### Step 1, Source Code
 
 In the source code:
 - create a `base` and a `shared` folder.
 - move the `main.tf`, `outputs.tf` and `variables.tf` into the `base` folder.
-- create 3 empty files (`main.tf`, `outputs.tf` and `variables.tf`) in the `shared` folder
-- extract from the `base/*` files all data related to `ECR`
+- create 3 empty files (`main.tf`, `outputs.tf` and `variables.tf`) in the `shared` folder.
+- extract from the `base/*` files all data related to `ECR`.
 
 ### Step 2, AWS Access Key
 
 For Terraform to push your changes into AWS, it needs an access key. There are 2 options for that:
-- Using Terraform Cloud: configure the `aws_access_key` and `aws_secret_key` as sensitive variables in your TF Cloud Workspaces. Then add the reference into the source code:
+- Using Terraform Cloud: configure the `aws_access_key` and `aws_secret_key` as sensitive variables in your Terraform Cloud Workspaces. Then add the reference into the source code:
   ```
   // base/main.tf && shared/main.tf
   provider "aws" {
@@ -84,13 +87,9 @@ _Workspaces can be managed in the terraform cloud or using the CLI._
 - Create a workspace named `{project-slug}-staging`
   - Follow the same steps, but this time, configure the `Terraform Working Directory` as `base`
   - When inputting the variables, adjust the `namespace` and `environment` with the `-staging` suffix.
-- Last, create the `{project-slug}-prod` workspace. It is similar to the `{project-slug}-staging` workspace but use the `-prod` suffix instead of the `-staging` one.
+- Last, create the `{project-slug}-prod` workspace. Follow the steps for the `{project-slug}-staging` workspace but use the `-prod` suffix instead of the `-staging` one.
 
-> Other variables might change from `staging` to `prod`, such as the DB credentials. Consider reviewing all the available variables and their descriptions.
-
-## Add environment Variables
-
-> TODO: Describe how to add env variables using the file `service.json.tftpl` in the ECS module.
+> 💡 Other variables might change from `staging` to `prod`, such as the DB credentials. Consider reviewing all the available variables and their descriptions.
 
 ## License
 
