@@ -1,4 +1,3 @@
-import { existsSync } from 'fs-extra';
 import { prompt } from 'inquirer';
 
 import Generator from '.';
@@ -33,6 +32,10 @@ describe('Generator command', () => {
             Error('This type has not been implemented!')
           );
         });
+
+        it('does NOT create any files', () => {
+          expect(projectDir).toBeEmpty();
+        });
       });
 
       describe('given infrastructure type is advanced', () => {
@@ -41,7 +44,10 @@ describe('Generator command', () => {
 
         beforeAll(async () => {
           (prompt as unknown as jest.Mock)
-            .mockResolvedValueOnce({ provider: 'aws' })
+            .mockResolvedValueOnce({
+              provider: 'aws',
+              versionControl: 'github',
+            })
             .mockResolvedValueOnce({ infrastructureType: 'advanced' });
 
           await Generator.run([projectDir]);
@@ -52,8 +58,34 @@ describe('Generator command', () => {
           remove('/', projectDir);
         });
 
-        it('creates a new project folder', () => {
-          expect(existsSync(projectDir)).toBe(true);
+        it('creates expected directories', () => {
+          const expectedDirectories = [
+            'modules/alb/',
+            'modules/bastion/',
+            'modules/ecr/',
+            'modules/ecs/',
+            'modules/log/',
+            'modules/rds/',
+            'modules/s3/',
+            'modules/security_group/',
+            'modules/ssm/',
+            'modules/vpc/',
+            '.github/',
+          ];
+
+          expect(projectDir).toHaveDirectories(expectedDirectories);
+        });
+
+        it('creates expected files', () => {
+          const expectedFiles = [
+            '.gitignore',
+            'main.tf',
+            'variables.tf',
+            'providers.tf',
+            'outputs.tf',
+          ];
+
+          expect(projectDir).toHaveFiles(expectedFiles);
         });
 
         it('displays the success message', () => {
@@ -86,6 +118,10 @@ describe('Generator command', () => {
           Error('This provider has not been implemented!')
         );
       });
+
+      it('does NOT create any files', () => {
+        expect(projectDir).toBeEmpty();
+      });
     });
 
     describe('given provider is Heroku', () => {
@@ -109,6 +145,10 @@ describe('Generator command', () => {
         expect(consoleErrorSpy).toHaveBeenCalledWith(
           Error('This provider has not been implemented!')
         );
+      });
+
+      it('does NOT create any files', () => {
+        expect(projectDir).toBeEmpty();
       });
     });
 
