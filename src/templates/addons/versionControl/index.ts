@@ -11,11 +11,6 @@ const versionControlChoices = [
         value: 'github',
         name: 'GitHub',
       },
-      {
-        value: 'gitlab',
-        name: 'GitLab (NOT IMPLEMENTED YET)',
-        disabled: true,
-      },
     ],
   },
 ];

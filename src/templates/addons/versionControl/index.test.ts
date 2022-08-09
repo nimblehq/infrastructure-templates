@@ -38,14 +38,14 @@ describe('Version control add-on', () => {
       });
     });
 
-    describe('given gitlab version control', () => {
-      const projectDir = 'version-control-gitlab-addon-test';
+    describe('given none version control', () => {
+      const projectDir = 'version-control-none-addon-test';
 
       beforeAll(() => {
         const generalOptions: GeneralOptions = {
           projectName: projectDir,
           provider: 'aws',
-          versionControl: 'gitlab',
+          versionControl: 'none',
         };
 
         applyVersionControl(generalOptions);

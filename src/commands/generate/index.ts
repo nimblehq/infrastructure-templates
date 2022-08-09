@@ -11,7 +11,7 @@ import { generateAwsTemplate } from '../../templates/aws';
 
 type GeneralOptions = {
   projectName: string;
-  versionControl?: 'github' | 'gitlab';
+  versionControl?: 'github' | 'none';
   provider: 'aws' | 'gcp' | 'heroku';
 };
 
