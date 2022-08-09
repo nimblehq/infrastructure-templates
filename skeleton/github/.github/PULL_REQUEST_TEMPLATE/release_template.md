@@ -6,9 +6,9 @@ Link to the project management tool for the release
 
 Provide the ID and title of the issue in the section for each type (feature, chore and bug). The link is optional.
 
-- [ch1234] As a user, I can log in
-or
-- [[ch1234](https://github.com/nimblehq/project-name/issues/1234)] As a user, I can log in
+- [sc-1234] As a user, I can log in
+or just
+- [[sc-1234](https://github.com/nimblehq/project-name/issues/1234)] As a user, I can log in
 
 ## Chores
 
