@@ -12,7 +12,7 @@ import { generateAwsTemplate } from '../../templates/aws';
 type GeneralOptions = {
   projectName: string;
   versionControl?: 'github' | 'none';
-  provider: 'aws' | 'gcp' | 'heroku';
+  provider: 'aws' | 'other';
 };
 
 const providerChoices = [
@@ -24,16 +24,6 @@ const providerChoices = [
       {
         value: 'aws',
         name: 'AWS',
-      },
-      {
-        value: 'gcp',
-        name: 'GCP (NOT IMPLEMENTED YET)',
-        disabled: true,
-      },
-      {
-        value: 'heroku',
-        name: 'Heroku (NOT IMPLEMENTED YET)',
-        disabled: true,
       },
     ],
   },
@@ -76,8 +66,6 @@ export default class Generator extends Command {
           await generateAwsTemplate(generalOptions);
 
           break;
-        case 'gcp':
-        case 'heroku':
         default:
           this.error('This provider has not been implemented!');
       }

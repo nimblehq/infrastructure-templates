@@ -10,34 +10,6 @@ jest.mock('../../helpers/terraform');
 describe('Generator command', () => {
   describe('given valid options', () => {
     describe('given provider is AWS', () => {
-      describe('given infrastructure type is basic', () => {
-        const projectDir = 'aws-basic-test';
-        const consoleErrorSpy = jest.spyOn(global.console, 'error');
-
-        beforeAll(async () => {
-          (prompt as unknown as jest.Mock)
-            .mockResolvedValueOnce({ provider: 'aws' })
-            .mockResolvedValueOnce({ infrastructureType: 'basic' });
-
-          await Generator.run([projectDir]);
-        });
-
-        afterAll(() => {
-          jest.resetAllMocks();
-          remove('/', projectDir);
-        });
-
-        it('displays the error message', () => {
-          expect(consoleErrorSpy).toHaveBeenCalledWith(
-            Error('This type has not been implemented!')
-          );
-        });
-
-        it('does NOT create any files', () => {
-          expect(projectDir).toBeEmpty();
-        });
-      });
-
       describe('given infrastructure type is advanced', () => {
         const projectDir = 'aws-advanced-test';
         const stdoutSpy = jest.spyOn(process.stdout, 'write');
@@ -96,41 +68,13 @@ describe('Generator command', () => {
       });
     });
 
-    describe('given provider is GCP', () => {
-      const projectDir = 'gcp-test';
+    describe('given provider is other', () => {
+      const projectDir = 'other-test';
       const consoleErrorSpy = jest.spyOn(global.console, 'error');
 
       beforeAll(async () => {
         (prompt as unknown as jest.Mock).mockResolvedValueOnce({
-          provider: 'gcp',
-        });
-
-        await Generator.run([projectDir]);
-      });
-
-      afterAll(() => {
-        jest.resetAllMocks();
-        remove('/', projectDir);
-      });
-
-      it('displays the error message', () => {
-        expect(consoleErrorSpy).toHaveBeenCalledWith(
-          Error('This provider has not been implemented!')
-        );
-      });
-
-      it('does NOT create any files', () => {
-        expect(projectDir).toBeEmpty();
-      });
-    });
-
-    describe('given provider is Heroku', () => {
-      const projectDir = 'heroku-test';
-      const consoleErrorSpy = jest.spyOn(global.console, 'error');
-
-      beforeAll(async () => {
-        (prompt as unknown as jest.Mock).mockResolvedValueOnce({
-          provider: 'heroku',
+          provider: 'other',
         });
 
         await Generator.run([projectDir]);
