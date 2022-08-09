@@ -1,4 +1,4 @@
-https://github.com/nimblehq/git-template/issues/??
+Close #
 
 ## What happened 👀
 
