@@ -1,5 +1,6 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
+import { applyTerraform } from '../../addons/terraform';
 import applyAlb, {
   albModuleContent,
   albOutputsContent,
@@ -19,6 +20,7 @@ describe('ALB add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
+      applyTerraform(awsOptions);
       applyCommon(awsOptions);
       applyAlb(awsOptions);
     });

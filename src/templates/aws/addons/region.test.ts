@@ -1,5 +1,6 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
+import { applyTerraform } from '../../addons/terraform';
 import applyCommon from './common';
 import applyRegion, { regionVariablesContent } from './region';
 
@@ -16,6 +17,7 @@ describe('Region add-on', () => {
         awsRegion,
       };
 
+      applyTerraform(awsOptions);
       applyCommon(awsOptions);
       applyRegion(awsOptions);
     });

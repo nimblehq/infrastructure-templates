@@ -22,15 +22,8 @@ describe('Common add-on', () => {
       remove('/', projectDir);
     });
 
-    it('creates expected files', () => {
-      const expectedFiles = [
-        'main.tf',
-        'providers.tf',
-        'outputs.tf',
-        'variables.tf',
-      ];
-
-      expect(projectDir).toHaveFiles(expectedFiles);
+    it('creates the expected file', () => {
+      expect(projectDir).toHaveFile('providers.tf');
     });
   });
 });

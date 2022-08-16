@@ -3,6 +3,7 @@ import { prompt } from 'inquirer';
 
 import { getProjectPath, remove } from '../../helpers/file';
 import { detectTerraform, formatCode } from '../../helpers/terraform';
+import { applyTerraform } from '../../templates/addons/terraform';
 import {
   applyVersionControl,
   versionControlChoices,
@@ -80,6 +81,7 @@ export default class Generator extends Command {
   }
 
   private applyCore(generalOptions: GeneralOptions): void {
+    applyTerraform(generalOptions);
     applyVersionControl(generalOptions);
   }
 

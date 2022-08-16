@@ -51,6 +51,7 @@ describe('Generator command', () => {
         it('creates expected files', () => {
           const expectedFiles = [
             '.gitignore',
+            '.tool-versions',
             'main.tf',
             'variables.tf',
             'providers.tf',
