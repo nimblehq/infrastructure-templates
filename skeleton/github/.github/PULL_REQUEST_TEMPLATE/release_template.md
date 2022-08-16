@@ -4,11 +4,9 @@ Link to the project management tool for the release
 
 ## Features
 
-Provide the ID and title of the issue in the section for each type (feature, chore and bug). The link is optional.
+Provide the Pull Request IDs in the section for each type (feature, chore, and bug), e.g.
 
-- [sc-1234] As a user, I can log in
-or just
-- [[sc-1234](https://app.shortcut.com/nimblehq/story/1234)] As a user, I can log in
+- #1234
 
 ## Chores
 
