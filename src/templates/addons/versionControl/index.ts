@@ -23,7 +23,7 @@ const applyVersionControl = (generalOptions: GeneralOptions): void => {
   const { versionControl, projectName } = generalOptions;
 
   if (versionControl === 'github') {
-    copy('github', '.', projectName);
+    copy('addons/versionControl/github', '.', projectName);
   }
 };
 
