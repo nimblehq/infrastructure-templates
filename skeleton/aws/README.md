@@ -28,7 +28,7 @@ In the source code:
 
 For Terraform to push your changes into AWS, it needs an access key. There are 2 options for that:
 - Using Terraform Cloud: configure the `aws_access_key` and `aws_secret_key` as sensitive variables in your Terraform Cloud Workspaces. Then add the reference into the source code:
-  ```
+  ```hcl
   // base/main.tf && shared/main.tf
   provider "aws" {
     region     = var.region
