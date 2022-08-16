@@ -11,6 +11,10 @@ const versionControlChoices = [
         value: 'github',
         name: 'GitHub',
       },
+      {
+        value: 'none',
+        name: 'None',
+      },
     ],
   },
 ];
