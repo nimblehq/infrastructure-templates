@@ -1,6 +1,6 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
-import { applyTerraform } from '../../addons/terraform';
+import { applyCore } from '../../core';
 import applyCommon from './common';
 import applyRds, { rdsModuleContent, rdsVariablesContent } from './rds';
 
@@ -16,7 +16,7 @@ describe('RDS add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyTerraform(awsOptions);
+      applyCore(awsOptions);
       applyCommon(awsOptions);
       applyRds(awsOptions);
     });

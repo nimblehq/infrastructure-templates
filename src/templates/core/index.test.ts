@@ -1,10 +1,10 @@
-import { applyTerraform } from '.';
-import { remove } from '../../../helpers/file';
-import { AwsOptions } from '../../aws';
+import { applyCore } from '.';
+import { remove } from '../../helpers/file';
+import { AwsOptions } from '../aws';
 
-describe('Terraform add-on', () => {
+describe('Core codebase', () => {
   describe('given valid AwsOptions', () => {
-    const projectDir = 'terraform-addon-test';
+    const projectDir = 'core-test';
 
     beforeAll(() => {
       const awsOptions: AwsOptions = {
@@ -14,7 +14,7 @@ describe('Terraform add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyTerraform(awsOptions);
+      applyCore(awsOptions);
     });
 
     afterAll(() => {

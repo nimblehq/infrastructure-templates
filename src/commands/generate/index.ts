@@ -3,12 +3,12 @@ import { prompt } from 'inquirer';
 
 import { getProjectPath, remove } from '../../helpers/file';
 import { detectTerraform, formatCode } from '../../helpers/terraform';
-import { applyTerraform } from '../../templates/addons/terraform';
 import {
   applyVersionControl,
   versionControlChoices,
 } from '../../templates/addons/versionControl';
 import { generateAwsTemplate } from '../../templates/aws';
+import { applyCore } from '../../templates/core';
 
 type GeneralOptions = {
   projectName: string;
@@ -60,7 +60,7 @@ export default class Generator extends Command {
     };
 
     try {
-      this.applyCore(generalOptions);
+      this.applyGeneralParts(generalOptions);
 
       switch (generalOptions.provider) {
         case 'aws':
@@ -80,8 +80,8 @@ export default class Generator extends Command {
     }
   }
 
-  private applyCore(generalOptions: GeneralOptions): void {
-    applyTerraform(generalOptions);
+  private applyGeneralParts(generalOptions: GeneralOptions): void {
+    applyCore(generalOptions);
     applyVersionControl(generalOptions);
   }
 

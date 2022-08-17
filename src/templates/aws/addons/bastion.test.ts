@@ -1,6 +1,6 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
-import { applyTerraform } from '../../addons/terraform';
+import { applyCore } from '../../core';
 import applyBastion, {
   bastionModuleContent,
   bastionVariablesContent,
@@ -19,7 +19,7 @@ describe('Bastion add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyTerraform(awsOptions);
+      applyCore(awsOptions);
       applyCommon(awsOptions);
       applyBastion(awsOptions);
     });

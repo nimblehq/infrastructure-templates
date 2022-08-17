@@ -1,6 +1,6 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
-import { applyTerraform } from '../../addons/terraform';
+import { applyCore } from '../../core';
 import applyCommon from './common';
 import applyS3, { s3ModuleContent, s3OutputsContent } from './s3';
 
@@ -16,7 +16,7 @@ describe('S3 add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyTerraform(awsOptions);
+      applyCore(awsOptions);
       applyCommon(awsOptions);
       applyS3(awsOptions);
     });
