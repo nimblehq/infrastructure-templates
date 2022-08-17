@@ -24,6 +24,7 @@ describe('Core codebase', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
+        '.gitignore',
         '.tool-versions',
         'main.tf',
         'outputs.tf',

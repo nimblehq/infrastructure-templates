@@ -31,7 +31,6 @@ describe('Version control add-on', () => {
           '.github/PULL_REQUEST_TEMPLATE/release_template.md',
           '.github/workflows/lint.yml',
           '.github/PULL_REQUEST_TEMPLATE.md',
-          '.gitignore',
         ];
 
         expect(projectDir).toHaveFiles(expectedFiles);
