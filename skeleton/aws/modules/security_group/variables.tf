@@ -19,6 +19,6 @@ variable "app_port" {
 }
 
 variable "nimble_office_ip" {
-  description = "Nimble Office IP"
+  description = "Nimble Office IP to be granted access to the Fargate services"
   type        = string
 }

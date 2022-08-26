@@ -2,7 +2,13 @@ import { AwsOptions } from '..';
 import { copy } from '../../../helpers/file';
 
 const applyCommon = ({ projectName }: AwsOptions) => {
-  const filesToCopy = ['main.tf', 'outputs.tf', 'providers.tf', 'variables.tf'];
+  const filesToCopy = [
+    'main.tf',
+    'outputs.tf',
+    'providers.tf',
+    'variables.tf',
+    'README.md',
+  ];
 
   filesToCopy.forEach((fileName) => {
     copy(`aws/${fileName}`, fileName, projectName);

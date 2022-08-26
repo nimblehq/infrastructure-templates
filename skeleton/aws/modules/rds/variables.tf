@@ -16,7 +16,7 @@ variable "engine_version" {
 }
 
 variable "instance_type" {
-  description = "The Aurora DB instance type"
+  description = "The Aurora DB instance type, e.g. 'db.t3.medium'"
   type        = string
 }
 
@@ -31,17 +31,17 @@ variable "vpc_id" {
 }
 
 variable "database_name" {
-  description = "The DB name"
+  description = "The DB name, e.g. 'acme_web_staging_db'"
   type        = string
 }
 
 variable "username" {
-  description = "The DB master username"
+  description = "The DB master username: 1–16 alphanumeric characters and underscores, first character must be a letter, can't be a word reserved by the database engine."
   type        = string
 }
 
 variable "password" {
-  description = "The DB master password"
+  description = "RDS password. Some special chars might result in a wrong encoding of the DATABASE_URL."
   type        = string
 }
 
@@ -56,12 +56,12 @@ variable "subnet_ids" {
 }
 
 variable "autoscaling_min_capacity" {
-  description = "Minimum number of read replicas when autoscaling is enabled"
+  description = "Minimum number of RDS read replicas when autoscaling is enabled (0 or more)"
   default     = 0
 }
 
 variable "autoscaling_max_capacity" {
-  description = "Maximum number of read replicas when autoscaling is enabled"
+  description = "Maximum number of read replicas when autoscaling is enabled (0 or more, 5 recommended)"
   default     = 0
 }
 
