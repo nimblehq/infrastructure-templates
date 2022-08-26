@@ -8,7 +8,7 @@ An infrastructure template for web applications powered by Terraform.
 - A `Basic` flavor is in the plan, but not available yet
 - The `Complete` flavor generates the following infrastructure:
 
-![Diagram of the Complete Infrastructure](https://github.com/nimblehq/infrastructure-templates/blob/feature/55-add-documentation/img/diagram_complete.png?raw=true)
+![Diagram of the Complete Infrastructure](https://github.com/nimblehq/infrastructure-templates/blob/develop/img/diagram_complete.svg?raw=true)
 
 ## Usage
 
