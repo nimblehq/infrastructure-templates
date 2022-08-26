@@ -1,4 +1,5 @@
 import {
+  toBeEmpty,
   toHaveFile,
   toHaveFiles,
   toHaveDirectory,
@@ -7,6 +8,7 @@ import {
 } from './file';
 
 const matchers = {
+  toBeEmpty,
   toHaveFile,
   toHaveFiles,
   toHaveDirectory,

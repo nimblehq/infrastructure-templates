@@ -10,7 +10,7 @@ describe('Common add-on', () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
-        infrastructureType: 'basic',
+        infrastructureType: 'advanced',
         awsRegion: 'ap-southeast-1',
       };
 

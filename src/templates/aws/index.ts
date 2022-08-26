@@ -10,12 +10,6 @@ const awsChoices = [
     message: 'What kind of infrastructure do you need?',
     choices: [
       {
-        key: 'basic',
-        value: 'basic',
-        name: 'Basic infrastructure (VPC + RDS + LOG + ECS) (NOT IMPLEMENTED YET)',
-        disabled: true,
-      },
-      {
         key: 'advanced',
         value: 'advanced',
         name: 'Complete infrastructure (VPC + ECR + RDS + S3 + FARGATE + LOG + Security groups + ALB)',
@@ -31,7 +25,7 @@ const awsChoices = [
 ];
 
 type AwsOptions = GeneralOptions & {
-  infrastructureType: 'basic' | 'advanced';
+  infrastructureType: 'advanced';
   awsRegion: string;
 };
 
@@ -50,7 +44,6 @@ const generateAwsTemplate = async (
       applyAdvancedTemplate(awsOptions);
 
       break;
-    case 'basic':
     default:
       throw Error('This type has not been implemented!');
   }
