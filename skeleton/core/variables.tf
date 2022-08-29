@@ -9,7 +9,7 @@ variable "owner" {
 }
 
 variable "namespace" {
-  description = "The namespace for the application infrastructure on AWS, e.g. acme-web"
+  description = "The namespace for the application infrastructure on the selected provider, e.g. acme-web"
   type        = string
 }
 

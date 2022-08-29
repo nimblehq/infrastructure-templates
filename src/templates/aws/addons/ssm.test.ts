@@ -1,5 +1,6 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
+import { applyCore } from '../../core';
 import applyCommon from './common';
 import applySsm, { ssmModuleContent, ssmVariablesContent } from './ssm';
 
@@ -15,6 +16,7 @@ describe('SSM add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
+      applyCore(awsOptions);
       applyCommon(awsOptions);
       applySsm(awsOptions);
     });

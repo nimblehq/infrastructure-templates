@@ -4,7 +4,7 @@ on:
   push:
 
 env:
-  TERRAFORM_VERSION: "1.2.4"
+  TERRAFORM_VERSION: "1.2.8"
 
 jobs:
   linting:

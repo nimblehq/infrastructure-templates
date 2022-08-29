@@ -1,5 +1,6 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
+import { applyCore } from '../../core';
 import applyAlb, {
   albModuleContent,
   albOutputsContent,
@@ -19,6 +20,7 @@ describe('ALB add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
+      applyCore(awsOptions);
       applyCommon(awsOptions);
       applyAlb(awsOptions);
     });

@@ -8,6 +8,7 @@ import {
   versionControlChoices,
 } from '../../templates/addons/versionControl';
 import { generateAwsTemplate } from '../../templates/aws';
+import { applyCore } from '../../templates/core';
 
 type GeneralOptions = {
   projectName: string;
@@ -59,7 +60,7 @@ export default class Generator extends Command {
     };
 
     try {
-      this.applyCore(generalOptions);
+      this.applyGeneralParts(generalOptions);
 
       switch (generalOptions.provider) {
         case 'aws':
@@ -79,7 +80,8 @@ export default class Generator extends Command {
     }
   }
 
-  private applyCore(generalOptions: GeneralOptions): void {
+  private applyGeneralParts(generalOptions: GeneralOptions): void {
+    applyCore(generalOptions);
     applyVersionControl(generalOptions);
   }
 
