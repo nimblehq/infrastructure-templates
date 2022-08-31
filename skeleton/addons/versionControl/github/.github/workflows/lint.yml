@@ -1,0 +1,34 @@
+name: Lint
+
+on:
+  push:
+
+env:
+  TERRAFORM_VERSION: "1.2.8"
+
+jobs:
+  linting:
+    name: Linting
+
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 5
+
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+      - name: Run Terraform format
+        run: terraform fmt -recursive -check

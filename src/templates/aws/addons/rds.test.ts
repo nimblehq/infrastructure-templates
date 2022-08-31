@@ -1,5 +1,6 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
+import { applyCore } from '../../core';
 import applyCommon from './common';
 import applyRds, { rdsModuleContent, rdsVariablesContent } from './rds';
 
@@ -15,6 +16,7 @@ describe('RDS add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
+      applyCore(awsOptions);
       applyCommon(awsOptions);
       applyRds(awsOptions);
     });

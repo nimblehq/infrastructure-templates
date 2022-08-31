@@ -19,12 +19,12 @@ variable "app_port" {
 }
 
 variable "ecr_repo_name" {
-  description = "ECR repo name"
+  description = "ECR repo name, e.g. 'acme-web'"
   type        = string
 }
 
 variable "ecr_tag" {
-  description = "ECR tag to deploy"
+  description = "ECR tag to deploy, e.g. 'acme-web'"
   type        = string
 }
 
@@ -43,22 +43,22 @@ variable "alb_target_group_arn" {
 }
 
 variable "cpu" {
-  description = "ECS task definition CPU"
+  description = "ECS task definition CPU, e.g. 512"
   type        = number
 }
 
 variable "memory" {
-  description = "ECS task definition memory"
+  description = "ECS task definition memory, e.g. 1024"
   type        = number
 }
 
 variable "deployment_maximum_percent" {
-  description = "Upper limit of the number of running tasks running during deployment"
+  description = "Upper limit of the number of running tasks running during deployment, e.g. 200"
   type        = number
 }
 
 variable "deployment_minimum_healthy_percent" {
-  description = "Lower limit of the number of running tasks running during deployment"
+  description = "Lower limit of the number of running tasks running during deployment, e.g. 100"
   type        = number
 }
 
@@ -68,7 +68,7 @@ variable "desired_count" {
 }
 
 variable "container_memory" {
-  description = "ECS task container memory"
+  description = "ECS task container memory, e.g. 900"
   type        = number
 }
 

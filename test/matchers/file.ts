@@ -2,8 +2,21 @@ import { readFileSync } from 'fs-extra';
 import { sync } from 'glob';
 import { diff } from 'jest-diff';
 
+const toBeEmpty = (projectDir: string) => {
+  const actualFiles = sync(`**/*.*`, { cwd: projectDir, dot: true });
+
+  const pass = actualFiles.length === 0;
+
+  return {
+    pass,
+    message: pass
+      ? () => `expected ${projectDir} to not be empty`
+      : () => `expected ${projectDir} to be empty`,
+  };
+};
+
 const toHaveFile = (projectDir: string, expectedFile: string) => {
-  const actualFiles = sync(`**/*.*`, { cwd: projectDir });
+  const actualFiles = sync(`**/*.*`, { cwd: projectDir, dot: true });
   const pass = actualFiles.includes(expectedFile);
 
   return {
@@ -19,7 +32,7 @@ const toHaveFiles = (projectDir: string, expectedFiles: string[]) => {
     throw new Error('Expected files must be an array');
   }
 
-  const actualFiles = sync(`**/*.*`, { cwd: projectDir });
+  const actualFiles = sync(`**/*.*`, { cwd: projectDir, dot: true });
   const pass = expectedFiles.every((file) => actualFiles.includes(file));
   const diffs = diff(expectedFiles, actualFiles, { expand: false });
 
@@ -32,7 +45,7 @@ const toHaveFiles = (projectDir: string, expectedFiles: string[]) => {
 };
 
 const toHaveDirectory = (projectDir: string, expectedDirectory: string) => {
-  const actualDirectories = sync(`**/`, { cwd: projectDir });
+  const actualDirectories = sync(`**/`, { cwd: projectDir, dot: true });
 
   const pass = actualDirectories.includes(expectedDirectory);
 
@@ -52,7 +65,7 @@ const toHaveDirectories = (
     throw new Error('Expected directories must be an array');
   }
 
-  const actualDirectories = sync(`**/`, { cwd: projectDir });
+  const actualDirectories = sync(`**/`, { cwd: projectDir, dot: true });
   const pass = expectedDirectories.every((directory) =>
     actualDirectories.includes(directory)
   );
@@ -96,9 +109,10 @@ const toHaveContentInFile = (
 };
 
 export {
+  toBeEmpty,
+  toHaveContentInFile,
+  toHaveDirectories,
+  toHaveDirectory,
   toHaveFile,
   toHaveFiles,
-  toHaveDirectory,
-  toHaveDirectories,
-  toHaveContentInFile,
 };

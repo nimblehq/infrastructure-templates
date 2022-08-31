@@ -1,5 +1,6 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
+import { applyCore } from '../../core';
 import applyCommon from './common';
 import applyEcr, { ecrModuleContent, ecrVariablesContent } from './ecr';
 
@@ -15,6 +16,7 @@ describe('ECR add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
+      applyCore(awsOptions);
       applyCommon(awsOptions);
       applyEcr(awsOptions);
     });

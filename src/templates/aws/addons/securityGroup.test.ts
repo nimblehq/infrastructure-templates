@@ -1,5 +1,6 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
+import { applyCore } from '../../core';
 import applyCommon from './common';
 import applySecurityGroup, {
   securityGroupModuleContent,
@@ -18,6 +19,7 @@ describe('Security group add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
+      applyCore(awsOptions);
       applyCommon(awsOptions);
       applySecurityGroup(awsOptions);
     });

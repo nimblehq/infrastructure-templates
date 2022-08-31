@@ -1,5 +1,6 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
+import { applyCore } from '../../core';
 import applyCommon from './common';
 import applyEcs, { ecsModuleContent, ecsVariablesContent } from './ecs';
 
@@ -15,6 +16,7 @@ describe('ECS add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
+      applyCore(awsOptions);
       applyCommon(awsOptions);
       applyEcs(awsOptions);
     });
