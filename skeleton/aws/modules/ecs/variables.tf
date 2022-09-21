@@ -81,3 +81,11 @@ variable "aws_parameter_store" {
   description = "AWS parameter store"
   type        = map(any)
 }
+
+variable "environment_variables" {
+  description = "List of [{name = \"\", value = \"\"}] pairs of environment variables"
+  type = set(object({
+    name  = string
+    value = string
+  }))
+}
