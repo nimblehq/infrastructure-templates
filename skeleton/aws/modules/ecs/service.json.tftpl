@@ -21,8 +21,7 @@
       }
     },
     "environment": ${jsonencode(environment_variables)},
-    "secrets": [
-    ],
+    "secrets": ${jsonencode(secrets_variables)},
     "ulimits": [
       {
         "name": "nofile",

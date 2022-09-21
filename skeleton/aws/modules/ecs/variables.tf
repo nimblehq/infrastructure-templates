@@ -77,15 +77,20 @@ variable "aws_cloudwatch_log_group_name" {
   type        = string
 }
 
-variable "aws_parameter_store" {
-  description = "AWS parameter store"
-  type        = map(any)
-}
-
 variable "environment_variables" {
   description = "List of [{name = \"\", value = \"\"}] pairs of environment variables"
   type = set(object({
     name  = string
     value = string
   }))
+}
+
+variable "secrets_variables" {
+  description = "List of [{name = \"\", valueFrom = \"\"}] pairs of secret variables"
+  type        = list(any)
+}
+
+variable "secrets_arns" {
+  description = "The ARNs of the SSM Parameter Store parameters"
+  type        = list(string)
 }

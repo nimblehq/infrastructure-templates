@@ -25,9 +25,10 @@ locals {
     aws_cloudwatch_log_group_name      = var.aws_cloudwatch_log_group_name
 
     environment_variables = setunion(local.environment_variables, var.environment_variables)
+    secrets_variables     = var.secrets_variables
   }
 
-  container_definitions = templatefile("${path.module}/service.json.tftpl", merge(local.container_vars, var.aws_parameter_store))
+  container_definitions = templatefile("${path.module}/service.json.tftpl", local.container_vars)
 
   ecs_task_execution_ssm_policy = {
     Version = "2012-10-17",
@@ -37,7 +38,7 @@ locals {
         Action = [
           "ssm:GetParameters"
         ],
-        Resource = "*"
+        Resource = var.secrets_arns
       }
     ]
   }

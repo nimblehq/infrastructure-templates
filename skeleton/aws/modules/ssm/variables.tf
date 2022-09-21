@@ -3,27 +3,8 @@ variable "namespace" {
   type        = string
 }
 
-variable "secret_key_base" {
-  description = "The Secret key base for the application"
-  type        = string
-}
-
-variable "rds_username" {
-  description = "The DB username for building DB URL"
-  type        = string
-}
-
-variable "rds_password" {
-  description = "The DB password for building DB URL"
-  type        = string
-}
-
-variable "rds_endpoint" {
-  description = "The DB endpoint for building DB URL"
-  type        = string
-}
-
-variable "rds_database_name" {
-  description = "The DB name for building DB URL"
-  type        = string
+variable "secrets" {
+  description = "Map of secrets to keep in AWS SSM Parameter Store"
+  type        = map(string)
+  default     = {}
 }

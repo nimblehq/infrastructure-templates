@@ -78,8 +78,9 @@ const ecsModuleContent = dedent`
     deployment_minimum_healthy_percent = var.ecs.deployment_minimum_healthy_percent
     container_memory                   = var.ecs.task_container_memory
 
-    aws_parameter_store   = module.ssm.parameter_store
     environment_variables = var.environment_variables
+    secrets_variables     = module.ssm.secrets_variables
+    secrets_arns          = module.ssm.parameter_store_arns
   }
 \n`;
 
