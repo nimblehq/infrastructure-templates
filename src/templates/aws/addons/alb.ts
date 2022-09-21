@@ -13,6 +13,18 @@ const albVariablesContent = dedent`
       description = "Application domain"
       type        = string
     }
+
+    variable "enable_alb_stickiness" {
+      description = "Enable sticky sessions for ALB"
+      type        = bool
+      default     = false
+    }
+
+    variable "alb_stickiness_type" {
+      description = "ALB stickiness type"
+      type        = string
+      default     = "lb_cookie"
+    }
   \n`;
 const albModuleContent = dedent`
     module "alb" {
@@ -24,6 +36,8 @@ const albModuleContent = dedent`
       subnet_ids         = module.vpc.public_subnet_ids
       security_group_ids = module.security_group.alb_security_group_ids
       health_check_path  = var.health_check_path
+      enable_stickiness  = var.enable_alb_stickiness
+      stickiness_type    = var.alb_stickiness_type
     }
   \n`;
 const albOutputsContent = dedent`

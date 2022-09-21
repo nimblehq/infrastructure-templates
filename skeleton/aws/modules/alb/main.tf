@@ -31,6 +31,15 @@ resource "aws_lb_target_group" "target_group" {
     port                = var.app_port
     unhealthy_threshold = 2
   }
+
+  dynamic "stickiness" {
+    for_each = var.enable_stickiness ? [1] : []
+
+    content {
+      enabled         = true
+      type            = var.stickiness_type
+    }
+  }
 }
 
 resource "aws_lb_listener" "app_http" {
