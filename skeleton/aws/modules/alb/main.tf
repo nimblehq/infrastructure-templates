@@ -36,8 +36,8 @@ resource "aws_lb_target_group" "target_group" {
     for_each = var.enable_stickiness ? [1] : []
 
     content {
-      enabled         = true
-      type            = var.stickiness_type
+      enabled = true
+      type    = var.stickiness_type
     }
   }
 }
