@@ -63,6 +63,73 @@ _Workspaces can be managed in the terraform cloud or using the CLI._
 
 > 💡 Other variables might change from `staging` to `prod`, such as the DB credentials. Consider reviewing all the available variables and their descriptions.
 
+### Step 4: Environment Variables and Secrets
+
+To provision a new environment variable, it needs to be configured in the Terraform workspace.
+
+> 💡 Editing the environment variables requires planning and applying changes in the Terraform project.
+
+### Non Sensitive Variable
+
+Non-sensitive variables do not require code changes in the `*-infra` project.
+
+Edit the variable named `environment_variables` directly in the Terraform workspace.
+This variable is an object and it can be extended just by editing its content and appending a new item to it.
+
+Example of the `environment_variables` object as displayed in Terraform:
+
+```
+[
+    {
+      name = "AVAILABLE_LOCALES"
+      value = "en,th"
+    },
+    {
+      name = "DEFAULT_LOCALE"
+      value = "th"
+    },
+   {
+     name = "FALLBACK_LOCALES"
+     value = "th"
+   }
+]
+```
+
+> ⚠️ A wrong indentation will break the object.
+> Make sure to carefully apply the right indent when editing this variable.
+
+### Sensitive Variable
+
+When a variable is set to sensitive, its content cannot be read by users once saved.
+So extending an object is not possible for sensitive variables — unless adding a lot of complexity.
+
+The below steps describe how to add a new sensitive environment variable with the name `MY_NEW_VAR`.
+
+First, edit the `*-infra` source code:
+- Declare a new variable in `base/variables.tf` with the name `my_new_var`
+- Edit the `base/main.tf` file, add the name of the variable under the `secrets` section in the `ssm` module:
+  ```terraform
+  module "ssm" {
+    source = "../modules/ssm"
+
+    namespace = var.namespace
+
+    secrets = {
+      secret_key_base = var.secret_key_base,
+      my_new_var      = var.my_new_var
+    }
+  }
+  ```
+
+Then add the variable in the Terraform workspace.
+The variable shall be marked as "sensitive" to ensure its value will not be available within logs.
+
+Once the variable is added and the code pushed, run a Terraform plan.
+The plan results should indicate about the creation of the new variable.
+Apply the plan if it ran successfully.
+
+The new variable `MY_NEW_VAR` will be available in the ECS task definition.
+
 ## License
 
 This project is Copyright (c) 2014 and onwards Nimble. It is free software and may be redistributed under the terms specified in the [LICENSE] file.
