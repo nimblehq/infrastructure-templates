@@ -33,6 +33,11 @@ locals {
   }
 }
 
+# Current task definition on AWS including deployments outside terraform (e.g. CI deployments)
+data "aws_ecs_task_definition" "task" {
+  task_definition = aws_ecs_task_definition.main.family
+}
+
 data "aws_iam_policy_document" "ecs_task_execution_role" {
   version = "2012-10-17"
   statement {
@@ -87,7 +92,7 @@ resource "aws_ecs_service" "main" {
   deployment_maximum_percent         = var.deployment_maximum_percent
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
   desired_count                      = var.desired_count
-  task_definition                    = aws_ecs_task_definition.main.arn
+  task_definition                    = "${aws_ecs_task_definition.main.family}:${max("${aws_ecs_task_definition.main.revision}", "${data.aws_ecs_task_definition.task.revision}")}"
 
   deployment_circuit_breaker {
     enable   = true
