@@ -130,6 +130,15 @@ Apply the plan if it ran successfully.
 
 The new variable `MY_NEW_VAR` will be available in the ECS task definition.
 
+### Update existing variables
+
+- To update an existing variable, edit the variable in the Terraform workspace:
+- If the variable is not sensitive, edit the `environment_variables` object.
+- If the variable is sensitive, edit the variable directly in the Terraform workspace.
+- Once the variable is updated, run a Terraform plan and apply it if it ran successfully.
+
+**Note:** Re-deploying the application is required when updating sensitive variables.
+
 ## License
 
 This project is Copyright (c) 2014 and onwards Nimble. It is free software and may be redistributed under the terms specified in the [LICENSE] file.
