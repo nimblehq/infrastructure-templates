@@ -25,13 +25,13 @@
     "@oclif/plugin-plugins": "^2.0.1",
     "@types/dedent": "^0.7.0",
     "dedent": "^0.7.0",
-    "inquirer": "^8.2.4"
+    "inquirer": "^9.1.2"
   },
   "devDependencies": {
     "@nimblehq/eslint-config-nimble": "^2.4.0",
     "@types/fs-extra": "^9.0.13",
     "@types/glob": "^7.2.0",
-    "@types/inquirer": "^8.2.1",
+    "@types/inquirer": "^9.0.2",
     "@types/jest": "^28.1.6",
     "@types/node": "^18.7.6",
     "chai": "^4.3.6",
