@@ -3,6 +3,14 @@ data "aws_ecr_repository" "repo" {
 }
 
 locals {
+  # Environment variables from other variables
+  environment_variables = toset([
+    {
+      name  = "AWS_REGION"
+      value = var.region
+    }
+  ])
+
   container_vars = {
     namespace                          = var.namespace
     region                             = var.region
@@ -15,9 +23,12 @@ locals {
     aws_ecr_repository                 = data.aws_ecr_repository.repo.repository_url
     aws_ecr_tag                        = var.ecr_tag
     aws_cloudwatch_log_group_name      = var.aws_cloudwatch_log_group_name
+
+    environment_variables = setunion(local.environment_variables, var.environment_variables)
+    secrets_variables     = var.secrets_variables
   }
 
-  container_definitions = templatefile("${path.module}/service.json.tftpl", merge(local.container_vars, var.aws_parameter_store))
+  container_definitions = templatefile("${path.module}/service.json.tftpl", local.container_vars)
 
   ecs_task_execution_ssm_policy = {
     Version = "2012-10-17",
@@ -27,7 +38,7 @@ locals {
         Action = [
           "ssm:GetParameters"
         ],
-        Resource = "*"
+        Resource = var.secrets_arns
       }
     ]
   }
