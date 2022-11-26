@@ -1,8 +1,9 @@
-output "parameter_store" {
-  description = "ARNs of the parameters"
+output "secrets_variables" {
+  description = "The formatted secrets for ECS task definition"
+  value       = local.secrets_variables
+}
 
-  value = {
-    secret_base_ssm_arn  = aws_ssm_parameter.secret_key_base.arn
-    database_url_ssm_arn = aws_ssm_parameter.database_url.arn
-  }
+output "parameter_store_arns" {
+  description = "List of parameter store ARNs for granting access to ECS task execution role"
+  value       = local.parameter_store_arns
 }

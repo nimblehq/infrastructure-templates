@@ -3,6 +3,14 @@ data "aws_ecr_repository" "repo" {
 }
 
 locals {
+  # Environment variables from other variables
+  environment_variables = toset([
+    {
+      name  = "AWS_REGION"
+      value = var.region
+    }
+  ])
+
   container_vars = {
     namespace                          = var.namespace
     region                             = var.region
@@ -15,9 +23,12 @@ locals {
     aws_ecr_repository                 = data.aws_ecr_repository.repo.repository_url
     aws_ecr_tag                        = var.ecr_tag
     aws_cloudwatch_log_group_name      = var.aws_cloudwatch_log_group_name
+
+    environment_variables = setunion(local.environment_variables, var.environment_variables)
+    secrets_variables     = var.secrets_variables
   }
 
-  container_definitions = templatefile("${path.module}/service.json.tftpl", merge(local.container_vars, var.aws_parameter_store))
+  container_definitions = templatefile("${path.module}/service.json.tftpl", local.container_vars)
 
   ecs_task_execution_ssm_policy = {
     Version = "2012-10-17",
@@ -27,10 +38,15 @@ locals {
         Action = [
           "ssm:GetParameters"
         ],
-        Resource = "*"
+        Resource = var.secrets_arns
       }
     ]
   }
+}
+
+# Current task definition on AWS including deployments outside terraform (e.g. CI deployments)
+data "aws_ecs_task_definition" "task" {
+  task_definition = aws_ecs_task_definition.main.family
 }
 
 data "aws_iam_policy_document" "ecs_task_execution_role" {
@@ -87,7 +103,7 @@ resource "aws_ecs_service" "main" {
   deployment_maximum_percent         = var.deployment_maximum_percent
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
   desired_count                      = var.desired_count
-  task_definition                    = aws_ecs_task_definition.main.arn
+  task_definition                    = "${aws_ecs_task_definition.main.family}:${max("${aws_ecs_task_definition.main.revision}", "${data.aws_ecs_task_definition.task.revision}")}"
 
   deployment_circuit_breaker {
     enable   = true
