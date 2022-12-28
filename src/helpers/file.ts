@@ -1,3 +1,4 @@
+import { renameSync } from 'fs';
 import path = require('path');
 
 import {
@@ -41,7 +42,7 @@ const appendToFile = (
 ): void => {
   const targetPath = getProjectFilePath(target, projectName);
 
-  appendFileSync(targetPath, content);
+  appendFileSync(targetPath, String(content));
 };
 
 const copy = (source: string, target: string, projectName: string): void => {
@@ -100,6 +101,13 @@ const injectToFile = (
   writeFileSync(targetPath, newContent);
 };
 
+const rename = (target: string, newName: string, projectName: string): void => {
+  const targetPath = getProjectFilePath(target, projectName);
+  const newTargetPath = path.join(path.dirname(targetPath), newName);
+
+  renameSync(targetPath, newTargetPath);
+};
+
 export {
   appendToFile,
   copy,
@@ -110,4 +118,5 @@ export {
   getTemplatePath,
   injectToFile,
   remove,
+  rename,
 };

@@ -1,3 +1,4 @@
+import * as legacyFs from 'fs';
 import path = require('path');
 
 import * as fs from 'fs-extra';
@@ -13,6 +14,7 @@ import {
   getTemplatePath,
   injectToFile,
   remove,
+  rename,
 } from './file';
 
 jest.mock('fs-extra');
@@ -299,6 +301,25 @@ describe('File helpers', () => {
             `${initialContent}\n${content}`
           );
         });
+      });
+    });
+  });
+
+  describe('rename', () => {
+    describe('given target file and new name', () => {
+      it('renames the target file', () => {
+        const target = 'targetFile.txt';
+        const newName = 'newName.txt';
+        const projectName = 'projectName';
+        const targetPath = getProjectFilePath(target, projectName);
+        const newPath = getProjectFilePath(newName, projectName);
+        const renameSpy = jest.spyOn(legacyFs, 'renameSync');
+
+        (legacyFs.renameSync as jest.Mock).mockReturnValue({});
+
+        rename(target, newName, projectName);
+
+        expect(renameSpy).toHaveBeenCalledWith(targetPath, newPath);
       });
     });
   });
