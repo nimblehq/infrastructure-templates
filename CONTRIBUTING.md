@@ -6,7 +6,7 @@ The following is a set of guidelines for contributing to this project. These are
 
 ## Introduction
 
-This project is using TypeScript and [OCLIF](https://oclif.io/) to build the CLI. The project is using Jest for testing, ESLint for code formatting and linting.
+This project uses TypeScript and [OCLIF](https://oclif.io/) to build the CLI, Jest for testing, and ESLint for code formatting and linting.
 
 ## Issues and feature requests
 
@@ -17,7 +17,7 @@ If you have any issues or feature requests, please create an issue in the [GitHu
 ### Prerequisites
 
 - Node.js 12.0.0 or higher
-- NPM is preferred to use with this project, but you can use Yarn as well and don't commit the `yarn.lock` file to the repository
+- NPM is preferred to use with this project
 
 ### Install dependencies
 
@@ -60,7 +60,7 @@ The project has the following main folders:
 
 ### Add a new command
 
-To add a new command, you need to create a new folder in the `src/commands` folder and add the `index.ts` file in it.
+To add a new command, create a new folder in the `src/commands` and add the `index.ts` file.
 The command documentation can be found [here](https://oclif.io/docs/commands).
 
 ### Add a new addon/module
@@ -93,7 +93,7 @@ npm run lint:fix // to fix linting
 
 - This project will be published to NPM automatically when a new release is created in GitHub. Therefore, the package version in `package.json` should be updated before creating a new release.
 
-- The release should be created in the `master` branch.
+- The release should be created in the `main` branch.
 
 - The release should be created with the following format: `{version}` e.g. `1.0.0`
 
@@ -105,4 +105,4 @@ npm run lint:fix // to fix linting
 npm run publish
 ```
 
-**Note:** You need to have the NPM account to publish the project and make sure that the version in `package.json` is updated.
+**Note:** NPM credentials are required to publish the project. Ensure that the version in `package.json` is updated.
