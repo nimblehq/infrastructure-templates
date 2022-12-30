@@ -9,8 +9,8 @@ jobs:
     name: Run Tests
     strategy:
       matrix:
-        node-version: [16.x]
-    runs-on: ubuntu-20.04
+        node-version: [16.x, 18.x]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the repository
