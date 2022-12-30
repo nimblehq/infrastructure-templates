@@ -16,7 +16,7 @@ If you have any issues or feature requests, please create an issue in the [GitHu
 
 ### Prerequisites
 
-- Node.js 12.0.0 or higher
+- [Node.js](https://nodejs.org/en/download/) 12.x or higher - 18.x LTS is recommended
 - NPM is preferred to use with this project
 
 ### Install dependencies
