@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.11.0
         with:
           access_token: ${{ github.token }}
 
@@ -18,7 +18,7 @@ jobs:
       - name: Setup node and restore cached dependencies
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18.x'
           cache: 'npm'
 
       - name: Install dependencies
