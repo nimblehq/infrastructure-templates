@@ -9,21 +9,21 @@ jobs:
     name: Run Tests
     strategy:
       matrix:
-        node-version: [16.x]
-    runs-on: ubuntu-20.04
+        node-version: [16.x, 18.x]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
       - name: Cache Node npm
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: node_modules
           key: ${{ runner.os }}-infrastructure-templates-node-${{ hashFiles('**/package-lock.json') }}
