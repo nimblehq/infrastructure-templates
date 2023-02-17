@@ -1,3 +1,3 @@
 {
-  "extends": ["@nimblehq/eslint-config-nimble"]
+  "extends": ["@nimblehq/eslint-config-nimble-core"]
 }

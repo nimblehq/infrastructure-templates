@@ -20,15 +20,15 @@
     "/oclif.manifest.json"
   ],
   "dependencies": {
-    "@oclif/core": "^1",
+    "@oclif/core": "^2",
     "@oclif/plugin-help": "^5",
-    "@oclif/plugin-plugins": "^2.0.1",
+    "@oclif/plugin-plugins": "^2",
     "@types/dedent": "^0.7.0",
     "dedent": "^0.7.0",
     "inquirer": "^8.2.4"
   },
   "devDependencies": {
-    "@nimblehq/eslint-config-nimble": "^2.4.0",
+    "@nimblehq/eslint-config-nimble-core": "2.6.0",
     "@types/fs-extra": "^9.0.13",
     "@types/glob": "^7.2.0",
     "@types/inquirer": "^8.2.1",
