@@ -1,4 +1,4 @@
-import { Command } from '@oclif/core';
+import { Args, Command } from '@oclif/core';
 import { prompt } from 'inquirer';
 
 import { getProjectPath, remove } from '../../helpers/file';
@@ -37,14 +37,21 @@ export default class Generator extends Command {
 
   static flags = {};
 
-  static args = [
-    {
-      name: 'projectName',
+  // static args = [
+  //   {
+  //     name: 'projectName',
+  //     required: true,
+  //     description: 'directory name of new project',
+  //     default: '.',
+  //   },
+  // ];
+  static args = {
+    projectName: Args.string({
       required: true,
-      description: 'directory name of new project',
+      description: 'Directory name of new project',
       default: '.',
-    },
-  ];
+    }),
+  };
 
   async run(): Promise<void> {
     const { args } = await this.parse(Generator);
