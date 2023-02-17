@@ -37,14 +37,6 @@ export default class Generator extends Command {
 
   static flags = {};
 
-  // static args = [
-  //   {
-  //     name: 'projectName',
-  //     required: true,
-  //     description: 'directory name of new project',
-  //     default: '.',
-  //   },
-  // ];
   static args = {
     projectName: Args.string({
       required: true,
