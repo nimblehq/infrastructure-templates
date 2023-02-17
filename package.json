@@ -1,6 +1,6 @@
 {
   "name": "@nimblehq/infra-template",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "Nimble Infrastructure Template generator",
   "author": "Nimblehq",
   "bin": {
