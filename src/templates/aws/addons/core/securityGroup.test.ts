@@ -1,6 +1,6 @@
-import { AwsOptions } from '..';
-import { remove } from '../../../helpers/file';
-import { applyCore } from '../../core';
+import { AwsOptions } from '../..';
+import { remove } from '../../../../helpers/file';
+import { applyCore } from '../../../core';
 import applyCommon from './common';
 import applySecurityGroup, {
   securityGroupModuleContent,

@@ -1,7 +1,7 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
 import { applyCore } from '../../core';
-import applyCommon from './common';
+import applyCommon from './core/common';
 import applyEcr, { ecrModuleContent, ecrVariablesContent } from './ecr';
 
 describe('ECR add-on', () => {

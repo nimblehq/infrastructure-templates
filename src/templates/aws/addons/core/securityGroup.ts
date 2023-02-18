@@ -1,11 +1,11 @@
 import * as dedent from 'dedent';
 
-import { AwsOptions } from '..';
-import { appendToFile, copy } from '../../../helpers/file';
+import { AwsOptions } from '../..';
+import { appendToFile, copy } from '../../../../helpers/file';
 import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
-} from '../../core/constants';
+} from '../../../core/constants';
 
 const securityGroupVariablesContent = dedent`
   variable "nimble_office_ip" {

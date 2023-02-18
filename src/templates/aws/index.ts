@@ -1,6 +1,12 @@
 import { prompt } from 'inquirer';
 
 import { GeneralOptions } from '../../commands/generate';
+import {
+  applyCommon,
+  applyRegion,
+  applySecurityGroup,
+  applyVpc,
+} from './addons';
 import { applyAdvancedTemplate } from './advanced';
 
 const awsChoices = [
@@ -29,6 +35,11 @@ type AwsOptions = GeneralOptions & {
   awsRegion: string;
 };
 
+const applyCommonModules = (options: AwsOptions): void => {
+  applyCommon(options);
+  applyRegion(options);
+};
+
 const generateAwsTemplate = async (
   generalOptions: GeneralOptions
 ): Promise<void> => {
@@ -41,6 +52,9 @@ const generateAwsTemplate = async (
 
   switch (awsOptions.infrastructureType) {
     case 'advanced':
+      applyCommonModules(awsOptions);
+      applyVpc(awsOptions);
+      applySecurityGroup(awsOptions);
       applyAdvancedTemplate(awsOptions);
 
       break;

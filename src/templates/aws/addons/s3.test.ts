@@ -1,7 +1,7 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
 import { applyCore } from '../../core';
-import applyCommon from './common';
+import applyCommon from './core/common';
 import applyS3, { s3ModuleContent, s3OutputsContent } from './s3';
 
 describe('S3 add-on', () => {

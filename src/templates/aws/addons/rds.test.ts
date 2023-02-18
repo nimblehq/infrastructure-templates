@@ -1,7 +1,7 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
 import { applyCore } from '../../core';
-import applyCommon from './common';
+import applyCommon from './core/common';
 import applyRds, { rdsModuleContent, rdsVariablesContent } from './rds';
 
 describe('RDS add-on', () => {

@@ -5,7 +5,7 @@ import applyBastion, {
   bastionModuleContent,
   bastionVariablesContent,
 } from './bastion';
-import applyCommon from './common';
+import applyCommon from './core/common';
 
 describe('Bastion add-on', () => {
   describe('given valid AWS options', () => {

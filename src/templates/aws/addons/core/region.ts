@@ -1,8 +1,8 @@
 import * as dedent from 'dedent';
 
-import { AwsOptions } from '..';
-import { appendToFile } from '../../../helpers/file';
-import { INFRA_BASE_VARIABLES_PATH } from '../../core/constants';
+import { AwsOptions } from '../..';
+import { appendToFile } from '../../../../helpers/file';
+import { INFRA_BASE_VARIABLES_PATH } from '../../../core/constants';
 
 const regionVariablesContent = (awsRegion: string) => dedent`
   variable "region" {

@@ -1,11 +1,11 @@
 import * as dedent from 'dedent';
 
-import { AwsOptions } from '..';
-import { appendToFile, copy } from '../../../helpers/file';
+import { AwsOptions } from '../..';
+import { appendToFile, copy } from '../../../../helpers/file';
 import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_OUTPUTS_PATH,
-} from '../../core/constants';
+} from '../../../core/constants';
 
 const vpcOutputsContent = dedent`
   output "vpc_id" {

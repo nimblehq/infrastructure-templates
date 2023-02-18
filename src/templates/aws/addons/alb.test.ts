@@ -6,7 +6,7 @@ import applyAlb, {
   albOutputsContent,
   albVariablesContent,
 } from './alb';
-import applyCommon from './common';
+import applyCommon from './core/common';
 
 describe('ALB add-on', () => {
   describe('given valid AWS options', () => {
