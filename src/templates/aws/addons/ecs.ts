@@ -31,7 +31,7 @@ const ecsVariablesContent = dedent`
   }
 
   variable "environment_variables" {
-    description = "List of [{name = \"\", value = \"\"}] pairs of environment variables"
+    description = "List of [{name = \\"\\", value = \\"\\"}] pairs of environment variables"
     type = set(object({
       name  = string
       value = string

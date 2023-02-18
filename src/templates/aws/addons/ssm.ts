@@ -12,10 +12,6 @@ const ssmVariablesContent = dedent`
     description = "The Secret key base for the application"
     type = string
   }`;
-/* eslint-disable no-template-curly-in-string */
-const databaseUrlString =
-  'postgres://${var.rds_username}:${var.rds_password}@${module.rds.db_endpoint}/${var.rds_database_name}';
-/* eslint-enable no-template-curly-in-string */
 const ssmModuleContent = dedent`
   module "ssm" {
     source = "../modules/ssm"
@@ -23,7 +19,7 @@ const ssmModuleContent = dedent`
     namespace = var.namespace
 
     secrets = {
-      database_url = "${databaseUrlString}"
+      database_url = "postgres://\${var.rds_username}:\${var.rds_password}@\${module.rds.db_endpoint}/\${var.rds_database_name}"
       secret_key_base = var.secret_key_base
     }
   }`;
