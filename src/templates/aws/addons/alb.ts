@@ -2,6 +2,11 @@ import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
 import { appendToFile, copy } from '../../../helpers/file';
+import {
+  INFRA_BASE_MAIN_PATH,
+  INFRA_BASE_OUTPUTS_PATH,
+  INFRA_BASE_VARIABLES_PATH,
+} from '../../core/constants';
 
 const albVariablesContent = dedent`
     variable "health_check_path" {
@@ -49,9 +54,9 @@ const albOutputsContent = dedent`
 
 const applyAlb = ({ projectName }: AwsOptions) => {
   copy('aws/modules/alb', 'modules/alb', projectName);
-  appendToFile('main.tf', albModuleContent, projectName);
-  appendToFile('variables.tf', albVariablesContent, projectName);
-  appendToFile('outputs.tf', albOutputsContent, projectName);
+  appendToFile(INFRA_BASE_MAIN_PATH, albModuleContent, projectName);
+  appendToFile(INFRA_BASE_VARIABLES_PATH, albVariablesContent, projectName);
+  appendToFile(INFRA_BASE_OUTPUTS_PATH, albOutputsContent, projectName);
 };
 
 export default applyAlb;

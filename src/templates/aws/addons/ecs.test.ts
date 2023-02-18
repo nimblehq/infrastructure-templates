@@ -28,10 +28,10 @@ describe('ECS add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'main.tf',
-        'providers.tf',
-        'outputs.tf',
-        'variables.tf',
+        'base/main.tf',
+        'base/providers.tf',
+        'base/outputs.tf',
+        'base/variables.tf',
         'modules/ecs/main.tf',
         'modules/ecs/variables.tf',
         'modules/ecs/service.json.tftpl',
@@ -41,12 +41,12 @@ describe('ECS add-on', () => {
     });
 
     it('adds ECS module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('main.tf', ecsModuleContent);
+      expect(projectDir).toHaveContentInFile('base/main.tf', ecsModuleContent);
     });
 
     it('adds ECS variables to variables.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'variables.tf',
+        'base/variables.tf',
         ecsVariablesContent
       );
     });

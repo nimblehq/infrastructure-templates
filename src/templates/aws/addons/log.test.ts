@@ -28,10 +28,10 @@ describe('Log add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'main.tf',
-        'providers.tf',
-        'outputs.tf',
-        'variables.tf',
+        'base/main.tf',
+        'base/providers.tf',
+        'base/outputs.tf',
+        'base/variables.tf',
         'modules/log/main.tf',
         'modules/log/variables.tf',
         'modules/log/outputs.tf',
@@ -41,7 +41,7 @@ describe('Log add-on', () => {
     });
 
     it('adds log module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('main.tf', logModuleContent);
+      expect(projectDir).toHaveContentInFile('base/main.tf', logModuleContent);
     });
   });
 });

@@ -2,6 +2,10 @@ import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
 import { appendToFile, copy } from '../../../helpers/file';
+import {
+  INFRA_BASE_MAIN_PATH,
+  INFRA_BASE_VARIABLES_PATH,
+} from '../../core/constants';
 
 const bastionVariablesContent = dedent`
   variable "bastion_image_id" {
@@ -27,8 +31,7 @@ const bastionVariablesContent = dedent`
   variable "bastion_min_instance_count" {
     description = "The minimum number of the instance"
     default = 1
-  }
-\n`;
+  }`;
 const bastionModuleContent = dedent`
   module "bastion" {
     source = "./modules/bastion"
@@ -43,13 +46,12 @@ const bastionModuleContent = dedent`
     min_instance_count     = var.bastion_min_instance_count
     max_instance_count     = var.bastion_max_instance_count
     instance_desired_count = var.bastion_instance_desired_count
-  }
-\n`;
+  }`;
 
 const applyBastion = ({ projectName }: AwsOptions) => {
   copy('aws/modules/bastion', 'modules/bastion', projectName);
-  appendToFile('variables.tf', bastionVariablesContent, projectName);
-  appendToFile('main.tf', bastionModuleContent, projectName);
+  appendToFile(INFRA_BASE_VARIABLES_PATH, bastionVariablesContent, projectName);
+  appendToFile(INFRA_BASE_MAIN_PATH, bastionModuleContent, projectName);
 };
 
 export default applyBastion;

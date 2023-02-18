@@ -52,10 +52,10 @@ describe('Generator command', () => {
           const expectedFiles = [
             '.gitignore',
             '.tool-versions',
-            'main.tf',
-            'variables.tf',
-            'providers.tf',
-            'outputs.tf',
+            'base/main.tf',
+            'base/variables.tf',
+            'base/providers.tf',
+            'base/outputs.tf',
           ];
 
           expect(projectDir).toHaveFiles(expectedFiles);

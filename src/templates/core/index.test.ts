@@ -26,9 +26,9 @@ describe('Core codebase', () => {
       const expectedFiles = [
         '.gitignore',
         '.tool-versions',
-        'main.tf',
-        'outputs.tf',
-        'variables.tf',
+        'base/main.tf',
+        'base/outputs.tf',
+        'base/variables.tf',
       ];
 
       expect(projectDir).toHaveFiles(expectedFiles);

@@ -2,6 +2,10 @@ import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
 import { appendToFile, copy } from '../../../helpers/file';
+import {
+  INFRA_BASE_MAIN_PATH,
+  INFRA_BASE_VARIABLES_PATH,
+} from '../../core/constants';
 
 const ecsVariablesContent = dedent`
   variable "ecr_repo_name" {
@@ -54,8 +58,7 @@ const ecsVariablesContent = dedent`
         value = "80"
       },
     ]
-  }
-\n`;
+  }`;
 
 const ecsModuleContent = dedent`
   module "ecs" {
@@ -81,13 +84,12 @@ const ecsModuleContent = dedent`
     environment_variables = var.environment_variables
     secrets_variables     = module.ssm.secrets_variables
     secrets_arns          = module.ssm.parameter_store_arns
-  }
-\n`;
+  }`;
 
 const applyEcs = ({ projectName }: AwsOptions) => {
   copy('aws/modules/ecs', 'modules/ecs', projectName);
-  appendToFile('variables.tf', ecsVariablesContent, projectName);
-  appendToFile('main.tf', ecsModuleContent, projectName);
+  appendToFile(INFRA_BASE_VARIABLES_PATH, ecsVariablesContent, projectName);
+  appendToFile(INFRA_BASE_MAIN_PATH, ecsModuleContent, projectName);
 };
 
 export default applyEcs;
