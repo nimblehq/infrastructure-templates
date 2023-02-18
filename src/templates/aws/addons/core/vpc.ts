@@ -1,4 +1,4 @@
-import * as dedent from 'dedent';
+import { dedent } from 'ts-dedent';
 
 import { AwsOptions } from '../..';
 import { appendToFile, copy } from '../../../../helpers/file';
