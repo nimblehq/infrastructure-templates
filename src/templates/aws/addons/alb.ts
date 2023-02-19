@@ -9,6 +9,7 @@ import {
   INFRA_BASE_OUTPUTS_PATH,
   INFRA_BASE_VARIABLES_PATH,
 } from '../../core/constants';
+import { isAWSModuleAdded, requireAWSModules } from '../../core/dependencies';
 
 const albVariablesContent = dedent`
   variable "health_check_path" {
@@ -89,16 +90,29 @@ const albSGOutputsContent = dedent`
     value       = [aws_security_group.alb.id]
   }`;
 
-const applyAlb = ({ projectName }: AwsOptions) => {
-  copy('aws/modules/alb', 'modules/alb', projectName);
-  appendToFile(INFRA_BASE_MAIN_PATH, albModuleContent, projectName);
-  appendToFile(INFRA_BASE_VARIABLES_PATH, albVariablesContent, projectName);
-  appendToFile(INFRA_BASE_OUTPUTS_PATH, albOutputsContent, projectName);
-  appendToFile(AWS_SECURITY_GROUP_MAIN_PATH, albSGMainContent, projectName);
+const applyAlb = async (options: AwsOptions) => {
+  if (isAWSModuleAdded('alb', options.projectName)) {
+    return;
+  }
+  await requireAWSModules('alb', 'securityGroup', options);
+
+  copy('aws/modules/alb', 'modules/alb', options.projectName);
+  appendToFile(INFRA_BASE_MAIN_PATH, albModuleContent, options.projectName);
+  appendToFile(
+    INFRA_BASE_VARIABLES_PATH,
+    albVariablesContent,
+    options.projectName
+  );
+  appendToFile(INFRA_BASE_OUTPUTS_PATH, albOutputsContent, options.projectName);
+  appendToFile(
+    AWS_SECURITY_GROUP_MAIN_PATH,
+    albSGMainContent,
+    options.projectName
+  );
   appendToFile(
     AWS_SECURITY_GROUP_OUTPUTS_PATH,
     albSGOutputsContent,
-    projectName
+    options.projectName
   );
 };
 

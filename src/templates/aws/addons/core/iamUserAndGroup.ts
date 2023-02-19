@@ -89,7 +89,7 @@ const iamOutputsContent = dedent`
     value       = module.iam_bot_users.temporary_passwords
   }`;
 
-const applyIamUserAndGroup = ({ projectName }: AwsOptions) => {
+const applyIamUserAndGroup = async ({ projectName }: AwsOptions) => {
   copy('aws/modules/iam_groups', 'modules/iam_groups', projectName);
   copy('aws/modules/iam_users', 'modules/iam_users', projectName);
 

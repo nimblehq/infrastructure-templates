@@ -8,6 +8,7 @@ import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
 } from '../../core/constants';
+import { isAWSModuleAdded, requireAWSModules } from '../../core/dependencies';
 
 const ecsVariablesContent = dedent`
   variable "ecr_repo_name" {
@@ -148,15 +149,28 @@ const ecsSGOutputsContent = dedent`
     value       = [aws_security_group.ecs_fargate.id]
   }`;
 
-const applyEcs = ({ projectName }: AwsOptions) => {
-  copy('aws/modules/ecs', 'modules/ecs', projectName);
-  appendToFile(INFRA_BASE_VARIABLES_PATH, ecsVariablesContent, projectName);
-  appendToFile(INFRA_BASE_MAIN_PATH, ecsModuleContent, projectName);
-  appendToFile(AWS_SECURITY_GROUP_MAIN_PATH, ecsSGMainContent, projectName);
+const applyEcs = async (options: AwsOptions) => {
+  if (isAWSModuleAdded('ecs', options.projectName)) {
+    return;
+  }
+  await requireAWSModules('ecs', 'securityGroup', options);
+
+  copy('aws/modules/ecs', 'modules/ecs', options.projectName);
+  appendToFile(
+    INFRA_BASE_VARIABLES_PATH,
+    ecsVariablesContent,
+    options.projectName
+  );
+  appendToFile(INFRA_BASE_MAIN_PATH, ecsModuleContent, options.projectName);
+  appendToFile(
+    AWS_SECURITY_GROUP_MAIN_PATH,
+    ecsSGMainContent,
+    options.projectName
+  );
   appendToFile(
     AWS_SECURITY_GROUP_OUTPUTS_PATH,
     ecsSGOutputsContent,
-    projectName
+    options.projectName
   );
 };
 

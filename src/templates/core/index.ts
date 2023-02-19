@@ -1,7 +1,7 @@
 import { GeneralOptions } from '../../commands/generate';
 import { copy, rename } from '../../helpers/file';
 
-const applyCore = (generalOptions: GeneralOptions): void => {
+const applyCore = async (generalOptions: GeneralOptions) => {
   const { projectName } = generalOptions;
 
   copy('core/', '.', projectName);

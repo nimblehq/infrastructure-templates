@@ -6,6 +6,7 @@ import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_OUTPUTS_PATH,
 } from '../../../core/constants';
+import { isAWSModuleAdded } from '../../../core/dependencies';
 
 const vpcOutputsContent = dedent`
   output "vpc_id" {
@@ -20,10 +21,14 @@ const vpcModuleContent = dedent`
     namespace = var.namespace
   }`;
 
-const applyVpc = ({ projectName }: AwsOptions) => {
-  copy('aws/modules/vpc', 'modules/vpc', projectName);
-  appendToFile(INFRA_BASE_MAIN_PATH, vpcModuleContent, projectName);
-  appendToFile(INFRA_BASE_OUTPUTS_PATH, vpcOutputsContent, projectName);
+const applyVpc = async (options: AwsOptions) => {
+  if (isAWSModuleAdded('vpc', options.projectName)) {
+    return;
+  }
+
+  copy('aws/modules/vpc', 'modules/vpc', options.projectName);
+  appendToFile(INFRA_BASE_MAIN_PATH, vpcModuleContent, options.projectName);
+  appendToFile(INFRA_BASE_OUTPUTS_PATH, vpcOutputsContent, options.projectName);
 };
 
 export default applyVpc;

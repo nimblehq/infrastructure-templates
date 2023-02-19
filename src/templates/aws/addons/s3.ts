@@ -6,6 +6,7 @@ import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_OUTPUTS_PATH,
 } from '../../core/constants';
+import { isAWSModuleAdded } from '../../core/dependencies';
 
 const s3OutputsContent = dedent`
   output "s3_alb_log_bucket_name" {
@@ -20,10 +21,14 @@ const s3ModuleContent = dedent`
     namespace   = var.namespace
   }`;
 
-const applyS3 = ({ projectName }: AwsOptions) => {
-  copy('aws/modules/s3', 'modules/s3', projectName);
-  appendToFile(INFRA_BASE_OUTPUTS_PATH, s3OutputsContent, projectName);
-  appendToFile(INFRA_BASE_MAIN_PATH, s3ModuleContent, projectName);
+const applyS3 = async (options: AwsOptions) => {
+  if (isAWSModuleAdded('s3', options.projectName)) {
+    return;
+  }
+
+  copy('aws/modules/s3', 'modules/s3', options.projectName);
+  appendToFile(INFRA_BASE_OUTPUTS_PATH, s3OutputsContent, options.projectName);
+  appendToFile(INFRA_BASE_MAIN_PATH, s3ModuleContent, options.projectName);
 };
 
 export default applyS3;

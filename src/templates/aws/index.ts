@@ -36,9 +36,9 @@ type AwsOptions = GeneralOptions & {
   awsRegion: string;
 };
 
-const applyCommonModules = (options: AwsOptions): void => {
-  applyCommon(options);
-  applyRegion(options);
+const applyCommonModules = async (options: AwsOptions) => {
+  await applyCommon(options);
+  await applyRegion(options);
 };
 
 const generateAwsTemplate = async (
@@ -53,11 +53,11 @@ const generateAwsTemplate = async (
 
   switch (awsOptions.infrastructureType) {
     case 'advanced':
-      applyCommonModules(awsOptions);
-      applyVpc(awsOptions);
-      applySecurityGroup(awsOptions);
-      applyIamUserAndGroup(awsOptions);
-      applyAdvancedTemplate(awsOptions);
+      await applyCommonModules(awsOptions);
+      await applyVpc(awsOptions);
+      await applySecurityGroup(awsOptions);
+      await applyIamUserAndGroup(awsOptions);
+      await applyAdvancedTemplate(awsOptions);
 
       break;
     default:

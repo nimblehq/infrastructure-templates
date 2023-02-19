@@ -6,6 +6,10 @@ import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
 } from '../../../core/constants';
+import {
+  isAWSModuleAdded,
+  requireAWSModules,
+} from '../../../core/dependencies';
 
 const securityGroupVariablesContent = dedent`
   variable "nimble_office_ip" {
@@ -24,14 +28,27 @@ const securityGroupModuleContent = dedent`
     nimble_office_ip = var.nimble_office_ip
   }`;
 
-const applySecurityGroup = ({ projectName }: AwsOptions) => {
-  copy('aws/modules/security_group', 'modules/security_group', projectName);
+const applySecurityGroup = async (options: AwsOptions) => {
+  if (isAWSModuleAdded('securityGroup', options.projectName)) {
+    return;
+  }
+  await requireAWSModules('securityGroup', 'vpc', options);
+
+  copy(
+    'aws/modules/security_group',
+    'modules/security_group',
+    options.projectName
+  );
   appendToFile(
     INFRA_BASE_VARIABLES_PATH,
     securityGroupVariablesContent,
-    projectName
+    options.projectName
   );
-  appendToFile(INFRA_BASE_MAIN_PATH, securityGroupModuleContent, projectName);
+  appendToFile(
+    INFRA_BASE_MAIN_PATH,
+    securityGroupModuleContent,
+    options.projectName
+  );
 };
 
 export default applySecurityGroup;

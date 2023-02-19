@@ -6,6 +6,7 @@ import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
 } from '../../core/constants';
+import { isAWSModuleAdded, requireAWSModules } from '../../core/dependencies';
 
 const ssmVariablesContent = dedent`
   variable "secret_key_base" {
@@ -25,10 +26,19 @@ const ssmModuleContent = dedent`
     }
   }`;
 
-const applySsm = ({ projectName }: AwsOptions) => {
-  copy('aws/modules/ssm', 'modules/ssm', projectName);
-  appendToFile(INFRA_BASE_VARIABLES_PATH, ssmVariablesContent, projectName);
-  appendToFile(INFRA_BASE_MAIN_PATH, ssmModuleContent, projectName);
+const applySsm = async (options: AwsOptions) => {
+  if (isAWSModuleAdded('ssm', options.projectName)) {
+    return;
+  }
+  await requireAWSModules('ssm', 'ecs', options);
+
+  copy('aws/modules/ssm', 'modules/ssm', options.projectName);
+  appendToFile(
+    INFRA_BASE_VARIABLES_PATH,
+    ssmVariablesContent,
+    options.projectName
+  );
+  appendToFile(INFRA_BASE_MAIN_PATH, ssmModuleContent, options.projectName);
 };
 
 export default applySsm;

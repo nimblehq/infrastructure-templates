@@ -8,6 +8,7 @@ import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
 } from '../../core/constants';
+import { isAWSModuleAdded, requireAWSModules } from '../../core/dependencies';
 
 const bastionVariablesContent = dedent`
   variable "bastion_image_id" {
@@ -88,15 +89,28 @@ const bastionSGOutputsContent = dedent`
     value       = [aws_security_group.bastion.id]
   }`;
 
-const applyBastion = ({ projectName }: AwsOptions) => {
-  copy('aws/modules/bastion', 'modules/bastion', projectName);
-  appendToFile(INFRA_BASE_VARIABLES_PATH, bastionVariablesContent, projectName);
-  appendToFile(INFRA_BASE_MAIN_PATH, bastionModuleContent, projectName);
-  appendToFile(AWS_SECURITY_GROUP_MAIN_PATH, bastionSGMainContent, projectName);
+const applyBastion = async (options: AwsOptions) => {
+  if (isAWSModuleAdded('bastion', options.projectName)) {
+    return;
+  }
+  await requireAWSModules('bastion', 'securityGroup', options);
+
+  copy('aws/modules/bastion', 'modules/bastion', options.projectName);
+  appendToFile(
+    INFRA_BASE_VARIABLES_PATH,
+    bastionVariablesContent,
+    options.projectName
+  );
+  appendToFile(INFRA_BASE_MAIN_PATH, bastionModuleContent, options.projectName);
+  appendToFile(
+    AWS_SECURITY_GROUP_MAIN_PATH,
+    bastionSGMainContent,
+    options.projectName
+  );
   appendToFile(
     AWS_SECURITY_GROUP_OUTPUTS_PATH,
     bastionSGOutputsContent,
-    projectName
+    options.projectName
   );
 };
 

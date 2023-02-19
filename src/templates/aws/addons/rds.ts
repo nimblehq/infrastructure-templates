@@ -8,6 +8,7 @@ import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
 } from '../../core/constants';
+import { isAWSModuleAdded, requireAWSModules } from '../../core/dependencies';
 
 const rdsVariablesContent = dedent`
   variable "rds_instance_type" {
@@ -97,15 +98,28 @@ const rdsSGOutputsContent = dedent`
     value       = [aws_security_group.rds.id]
   }`;
 
-const applyRds = ({ projectName }: AwsOptions) => {
-  copy('aws/modules/rds', 'modules/rds', projectName);
-  appendToFile(INFRA_BASE_VARIABLES_PATH, rdsVariablesContent, projectName);
-  appendToFile(INFRA_BASE_MAIN_PATH, rdsModuleContent, projectName);
-  appendToFile(AWS_SECURITY_GROUP_MAIN_PATH, rdsSGMainContent, projectName);
+const applyRds = async (options: AwsOptions) => {
+  if (isAWSModuleAdded('rds', options.projectName)) {
+    return;
+  }
+  await requireAWSModules('rds', 'securityGroup', options);
+
+  copy('aws/modules/rds', 'modules/rds', options.projectName);
+  appendToFile(
+    INFRA_BASE_VARIABLES_PATH,
+    rdsVariablesContent,
+    options.projectName
+  );
+  appendToFile(INFRA_BASE_MAIN_PATH, rdsModuleContent, options.projectName);
+  appendToFile(
+    AWS_SECURITY_GROUP_MAIN_PATH,
+    rdsSGMainContent,
+    options.projectName
+  );
   appendToFile(
     AWS_SECURITY_GROUP_OUTPUTS_PATH,
     rdsSGOutputsContent,
-    projectName
+    options.projectName
   );
 };
 

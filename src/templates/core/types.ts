@@ -13,9 +13,10 @@ type AWSModuleName =
   | 'ssm';
 
 type AWSModule = {
+  name: AWSModuleName;
   path: string;
   mainContent: string;
-  applyModuleFunction: (options: AwsOptions) => void;
+  applyModuleFunction: (options: AwsOptions) => void | Promise<void>;
 };
 
 export { AWSModuleName, AWSModule };

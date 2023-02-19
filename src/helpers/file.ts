@@ -120,11 +120,11 @@ const containsContent = (
   projectName: string
 ): boolean => {
   const targetPath = getProjectFilePath(target, projectName);
-
   const data = readFileSync(targetPath, 'utf8');
   const lines = data.toString().split('\n');
+  const index = lines.findIndex((line) => line.includes(content));
 
-  return lines.includes(content);
+  return index !== -1;
 };
 
 export {
