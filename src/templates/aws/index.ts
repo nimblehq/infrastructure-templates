@@ -1,4 +1,4 @@
-import * as inquirer from 'inquirer';
+import { prompt } from 'inquirer';
 
 import { GeneralOptions } from '../../commands/generate';
 import { applyAdvancedTemplate } from './advanced';
@@ -32,7 +32,7 @@ type AwsOptions = GeneralOptions & {
 const generateAwsTemplate = async (
   generalOptions: GeneralOptions
 ): Promise<void> => {
-  const awsOptionsPrompt = await inquirer.prompt(awsChoices);
+  const awsOptionsPrompt = await prompt(awsChoices);
   const awsOptions: AwsOptions = {
     ...generalOptions,
     infrastructureType: awsOptionsPrompt.infrastructureType,
