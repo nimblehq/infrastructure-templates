@@ -11,6 +11,7 @@ const securityGroupVariablesContent = dedent`
   variable "nimble_office_ip" {
     description = "Nimble Office IP"
   }`;
+
 const securityGroupModuleContent = dedent`
   module "security_group" {
     source = "../modules/security_group"

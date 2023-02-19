@@ -3,9 +3,12 @@ import { remove } from '../../../helpers/file';
 import { applyCore } from '../../core';
 import applyBastion, {
   bastionModuleContent,
+  bastionSGMainContent,
+  bastionSGOutputsContent,
   bastionVariablesContent,
 } from './bastion';
 import applyCommon from './core/common';
+import applySecurityGroup from './core/securityGroup';
 
 describe('Bastion add-on', () => {
   describe('given valid AWS options', () => {
@@ -21,6 +24,7 @@ describe('Bastion add-on', () => {
 
       applyCore(awsOptions);
       applyCommon(awsOptions);
+      applySecurityGroup(awsOptions); // TODO: Add test to require this
       applyBastion(awsOptions);
     });
 
@@ -53,6 +57,20 @@ describe('Bastion add-on', () => {
       expect(projectDir).toHaveContentInFile(
         'base/variables.tf',
         bastionVariablesContent
+      );
+    });
+
+    it('adds bastion security group main content to security group main.tf', () => {
+      expect(projectDir).toHaveContentInFile(
+        'modules/security_group/main.tf',
+        bastionSGMainContent
+      );
+    });
+
+    it('adds bastion security group outputs content to security group main.tf', () => {
+      expect(projectDir).toHaveContentInFile(
+        'modules/security_group/outputs.tf',
+        bastionSGOutputsContent
       );
     });
   });

@@ -3,6 +3,8 @@ import { dedent } from 'ts-dedent';
 import { AwsOptions } from '..';
 import { appendToFile, copy } from '../../../helpers/file';
 import {
+  AWS_SECURITY_GROUP_MAIN_PATH,
+  AWS_SECURITY_GROUP_OUTPUTS_PATH,
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
 } from '../../core/constants';
@@ -37,6 +39,7 @@ const rdsVariablesContent = dedent`
     description = "Maximum number of RDS read replicas when autoscaling is enabled"
     type = number
   }`;
+
 const rdsModuleContent = dedent`
   module "rds" {
     source = "../modules/rds"
@@ -57,11 +60,57 @@ const rdsModuleContent = dedent`
     autoscaling_max_capacity = var.rds_autoscaling_max_capacity
   }`;
 
+const rdsSGMainContent = dedent`
+  resource "aws_security_group" "rds" {
+    name        = "\${var.namespace}-rds"
+    description = "RDS Security Group"
+    vpc_id      = var.vpc_id
+
+    tags = {
+      Name = "\${var.namespace}-rds-sg"
+    }
+  }
+
+  resource "aws_security_group_rule" "rds_ingress_app_fargate" {
+    type                     = "ingress"
+    security_group_id        = aws_security_group.rds.id
+    from_port                = 5432
+    to_port                  = 5432
+    protocol                 = "tcp"
+    source_security_group_id = aws_security_group.ecs_fargate.id
+  }
+
+  resource "aws_security_group_rule" "rds_ingress_bastion" {
+    type                     = "ingress"
+    security_group_id        = aws_security_group.rds.id
+    from_port                = 5432
+    to_port                  = 5432
+    protocol                 = "tcp"
+    source_security_group_id = aws_security_group.bastion.id
+  }`;
+
+const rdsSGOutputsContent = dedent`
+  output "rds_security_group_ids" {
+    description = "Security group IDs for Aurora"
+    value       = [aws_security_group.rds.id]
+  }`;
+
 const applyRds = ({ projectName }: AwsOptions) => {
   copy('aws/modules/rds', 'modules/rds', projectName);
   appendToFile(INFRA_BASE_VARIABLES_PATH, rdsVariablesContent, projectName);
   appendToFile(INFRA_BASE_MAIN_PATH, rdsModuleContent, projectName);
+  appendToFile(AWS_SECURITY_GROUP_MAIN_PATH, rdsSGMainContent, projectName);
+  appendToFile(
+    AWS_SECURITY_GROUP_OUTPUTS_PATH,
+    rdsSGOutputsContent,
+    projectName
+  );
 };
 
 export default applyRds;
-export { rdsVariablesContent, rdsModuleContent };
+export {
+  rdsVariablesContent,
+  rdsModuleContent,
+  rdsSGMainContent,
+  rdsSGOutputsContent,
+};

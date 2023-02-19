@@ -12,6 +12,7 @@ const vpcOutputsContent = dedent`
     description = "VPC ID"
     value       = module.vpc.vpc_id
   }`;
+
 const vpcModuleContent = dedent`
   module "vpc" {
     source    = "../modules/vpc"

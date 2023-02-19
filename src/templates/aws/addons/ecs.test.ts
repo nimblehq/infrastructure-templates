@@ -2,7 +2,13 @@ import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
 import { applyCore } from '../../core';
 import applyCommon from './core/common';
-import applyEcs, { ecsModuleContent, ecsVariablesContent } from './ecs';
+import applySecurityGroup from './core/securityGroup';
+import applyEcs, {
+  ecsModuleContent,
+  ecsSGMainContent,
+  ecsSGOutputsContent,
+  ecsVariablesContent,
+} from './ecs';
 
 describe('ECS add-on', () => {
   describe('given valid AWS options', () => {
@@ -18,6 +24,7 @@ describe('ECS add-on', () => {
 
       applyCore(awsOptions);
       applyCommon(awsOptions);
+      applySecurityGroup(awsOptions); // TODO: Add test to require this
       applyEcs(awsOptions);
     });
 
@@ -48,6 +55,20 @@ describe('ECS add-on', () => {
       expect(projectDir).toHaveContentInFile(
         'base/variables.tf',
         ecsVariablesContent
+      );
+    });
+
+    it('adds ECS security group main content to security group main.tf', () => {
+      expect(projectDir).toHaveContentInFile(
+        'modules/security_group/main.tf',
+        ecsSGMainContent
+      );
+    });
+
+    it('adds ECS security group outputs content to security group main.tf', () => {
+      expect(projectDir).toHaveContentInFile(
+        'modules/security_group/outputs.tf',
+        ecsSGOutputsContent
       );
     });
   });
