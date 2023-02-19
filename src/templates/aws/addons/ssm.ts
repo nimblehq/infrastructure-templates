@@ -12,6 +12,7 @@ const ssmVariablesContent = dedent`
     description = "The Secret key base for the application"
     type = string
   }`;
+
 const ssmModuleContent = dedent`
   module "ssm" {
     source = "../modules/ssm"

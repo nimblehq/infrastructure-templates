@@ -12,6 +12,7 @@ const ecrVariablesContent = dedent`
     description = "Sets max amount of the latest develop images to be kept"
     type        = number
   }`;
+
 const ecrModuleContent = dedent`
   module "ecr" {
     source = "../modules/ecr"
