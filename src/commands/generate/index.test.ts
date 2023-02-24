@@ -36,7 +36,7 @@ describe('Generator command', () => {
             'modules/bastion/',
             'modules/ecr/',
             'modules/ecs/',
-            'modules/log/',
+            'modules/cloudwatch/',
             'modules/rds/',
             'modules/s3/',
             'modules/security_group/',

@@ -1,12 +1,12 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
 import { applyCore } from '../../core';
+import applyCloudwatch, { cloudwatchModuleContent } from './cloudwatch';
 import applyCommon from './common';
-import applyLog, { logModuleContent } from './log';
 
-describe('Log add-on', () => {
+describe('Cloudwatch add-on', () => {
   describe('given valid AWS options', () => {
-    const projectDir = 'log-addon-test';
+    const projectDir = 'cloudwatch-addon-test';
 
     beforeAll(() => {
       const awsOptions: AwsOptions = {
@@ -18,7 +18,7 @@ describe('Log add-on', () => {
 
       applyCore(awsOptions);
       applyCommon(awsOptions);
-      applyLog(awsOptions);
+      applyCloudwatch(awsOptions);
     });
 
     afterAll(() => {
@@ -32,16 +32,19 @@ describe('Log add-on', () => {
         'base/providers.tf',
         'base/outputs.tf',
         'base/variables.tf',
-        'modules/log/main.tf',
-        'modules/log/variables.tf',
-        'modules/log/outputs.tf',
+        'modules/cloudwatch/main.tf',
+        'modules/cloudwatch/variables.tf',
+        'modules/cloudwatch/outputs.tf',
       ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });
 
-    it('adds log module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('base/main.tf', logModuleContent);
+    it('adds cloudwatch module to main.tf', () => {
+      expect(projectDir).toHaveContentInFile(
+        'base/main.tf',
+        cloudwatchModuleContent
+      );
     });
   });
 });

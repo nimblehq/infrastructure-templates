@@ -5,7 +5,7 @@ import {
   applyCommon,
   applyEcr,
   applyEcs,
-  applyLog,
+  applyCloudwatch,
   applyRds,
   applyRegion,
   applyS3,
@@ -20,7 +20,7 @@ const applyAdvancedTemplate = (options: AwsOptions) => {
   applyVpc(options);
   applySecurityGroup(options);
   applyEcr(options);
-  applyLog(options);
+  applyCloudwatch(options);
   applyS3(options);
   applyAlb(options);
   applyRds(options);
