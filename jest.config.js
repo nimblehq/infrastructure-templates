@@ -10,9 +10,7 @@ module.exports = {
     '!src/**/*.d.ts',
     '!src/index.ts',
   ],
-  globals: {
-    "ts-jest": {
-      diagnostics: false
-    }
-  },
+  transform: {
+    '^.+\\.ts$': ['ts-jest', { diagnostics: false }],
+  }
 };
