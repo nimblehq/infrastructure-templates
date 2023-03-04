@@ -31,10 +31,10 @@ describe('Bastion add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'main.tf',
-        'providers.tf',
-        'outputs.tf',
-        'variables.tf',
+        'base/main.tf',
+        'base/providers.tf',
+        'base/outputs.tf',
+        'base/variables.tf',
         'modules/bastion/main.tf',
         'modules/bastion/variables.tf',
       ];
@@ -43,12 +43,15 @@ describe('Bastion add-on', () => {
     });
 
     it('adds bastion module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('main.tf', bastionModuleContent);
+      expect(projectDir).toHaveContentInFile(
+        'base/main.tf',
+        bastionModuleContent
+      );
     });
 
     it('adds bastion variables to variables.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'variables.tf',
+        'base/variables.tf',
         bastionVariablesContent
       );
     });

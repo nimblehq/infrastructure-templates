@@ -42,7 +42,7 @@ const appendToFile = (
 ): void => {
   const targetPath = getProjectFilePath(target, projectName);
 
-  appendFileSync(targetPath, String(content));
+  appendFileSync(targetPath, `\n${content}\n`);
 };
 
 const copy = (source: string, target: string, projectName: string): void => {

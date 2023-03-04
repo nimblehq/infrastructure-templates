@@ -1,9 +1,9 @@
 import applyAlb from './alb';
 import applyBastion from './bastion';
+import applyCloudwatch from './cloudwatch';
 import applyCommon from './common';
 import applyEcr from './ecr';
 import applyEcs from './ecs';
-import applyLog from './log';
 import applyRds from './rds';
 import applyRegion from './region';
 import applyS3 from './s3';
@@ -17,7 +17,7 @@ export {
   applyCommon,
   applyEcr,
   applyEcs,
-  applyLog,
+  applyCloudwatch,
   applyRds,
   applyRegion,
   applyS3,

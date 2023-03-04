@@ -2,13 +2,16 @@ import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
 import { appendToFile, copy } from '../../../helpers/file';
+import {
+  INFRA_BASE_MAIN_PATH,
+  INFRA_BASE_VARIABLES_PATH,
+} from '../../core/constants';
 
 const ssmVariablesContent = dedent`
   variable "secret_key_base" {
     description = "The Secret key base for the application"
     type = string
-  }
-\n`;
+  }`;
 /* eslint-disable no-template-curly-in-string */
 const databaseUrlString =
   'postgres://${var.rds_username}:${var.rds_password}@${module.rds.db_endpoint}/${var.rds_database_name}';
@@ -23,13 +26,12 @@ const ssmModuleContent = dedent`
       database_url = "${databaseUrlString}"
       secret_key_base = var.secret_key_base
     }
-  }
-\n`;
+  }`;
 
 const applySsm = ({ projectName }: AwsOptions) => {
   copy('aws/modules/ssm', 'modules/ssm', projectName);
-  appendToFile('variables.tf', ssmVariablesContent, projectName);
-  appendToFile('main.tf', ssmModuleContent, projectName);
+  appendToFile(INFRA_BASE_VARIABLES_PATH, ssmVariablesContent, projectName);
+  appendToFile(INFRA_BASE_MAIN_PATH, ssmModuleContent, projectName);
 };
 
 export default applySsm;

@@ -6,7 +6,7 @@ import {
   applyCommon,
   applyEcr,
   applyEcs,
-  applyLog,
+  applyCloudwatch,
   applyRds,
   applyRegion,
   applyS3,
@@ -57,8 +57,8 @@ describe('AWS advanced template', () => {
       expect(applyEcr).toHaveBeenCalledWith(options);
     });
 
-    it('applies log add-on', () => {
-      expect(applyLog).toHaveBeenCalledWith(options);
+    it('applies cloudwatch add-on', () => {
+      expect(applyCloudwatch).toHaveBeenCalledWith(options);
     });
 
     it('applies S3 add-on', () => {

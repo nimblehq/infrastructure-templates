@@ -29,10 +29,10 @@ describe('Region add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'main.tf',
-        'providers.tf',
-        'outputs.tf',
-        'variables.tf',
+        'base/main.tf',
+        'base/providers.tf',
+        'base/outputs.tf',
+        'base/variables.tf',
       ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
@@ -40,7 +40,7 @@ describe('Region add-on', () => {
 
     it('adds region variables to variables.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'variables.tf',
+        'base/variables.tf',
         regionVariablesContent(awsRegion)
       );
     });

@@ -23,7 +23,7 @@ describe('Common add-on', () => {
     });
 
     it('creates the expected file', () => {
-      expect(projectDir).toHaveFile('providers.tf');
+      expect(projectDir).toHaveFile('base/providers.tf');
     });
   });
 });

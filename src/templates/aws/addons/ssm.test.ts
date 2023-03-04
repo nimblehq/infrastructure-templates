@@ -28,10 +28,10 @@ describe('SSM add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'main.tf',
-        'providers.tf',
-        'outputs.tf',
-        'variables.tf',
+        'base/main.tf',
+        'base/providers.tf',
+        'base/outputs.tf',
+        'base/variables.tf',
         'modules/ssm/main.tf',
         'modules/ssm/variables.tf',
         'modules/ssm/outputs.tf',
@@ -41,12 +41,12 @@ describe('SSM add-on', () => {
     });
 
     it('adds SSM module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('main.tf', ssmModuleContent);
+      expect(projectDir).toHaveContentInFile('base/main.tf', ssmModuleContent);
     });
 
     it('adds SSM variables to variables.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'variables.tf',
+        'base/variables.tf',
         ssmVariablesContent
       );
     });

@@ -2,6 +2,10 @@ import * as dedent from 'dedent';
 
 import { AwsOptions } from '..';
 import { appendToFile, copy } from '../../../helpers/file';
+import {
+  INFRA_BASE_MAIN_PATH,
+  INFRA_BASE_VARIABLES_PATH,
+} from '../../core/constants';
 
 const rdsVariablesContent = dedent`
   variable "rds_instance_type" {
@@ -32,8 +36,7 @@ const rdsVariablesContent = dedent`
   variable "rds_autoscaling_max_capacity" {
     description = "Maximum number of RDS read replicas when autoscaling is enabled"
     type = number
-  }
-\n`;
+  }`;
 const rdsModuleContent = dedent`
   module "rds" {
     source = "./modules/rds"
@@ -52,13 +55,12 @@ const rdsModuleContent = dedent`
 
     autoscaling_min_capacity = var.rds_autoscaling_min_capacity
     autoscaling_max_capacity = var.rds_autoscaling_max_capacity
-  }
-\n`;
+  }`;
 
 const applyRds = ({ projectName }: AwsOptions) => {
   copy('aws/modules/rds', 'modules/rds', projectName);
-  appendToFile('variables.tf', rdsVariablesContent, projectName);
-  appendToFile('main.tf', rdsModuleContent, projectName);
+  appendToFile(INFRA_BASE_VARIABLES_PATH, rdsVariablesContent, projectName);
+  appendToFile(INFRA_BASE_MAIN_PATH, rdsModuleContent, projectName);
 };
 
 export default applyRds;

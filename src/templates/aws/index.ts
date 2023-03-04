@@ -12,7 +12,7 @@ const awsChoices = [
       {
         key: 'advanced',
         value: 'advanced',
-        name: 'Complete infrastructure (VPC + ECR + RDS + S3 + FARGATE + LOG + Security groups + ALB)',
+        name: 'Complete infrastructure (VPC + ECR + RDS + S3 + FARGATE + Cloudwatch + Security groups + ALB)',
       },
     ],
   },
