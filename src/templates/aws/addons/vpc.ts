@@ -14,7 +14,7 @@ const vpcOutputsContent = dedent`
   }`;
 const vpcModuleContent = dedent`
   module "vpc" {
-    source    = "./modules/vpc"
+    source    = "../modules/vpc"
 
     namespace = var.namespace
   }`;

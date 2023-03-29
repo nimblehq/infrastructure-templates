@@ -34,7 +34,7 @@ const bastionVariablesContent = dedent`
   }`;
 const bastionModuleContent = dedent`
   module "bastion" {
-    source = "./modules/bastion"
+    source = "../modules/bastion"
 
     subnet_ids                  = module.vpc.public_subnet_ids
     instance_security_group_ids = module.security_group.bastion_security_group_ids

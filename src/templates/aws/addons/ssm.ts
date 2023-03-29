@@ -18,7 +18,7 @@ const databaseUrlString =
 /* eslint-enable no-template-curly-in-string */
 const ssmModuleContent = dedent`
   module "ssm" {
-    source = "./modules/ssm"
+    source = "../modules/ssm"
 
     namespace = var.namespace
 

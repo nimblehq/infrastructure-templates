@@ -33,7 +33,7 @@ const albVariablesContent = dedent`
   \n`;
 const albModuleContent = dedent`
     module "alb" {
-      source = "./modules/alb"
+      source = "../modules/alb"
 
       vpc_id             = module.vpc.vpc_id
       namespace          = var.namespace
