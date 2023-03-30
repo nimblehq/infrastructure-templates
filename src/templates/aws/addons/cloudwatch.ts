@@ -6,7 +6,7 @@ import { INFRA_BASE_MAIN_PATH } from '../../core/constants';
 
 const cloudwatchModuleContent = dedent`
   module "cloudwatch" {
-    source = "./modules/cloudwatch"
+    source = "../modules/cloudwatch"
 
     namespace = var.namespace
   }`;

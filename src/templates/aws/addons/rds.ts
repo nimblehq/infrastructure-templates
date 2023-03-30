@@ -39,7 +39,7 @@ const rdsVariablesContent = dedent`
   }`;
 const rdsModuleContent = dedent`
   module "rds" {
-    source = "./modules/rds"
+    source = "../modules/rds"
 
     namespace = var.namespace
 

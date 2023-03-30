@@ -13,7 +13,7 @@ const securityGroupVariablesContent = dedent`
   }`;
 const securityGroupModuleContent = dedent`
   module "security_group" {
-    source = "./modules/security_group"
+    source = "../modules/security_group"
 
     namespace                   = var.namespace
     vpc_id                      = module.vpc.vpc_id

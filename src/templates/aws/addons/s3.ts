@@ -15,7 +15,7 @@ const s3OutputsContent = dedent`
 
 const s3ModuleContent = dedent`
   module "s3" {
-    source = "./modules/s3"
+    source = "../modules/s3"
 
     namespace   = var.namespace
   }`;

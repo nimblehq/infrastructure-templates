@@ -62,7 +62,7 @@ const ecsVariablesContent = dedent`
 
 const ecsModuleContent = dedent`
   module "ecs" {
-    source = "./modules/ecs"
+    source = "../modules/ecs"
 
     subnets                            = module.vpc.private_subnet_ids
     namespace                          = var.namespace
