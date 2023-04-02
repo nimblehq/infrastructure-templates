@@ -1,4 +1,4 @@
-import { prompt } from 'inquirer';
+import inquirer from 'inquirer';
 
 import Generator from '.';
 import { remove } from '../../helpers/file';
@@ -15,7 +15,7 @@ describe('Generator command', () => {
         const stdoutSpy = jest.spyOn(process.stdout, 'write');
 
         beforeAll(async () => {
-          (prompt as unknown as jest.Mock)
+          (inquirer.prompt as unknown as jest.Mock)
             .mockResolvedValueOnce({
               provider: 'aws',
               versionControl: 'github',
@@ -74,7 +74,7 @@ describe('Generator command', () => {
       const consoleErrorSpy = jest.spyOn(global.console, 'error');
 
       beforeAll(async () => {
-        (prompt as unknown as jest.Mock).mockResolvedValueOnce({
+        (inquirer.prompt as unknown as jest.Mock).mockResolvedValueOnce({
           provider: 'other',
         });
 
@@ -102,7 +102,7 @@ describe('Generator command', () => {
 
       describe('given current machine had terraform', () => {
         beforeAll(async () => {
-          (prompt as unknown as jest.Mock)
+          (inquirer.prompt as unknown as jest.Mock)
             .mockResolvedValueOnce({ provider: 'aws' })
             .mockResolvedValueOnce({ infrastructureType: 'advanced' });
 
@@ -125,7 +125,7 @@ describe('Generator command', () => {
         const consoleErrorSpy = jest.spyOn(global.console, 'error');
 
         beforeAll(async () => {
-          (prompt as unknown as jest.Mock)
+          (inquirer.prompt as unknown as jest.Mock)
             .mockResolvedValueOnce({ provider: 'aws' })
             .mockResolvedValueOnce({ infrastructureType: 'advanced' });
 

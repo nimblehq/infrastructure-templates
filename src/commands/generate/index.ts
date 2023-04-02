@@ -1,5 +1,5 @@
 import { Args, Command } from '@oclif/core';
-import { prompt } from 'inquirer';
+import inquirer from 'inquirer';
 
 import { getProjectPath, remove } from '../../helpers/file';
 import { detectTerraform, formatCode } from '../../helpers/terraform';
@@ -48,7 +48,7 @@ export default class Generator extends Command {
   async run(): Promise<void> {
     const { args } = await this.parse(Generator);
 
-    const generalPrompt = await prompt<GeneralOptions>([
+    const generalPrompt = await inquirer.prompt<GeneralOptions>([
       ...versionControlChoices,
       ...providerChoices,
     ]);

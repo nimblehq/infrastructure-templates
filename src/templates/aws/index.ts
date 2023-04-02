@@ -1,4 +1,4 @@
-import { prompt } from 'inquirer';
+import inquirer from 'inquirer';
 
 import { GeneralOptions } from '../../commands/generate';
 import {
@@ -43,7 +43,7 @@ const applyCommonModules = (options: AwsOptions): void => {
 const generateAwsTemplate = async (
   generalOptions: GeneralOptions
 ): Promise<void> => {
-  const awsOptionsPrompt = await prompt(awsChoices);
+  const awsOptionsPrompt = await inquirer.prompt(awsChoices);
   const awsOptions: AwsOptions = {
     ...generalOptions,
     infrastructureType: awsOptionsPrompt.infrastructureType,
