@@ -5,7 +5,7 @@ const versionControlChoices = [
   {
     type: 'list',
     name: 'versionControl',
-    message: 'Enable version control for this project',
+    message: 'Which Git hosting service you would like to use?',
     choices: [
       {
         value: 'github',
