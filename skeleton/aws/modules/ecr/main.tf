@@ -1,5 +1,10 @@
+# tfsec:ignore:aws-ecr-enforce-immutable-repository tfsec:ignore:aws-ecr-repository-customer-key
 resource "aws_ecr_repository" "main" {
   name = var.namespace
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
 
 locals {

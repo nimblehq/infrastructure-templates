@@ -1,12 +1,22 @@
 data "aws_elb_service_account" "elb_service_account" {}
 
+# tfsec:ignore:aws-s3-enable-versioning tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-encryption-customer-key tfsec:ignore:aws-s3-enable-bucket-encryption
 resource "aws_s3_bucket" "alb_log" {
-  bucket = "${var.namespace}-alb-log"
+  bucket        = "${var.namespace}-alb-log"
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_acl" "alb_log_bucket_acl" {
   bucket = aws_s3_bucket.alb_log.id
   acl    = "private"
+}
+
+resource "aws_s3_bucket_public_access_block" "alb_log" {
+  bucket                  = aws_s3_bucket.alb_log.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 locals {

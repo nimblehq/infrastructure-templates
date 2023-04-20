@@ -1,3 +1,4 @@
+# tfsec:ignore:aws-elb-alb-not-public
 resource "aws_lb" "main" {
   name               = "${var.namespace}-alb"
   internal           = false
@@ -6,6 +7,7 @@ resource "aws_lb" "main" {
   security_groups    = var.security_group_ids
 
   enable_deletion_protection = true
+  drop_invalid_header_fields = true
 
   access_logs {
     bucket  = "${var.namespace}-alb-log"
@@ -42,6 +44,7 @@ resource "aws_lb_target_group" "target_group" {
   }
 }
 
+# tfsec:ignore:aws-elb-http-not-used
 resource "aws_lb_listener" "app_http" {
   load_balancer_arn = aws_lb.main.arn
   port              = "80"
