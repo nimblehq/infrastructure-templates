@@ -1,17 +1,18 @@
-import * as dedent from 'dedent';
+import { dedent } from 'ts-dedent';
 
-import { AwsOptions } from '..';
-import { appendToFile, copy } from '../../../helpers/file';
+import { AwsOptions } from '../..';
+import { appendToFile, copy } from '../../../../helpers/file';
 import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_OUTPUTS_PATH,
-} from '../../core/constants';
+} from '../../../core/constants';
 
 const vpcOutputsContent = dedent`
   output "vpc_id" {
     description = "VPC ID"
     value       = module.vpc.vpc_id
   }`;
+
 const vpcModuleContent = dedent`
   module "vpc" {
     source    = "../modules/vpc"

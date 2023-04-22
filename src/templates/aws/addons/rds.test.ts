@@ -1,8 +1,14 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
 import { applyCore } from '../../core';
-import applyCommon from './common';
-import applyRds, { rdsModuleContent, rdsVariablesContent } from './rds';
+import applyCommon from './core/common';
+import applySecurityGroup from './core/securityGroup';
+import applyRds, {
+  rdsModuleContent,
+  rdsSGMainContent,
+  rdsSGOutputsContent,
+  rdsVariablesContent,
+} from './rds';
 
 describe('RDS add-on', () => {
   describe('given valid AWS options', () => {
@@ -18,6 +24,7 @@ describe('RDS add-on', () => {
 
       applyCore(awsOptions);
       applyCommon(awsOptions);
+      applySecurityGroup(awsOptions); // TODO: Add test to require this
       applyRds(awsOptions);
     });
 
@@ -48,6 +55,20 @@ describe('RDS add-on', () => {
       expect(projectDir).toHaveContentInFile(
         'base/variables.tf',
         rdsVariablesContent
+      );
+    });
+
+    it('adds RDS security group main content to security group main.tf', () => {
+      expect(projectDir).toHaveContentInFile(
+        'modules/security_group/main.tf',
+        rdsSGMainContent
+      );
+    });
+
+    it('adds RDS security group outputs content to security group main.tf', () => {
+      expect(projectDir).toHaveContentInFile(
+        'modules/security_group/outputs.tf',
+        rdsSGOutputsContent
       );
     });
   });

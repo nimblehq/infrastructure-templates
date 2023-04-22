@@ -2,7 +2,7 @@ import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
 import { applyCore } from '../../core';
 import applyCloudwatch, { cloudwatchModuleContent } from './cloudwatch';
-import applyCommon from './common';
+import applyCommon from './core/common';
 
 describe('Cloudwatch add-on', () => {
   describe('given valid AWS options', () => {

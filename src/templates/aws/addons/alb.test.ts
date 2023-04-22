@@ -4,9 +4,12 @@ import { applyCore } from '../../core';
 import applyAlb, {
   albModuleContent,
   albOutputsContent,
+  albSGMainContent,
+  albSGOutputsContent,
   albVariablesContent,
 } from './alb';
-import applyCommon from './common';
+import applyCommon from './core/common';
+import applySecurityGroup from './core/securityGroup';
 
 describe('ALB add-on', () => {
   describe('given valid AWS options', () => {
@@ -22,6 +25,7 @@ describe('ALB add-on', () => {
 
       applyCore(awsOptions);
       applyCommon(awsOptions);
+      applySecurityGroup(awsOptions); // TODO: Add test to require this
       applyAlb(awsOptions);
     });
 
@@ -58,6 +62,20 @@ describe('ALB add-on', () => {
       expect(projectDir).toHaveContentInFile(
         'base/outputs.tf',
         albOutputsContent
+      );
+    });
+
+    it('adds ALB security group main content to security group main.tf', () => {
+      expect(projectDir).toHaveContentInFile(
+        'modules/security_group/main.tf',
+        albSGMainContent
+      );
+    });
+
+    it('adds ALB security group outputs content to security group main.tf', () => {
+      expect(projectDir).toHaveContentInFile(
+        'modules/security_group/outputs.tf',
+        albSGOutputsContent
       );
     });
   });
