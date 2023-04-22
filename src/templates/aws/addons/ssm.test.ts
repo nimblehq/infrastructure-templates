@@ -4,11 +4,17 @@ import { applyCore } from '../../core';
 import applyCommon from './core/common';
 import applySsm, { ssmModuleContent, ssmVariablesContent } from './ssm';
 
+jest.mock('inquirer', () => {
+  return {
+    prompt: jest.fn().mockResolvedValue({ apply: true }),
+  };
+});
+
 describe('SSM add-on', () => {
   describe('given valid AWS options', () => {
     const projectDir = 'ssm-addon-test';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
@@ -16,9 +22,9 @@ describe('SSM add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyCore(awsOptions);
-      applyCommon(awsOptions);
-      applySsm(awsOptions);
+      await applyCore(awsOptions);
+      await applyCommon(awsOptions);
+      await applySsm(awsOptions);
     });
 
     afterAll(() => {

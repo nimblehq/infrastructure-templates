@@ -6,7 +6,7 @@ describe('Common add-on', () => {
   describe('given valid AwsOptions', () => {
     const projectDir = 'common-addon-test';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
@@ -14,7 +14,7 @@ describe('Common add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyCommon(awsOptions);
+      await applyCommon(awsOptions);
     });
 
     afterAll(() => {

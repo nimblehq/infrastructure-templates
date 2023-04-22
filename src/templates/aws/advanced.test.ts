@@ -24,8 +24,8 @@ describe('AWS advanced template', () => {
       awsRegion: 'ap-southeast-1',
     };
 
-    beforeAll(() => {
-      applyAdvancedTemplate(options);
+    beforeAll(async () => {
+      await applyAdvancedTemplate(options);
     });
 
     afterAll(() => {

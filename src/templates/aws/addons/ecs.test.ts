@@ -2,7 +2,6 @@ import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
 import { applyCore } from '../../core';
 import applyCommon from './core/common';
-import applySecurityGroup from './core/securityGroup';
 import applyEcs, {
   ecsModuleContent,
   ecsSGMainContent,
@@ -10,11 +9,17 @@ import applyEcs, {
   ecsVariablesContent,
 } from './ecs';
 
+jest.mock('inquirer', () => {
+  return {
+    prompt: jest.fn().mockResolvedValue({ apply: true }),
+  };
+});
+
 describe('ECS add-on', () => {
   describe('given valid AWS options', () => {
     const projectDir = 'ecs-addon-test';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
@@ -22,10 +27,9 @@ describe('ECS add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyCore(awsOptions);
-      applyCommon(awsOptions);
-      applySecurityGroup(awsOptions); // TODO: Add test to require this
-      applyEcs(awsOptions);
+      await applyCore(awsOptions);
+      await applyCommon(awsOptions);
+      await applyEcs(awsOptions);
     });
 
     afterAll(() => {

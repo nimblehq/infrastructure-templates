@@ -4,11 +4,17 @@ import { applyCore } from '../../core';
 import applyCommon from './core/common';
 import applyS3, { s3ModuleContent, s3OutputsContent } from './s3';
 
+jest.mock('inquirer', () => {
+  return {
+    prompt: jest.fn().mockResolvedValue({ apply: true }),
+  };
+});
+
 describe('S3 add-on', () => {
   describe('given valid AWS options', () => {
     const projectDir = 's3-addon-test';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
@@ -16,9 +22,9 @@ describe('S3 add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyCore(awsOptions);
-      applyCommon(awsOptions);
-      applyS3(awsOptions);
+      await applyCore(awsOptions);
+      await applyCommon(awsOptions);
+      await applyS3(awsOptions);
     });
 
     afterAll(() => {

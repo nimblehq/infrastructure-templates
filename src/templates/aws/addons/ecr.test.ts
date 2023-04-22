@@ -4,11 +4,17 @@ import { applyCore } from '../../core';
 import applyCommon from './core/common';
 import applyEcr, { ecrModuleContent, ecrVariablesContent } from './ecr';
 
+jest.mock('inquirer', () => {
+  return {
+    prompt: jest.fn().mockResolvedValue({ apply: true }),
+  };
+});
+
 describe('ECR add-on', () => {
   describe('given valid AWS options', () => {
     const projectDir = 'ecr-addon-test';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
@@ -16,9 +22,9 @@ describe('ECR add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyCore(awsOptions);
-      applyCommon(awsOptions);
-      applyEcr(awsOptions);
+      await applyCore(awsOptions);
+      await applyCommon(awsOptions);
+      await applyEcr(awsOptions);
     });
 
     afterAll(() => {

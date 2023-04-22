@@ -32,12 +32,13 @@ describe('AWS template', () => {
     };
 
     describe('given infrastructureType is advanced', () => {
-      beforeAll(() => {
+      beforeAll(async () => {
         (prompt as unknown as jest.Mock).mockResolvedValue({
           infrastructureType: infrastructureType,
           awsRegion: region,
         });
-        generateAwsTemplate(options);
+
+        await generateAwsTemplate(options);
       });
 
       afterAll(() => {

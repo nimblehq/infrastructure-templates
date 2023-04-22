@@ -4,12 +4,18 @@ import { applyCore } from '../../../core';
 import applyCommon from './common';
 import applyRegion, { regionVariablesContent } from './region';
 
+jest.mock('inquirer', () => {
+  return {
+    prompt: jest.fn().mockResolvedValue({ apply: true }),
+  };
+});
+
 describe('Region add-on', () => {
   describe('given valid AWS options', () => {
     const projectDir = 'region-addon-test';
     const awsRegion = 'ap-southeast-1';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
@@ -17,9 +23,9 @@ describe('Region add-on', () => {
         awsRegion,
       };
 
-      applyCore(awsOptions);
-      applyCommon(awsOptions);
-      applyRegion(awsOptions);
+      await applyCore(awsOptions);
+      await applyCommon(awsOptions);
+      await applyRegion(awsOptions);
     });
 
     afterAll(() => {

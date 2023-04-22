@@ -7,7 +7,7 @@ import {
   applyBastion,
   applyEcr,
   applyEcs,
-  applyLog,
+  applyCloudwatch,
   applyRds,
   applyS3,
   applySecurityGroup,
@@ -54,11 +54,11 @@ const AWS_MODULES: Record<AWSModuleName, AWSModule> = {
     mainContent: 'module "ecs"',
     applyModuleFunction: (options: AwsOptions) => applyEcs(options),
   },
-  log: {
-    name: 'log',
-    path: 'modules/log',
-    mainContent: 'module "log"',
-    applyModuleFunction: (options: AwsOptions) => applyLog(options),
+  cloudwatch: {
+    name: 'cloudwatch',
+    path: 'modules/cloudwatch',
+    mainContent: 'module "cloudwatch"',
+    applyModuleFunction: (options: AwsOptions) => applyCloudwatch(options),
   },
   rds: {
     name: 'rds',

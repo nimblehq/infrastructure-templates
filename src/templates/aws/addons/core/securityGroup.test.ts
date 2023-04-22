@@ -7,11 +7,17 @@ import applySecurityGroup, {
   securityGroupVariablesContent,
 } from './securityGroup';
 
+jest.mock('inquirer', () => {
+  return {
+    prompt: jest.fn().mockResolvedValue({ apply: true }),
+  };
+});
+
 describe('Security group add-on', () => {
   describe('given valid AWS options', () => {
     const projectDir = 'security-group-addon-test';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
@@ -19,9 +25,9 @@ describe('Security group add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyCore(awsOptions);
-      applyCommon(awsOptions);
-      applySecurityGroup(awsOptions);
+      await applyCore(awsOptions);
+      await applyCommon(awsOptions);
+      await applySecurityGroup(awsOptions);
     });
 
     afterAll(() => {

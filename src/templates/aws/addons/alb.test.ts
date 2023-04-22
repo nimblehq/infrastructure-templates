@@ -9,13 +9,18 @@ import applyAlb, {
   albVariablesContent,
 } from './alb';
 import applyCommon from './core/common';
-import applySecurityGroup from './core/securityGroup';
+
+jest.mock('inquirer', () => {
+  return {
+    prompt: jest.fn().mockResolvedValue({ apply: true }),
+  };
+});
 
 describe('ALB add-on', () => {
   describe('given valid AWS options', () => {
     const projectDir = 'alb-addon-test';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
@@ -23,10 +28,9 @@ describe('ALB add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyCore(awsOptions);
-      applyCommon(awsOptions);
-      applySecurityGroup(awsOptions); // TODO: Add test to require this
-      applyAlb(awsOptions);
+      await applyCore(awsOptions);
+      await applyCommon(awsOptions);
+      await applyAlb(awsOptions);
     });
 
     afterAll(() => {

@@ -7,7 +7,7 @@ type AWSModuleName =
   | 'bastion'
   | 'ecr'
   | 'ecs'
-  | 'log'
+  | 'cloudwatch'
   | 'rds'
   | 's3'
   | 'ssm';

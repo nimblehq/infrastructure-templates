@@ -7,11 +7,17 @@ import applyCloudwatch, {
 } from './cloudwatch';
 import applyCommon from './core/common';
 
+jest.mock('inquirer', () => {
+  return {
+    prompt: jest.fn().mockResolvedValue({ apply: true }),
+  };
+});
+
 describe('Cloudwatch add-on', () => {
   describe('given valid AWS options', () => {
     const projectDir = 'cloudwatch-addon-test';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
@@ -19,9 +25,9 @@ describe('Cloudwatch add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyCore(awsOptions);
-      applyCommon(awsOptions);
-      applyCloudwatch(awsOptions);
+      await applyCore(awsOptions);
+      await applyCommon(awsOptions);
+      await applyCloudwatch(awsOptions);
     });
 
     afterAll(() => {

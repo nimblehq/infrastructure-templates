@@ -24,7 +24,7 @@ const cloudwatchModuleContent = dedent`
   }`;
 
 const applyCloudwatch = async (options: AwsOptions) => {
-  if (isAWSModuleAdded('log', options.projectName)) {
+  if (isAWSModuleAdded('cloudwatch', options.projectName)) {
     return;
   }
 

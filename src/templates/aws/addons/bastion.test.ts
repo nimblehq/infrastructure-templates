@@ -10,11 +10,17 @@ import applyBastion, {
 import applyCommon from './core/common';
 import applySecurityGroup from './core/securityGroup';
 
+jest.mock('inquirer', () => {
+  return {
+    prompt: jest.fn().mockResolvedValue({ apply: true }),
+  };
+});
+
 describe('Bastion add-on', () => {
   describe('given valid AWS options', () => {
     const projectDir = 'bastion-addon-test';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
@@ -22,10 +28,10 @@ describe('Bastion add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyCore(awsOptions);
-      applyCommon(awsOptions);
-      applySecurityGroup(awsOptions); // TODO: Add test to require this
-      applyBastion(awsOptions);
+      await applyCore(awsOptions);
+      await applyCommon(awsOptions);
+      await applySecurityGroup(awsOptions); // TODO: Add test to require this
+      await applyBastion(awsOptions);
     });
 
     afterAll(() => {
