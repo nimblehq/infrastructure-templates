@@ -94,3 +94,33 @@ variable "secrets_arns" {
   description = "The ARNs of the SSM Parameter Store parameters"
   type        = list(string)
 }
+
+variable "deployment_minimum_healthy_percent" {
+  description = "Lower limit of the number of running tasks running during deployment"
+  type        = number
+}
+
+variable "deployment_maximum_percent" {
+  description = "Upper limit of the number of running tasks running during deployment"
+  type        = number
+}
+
+variable "min_instance_count" {
+  description = "Autoscaling minimum instance count"
+  type        = number
+}
+
+variable "max_instance_count" {
+  description = "Autoscaling maximum instance count"
+  type        = number
+}
+
+variable "autoscaling_target_cpu_percentage" {
+  description = "Autoscaling target CPU percentage"
+  type        = number
+}
+
+variable "autoscaling_target_memory_percentage" {
+  description = "Autoscaling target memory percentage"
+  type        = number
+}
