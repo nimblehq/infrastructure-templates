@@ -94,12 +94,12 @@ data "aws_ecs_task_definition" "task" {
 }
 
 resource "aws_iam_policy" "ecs_task_execution_ssm" {
-  name   = "ECSTaskExecutionAccessSSMPolicy"
+  name   = "${var.namespace}-ECSTaskExecutionAccessSSMPolicy"
   policy = jsonencode(local.ecs_task_execution_ssm_policy)
 }
 
 resource "aws_iam_policy" "ecs_task_excution_service_scaling" {
-  name   = "ECSAutoScalingPolicy"
+  name   = "${var.namespace}-ECSAutoScalingPolicy"
   policy = jsonencode(local.ecs_service_scaling_policy)
 }
 
