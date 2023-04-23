@@ -30,6 +30,20 @@ locals {
 
   container_definitions = templatefile("${path.module}/service.json.tftpl", local.container_vars)
 
+  ecs_task_execution_assume_role_policy = {
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = ""
+        Effect    = "Allow"
+        Action    = "sts:AssumeRole"
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+      }
+    ]
+  }
+
   ecs_task_execution_ssm_policy = {
     Version = "2012-10-17",
     Statement = [
@@ -80,20 +94,6 @@ data "aws_ecs_task_definition" "task" {
   task_definition = aws_ecs_task_definition.main.family
 }
 
-data "aws_iam_policy_document" "ecs_task_execution_role" {
-  version = "2012-10-17"
-  statement {
-    sid     = ""
-    effect  = "Allow"
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["ecs-tasks.amazonaws.com"]
-    }
-  }
-}
-
 resource "aws_iam_policy" "ecs_task_execution_ssm" {
   name   = "ECSTaskExecutionAccessSSMPolicy"
   policy = jsonencode(local.ecs_task_execution_ssm_policy)
@@ -106,7 +106,7 @@ resource "aws_iam_policy" "ecs_task_excution_service_scaling" {
 
 resource "aws_iam_role" "ecs_task_execution_role" {
   name               = "${var.namespace}-ecs-execution-role"
-  assume_role_policy = data.aws_iam_policy_document.ecs_task_execution_role.json
+  assume_role_policy = jsonencode(local.ecs_task_execution_assume_role_policy)
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role" {
