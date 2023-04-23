@@ -1,6 +1,7 @@
-import { AwsOptions } from '..';
-import { remove } from '../../../helpers/file';
-import { applyCore } from '../../core';
+import { remove } from '@/helpers/file';
+import { AwsOptions } from '@/templates/aws';
+import { applyCore } from '@/templates/core';
+
 import applyBastion, {
   bastionModuleContent,
   bastionSGMainContent,
@@ -8,7 +9,6 @@ import applyBastion, {
   bastionVariablesContent,
 } from './bastion';
 import applyCommon from './core/common';
-import applySecurityGroup from './core/securityGroup';
 
 jest.mock('inquirer', () => {
   return {
@@ -30,7 +30,6 @@ describe('Bastion add-on', () => {
 
       await applyCore(awsOptions);
       await applyCommon(awsOptions);
-      await applySecurityGroup(awsOptions); // TODO: Add test to require this
       await applyBastion(awsOptions);
     });
 

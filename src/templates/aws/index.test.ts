@@ -1,8 +1,9 @@
 import { prompt } from 'inquirer';
 
+import { GeneralOptions } from '@/commands/generate';
+import { remove } from '@/helpers/file';
+
 import { generateAwsTemplate } from '.';
-import { GeneralOptions } from '../../commands/generate';
-import { remove } from '../../helpers/file';
 import {
   applyCommon,
   applyRegion,

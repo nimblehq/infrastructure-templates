@@ -1,14 +1,14 @@
 import { Args, Command, ux } from '@oclif/core';
 import { prompt } from 'inquirer';
 
-import { getProjectPath, remove } from '../../helpers/file';
-import { detectTerraform, formatCode } from '../../helpers/terraform';
+import { getProjectPath, remove } from '@/helpers/file';
+import { detectTerraform, formatCode } from '@/helpers/terraform';
 import {
   applyVersionControl,
   versionControlChoices,
-} from '../../templates/addons/versionControl';
-import { generateAwsTemplate } from '../../templates/aws';
-import { applyCore } from '../../templates/core';
+} from '@/templates/addons/versionControl';
+import { generateAwsTemplate } from '@/templates/aws';
+import { applyCore } from '@/templates/core';
 
 type GeneralOptions = {
   projectName: string;

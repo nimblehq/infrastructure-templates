@@ -1,4 +1,4 @@
-import { AwsOptions } from '../aws';
+import { AwsOptions } from '@/templates/aws';
 
 type AWSModuleName =
   | 'vpc'

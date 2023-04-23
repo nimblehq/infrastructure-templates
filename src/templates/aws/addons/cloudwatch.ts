@@ -1,18 +1,18 @@
 import { dedent } from 'ts-dedent';
 
-import { AwsOptions } from '..';
-import { appendToFile, copy } from '../../../helpers/file';
+import { appendToFile, copy } from '@/helpers/file';
+import { AwsOptions } from '@/templates/aws';
 import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
-} from '../../core/constants';
+} from '@/templates/core/constants';
+import { isAWSModuleAdded } from '@/templates/core/dependencies';
 
 const cloudwatchVariablesContent = dedent`
   variable "cloudwatch_log_retention_in_days" {
     description = "How long (days) to retain the cloudwatch log data"
     default     = 365
   }`;
-import { isAWSModuleAdded } from '../../core/dependencies';
 
 const cloudwatchModuleContent = dedent`
   module "cloudwatch" {

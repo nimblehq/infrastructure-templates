@@ -24,7 +24,8 @@
     "@oclif/plugin-plugins": "^2",
     "@types/dedent": "^0.7.0",
     "inquirer": "^8.2.4",
-    "ts-dedent": "^2.2.0"
+    "ts-dedent": "^2.2.0",
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@nimblehq/eslint-config-nimble-core": "2.6.0",

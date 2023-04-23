@@ -1,12 +1,15 @@
 import { dedent } from 'ts-dedent';
 
-import { AwsOptions } from '..';
-import { appendToFile, copy } from '../../../helpers/file';
+import { appendToFile, copy } from '@/helpers/file';
+import { AwsOptions } from '@/templates/aws';
 import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
-} from '../../core/constants';
-import { isAWSModuleAdded, requireAWSModules } from '../../core/dependencies';
+} from '@/templates/core/constants';
+import {
+  isAWSModuleAdded,
+  requireAWSModules,
+} from '@/templates/core/dependencies';
 
 const ssmVariablesContent = dedent`
   variable "secret_key_base" {

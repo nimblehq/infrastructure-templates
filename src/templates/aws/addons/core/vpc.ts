@@ -1,12 +1,12 @@
 import { dedent } from 'ts-dedent';
 
-import { AwsOptions } from '../..';
-import { appendToFile, copy } from '../../../../helpers/file';
+import { appendToFile, copy } from '@/helpers/file';
+import { AwsOptions } from '@/templates/aws';
 import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_OUTPUTS_PATH,
-} from '../../../core/constants';
-import { isAWSModuleAdded } from '../../../core/dependencies';
+} from '@/templates/core/constants';
+import { isAWSModuleAdded } from '@/templates/core/dependencies';
 
 const vpcOutputsContent = dedent`
   output "vpc_id" {

@@ -1,6 +1,7 @@
+import { GeneralOptions } from '@/commands/generate';
+import { remove } from '@/helpers/file';
+
 import { applyVersionControl } from '.';
-import { GeneralOptions } from '../../../commands/generate';
-import { remove } from '../../../helpers/file';
 
 describe('Version control add-on', () => {
   describe('given valid GeneralOptions', () => {

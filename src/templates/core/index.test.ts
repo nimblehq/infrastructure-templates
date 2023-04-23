@@ -1,6 +1,7 @@
+import { remove } from '@/helpers/file';
+import { AwsOptions } from '@/templates/aws';
+
 import { applyCore } from '.';
-import { remove } from '../../helpers/file';
-import { AwsOptions } from '../aws';
 
 describe('Core codebase', () => {
   describe('given valid AwsOptions', () => {

@@ -1,5 +1,6 @@
-import { AwsOptions } from '../../';
-import { remove } from '../../../../helpers/file';
+import { remove } from '@/helpers/file';
+import { AwsOptions } from '@/templates/aws';
+
 import applyCommon from './common';
 
 describe('Common add-on', () => {

@@ -1,7 +1,7 @@
-/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
+const { pathsToModuleNameMapper } = require('ts-jest')
+const { compilerOptions } = require('./tsconfig')
+
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   setupFilesAfterEnv: ['<rootDir>/test/jest.setup.ts'],
   verbose: true,
@@ -12,5 +12,8 @@ module.exports = {
   ],
   transform: {
     '^.+\\.ts$': ['ts-jest', { diagnostics: false }],
-  }
+  },
+  roots: ['<rootDir>'],
+  modulePaths: [compilerOptions.baseUrl],
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths /*, { prefix: '<rootDir>/' } */),
 };

@@ -1,15 +1,18 @@
 import { dedent } from 'ts-dedent';
 
-import { AwsOptions } from '..';
-import { appendToFile, copy } from '../../../helpers/file';
+import { appendToFile, copy } from '@/helpers/file';
+import { AwsOptions } from '@/templates/aws';
 import {
   AWS_SECURITY_GROUP_MAIN_PATH,
   AWS_SECURITY_GROUP_OUTPUTS_PATH,
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_OUTPUTS_PATH,
   INFRA_BASE_VARIABLES_PATH,
-} from '../../core/constants';
-import { isAWSModuleAdded, requireAWSModules } from '../../core/dependencies';
+} from '@/templates/core/constants';
+import {
+  isAWSModuleAdded,
+  requireAWSModules,
+} from '@/templates/core/dependencies';
 
 const albVariablesContent = dedent`
   variable "health_check_path" {

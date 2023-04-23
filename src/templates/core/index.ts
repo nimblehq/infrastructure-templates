@@ -1,5 +1,5 @@
-import { GeneralOptions } from '../../commands/generate';
-import { copy, rename } from '../../helpers/file';
+import { GeneralOptions } from '@/commands/generate';
+import { copy, rename } from '@/helpers/file';
 
 const applyCore = async (generalOptions: GeneralOptions) => {
   const { projectName } = generalOptions;

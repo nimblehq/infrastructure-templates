@@ -1,6 +1,7 @@
-import { AwsOptions } from '..';
-import { remove } from '../../../helpers/file';
-import { applyCore } from '../../core';
+import { remove } from '@/helpers/file';
+import { AwsOptions } from '@/templates/aws';
+import { applyCore } from '@/templates/core';
+
 import applyAlb, {
   albModuleContent,
   albOutputsContent,

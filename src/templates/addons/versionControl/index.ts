@@ -1,5 +1,5 @@
-import { GeneralOptions } from '../../../commands/generate';
-import { copy } from '../../../helpers/file';
+import { GeneralOptions } from '@/commands/generate';
+import { copy } from '@/helpers/file';
 
 const versionControlChoices = [
   {

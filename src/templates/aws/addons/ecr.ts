@@ -1,12 +1,12 @@
 import { dedent } from 'ts-dedent';
 
-import { AwsOptions } from '..';
-import { appendToFile, copy } from '../../../helpers/file';
+import { appendToFile, copy } from '@/helpers/file';
+import { AwsOptions } from '@/templates/aws';
 import {
   INFRA_SHARED_MAIN_PATH,
   INFRA_SHARED_VARIABLES_PATH,
-} from '../../core/constants';
-import { isAWSModuleAdded } from '../../core/dependencies';
+} from '@/templates/core/constants';
+import { isAWSModuleAdded } from '@/templates/core/dependencies';
 
 const ecrVariablesContent = dedent`
   variable "image_limit" {

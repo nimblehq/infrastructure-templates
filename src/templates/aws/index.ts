@@ -1,6 +1,7 @@
 import { prompt } from 'inquirer';
 
-import { GeneralOptions } from '../../commands/generate';
+import { GeneralOptions } from '@/commands/generate';
+
 import {
   applyCommon,
   applyIamUserAndGroup,

@@ -1,5 +1,6 @@
+import { remove } from '@/helpers/file';
+
 import { AwsOptions } from '.';
-import { remove } from '../../helpers/file';
 import {
   applyAlb,
   applyBastion,

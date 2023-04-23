@@ -1,6 +1,7 @@
-import { AwsOptions } from '../..';
-import { remove } from '../../../../helpers/file';
-import { applyCore } from '../../../core';
+import { remove } from '@/helpers/file';
+import { AwsOptions } from '@/templates/aws';
+import { applyCore } from '@/templates/core';
+
 import applyCommon from './common';
 import applyVpc, { vpcModuleContent, vpcOutputsContent } from './vpc';
 
@@ -8,7 +9,7 @@ describe('VPC add-on', () => {
   describe('given valid AWS options', () => {
     const projectDir = 'vpc-addon-test';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
@@ -16,9 +17,9 @@ describe('VPC add-on', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyCore(awsOptions);
-      applyCommon(awsOptions);
-      applyVpc(awsOptions);
+      await applyCore(awsOptions);
+      await applyCommon(awsOptions);
+      await applyVpc(awsOptions);
     });
 
     afterAll(() => {

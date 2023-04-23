@@ -1,11 +1,12 @@
 import { prompt } from 'inquirer';
 
+import { remove } from '@/helpers/file';
+import { formatCode, detectTerraform } from '@/helpers/terraform';
+
 import Generator from '.';
-import { remove } from '../../helpers/file';
-import { formatCode, detectTerraform } from '../../helpers/terraform';
 
 jest.mock('inquirer');
-jest.mock('../../helpers/terraform');
+jest.mock('@/helpers/terraform');
 
 describe('Generator command', () => {
   describe('given valid options', () => {

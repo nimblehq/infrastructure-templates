@@ -1,6 +1,6 @@
-import { AwsOptions } from '../..';
-import { copy } from '../../../../helpers/file';
-import { INFRA_BASE_PATH, INFRA_SHARED_PATH } from '../../../core/constants';
+import { copy } from '@/helpers/file';
+import { AwsOptions } from '@/templates/aws';
+import { INFRA_BASE_PATH, INFRA_SHARED_PATH } from '@/templates/core/constants';
 
 const applyCommon = async (options: AwsOptions) => {
   copy(

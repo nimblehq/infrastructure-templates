@@ -1,15 +1,15 @@
 import { dedent } from 'ts-dedent';
 
-import { AwsOptions } from '../..';
-import { appendToFile, copy } from '../../../../helpers/file';
+import { appendToFile, copy } from '@/helpers/file';
+import { AwsOptions } from '@/templates/aws';
 import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
-} from '../../../core/constants';
+} from '@/templates/core/constants';
 import {
   isAWSModuleAdded,
   requireAWSModules,
-} from '../../../core/dependencies';
+} from '@/templates/core/dependencies';
 
 const securityGroupVariablesContent = dedent`
   variable "nimble_office_ip" {
