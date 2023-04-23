@@ -95,16 +95,6 @@ variable "secrets_arns" {
   type        = list(string)
 }
 
-variable "deployment_minimum_healthy_percent" {
-  description = "Lower limit of the number of running tasks running during deployment"
-  type        = number
-}
-
-variable "deployment_maximum_percent" {
-  description = "Upper limit of the number of running tasks running during deployment"
-  type        = number
-}
-
 variable "min_instance_count" {
   description = "Autoscaling minimum instance count"
   type        = number
