@@ -18,7 +18,7 @@ import {
 import { INFRA_BASE_MAIN_PATH } from './constants';
 import { AWSModule, AWSModuleName } from './types';
 
-const AWS_MODULES: Record<AWSModuleName, AWSModule> = {
+const AWS_MODULES: Record<AWSModuleName | string, AWSModule> = {
   vpc: {
     name: 'vpc',
     path: 'modules/vpc',
@@ -82,12 +82,12 @@ const AWS_MODULES: Record<AWSModuleName, AWSModule> = {
 };
 
 const isAWSModuleAdded = (
-  dependency: AWSModuleName,
+  dependency: AWSModuleName | string,
   projectName: string
 ): boolean => {
   const module = AWS_MODULES[dependency];
   if (!module) {
-    throw new Error(`Dependency ${dependency} is not supported`);
+    throw new Error(`Module \`${dependency}\` is not supported`);
   }
 
   const isModuleExisting = isExisting(module.path, projectName);
@@ -108,16 +108,16 @@ const applyAWSModule = async (
   const result = await prompt({
     type: 'confirm',
     name: 'apply',
-    message: `The ${currentAwsModule} module requires ${awsModule.name} module. Do you want to add ${awsModule.name} module?`,
+    message: `The \`${currentAwsModule}\` module requires \`${awsModule.name}\` module. Do you want to add \`${awsModule.name}\` module?`,
     default: true,
   });
 
   if (result.apply) {
     try {
-      console.log('Applying module:', awsModule.name);
+      console.log(`Applying module: \`${awsModule.name}\``);
       await awsModule.applyModuleFunction(awsOptions);
     } catch (error) {
-      console.log(`Module ${awsModule.name} is not added:`, error);
+      console.log(`Module \`${awsModule.name}\` was not added:`, error);
 
       return false;
     }
@@ -125,13 +125,13 @@ const applyAWSModule = async (
     return true;
   }
 
-  console.log(`Module ${awsModule.name} is not added`);
+  console.log(`Module \`${awsModule.name}\` was not added`);
   return false;
 };
 
 const requireAWSModules = async (
   currentModule: AWSModuleName,
-  modules: AWSModuleName[] | AWSModuleName,
+  modules: Array<AWSModuleName | string> | AWSModuleName | string,
   awsOptions: AwsOptions
 ): Promise<boolean> => {
   const awsModules = Array.isArray(modules) ? modules : [modules];
@@ -146,9 +146,10 @@ const requireAWSModules = async (
       AWS_MODULES[awsModule],
       awsOptions
     );
+
     if (!result) {
       throw new Error(
-        `Module ${awsModule} is required before adding ${currentModule} module`
+        `Module \`${awsModule}\` is required before adding \`${currentModule}\` module`
       );
     }
   }

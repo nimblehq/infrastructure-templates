@@ -119,6 +119,10 @@ const containsContent = (
   content: string,
   projectName: string
 ): boolean => {
+  if (!isExisting(target, projectName)) {
+    return false;
+  }
+
   const targetPath = getProjectFilePath(target, projectName);
   const data = readFileSync(targetPath, 'utf8');
   const lines = data.toString().split('\n');
