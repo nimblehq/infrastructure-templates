@@ -162,6 +162,11 @@ resource "aws_ecs_service" "main" {
     container_name   = var.namespace
     container_port   = var.app_port
   }
+
+  # Allow external changes without Terraform plan to the desired_count as it can be changed by Autoscaling
+  lifecycle {
+    ignore_changes = [desired_count]
+  }
 }
 
 resource "aws_appautoscaling_target" "main" {
