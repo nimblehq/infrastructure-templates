@@ -2,6 +2,7 @@ import applyAlb from './alb';
 import applyBastion from './bastion';
 import applyCloudwatch from './cloudwatch';
 import applyCommon from './core/common';
+import applyIamUserAndGroup from './core/iamUserAndGroup';
 import applyRegion from './core/region';
 import applySecurityGroup from './core/securityGroup';
 import applyVpc from './core/vpc';
@@ -15,9 +16,10 @@ export {
   applyAlb,
   applyBastion,
   applyCommon,
+  applyCloudwatch,
   applyEcr,
   applyEcs,
-  applyCloudwatch,
+  applyIamUserAndGroup,
   applyRds,
   applyRegion,
   applyS3,
