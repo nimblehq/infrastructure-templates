@@ -18,6 +18,11 @@ const awsChoices = [
     message: 'What kind of infrastructure do you need?',
     choices: [
       {
+        key: 'blank',
+        value: 'blank',
+        name: 'Blank infrastructure (Terraform + AWS provider + folder structure)',
+      },
+      {
         key: 'advanced',
         value: 'advanced',
         name: 'Complete infrastructure (VPC + ECR + RDS + S3 + FARGATE + Cloudwatch + Security groups + ALB)',
@@ -33,7 +38,7 @@ const awsChoices = [
 ];
 
 type AwsOptions = GeneralOptions & {
-  infrastructureType: 'advanced';
+  infrastructureType?: 'blank' | 'advanced';
   awsRegion: string;
 };
 
@@ -53,6 +58,11 @@ const generateAwsTemplate = async (
   };
 
   switch (awsOptions.infrastructureType) {
+    case 'blank':
+      await applyCommonModules(awsOptions);
+
+      break;
+
     case 'advanced':
       await applyCommonModules(awsOptions);
       await applyVpc(awsOptions);

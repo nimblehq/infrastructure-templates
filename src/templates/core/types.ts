@@ -1,16 +1,19 @@
 import { AwsOptions } from '@/templates/aws';
 
-type AWSModuleName =
-  | 'vpc'
-  | 'securityGroup'
-  | 'alb'
-  | 'bastion'
-  | 'ecr'
-  | 'ecs'
-  | 'cloudwatch'
-  | 'rds'
-  | 's3'
-  | 'ssm';
+const awsModules = [
+  'vpc',
+  'securityGroup',
+  'alb',
+  'bastion',
+  'ecr',
+  'ecs',
+  'cloudwatch',
+  'rds',
+  's3',
+  'ssm',
+] as const;
+
+type AWSModuleName = typeof awsModules[number] | string;
 
 type AWSModule = {
   name: AWSModuleName;
@@ -19,4 +22,4 @@ type AWSModule = {
   applyModuleFunction: (options: AwsOptions) => void | Promise<void>;
 };
 
-export { AWSModuleName, AWSModule };
+export { AWSModuleName, AWSModule, awsModules };

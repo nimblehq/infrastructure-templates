@@ -13,7 +13,7 @@ import { applyCore } from '@/templates/core';
 type GeneralOptions = {
   projectName: string;
   versionControl?: 'github' | 'none';
-  provider: 'aws' | 'other';
+  provider: 'aws' | 'other' | string;
 };
 
 const providerChoices = [
