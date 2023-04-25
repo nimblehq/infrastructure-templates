@@ -16,7 +16,7 @@ import {
 } from '@/templates/aws/addons';
 
 import { INFRA_BASE_MAIN_PATH } from './constants';
-import { AWSModule, AWSModuleName } from './types';
+import { AWSModule, AWSModuleName, CustomOption } from './types';
 
 const AWS_MODULES: Record<AWSModuleName | string, AWSModule> = {
   vpc: {
@@ -103,24 +103,31 @@ const isAWSModuleAdded = (
 const applyAWSModule = async (
   currentAwsModule: AWSModuleName,
   awsModule: AWSModule,
-  awsOptions: AwsOptions
+  awsOptions: AwsOptions,
+  options: CustomOption
 ): Promise<boolean> => {
-  const isProject = !AWS_MODULES[currentAwsModule];
+  let result;
 
-  const result = await prompt({
-    type: 'confirm',
-    name: 'apply',
-    message: `The \`${currentAwsModule}\` ${
-      isProject ? 'project' : 'module'
-    } requires \`${awsModule.name}\` module. Do you want to add \`${
-      awsModule.name
-    }\` module?`,
-    default: true,
-  });
+  if (options.skipConfirmation) {
+    result = { apply: true };
+  } else {
+    const isProject = !AWS_MODULES[currentAwsModule];
+    const currentName = currentAwsModule === '.' ? 'current' : currentAwsModule;
+
+    result = await prompt({
+      type: 'confirm',
+      name: 'apply',
+      message: `The \`${currentName}\` ${
+        isProject ? 'project' : 'module'
+      } requires \`${awsModule.name}\` module. Do you want to add \`${
+        awsModule.name
+      }\` module?`,
+      default: true,
+    });
+  }
 
   if (result.apply) {
     try {
-      console.log(`Applying module: \`${awsModule.name}\``);
       await awsModule.applyModuleFunction(awsOptions);
     } catch (error) {
       console.log(`Module \`${awsModule.name}\` was not added:`, error);
@@ -128,6 +135,7 @@ const applyAWSModule = async (
       return false;
     }
 
+    console.log(`Module \`${awsModule.name}\` has been added`);
     return true;
   }
 
@@ -138,7 +146,8 @@ const applyAWSModule = async (
 const requireAWSModules = async (
   currentModule: AWSModuleName,
   modules: Array<AWSModuleName | string> | AWSModuleName | string,
-  awsOptions: AwsOptions
+  awsOptions: AwsOptions,
+  options: CustomOption = { skipConfirmation: false }
 ): Promise<boolean> => {
   const awsModules = Array.isArray(modules) ? modules : [modules];
 
@@ -150,7 +159,8 @@ const requireAWSModules = async (
     const result = await applyAWSModule(
       currentModule,
       AWS_MODULES[awsModule],
-      awsOptions
+      awsOptions,
+      options
     );
 
     if (!result) {

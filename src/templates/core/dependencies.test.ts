@@ -85,7 +85,51 @@ describe('Dependencies', () => {
       });
 
       describe('when module was not added', () => {
-        describe('when user chooses to add module', () => {
+        describe('given the default options', () => {
+          describe('when user chooses to add module', () => {
+            it('returns true', async () => {
+              const options: AwsOptions = {
+                projectName: projectDir,
+                provider: 'aws',
+                infrastructureType: 'advanced',
+                awsRegion: 'ap-southeast-1',
+              };
+
+              await applyCore(options);
+              await applyCommon(options);
+
+              (prompt as unknown as jest.Mock).mockResolvedValue({
+                apply: true,
+              });
+
+              expect(await requireAWSModules('alb', 'vpc', options)).toBe(true);
+            });
+          });
+
+          describe('when user chooses not to add module', () => {
+            it('throws an error', async () => {
+              const options: AwsOptions = {
+                projectName: projectDir,
+                provider: 'aws',
+                infrastructureType: 'advanced',
+                awsRegion: 'ap-southeast-1',
+              };
+
+              await applyCore(options);
+              await applyCommon(options);
+
+              (prompt as unknown as jest.Mock).mockResolvedValue({
+                apply: false,
+              });
+
+              expect(requireAWSModules('alb', 'vpc', options)).rejects.toThrow(
+                'Module `vpc` is required before adding `alb` module'
+              );
+            });
+          });
+        });
+
+        describe('given the skipConfirmation option is true', () => {
           it('returns true', async () => {
             const options: AwsOptions = {
               projectName: projectDir,
@@ -97,33 +141,11 @@ describe('Dependencies', () => {
             await applyCore(options);
             await applyCommon(options);
 
-            (prompt as unknown as jest.Mock).mockResolvedValue({
-              apply: true,
-            });
-
-            expect(await requireAWSModules('alb', 'vpc', options)).toBe(true);
-          });
-        });
-
-        describe('when user chooses not to add module', () => {
-          it('throws an error', async () => {
-            const options: AwsOptions = {
-              projectName: projectDir,
-              provider: 'aws',
-              infrastructureType: 'advanced',
-              awsRegion: 'ap-southeast-1',
-            };
-
-            await applyCore(options);
-            await applyCommon(options);
-
-            (prompt as unknown as jest.Mock).mockResolvedValue({
-              apply: false,
-            });
-
-            expect(requireAWSModules('alb', 'vpc', options)).rejects.toThrow(
-              'Module `vpc` is required before adding `alb` module'
-            );
+            expect(
+              await requireAWSModules('alb', 'vpc', options, {
+                skipConfirmation: true,
+              })
+            ).toBe(true);
           });
         });
       });

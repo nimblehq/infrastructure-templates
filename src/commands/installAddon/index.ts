@@ -43,8 +43,11 @@ export default class InstallAddon extends Command {
       provider: flags.provider,
     };
 
+    const projectName =
+      options.projectName === '.' ? 'current' : options.projectName;
+
     ux.info(
-      `You are about to add \`${args.moduleName}\` module to \`${options.projectName}\` project`
+      `You are about to add \`${args.moduleName}\` module to \`${projectName}\` project`
     );
 
     switch (options.provider) {
@@ -57,7 +60,8 @@ export default class InstallAddon extends Command {
         await requireAWSModules(
           options.projectName,
           args.moduleName,
-          awsOptions
+          awsOptions,
+          { skipConfirmation: true }
         );
 
         break;
