@@ -1,12 +1,12 @@
 import { prompt } from 'inquirer';
 
 import { remove } from '@/helpers/file';
-import { formatCode, detectTerraform } from '@/helpers/terraform';
+import { postProcess } from '@/utils/hooks';
 
 import Generator from '.';
 
 jest.mock('inquirer');
-jest.mock('@/helpers/terraform');
+jest.mock('@/utils/hooks');
 
 describe('Generator command', () => {
   describe('given valid options', () => {
@@ -58,6 +58,10 @@ describe('Generator command', () => {
           expect(stdoutSpy).toHaveBeenCalledWith(
             'The infrastructure template has been generated successfully!\n'
           );
+        });
+
+        it('calls postProcess hook', () => {
+          expect(postProcess).toHaveBeenCalledTimes(1);
         });
       });
 
@@ -117,6 +121,10 @@ describe('Generator command', () => {
             'The infrastructure code was generated at `aws-advanced-test`\n'
           );
         });
+
+        it('calls postProcess hook', () => {
+          expect(postProcess).toHaveBeenCalledTimes(1);
+        });
       });
     });
 
@@ -137,62 +145,6 @@ describe('Generator command', () => {
         await expect(Generator.run([projectDir])).rejects.toThrowError(
           'This provider has not been implemented!'
         );
-      });
-    });
-
-    describe('postProcess', () => {
-      const projectDir = 'postProcess-test';
-
-      describe('given current machine had terraform', () => {
-        beforeAll(async () => {
-          (prompt as unknown as jest.Mock)
-            .mockResolvedValueOnce({ provider: 'aws' })
-            .mockResolvedValueOnce({ infrastructureType: 'advanced' });
-
-          (detectTerraform as jest.Mock).mockImplementation(() => true);
-
-          await Generator.run([projectDir]);
-        });
-
-        afterAll(() => {
-          jest.resetAllMocks();
-          remove('/', projectDir);
-        });
-
-        it('runs formatCode', async () => {
-          await expect(formatCode).toHaveBeenCalled();
-        });
-      });
-
-      describe('given current machine did not have terraform', () => {
-        const consoleErrorSpy = jest.spyOn(global.console, 'error');
-
-        beforeAll(async () => {
-          (prompt as unknown as jest.Mock)
-            .mockResolvedValueOnce({ provider: 'aws' })
-            .mockResolvedValueOnce({ infrastructureType: 'advanced' });
-
-          (detectTerraform as jest.Mock).mockImplementation(() => {
-            throw new Error('terraform not found');
-          });
-
-          await Generator.run([projectDir]);
-        });
-
-        afterAll(() => {
-          jest.resetAllMocks();
-          remove('/', projectDir);
-        });
-
-        it('does NOT run formatCode', async () => {
-          await expect(formatCode).not.toHaveBeenCalled();
-        });
-
-        it('displays the error message', () => {
-          expect(consoleErrorSpy).toHaveBeenCalledWith(
-            Error('terraform not found')
-          );
-        });
       });
     });
   });

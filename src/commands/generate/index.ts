@@ -1,14 +1,14 @@
 import { Args, Command, ux } from '@oclif/core';
 import { prompt } from 'inquirer';
 
-import { getProjectPath, remove } from '@/helpers/file';
-import { detectTerraform, formatCode } from '@/helpers/terraform';
+import { remove } from '@/helpers/file';
 import {
   applyVersionControl,
   versionControlChoices,
 } from '@/templates/addons/versionControl';
 import { generateAwsTemplate } from '@/templates/aws';
 import { applyCore } from '@/templates/core';
+import { postProcess } from '@/utils/hooks';
 
 type GeneralOptions = {
   projectName: string;
@@ -60,6 +60,7 @@ export default class Generator extends Command {
     };
 
     await this.generate(generalOptions);
+    await postProcess(generalOptions);
 
     ux.info(
       `The infrastructure code was generated at \`${generalOptions.projectName}\``
@@ -78,8 +79,6 @@ export default class Generator extends Command {
         default:
           ux.error('This provider has not been implemented!');
       }
-
-      await this.postProcess(generalOptions);
     } catch (error) {
       remove('/', generalOptions.projectName);
 
@@ -93,16 +92,6 @@ export default class Generator extends Command {
   private async applyGeneralParts(generalOptions: GeneralOptions) {
     await applyCore(generalOptions);
     await applyVersionControl(generalOptions);
-  }
-
-  private async postProcess(generalOptions: GeneralOptions) {
-    try {
-      if (await detectTerraform()) {
-        await formatCode(getProjectPath(generalOptions.projectName));
-      }
-    } catch (error) {
-      console.error(error);
-    }
   }
 }
 

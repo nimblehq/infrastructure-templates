@@ -3,6 +3,7 @@ import { Args, Flags, Command, ux } from '@oclif/core';
 import { AwsOptions } from '@/templates/aws';
 import { requireAWSModules } from '@/templates/core/dependencies';
 import { awsModules } from '@/templates/core/types';
+import { postProcess } from '@/utils/hooks';
 
 import { GeneralOptions } from '../generate';
 
@@ -64,6 +65,8 @@ export default class InstallAddon extends Command {
         default:
           this.error('This provider has not been implemented!');
       }
+
+      await postProcess(options);
 
       ux.info(
         `The \`${args.moduleName}\` module has been installed to \`${projectName}\` project successfully!`

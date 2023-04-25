@@ -2,10 +2,12 @@ import { prompt } from 'inquirer';
 
 import Generator from '@/commands/generate';
 import { remove } from '@/helpers/file';
+import { postProcess } from '@/utils/hooks';
 
 import InstallAddon from '.';
 
 jest.mock('inquirer');
+jest.mock('@/utils/hooks');
 
 describe('Install add-on command', () => {
   describe('given AWS provider', () => {
@@ -71,6 +73,11 @@ describe('Install add-on command', () => {
         expect(stdoutSpy).toHaveBeenCalledWith(
           `The \`vpc\` module has been installed to \`${projectDir}\` project successfully!\n`
         );
+      });
+
+      it('calls postProcess hook', () => {
+        // One call for the generator and one for the add-on installation
+        expect(postProcess).toHaveBeenCalledTimes(2);
       });
     });
 

@@ -52,7 +52,11 @@ describe('Terraform helper', () => {
 
         await formatCode('/');
 
-        expect(runCommand).toHaveBeenCalledWith('terraform', ['fmt'], '/');
+        expect(runCommand).toHaveBeenCalledWith(
+          'terraform',
+          ['fmt', '-recursive'],
+          '/'
+        );
       });
     });
 
