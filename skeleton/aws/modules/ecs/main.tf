@@ -84,6 +84,11 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_ssm_policy" {
 
 resource "aws_ecs_cluster" "main" {
   name = "${var.namespace}-ecs-cluster"
+
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
 
 resource "aws_ecs_task_definition" "main" {

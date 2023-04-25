@@ -53,8 +53,9 @@ const bastionModuleContent = dedent`
 
 const bastionSGMainContent = dedent`
   resource "aws_security_group" "bastion" {
-    name   = "\${var.namespace}-bastion"
-    vpc_id = var.vpc_id
+    name        = "\${var.namespace}-bastion"
+    description = "Bastion Security Group"
+    vpc_id      = var.vpc_id
 
     tags = {
       Name = "\${var.namespace}-bastion-sg"
@@ -78,6 +79,7 @@ const bastionSGMainContent = dedent`
     to_port                  = 5432
     protocol                 = "tcp"
     source_security_group_id = aws_security_group.rds.id
+    description              = "From RDS to bastion"
   }`;
 
 const bastionSGOutputsContent = dedent`

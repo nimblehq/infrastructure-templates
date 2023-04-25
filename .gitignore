@@ -9,3 +9,8 @@ oclif.manifest.json
 yarn.lock
 /coverage
 .DS_Store
+
+# IDE
+.vscode
+.idea
+*.iml

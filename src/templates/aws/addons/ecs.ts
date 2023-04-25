@@ -106,6 +106,7 @@ const ecsSGMainContent = dedent`
     from_port                = var.app_port
     to_port                  = var.app_port
     source_security_group_id = aws_security_group.alb.id
+    description              = "From internal VPC to app"
   }
 
   resource "aws_security_group_rule" "ecs_fargate_ingress_private" {
@@ -115,8 +116,10 @@ const ecsSGMainContent = dedent`
     from_port         = 0
     to_port           = 65535
     cidr_blocks       = var.private_subnets_cidr_blocks
+    description       = "From internal VPC to app"
   }
 
+  # tfsec:ignore:aws-ec2-no-public-egress-sgr
   resource "aws_security_group_rule" "ecs_fargate_egress_anywhere" {
     type              = "egress"
     security_group_id = aws_security_group.ecs_fargate.id
@@ -124,6 +127,7 @@ const ecsSGMainContent = dedent`
     from_port         = 0
     to_port           = 0
     cidr_blocks       = ["0.0.0.0/0"]
+    description       = "From app to everywhere"
   }`;
 
 const ecsSGOutputsContent = dedent`
