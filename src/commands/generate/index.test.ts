@@ -11,6 +11,56 @@ jest.mock('@/helpers/terraform');
 describe('Generator command', () => {
   describe('given valid options', () => {
     describe('given provider is AWS', () => {
+      describe('given infrastructure type is blank', () => {
+        const projectDir = 'aws-blank-test';
+        const stdoutSpy = jest.spyOn(process.stdout, 'write');
+
+        beforeAll(async () => {
+          (prompt as unknown as jest.Mock)
+            .mockResolvedValueOnce({
+              provider: 'aws',
+              versionControl: 'github',
+            })
+            .mockResolvedValueOnce({ infrastructureType: 'blank' });
+
+          await Generator.run([projectDir]);
+        });
+
+        afterAll(() => {
+          jest.resetAllMocks();
+          remove('/', projectDir);
+        });
+
+        it('creates expected directories', () => {
+          const expectedDirectories = ['.github/', 'base/', 'shared/'];
+
+          expect(projectDir).toHaveDirectories(expectedDirectories);
+        });
+
+        it('creates expected files', () => {
+          const expectedFiles = [
+            '.gitignore',
+            '.tool-versions',
+            'base/main.tf',
+            'base/variables.tf',
+            'base/providers.tf',
+            'base/outputs.tf',
+            'shared/main.tf',
+            'shared/variables.tf',
+            'shared/providers.tf',
+            'shared/outputs.tf',
+          ];
+
+          expect(projectDir).toHaveFiles(expectedFiles);
+        });
+
+        it('displays the success message', () => {
+          expect(stdoutSpy).toHaveBeenCalledWith(
+            'The infrastructure template has been generated successfully!\n'
+          );
+        });
+      });
+
       describe('given infrastructure type is advanced', () => {
         const projectDir = 'aws-advanced-test';
         const stdoutSpy = jest.spyOn(process.stdout, 'write');
