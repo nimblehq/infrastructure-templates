@@ -36,37 +36,43 @@ export default class InstallAddon extends Command {
   };
 
   async run(): Promise<void> {
-    const { args, flags } = await this.parse(InstallAddon);
+    try {
+      const { args, flags } = await this.parse(InstallAddon);
 
-    const options: GeneralOptions = {
-      projectName: flags.projectName,
-      provider: flags.provider,
-    };
+      const options: GeneralOptions = {
+        projectName: flags.projectName,
+        provider: flags.provider,
+      };
 
-    const projectName =
-      options.projectName === '.' ? 'current' : options.projectName;
+      const projectName =
+        options.projectName === '.' ? 'current' : options.projectName;
+      switch (options.provider) {
+        case 'aws':
+          const awsOptions: AwsOptions = {
+            ...options,
+            awsRegion: 'ap-southeast-1',
+          };
 
-    ux.info(
-      `You are about to add \`${args.moduleName}\` module to \`${projectName}\` project`
-    );
+          await requireAWSModules(
+            options.projectName,
+            args.moduleName,
+            awsOptions,
+            { skipConfirmation: true }
+          );
 
-    switch (options.provider) {
-      case 'aws':
-        const awsOptions: AwsOptions = {
-          ...options,
-          awsRegion: 'ap-southeast-1',
-        };
+          break;
+        default:
+          this.error('This provider has not been implemented!');
+      }
 
-        await requireAWSModules(
-          options.projectName,
-          args.moduleName,
-          awsOptions,
-          { skipConfirmation: true }
-        );
+      ux.info(
+        `The \`${args.moduleName}\` module has been installed to \`${projectName}\` project successfully!`
+      );
+    } catch (error) {
+      let message = 'Unknown Error';
+      if (error instanceof Error) message = error.message;
 
-        break;
-      default:
-        this.error('This provider has not been implemented!');
+      ux.error(message);
     }
   }
 }

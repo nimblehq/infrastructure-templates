@@ -76,13 +76,17 @@ export default class Generator extends Command {
 
           break;
         default:
-          this.error('This provider has not been implemented!');
+          ux.error('This provider has not been implemented!');
       }
 
       await this.postProcess(generalOptions);
     } catch (error) {
       remove('/', generalOptions.projectName);
-      console.error(error);
+
+      let message = 'Unknown Error';
+      if (error instanceof Error) message = error.message;
+
+      ux.error(message);
     }
   }
 

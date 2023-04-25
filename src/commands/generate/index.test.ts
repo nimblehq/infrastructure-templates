@@ -122,29 +122,21 @@ describe('Generator command', () => {
 
     describe('given provider is other', () => {
       const projectDir = 'other-test';
-      const consoleErrorSpy = jest.spyOn(global.console, 'error');
-
       beforeAll(async () => {
         (prompt as unknown as jest.Mock).mockResolvedValueOnce({
           provider: 'other',
         });
-
-        await Generator.run([projectDir]);
       });
 
-      afterAll(() => {
+      afterEach(() => {
         jest.resetAllMocks();
         remove('/', projectDir);
       });
 
-      it('displays the error message', () => {
-        expect(consoleErrorSpy).toHaveBeenCalledWith(
-          Error('This provider has not been implemented!')
+      it('throws an error message', async () => {
+        await expect(Generator.run([projectDir])).rejects.toThrowError(
+          'This provider has not been implemented!'
         );
-      });
-
-      it('does NOT create any files', () => {
-        expect(projectDir).toBeEmpty();
       });
     });
 

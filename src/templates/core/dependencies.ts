@@ -135,11 +135,11 @@ const applyAWSModule = async (
       return false;
     }
 
-    console.log(`Module \`${awsModule.name}\` has been added`);
     return true;
   }
 
   console.log(`Module \`${awsModule.name}\` was not added`);
+
   return false;
 };
 

@@ -122,7 +122,9 @@ describe('Dependencies', () => {
                 apply: false,
               });
 
-              expect(requireAWSModules('alb', 'vpc', options)).rejects.toThrow(
+              await expect(
+                requireAWSModules('alb', 'vpc', options)
+              ).rejects.toThrow(
                 'Module `vpc` is required before adding `alb` module'
               );
             });
@@ -164,7 +166,7 @@ describe('Dependencies', () => {
         await applyCommon(options);
         await applyVpc(options);
 
-        expect(
+        await expect(
           requireAWSModules('alb', ['vpc', 'azure'], options)
         ).rejects.toThrow('Module `azure` is not supported');
       });
