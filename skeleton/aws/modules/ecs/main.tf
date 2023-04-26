@@ -30,7 +30,7 @@ locals {
 
   container_definitions = templatefile("${path.module}/service.json.tftpl", local.container_vars)
 
-  ecs_task_execution_assume_role_policy = {
+  ecs_task_execution_assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
@@ -41,9 +41,9 @@ locals {
         }
       }
     ]
-  }
+  })
 
-  ecs_task_execution_ssm_policy = {
+  ecs_task_execution_ssm_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
@@ -54,11 +54,11 @@ locals {
         Resource = var.secrets_arns
       }
     ]
-  }
+  })
 
   # Required IAM permissions from
   # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-auto-scaling.html#auto-scaling-IAM
-  ecs_service_scaling_policy = {
+  ecs_service_scaling_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
@@ -85,7 +85,7 @@ locals {
         Resource = "*"
       }
     ]
-  }
+  })
 }
 
 # Current task definition on AWS including deployments outside terraform (e.g. CI deployments)
@@ -95,17 +95,18 @@ data "aws_ecs_task_definition" "task" {
 
 resource "aws_iam_policy" "ecs_task_execution_ssm" {
   name   = "${var.namespace}-ECSTaskExecutionAccessSSMPolicy"
-  policy = jsonencode(local.ecs_task_execution_ssm_policy)
+  policy = local.ecs_task_execution_ssm_policy
 }
 
+# tfsec:ignore:aws-iam-no-policy-wildcards
 resource "aws_iam_policy" "ecs_task_excution_service_scaling" {
   name   = "${var.namespace}-ECSAutoScalingPolicy"
-  policy = jsonencode(local.ecs_service_scaling_policy)
+  policy = local.ecs_service_scaling_policy
 }
 
 resource "aws_iam_role" "ecs_task_execution_role" {
   name               = "${var.namespace}-ecs-execution-role"
-  assume_role_policy = jsonencode(local.ecs_task_execution_assume_role_policy)
+  assume_role_policy = local.ecs_task_execution_assume_role_policy
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role" {
