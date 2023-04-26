@@ -73,7 +73,7 @@ export default class Generator extends Command {
       await this.postProcess(generalOptions);
 
       this.log(
-        `The infrastructure code was generated at "${generalOptions.projectName}"`
+        `The infrastructure code was generated at '${generalOptions.projectName}'`
       );
     } catch (error) {
       remove('/', generalOptions.projectName);

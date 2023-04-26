@@ -63,7 +63,7 @@ describe('Generator command', () => {
 
         it('displays the success message', () => {
           expect(stdoutSpy).toHaveBeenCalledWith(
-            'The infrastructure code was generated at "aws-advanced-test"\n'
+            "The infrastructure code was generated at 'aws-advanced-test'\n"
           );
         });
       });
