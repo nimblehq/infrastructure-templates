@@ -116,11 +116,11 @@ variable "autoscaling_target_memory_percentage" {
 }
 
 variable "scale_in_cooldown_period" {
-  description = "The minimum time (in seconds) between two scaling-in activities."
+  description = "The minimum time (in seconds) between two scaling-in activities"
   default = 300
 }
 
 variable "scale_out_cooldown_period" {
-  description = "The minimum time (in seconds) between two scaling-out activities."
+  description = "The minimum time (in seconds) between two scaling-out activities"
   default = 300
 }
