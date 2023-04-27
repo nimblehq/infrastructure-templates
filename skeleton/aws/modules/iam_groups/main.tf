@@ -18,6 +18,16 @@ resource "aws_iam_group_policy_attachment" "admin_access" {
   policy_arn = data.aws_iam_policy.admin_access.arn
 }
 
+resource "aws_iam_group_policy" "developer_allow_manage_own_credentials" {
+  group  = aws_iam_group.developer.name
+  policy = local.allow_manage_own_credentials
+}
+
+resource "aws_iam_group_policy_attachment" "developer_power_user_access" {
+  group      = aws_iam_group.developer.name
+  policy_arn = data.aws_iam_policy.power_user_access.arn
+}
+
 resource "aws_iam_group_policy_attachment" "bot_s3_access" {
   group      = aws_iam_group.bot.name
   policy_arn = data.aws_iam_policy.s3_full_access.arn
@@ -31,19 +41,4 @@ resource "aws_iam_group_policy_attachment" "bot_power_user_access" {
 resource "aws_iam_group_policy" "bot_full_iam_access" {
   group  = aws_iam_group.bot.name
   policy = local.full_iam_access_policy
-}
-
-resource "aws_iam_group_policy" "developer_allow_manage_own_access_key" {
-  group  = aws_iam_group.developer.name
-  policy = local.allow_manage_own_access_key_policy
-}
-
-resource "aws_iam_group_policy" "developer_allow_manage_own_mfa" {
-  group  = aws_iam_group.developer.name
-  policy = local.allow_manage_own_mfa_policy
-}
-
-resource "aws_iam_group_policy_attachment" "developer_power_user_access" {
-  group      = aws_iam_group.developer.name
-  policy_arn = data.aws_iam_policy.power_user_access.arn
 }

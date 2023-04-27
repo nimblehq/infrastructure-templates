@@ -15,7 +15,6 @@ resource "aws_iam_user_login_profile" "user_account" {
   for_each = local.user_accounts
 
   user                    = each.value.name
-  password_reset_required = true
 
   lifecycle {
     ignore_changes = [
