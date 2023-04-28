@@ -56,7 +56,7 @@ describe('Generator command', () => {
 
         it('displays the success message', () => {
           expect(stdoutSpy).toHaveBeenCalledWith(
-            'The infrastructure template has been generated successfully!\n'
+            'The infrastructure code was generated at `aws-blank-test`\n'
           );
         });
 
