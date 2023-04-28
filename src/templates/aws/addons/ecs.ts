@@ -20,7 +20,7 @@ const ecsVariablesContent = dedent`
     type     = string
   }
 
-  variable "ecs" {
+  variable "ecs_config" {
     description = "ECS input variables"
     type = object({
       task_cpu                           = number
@@ -29,6 +29,12 @@ const ecsVariablesContent = dedent`
       task_container_memory              = number
       deployment_maximum_percent         = number
       deployment_minimum_healthy_percent = number
+
+      # Auto-scaling
+      min_instance_count                   = number
+      max_instance_count                   = number
+      autoscaling_target_cpu_percentage    = number
+      autoscaling_target_memory_percentage = number
     })
   }
 
@@ -75,13 +81,19 @@ const ecsModuleContent = dedent`
     ecr_tag                            = var.ecr_tag
     security_groups                    = module.security_group.ecs_security_group_ids
     alb_target_group_arn               = module.alb.alb_target_group_arn
-    aws_cloudwatch_log_group_name      = module.log.aws_cloudwatch_log_group_name
-    desired_count                      = var.ecs.task_desired_count
-    cpu                                = var.ecs.task_cpu
-    memory                             = var.ecs.task_memory
-    deployment_maximum_percent         = var.ecs.deployment_maximum_percent
-    deployment_minimum_healthy_percent = var.ecs.deployment_minimum_healthy_percent
-    container_memory                   = var.ecs.task_container_memory
+    aws_cloudwatch_log_group_name      = module.cloudwatch.aws_cloudwatch_log_group_name
+    desired_count                      = var.ecs_config.task_desired_count
+    cpu                                = var.ecs_config.task_cpu
+    memory                             = var.ecs_config.task_memory
+    deployment_maximum_percent         = var.ecs_config.deployment_maximum_percent
+    deployment_minimum_healthy_percent = var.ecs_config.deployment_minimum_healthy_percent
+    container_memory                   = var.ecs_config.task_container_memory
+
+    # Auto-scaling
+    min_instance_count                   = var.ecs_config.min_instance_count
+    max_instance_count                   = var.ecs_config.max_instance_count
+    autoscaling_target_cpu_percentage    = var.ecs_config.autoscaling_target_cpu_percentage
+    autoscaling_target_memory_percentage = var.ecs_config.autoscaling_target_memory_percentage
 
     environment_variables = var.environment_variables
     secrets_variables     = module.ssm.secrets_variables
