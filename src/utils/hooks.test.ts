@@ -9,7 +9,7 @@ describe('postProcess', () => {
   const projectDir = 'postProcess-test';
   const generalOptions = { projectName: projectDir, provider: 'aws' };
 
-  describe('given current machine had terraform', () => {
+  describe('given the current machine has terraform installed', () => {
     beforeAll(async () => {
       (detectTerraform as jest.Mock).mockImplementation(() => true);
 
@@ -26,7 +26,7 @@ describe('postProcess', () => {
     });
   });
 
-  describe('given current machine did not have terraform', () => {
+  describe('given the current machine does NOT have terraform installed', () => {
     const consoleErrorSpy = jest.spyOn(global.console, 'error');
 
     beforeAll(async () => {
