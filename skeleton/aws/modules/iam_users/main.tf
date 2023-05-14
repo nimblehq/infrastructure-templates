@@ -14,7 +14,7 @@ resource "aws_iam_user" "user_account" {
 resource "aws_iam_user_login_profile" "user_account" {
   for_each = local.user_accounts
 
-  user                    = each.value.name
+  user = each.value.name
 
   lifecycle {
     ignore_changes = [
