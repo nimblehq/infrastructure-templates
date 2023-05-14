@@ -1,13 +1,13 @@
 locals {
   # Comes from https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_my-sec-creds-self-manage.html
-  # Users can view and edit their own passwords, access keys, MFA devices, X.509 certificates, and SSH keys and Git credentials
-  # It also requires the user to set up and authenticate using MFA before performing any other operations in AWS
-  # This example policy does not allow users to reset a password while signing in to the AWS Management Console for the first time.
-  # They must set their MFA first
+  # This policy allows users to view and edit their own passwords, access keys, MFA devices, X.509 certificates, SSH keys, and Git credentials. 
+  # In addition, users are required to set up and authenticate using MFA before performing any other operations in AWS. 
+  # It also means this policy does NOT allow users to reset a password while signing in to the AWS Management Console for the first time. 
+  # They must first set up their MFA because allowing users to change their password without MFA can be a security risk.
   # 
   # The following actions are added to the initial policy from AWS
-  # - iam:GetLoginProfile: allow the IAM user viewing their account info on security page
-  # - iam:GetAccessKeyLastUsed: allow the IAM user viewing their access key's last used
+  # - iam:GetLoginProfile: allows the IAM user to view their account information on the security page.
+  # - iam:GetAccessKeyLastUsed: allows the IAM user to view the last time their access key was used.
   allow_manage_own_credentials = jsonencode({
     Version = "2012-10-17"
     Statement = [
