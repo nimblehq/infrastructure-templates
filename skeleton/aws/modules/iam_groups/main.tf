@@ -28,11 +28,6 @@ resource "aws_iam_group_policy_attachment" "developer_power_user_access" {
   policy_arn = data.aws_iam_policy.power_user_access.arn
 }
 
-resource "aws_iam_group_policy_attachment" "bot_s3_access" {
-  group      = aws_iam_group.bot.name
-  policy_arn = data.aws_iam_policy.s3_full_access.arn
-}
-
 resource "aws_iam_group_policy_attachment" "bot_power_user_access" {
   group      = aws_iam_group.bot.name
   policy_arn = data.aws_iam_policy.power_user_access.arn
