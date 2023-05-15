@@ -12,7 +12,7 @@ locals {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid = "AllowViewAccountInfo"
+        Sid    = "AllowViewAccountInfo"
         Effect = "Allow"
         Action = [
           "iam:GetAccountPasswordPolicy",
@@ -22,16 +22,16 @@ locals {
         Resource = "*"
       },
       {
-        Sid = "AllowManageOwnPasswords"
+        Sid    = "AllowManageOwnPasswords"
         Effect = "Allow"
         Action = [
           "iam:ChangePassword",
           "iam:GetUser"
         ]
-        Resource = "arn:aws:iam::*:user/${aws:username}"
+        Resource = "arn:aws:iam::*:user/$${aws:username}"
       },
       {
-        Sid = "AllowManageOwnAccessKeys"
+        Sid    = "AllowManageOwnAccessKeys"
         Effect = "Allow"
         Action = [
           "iam:CreateAccessKey",
@@ -40,10 +40,10 @@ locals {
           "iam:GetAccessKeyLastUsed",
           "iam:UpdateAccessKey"
         ]
-        Resource = "arn:aws:iam::*:user/${aws:username}"
+        Resource = "arn:aws:iam::*:user/$${aws:username}"
       },
       {
-        Sid = "AllowManageOwnSigningCertificates"
+        Sid    = "AllowManageOwnSigningCertificates"
         Effect = "Allow"
         Action = [
           "iam:DeleteSigningCertificate",
@@ -51,10 +51,10 @@ locals {
           "iam:UpdateSigningCertificate",
           "iam:UploadSigningCertificate"
         ]
-        Resource = "arn:aws:iam::*:user/${aws:username}"
+        Resource = "arn:aws:iam::*:user/$${aws:username}"
       },
       {
-        Sid = "AllowManageOwnSSHPublicKeys"
+        Sid    = "AllowManageOwnSSHPublicKeys"
         Effect = "Allow"
         Action = [
           "iam:DeleteSSHPublicKey",
@@ -63,10 +63,10 @@ locals {
           "iam:UpdateSSHPublicKey",
           "iam:UploadSSHPublicKey"
         ]
-        Resource = "arn:aws:iam::*:user/${aws:username}"
+        Resource = "arn:aws:iam::*:user/$${aws:username}"
       },
       {
-        Sid = "AllowManageOwnGitCredentials"
+        Sid    = "AllowManageOwnGitCredentials"
         Effect = "Allow"
         Action = [
           "iam:CreateServiceSpecificCredential",
@@ -75,10 +75,10 @@ locals {
           "iam:ResetServiceSpecificCredential",
           "iam:UpdateServiceSpecificCredential"
         ]
-        Resource = "arn:aws:iam::*:user/${aws:username}"
+        Resource = "arn:aws:iam::*:user/$${aws:username}"
       },
       {
-        Sid = "AllowManageOwnVirtualMFADevice"
+        Sid    = "AllowManageOwnVirtualMFADevice"
         Effect = "Allow"
         Action = [
           "iam:CreateVirtualMFADevice"
@@ -86,7 +86,7 @@ locals {
         Resource = "arn:aws:iam::*:mfa/*"
       },
       {
-        Sid = "AllowManageOwnUserMFA"
+        Sid    = "AllowManageOwnUserMFA"
         Effect = "Allow"
         Action = [
           "iam:DeactivateMFADevice",
@@ -94,10 +94,10 @@ locals {
           "iam:ListMFADevices",
           "iam:ResyncMFADevice"
         ]
-        Resource = "arn:aws:iam::*:user/${aws:username}"
+        Resource = "arn:aws:iam::*:user/$${aws:username}"
       },
       {
-        Sid = "DenyAllExceptListedIfNoMFA"
+        Sid    = "DenyAllExceptListedIfNoMFA"
         Effect = "Deny"
         NotAction = [
           "iam:CreateVirtualMFADevice",
@@ -124,10 +124,10 @@ locals {
   # It must be able to manage policies during terraform apply & create/delete users, permissions, etc. during terraform apply
   full_iam_access_policy = jsonencode({
     version = "2012-10-17"
-    statement = [      
-      {        
-        sid       = "AllowManageRoleAndPolicy"        
-        effect    = "Allow"        
+    statement = [
+      {
+        sid       = "AllowManageRoleAndPolicy"
+        effect    = "Allow"
         resources = ["arn:aws:iam::*"]
         actions   = ["iam:*"]
       }
