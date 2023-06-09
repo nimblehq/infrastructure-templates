@@ -2,13 +2,13 @@ import { Args, Command, ux } from '@oclif/core';
 import { prompt } from 'inquirer';
 
 import { remove } from '@/helpers/file';
+import { postProcess } from '@/hooks/postProcess';
 import {
   applyVersionControl,
   versionControlChoices,
 } from '@/templates/addons/versionControl';
 import { generateAwsTemplate } from '@/templates/aws';
 import { applyCore } from '@/templates/core';
-import { postProcess } from '@/utils/hooks';
 
 type GeneralOptions = {
   projectName: string;

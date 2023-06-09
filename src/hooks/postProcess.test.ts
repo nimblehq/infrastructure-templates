@@ -1,7 +1,7 @@
 import { remove } from '@/helpers/file';
 import { formatCode, detectTerraform } from '@/helpers/terraform';
 
-import { postProcess } from './hooks';
+import { postProcess } from './postProcess';
 
 jest.mock('@/helpers/terraform');
 

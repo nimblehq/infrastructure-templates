@@ -1,12 +1,12 @@
 import { prompt } from 'inquirer';
 
 import { remove } from '@/helpers/file';
-import { postProcess } from '@/utils/hooks';
+import { postProcess } from '@/hooks/postProcess';
 
 import Generator from '.';
 
 jest.mock('inquirer');
-jest.mock('@/utils/hooks');
+jest.mock('@/hooks/postProcess');
 
 describe('Generator command', () => {
   describe('given valid options', () => {

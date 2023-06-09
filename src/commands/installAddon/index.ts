@@ -1,9 +1,9 @@
 import { Args, Flags, Command, ux } from '@oclif/core';
 
+import { postProcess } from '@/hooks/postProcess';
 import { AwsOptions } from '@/templates/aws';
 import { requireAWSModules } from '@/templates/core/dependencies';
 import { awsModules } from '@/templates/core/types';
-import { postProcess } from '@/utils/hooks';
 
 import { GeneralOptions } from '../generate';
 
