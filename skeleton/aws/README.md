@@ -4,6 +4,7 @@ You can deploy your infrastructure with the [terraform CLI](https://learn.hashic
 
 This template remains generic to provide more flexibility.
 A workspace and folder strategy needs to be defined first:
+
 - What resources need to be global?
 - What resources need to be specific to an environment?
 - What workspaces will you need?
@@ -13,12 +14,14 @@ While advanced users won't need it, the next part provides a "starter kit" archi
 ## Starter kit
 
 The starter kit has 3 workspaces:
-- **Shared**, that handles a single ECR (Elastic Container Registry) for the whole infrastructure
+
+- **Shared**, handles a single ECR (Elastic Container Registry) for the whole infrastructure
 - **Staging** and **Prod**: Both workspaces are similar but use different resource names (using the suffixes `-staging` and `-prod`)
 
 ### Step 1, Source Code
 
 In the source code:
+
 - create a `base` and a `shared` folder.
 - move the `main.tf`, `outputs.tf` and `variables.tf` into the `base` folder.
 - create 3 empty files (`main.tf`, `outputs.tf` and `variables.tf`) in the `shared` folder.
@@ -27,7 +30,9 @@ In the source code:
 ### Step 2, AWS Access Key
 
 For Terraform to push your changes into AWS, it needs an access key. There are 2 options for that:
+
 - Using Terraform Cloud: configure the `aws_access_key` and `aws_secret_key` as sensitive variables in your Terraform Cloud Workspaces. Then add the reference into the source code:
+  
   ```hcl
   // base/main.tf && shared/main.tf
   provider "aws" {
@@ -43,12 +48,13 @@ For Terraform to push your changes into AWS, it needs an access key. There are 2
     }
   }
   ```
-- Using the `terraform` cli: You first need to install the `aws` CLI. Then run `aws configure` and enter your keys when prompt.
-  Note that this will store your key unencrypted in your file system. You want to ensure your workstation has an encrypted disk and strong password!
+
+- Using the Terraform CLI: You first need to install the AWS CLI. Then run `aws configure` and enter your keys when prompted.
+  Note that this will store your key unencrypted in your file system. You want to ensure your workstation has an encrypted disk and a strong password!
 
 ### Step 3: workspaces
 
-_Workspaces can be managed in the terraform cloud or using the CLI._
+_Workspaces can be managed in the Terraform cloud or using the CLI._
 
 - Create a workspace named `{project-slug}-shared`
   - Map it to the repository
@@ -69,7 +75,7 @@ To provision a new environment variable, it needs to be configured in the Terraf
 
 > 💡 Editing the environment variables requires planning and applying changes in the Terraform project.
 
-### Non Sensitive Variable
+#### Non Sensitive Variable
 
 Non-sensitive variables do not require code changes in the `*-infra` project.
 
@@ -78,7 +84,7 @@ This variable is an object and it can be extended just by editing its content an
 
 Example of the `environment_variables` object as displayed in Terraform:
 
-```
+```hcl
 [
     {
       name = "AVAILABLE_LOCALES"
@@ -98,7 +104,7 @@ Example of the `environment_variables` object as displayed in Terraform:
 > ⚠️ A wrong indentation will break the object.
 > Make sure to carefully apply the right indent when editing this variable.
 
-### Sensitive Variable
+#### Sensitive Variable
 
 When a variable is set to sensitive, its content cannot be read by users once saved.
 So extending an object is not possible for sensitive variables — unless adding a lot of complexity.
@@ -106,8 +112,10 @@ So extending an object is not possible for sensitive variables — unless adding
 The below steps describe how to add a new sensitive environment variable with the name `MY_NEW_VAR`.
 
 First, edit the `*-infra` source code:
+
 - Declare a new variable in `base/variables.tf` with the name `my_new_var`
 - Edit the `base/main.tf` file, add the name of the variable under the `secrets` section in the `ssm` module:
+  
   ```terraform
   module "ssm" {
     source = "../modules/ssm"
@@ -125,12 +133,12 @@ Then add the variable in the Terraform workspace.
 The variable shall be marked as "sensitive" to ensure its value will not be available within logs.
 
 Once the variable is added and the code pushed, run a Terraform plan.
-The plan results should indicate about the creation of the new variable.
+The plan results should indicate the creation of the new variable.
 Apply the plan if it ran successfully.
 
 The new variable `MY_NEW_VAR` will be available in the ECS task definition.
 
-### Update existing variables
+#### Update existing variables
 
 - To update an existing variable, edit the variable in the Terraform workspace:
 - If the variable is not sensitive, edit the `environment_variables` object.
@@ -138,6 +146,17 @@ The new variable `MY_NEW_VAR` will be available in the ECS task definition.
 - Once the variable is updated, run a Terraform plan and apply it if it ran successfully.
 
 **Note:** Re-deploying the application is required when updating sensitive variables.
+
+### Step 5: Adjust the ALB Target Group Health Check to your need
+
+The default settings for the Application Load Balancer Target Group health check are:
+
+- interval: every 5 seconds
+- timeout: 3 seconds
+- 2 consecutive failed checks will mark the task as failed and will trigger a rollback
+
+This suits well applications that are quickly up and running (e.g. static website, Go Gin app, ...).
+If your application load time is slower (e.g. Ruby on Rails), consider reviewing these numbers for longer timeout and interval.
 
 ## License
 
