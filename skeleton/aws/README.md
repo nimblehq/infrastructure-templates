@@ -15,7 +15,7 @@ While advanced users won't need it, the next part provides a "starter kit" archi
 
 The starter kit has 3 workspaces:
 
-- **Shared**, handles a single ECR (Elastic Container Registry) for the whole infrastructure
+- **Shared**: Handles a single ECR (Elastic Container Registry) for the whole infrastructure
 - **Staging** and **Prod**: Both workspaces are similar but use different resource names (using the suffixes `-staging` and `-prod`)
 
 ### Step 1, Source Code
@@ -155,8 +155,9 @@ The default settings for the Application Load Balancer Target Group health check
 - timeout: 3 seconds
 - 2 consecutive failed checks will mark the task as failed and will trigger a rollback
 
-This suits well applications that are quickly up and running (e.g. static website, Go Gin app, ...).
-If your application load time is slower (e.g. Ruby on Rails), consider reviewing these numbers for longer timeout and interval.
+This suits well applications that are quickly up and running (e.g., static website, Go Gin app, ...).
+If your application load time is slower (e.g., Ruby on Rails), consider reviewing these numbers for longer timeout and interval.
+For example, given the application requires 40 seconds to load, using a 60 seconds interval and a 30 seconds timeout would provide a recovery time of 2 minutes (2 failed checks) while avoiding unwanted rollbacks after deploying a new version.
 
 ## License
 
