@@ -10,7 +10,7 @@ import applyIamUserAndGroup, {
   iamOutputsContent,
 } from './iamUserAndGroup';
 
-describe('VPC add-on', () => {
+describe('IAM add-on', () => {
   describe('given valid AWS options', () => {
     const projectDir = 'iam-addon-test';
 
