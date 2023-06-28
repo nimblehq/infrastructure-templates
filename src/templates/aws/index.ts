@@ -3,6 +3,7 @@ import { prompt } from 'inquirer';
 import { GeneralOptions } from '../../commands/generate';
 import {
   applyCommon,
+  applyIamUserAndGroup,
   applyRegion,
   applySecurityGroup,
   applyVpc,
@@ -55,6 +56,7 @@ const generateAwsTemplate = async (
       applyCommonModules(awsOptions);
       applyVpc(awsOptions);
       applySecurityGroup(awsOptions);
+      applyIamUserAndGroup(awsOptions);
       applyAdvancedTemplate(awsOptions);
 
       break;
