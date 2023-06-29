@@ -24,7 +24,6 @@ describe('Dependencies', () => {
           projectName: projectDir,
           provider: 'aws',
           infrastructureType: 'advanced',
-          awsRegion: 'ap-southeast-1',
         };
 
         applyCore(options);
@@ -40,7 +39,6 @@ describe('Dependencies', () => {
           projectName: projectDir,
           provider: 'aws',
           infrastructureType: 'advanced',
-          awsRegion: 'ap-southeast-1',
         };
 
         expect(isAWSModuleAdded('vpc', options.projectName)).toBe(false);
@@ -53,7 +51,6 @@ describe('Dependencies', () => {
           projectName: projectDir,
           provider: 'aws',
           infrastructureType: 'advanced',
-          awsRegion: 'ap-southeast-1',
         };
 
         expect(() => isAWSModuleAdded('azure', options.projectName)).toThrow(
@@ -70,7 +67,6 @@ describe('Dependencies', () => {
           projectName: projectDir,
           provider: 'aws',
           infrastructureType: 'advanced',
-          awsRegion: 'ap-southeast-1',
         };
 
         await applyCore(options);
@@ -89,7 +85,6 @@ describe('Dependencies', () => {
               projectName: projectDir,
               provider: 'aws',
               infrastructureType: 'advanced',
-              awsRegion: 'ap-southeast-1',
             };
 
             await applyCore(options);
@@ -109,7 +104,6 @@ describe('Dependencies', () => {
               projectName: projectDir,
               provider: 'aws',
               infrastructureType: 'advanced',
-              awsRegion: 'ap-southeast-1',
             };
 
             await applyCore(options);
@@ -134,7 +128,6 @@ describe('Dependencies', () => {
             projectName: projectDir,
             provider: 'aws',
             infrastructureType: 'advanced',
-            awsRegion: 'ap-southeast-1',
           };
 
           await applyCore(options);
@@ -155,7 +148,6 @@ describe('Dependencies', () => {
           projectName: projectDir,
           provider: 'aws',
           infrastructureType: 'advanced',
-          awsRegion: 'ap-southeast-1',
         };
 
         await applyCore(options);

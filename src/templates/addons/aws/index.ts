@@ -3,6 +3,7 @@ import { prompt } from 'inquirer';
 import { GeneralOptions } from '@/commands/generate';
 
 import { applyAdvancedTemplate } from './advanced';
+import { AWS_DEFAULT_REGION } from './constants';
 import {
   applyCommon,
   applyIamUserAndGroup,
@@ -32,7 +33,7 @@ const awsChoices = [
   {
     type: 'input',
     name: 'awsRegion',
-    default: 'ap-southeast-1',
+    default: AWS_DEFAULT_REGION,
     message: 'Which AWS Region do you choose?',
   },
 ];

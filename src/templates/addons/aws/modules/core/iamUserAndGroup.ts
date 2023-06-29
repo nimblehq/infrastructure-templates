@@ -1,13 +1,13 @@
 import { dedent } from 'ts-dedent';
 
-import { AwsOptions } from '../..';
-import { appendToFile, copy } from '../../../../../helpers/file';
+import { appendToFile, copy } from '@/helpers/file';
+import { AwsOptions } from '@/templates/addons/aws';
+import { AWS_SKELETON_PATH } from '@/templates/addons/aws/constants';
 import {
   INFRA_SHARED_MAIN_PATH,
   INFRA_SHARED_VARIABLES_PATH,
   INFRA_SHARED_OUTPUTS_PATH,
-} from '../../../../core/constants';
-import { AWS_SKELETON_PATH } from '../../constants';
+} from '@/templates/core/constants';
 
 const iamVariablesContent = dedent`
   variable "iam_admin_emails" {

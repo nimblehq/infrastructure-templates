@@ -12,7 +12,6 @@ describe('Core codebase', () => {
         projectName: projectDir,
         provider: 'aws',
         infrastructureType: 'advanced',
-        awsRegion: 'ap-southeast-1',
       };
 
       applyCore(awsOptions);

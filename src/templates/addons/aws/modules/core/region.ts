@@ -2,9 +2,8 @@ import { dedent } from 'ts-dedent';
 
 import { appendToFile } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
+import { AWS_DEFAULT_REGION } from '@/templates/addons/aws/constants';
 import { INFRA_BASE_VARIABLES_PATH } from '@/templates/core/constants';
-
-const DEFAULT_REGION = 'ap-southeast-1';
 
 const regionVariablesContent = (awsRegion: string) => dedent`
   variable "region" {
@@ -16,7 +15,7 @@ const regionVariablesContent = (awsRegion: string) => dedent`
 const applyRegion = async (options: AwsOptions) => {
   appendToFile(
     INFRA_BASE_VARIABLES_PATH,
-    regionVariablesContent(options.awsRegion || DEFAULT_REGION),
+    regionVariablesContent(options.awsRegion || AWS_DEFAULT_REGION),
     options.projectName
   );
 };

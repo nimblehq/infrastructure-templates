@@ -1,6 +1,7 @@
-import { AwsOptions } from '../..';
-import { remove } from '../../../../../helpers/file';
-import { applyCore } from '../../../../core';
+import { remove } from '@/helpers/file';
+import { AwsOptions } from '@/templates/addons/aws';
+import { applyCore } from '@/templates/core';
+
 import applyCommon from './common';
 import applyIamUserAndGroup, {
   iamVariablesContent,
@@ -19,7 +20,6 @@ describe('IAM add-on', () => {
         projectName: projectDir,
         provider: 'aws',
         infrastructureType: 'advanced',
-        awsRegion: 'ap-southeast-1',
       };
 
       applyCore(awsOptions);

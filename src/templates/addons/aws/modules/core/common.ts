@@ -1,8 +1,7 @@
 import { copy } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
+import { AWS_SKELETON_PATH } from '@/templates/addons/aws/constants';
 import { INFRA_BASE_PATH, INFRA_SHARED_PATH } from '@/templates/core/constants';
-
-import { AWS_SKELETON_PATH } from '../../constants';
 
 const applyCommon = async (options: AwsOptions) => {
   copy(

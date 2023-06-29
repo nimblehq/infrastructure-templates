@@ -12,7 +12,6 @@ describe('Common add-on', () => {
         projectName: projectDir,
         provider: 'aws',
         infrastructureType: 'advanced',
-        awsRegion: 'ap-southeast-1',
       };
 
       await applyCommon(awsOptions);

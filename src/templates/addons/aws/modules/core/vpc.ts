@@ -2,13 +2,12 @@ import { dedent } from 'ts-dedent';
 
 import { appendToFile, copy } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
+import { AWS_SKELETON_PATH } from '@/templates/addons/aws/constants';
 import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_OUTPUTS_PATH,
 } from '@/templates/core/constants';
 import { isAWSModuleAdded } from '@/templates/core/dependencies';
-
-import { AWS_SKELETON_PATH } from '../../constants';
 
 const vpcOutputsContent = dedent`
   output "vpc_id" {
