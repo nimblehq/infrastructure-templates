@@ -54,7 +54,7 @@ describe('Dependencies', () => {
         };
 
         expect(() => isAWSModuleAdded('azure', options.projectName)).toThrow(
-          'Module `azure` is not supported'
+          "Module 'azure' is not supported"
         );
       });
     });
@@ -116,7 +116,7 @@ describe('Dependencies', () => {
             await expect(
               requireAWSModules('alb', 'vpc', options)
             ).rejects.toThrow(
-              'Module `vpc` is required before adding `alb` module'
+              `Module 'vpc' is required before adding 'alb' module`
             );
           });
         });
@@ -156,7 +156,7 @@ describe('Dependencies', () => {
 
         await expect(
           requireAWSModules('alb', ['vpc', 'azure'], options)
-        ).rejects.toThrow('Module `azure` is not supported');
+        ).rejects.toThrow(`Module 'azure' is not supported`);
       });
     });
   });

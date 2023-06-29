@@ -63,7 +63,7 @@ export default class Generator extends Command {
     await postProcess(generalOptions);
 
     ux.info(
-      `The infrastructure code was generated at \`${generalOptions.projectName}\``
+      `The infrastructure code was generated at '${generalOptions.projectName}'`
     );
   }
 

@@ -71,7 +71,7 @@ describe('Install add-on command', () => {
 
       it('displays the success message', () => {
         expect(stdoutSpy).toHaveBeenCalledWith(
-          `The \`vpc\` module has been installed to \`${projectDir}\` project successfully!\n`
+          `The 'vpc' module has been installed to '${projectDir}' project successfully!\n`
         );
       });
 

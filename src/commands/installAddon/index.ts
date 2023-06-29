@@ -57,14 +57,12 @@ export default class InstallAddon extends Command {
 
       const projectName =
         options.projectName === '.' ? 'current' : options.projectName;
-      ux.info(
-        `The \`${args.moduleName}\` module has been installed to \`${projectName}\` project successfully!`
-      );
-    } catch (error) {
-      let message = 'Unknown Error';
-      if (error instanceof Error) message = error.message;
 
-      ux.error(message);
+      ux.info(
+        `The '${args.moduleName}' module has been installed to '${projectName}' project successfully!`
+      );
+    } catch (error: Error | any) {
+      ux.info(error.message);
     }
   }
 

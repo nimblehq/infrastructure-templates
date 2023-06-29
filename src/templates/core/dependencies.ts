@@ -1,3 +1,4 @@
+import { ux } from '@oclif/core';
 import { prompt } from 'inquirer';
 
 import { containsContent, isExisting } from '@/helpers/file';
@@ -87,7 +88,7 @@ const isAWSModuleAdded = (
 ): boolean => {
   const module = AWS_MODULES[dependency];
   if (!module) {
-    throw new Error(`Module \`${dependency}\` is not supported`);
+    throw new Error(`Module '${dependency}' is not supported`);
   }
 
   const isModuleExisting = isExisting(module.path, projectName);
@@ -101,7 +102,7 @@ const isAWSModuleAdded = (
 };
 
 const applyAWSModule = async (
-  currentAwsModule: AWSModuleName,
+  currentModule: AWSModuleName,
   awsModule: AWSModule,
   awsOptions: AwsOptions,
   options: InstallationOptions
@@ -111,9 +112,10 @@ const applyAWSModule = async (
   if (options.skipConfirmation) {
     result = { apply: true };
   } else {
-    const isProject = !AWS_MODULES[currentAwsModule];
-    const currentName = currentAwsModule === '.' ? 'current' : currentAwsModule;
+    // If currentModule is not a valid AWS module, it means that it is a project name
+    const isProject = !AWS_MODULES[currentModule];
     const type = isProject ? 'project' : 'module';
+    const currentName = currentModule === '.' ? 'current' : currentModule;
 
     result = await prompt({
       type: 'confirm',
@@ -126,16 +128,14 @@ const applyAWSModule = async (
   if (result.apply) {
     try {
       await awsModule.applyModuleFunction(awsOptions);
-    } catch (error) {
-      console.log(`Module \`${awsModule.name}\` was not added:`, error);
+    } catch (error: any) {
+      ux.info(error.message);
 
       return false;
     }
 
     return true;
   }
-
-  console.log(`Module \`${awsModule.name}\` was not added`);
 
   return false;
 };
@@ -161,8 +161,15 @@ const requireAWSModules = async (
     );
 
     if (!result) {
+      if (AWS_MODULES[currentModule]) {
+        throw new Error(
+          `Module '${awsModule}' is required before adding '${currentModule}' module`
+        );
+      }
+
+      const currentName = currentModule === '.' ? 'current' : currentModule;
       throw new Error(
-        `Module \`${awsModule}\` is required before adding \`${currentModule}\` module`
+        `Failed to install '${awsModule}' module to the '${currentName}' project`
       );
     }
   }
