@@ -61,7 +61,7 @@ export default class InstallAddon extends Command {
       ux.info(
         `The '${args.moduleName}' module has been installed to '${projectName}' project successfully!`
       );
-    } catch (error: Error | any) {
+    } catch (error: any) { // eslint-disable-line
       ux.info(error.message);
     }
   }

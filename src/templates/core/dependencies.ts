@@ -128,7 +128,7 @@ const applyAWSModule = async (
   if (result.apply) {
     try {
       await awsModule.applyModuleFunction(awsOptions);
-    } catch (error: any) {
+    } catch (error: any) { // eslint-disable-line
       ux.info(error.message);
 
       return false;

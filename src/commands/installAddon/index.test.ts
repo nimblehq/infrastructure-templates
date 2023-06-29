@@ -83,6 +83,7 @@ describe('Install add-on command', () => {
 
     describe('given an INVALID add-on', () => {
       const projectDir = 'aws-install-invalid-addon-test';
+      const stdoutSpy = jest.spyOn(process.stdout, 'write');
 
       beforeAll(async () => {
         (prompt as unknown as jest.Mock)
@@ -93,6 +94,11 @@ describe('Install add-on command', () => {
           .mockResolvedValueOnce({ infrastructureType: 'blank' });
 
         await Generator.run([projectDir]);
+        await InstallAddon.run([
+          'invalid',
+          `--provider=${provider}`,
+          `--projectName=${projectDir}`,
+        ]);
       });
 
       afterAll(() => {
@@ -101,14 +107,10 @@ describe('Install add-on command', () => {
       });
 
       it('throws an error', async () => {
-        await expect(
-          InstallAddon.run([
-            'invalid',
-            `--provider=${provider}`,
-            `--projectName=${projectDir}`,
-          ])
-        ).rejects.toThrowError(
-          'Expected invalid to be one of: vpc, securityGroup, alb, bastion, ecr, ecs, cloudwatch, rds, s3, ssm'
+        expect(stdoutSpy).toHaveBeenCalledWith(
+          expect.stringContaining(
+            'Expected invalid to be one of: vpc, securityGroup, alb, bastion, ecr, ecs, cloudwatch, rds, s3, ssm'
+          )
         );
       });
     });
