@@ -16,7 +16,7 @@ import {
 } from '@/templates/aws/addons';
 
 import { INFRA_BASE_MAIN_PATH } from './constants';
-import { AWSModule, AWSModuleName, CustomOption } from './types';
+import { AWSModule, AWSModuleName, InstallationOptions } from './types';
 
 const AWS_MODULES: Record<AWSModuleName | string, AWSModule> = {
   vpc: {
@@ -104,7 +104,7 @@ const applyAWSModule = async (
   currentAwsModule: AWSModuleName,
   awsModule: AWSModule,
   awsOptions: AwsOptions,
-  options: CustomOption
+  options: InstallationOptions
 ): Promise<boolean> => {
   let result;
 
@@ -144,7 +144,7 @@ const requireAWSModules = async (
   currentModule: AWSModuleName,
   modules: Array<AWSModuleName | string> | AWSModuleName | string,
   awsOptions: AwsOptions,
-  options: CustomOption = { skipConfirmation: false }
+  options: InstallationOptions = { skipConfirmation: false }
 ): Promise<boolean> => {
   const awsModules = Array.isArray(modules) ? modules : [modules];
 

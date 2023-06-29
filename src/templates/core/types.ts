@@ -22,8 +22,8 @@ type AWSModule = {
   applyModuleFunction: (options: AwsOptions) => void | Promise<void>;
 };
 
-type CustomOption = {
+type InstallationOptions = {
   skipConfirmation: boolean;
 };
 
-export { AWSModuleName, AWSModule, CustomOption, awsModules };
+export { AWSModuleName, AWSModule, InstallationOptions, awsModules };
