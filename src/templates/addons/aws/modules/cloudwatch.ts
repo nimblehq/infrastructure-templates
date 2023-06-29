@@ -8,6 +8,8 @@ import {
 } from '@/templates/core/constants';
 import { isAWSModuleAdded } from '@/templates/core/dependencies';
 
+import { AWS_SKELETON_PATH } from '../constants';
+
 const cloudwatchVariablesContent = dedent`
   variable "cloudwatch_log_retention_in_days" {
     description = "How long (days) to retain the cloudwatch log data"
@@ -28,7 +30,11 @@ const applyCloudwatch = async (options: AwsOptions) => {
     return;
   }
 
-  copy('aws/modules/cloudwatch', 'modules/cloudwatch', options.projectName);
+  copy(
+    `${AWS_SKELETON_PATH}/modules/cloudwatch`,
+    'modules/cloudwatch',
+    options.projectName
+  );
   appendToFile(
     INFRA_BASE_VARIABLES_PATH,
     cloudwatchVariablesContent,

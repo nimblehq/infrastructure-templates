@@ -7,6 +7,7 @@ import {
   INFRA_SHARED_VARIABLES_PATH,
   INFRA_SHARED_OUTPUTS_PATH,
 } from '../../../../core/constants';
+import { AWS_SKELETON_PATH } from '../../constants';
 
 const iamVariablesContent = dedent`
   variable "iam_admin_emails" {
@@ -90,15 +91,21 @@ const iamOutputsContent = dedent`
   }`;
 
 const applyIamUserAndGroup = async ({ projectName }: AwsOptions) => {
-  copy('aws/modules/iam_groups', 'modules/iam_groups', projectName);
-  copy('aws/modules/iam_users', 'modules/iam_users', projectName);
-
   copy(
-    'aws/modules/iam_group_membership',
+    `${AWS_SKELETON_PATH}/modules/iam_groups`,
+    'modules/iam_groups',
+    projectName
+  );
+  copy(
+    `${AWS_SKELETON_PATH}/modules/iam_users`,
+    'modules/iam_users',
+    projectName
+  );
+  copy(
+    `${AWS_SKELETON_PATH}/modules/iam_group_membership`,
     'modules/iam_group_membership',
     projectName
   );
-
   appendToFile(INFRA_SHARED_MAIN_PATH, iamGroupsModuleContent, projectName);
   appendToFile(INFRA_SHARED_MAIN_PATH, iamUsersModuleContent, projectName);
 

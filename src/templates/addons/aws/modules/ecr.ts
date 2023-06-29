@@ -8,6 +8,8 @@ import {
 } from '@/templates/core/constants';
 import { isAWSModuleAdded } from '@/templates/core/dependencies';
 
+import { AWS_SKELETON_PATH } from '../constants';
+
 const ecrVariablesContent = dedent`
   variable "image_limit" {
     description = "Sets max amount of the latest develop images to be kept"
@@ -27,7 +29,7 @@ const applyEcr = async (options: AwsOptions) => {
     return;
   }
 
-  copy('aws/modules/ecr', 'modules/ecr', options.projectName);
+  copy(`${AWS_SKELETON_PATH}/modules/ecr`, 'modules/ecr', options.projectName);
   appendToFile(
     INFRA_SHARED_VARIABLES_PATH,
     ecrVariablesContent,

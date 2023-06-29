@@ -14,6 +14,7 @@ import {
 import {
   AWS_SECURITY_GROUP_MAIN_PATH,
   AWS_SECURITY_GROUP_OUTPUTS_PATH,
+  AWS_SKELETON_PATH,
 } from '../constants';
 
 const ecsVariablesContent = dedent`
@@ -161,7 +162,7 @@ const applyEcs = async (options: AwsOptions) => {
   }
   await requireAWSModules('ecs', 'securityGroup', options);
 
-  copy('aws/modules/ecs', 'modules/ecs', options.projectName);
+  copy(`${AWS_SKELETON_PATH}/modules/ecs`, 'modules/ecs', options.projectName);
   appendToFile(
     INFRA_BASE_VARIABLES_PATH,
     ecsVariablesContent,

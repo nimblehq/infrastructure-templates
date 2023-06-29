@@ -15,6 +15,7 @@ import {
 import {
   AWS_SECURITY_GROUP_MAIN_PATH,
   AWS_SECURITY_GROUP_OUTPUTS_PATH,
+  AWS_SKELETON_PATH,
 } from '../constants';
 
 const albVariablesContent = dedent`
@@ -102,7 +103,7 @@ const applyAlb = async (options: AwsOptions) => {
   }
   await requireAWSModules('alb', 'securityGroup', options);
 
-  copy('aws/modules/alb', 'modules/alb', options.projectName);
+  copy(`${AWS_SKELETON_PATH}/modules/alb`, 'modules/alb', options.projectName);
   appendToFile(INFRA_BASE_MAIN_PATH, albModuleContent, options.projectName);
   appendToFile(
     INFRA_BASE_VARIABLES_PATH,

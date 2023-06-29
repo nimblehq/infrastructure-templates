@@ -8,6 +8,8 @@ import {
 } from '@/templates/core/constants';
 import { isAWSModuleAdded } from '@/templates/core/dependencies';
 
+import { AWS_SKELETON_PATH } from '../constants';
+
 const s3OutputsContent = dedent`
   output "s3_alb_log_bucket_name" {
     description = "S3 bucket name for ALB log"
@@ -26,7 +28,7 @@ const applyS3 = async (options: AwsOptions) => {
     return;
   }
 
-  copy('aws/modules/s3', 'modules/s3', options.projectName);
+  copy(`${AWS_SKELETON_PATH}/modules/s3`, 'modules/s3', options.projectName);
   appendToFile(INFRA_BASE_OUTPUTS_PATH, s3OutputsContent, options.projectName);
   appendToFile(INFRA_BASE_MAIN_PATH, s3ModuleContent, options.projectName);
 };

@@ -8,6 +8,8 @@ import {
 } from '@/templates/core/constants';
 import { isAWSModuleAdded } from '@/templates/core/dependencies';
 
+import { AWS_SKELETON_PATH } from '../../constants';
+
 const vpcOutputsContent = dedent`
   output "vpc_id" {
     description = "VPC ID"
@@ -26,7 +28,7 @@ const applyVpc = async (options: AwsOptions) => {
     return;
   }
 
-  copy('aws/modules/vpc', 'modules/vpc', options.projectName);
+  copy(`${AWS_SKELETON_PATH}/modules/vpc`, 'modules/vpc', options.projectName);
   appendToFile(INFRA_BASE_MAIN_PATH, vpcModuleContent, options.projectName);
   appendToFile(INFRA_BASE_OUTPUTS_PATH, vpcOutputsContent, options.projectName);
 };

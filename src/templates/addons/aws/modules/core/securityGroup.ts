@@ -11,6 +11,8 @@ import {
   requireAWSModules,
 } from '@/templates/core/dependencies';
 
+import { AWS_SKELETON_PATH } from '../../constants';
+
 const securityGroupVariablesContent = dedent`
   variable "nimble_office_ip" {
     description = "Nimble Office IP"
@@ -35,7 +37,7 @@ const applySecurityGroup = async (options: AwsOptions) => {
   await requireAWSModules('securityGroup', 'vpc', options);
 
   copy(
-    'aws/modules/security_group',
+    `${AWS_SKELETON_PATH}/modules/security_group`,
     'modules/security_group',
     options.projectName
   );

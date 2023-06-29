@@ -14,6 +14,7 @@ import {
 import {
   AWS_SECURITY_GROUP_MAIN_PATH,
   AWS_SECURITY_GROUP_OUTPUTS_PATH,
+  AWS_SKELETON_PATH,
 } from '../constants';
 
 const rdsVariablesContent = dedent`
@@ -110,7 +111,7 @@ const applyRds = async (options: AwsOptions) => {
   }
   await requireAWSModules('rds', 'securityGroup', options);
 
-  copy('aws/modules/rds', 'modules/rds', options.projectName);
+  copy(`${AWS_SKELETON_PATH}/modules/rds`, 'modules/rds', options.projectName);
   appendToFile(
     INFRA_BASE_VARIABLES_PATH,
     rdsVariablesContent,
