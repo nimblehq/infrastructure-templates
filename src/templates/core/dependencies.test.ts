@@ -1,8 +1,8 @@
 import { prompt } from 'inquirer';
 
 import { remove } from '@/helpers/file';
-import { AwsOptions } from '@/templates/aws';
-import { applyCommon, applyVpc } from '@/templates/aws/addons';
+import { AwsOptions } from '@/templates/addons/aws';
+import { applyCommon, applyVpc } from '@/templates/addons/aws/modules';
 
 import { applyCore } from '.';
 import { isAWSModuleAdded, requireAWSModules } from './dependencies';

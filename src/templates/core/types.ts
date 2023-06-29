@@ -1,4 +1,4 @@
-import { AwsOptions } from '@/templates/aws';
+import { AwsOptions } from '@/templates/addons/aws';
 
 const awsModules = [
   'vpc',

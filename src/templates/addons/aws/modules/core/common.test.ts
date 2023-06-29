@@ -1,13 +1,13 @@
 import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 
-import { applyCore } from '.';
+import applyCommon from './common';
 
-describe('Core codebase', () => {
+describe('Common add-on', () => {
   describe('given valid AwsOptions', () => {
-    const projectDir = 'core-test';
+    const projectDir = 'common-addon-test';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
@@ -15,7 +15,7 @@ describe('Core codebase', () => {
         awsRegion: 'ap-southeast-1',
       };
 
-      applyCore(awsOptions);
+      await applyCommon(awsOptions);
     });
 
     afterAll(() => {
@@ -23,16 +23,8 @@ describe('Core codebase', () => {
       remove('/', projectDir);
     });
 
-    it('creates expected files', () => {
-      const expectedFiles = [
-        '.gitignore',
-        '.tool-versions',
-        'base/main.tf',
-        'base/outputs.tf',
-        'base/variables.tf',
-      ];
-
-      expect(projectDir).toHaveFiles(expectedFiles);
+    it('creates the expected file', () => {
+      expect(projectDir).toHaveFile('base/providers.tf');
     });
   });
 });

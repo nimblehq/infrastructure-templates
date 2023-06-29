@@ -1,7 +1,7 @@
 import { prompt } from 'inquirer';
 
 import { containsContent, isExisting } from '@/helpers/file';
-import { AwsOptions } from '@/templates/aws';
+import { AwsOptions } from '@/templates/addons/aws';
 import {
   applyAlb,
   applyBastion,
@@ -13,7 +13,7 @@ import {
   applySecurityGroup,
   applySsm,
   applyVpc,
-} from '@/templates/aws/addons';
+} from '@/templates/addons/aws/modules';
 
 import { INFRA_BASE_MAIN_PATH } from './constants';
 import { AWSModule, AWSModuleName, InstallationOptions } from './types';

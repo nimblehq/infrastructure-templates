@@ -3,11 +3,11 @@ import { prompt } from 'inquirer';
 
 import { remove } from '@/helpers/file';
 import { postProcess } from '@/hooks/postProcess';
+import { generateAwsTemplate } from '@/templates/addons/aws';
 import {
   applyVersionControl,
   versionControlChoices,
 } from '@/templates/addons/versionControl';
-import { generateAwsTemplate } from '@/templates/aws';
 import { applyCore } from '@/templates/core';
 
 type GeneralOptions = {
