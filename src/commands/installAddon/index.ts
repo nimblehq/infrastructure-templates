@@ -1,7 +1,6 @@
 import { Args, Flags, Command, ux } from '@oclif/core';
 
 import { postProcess } from '@/hooks/postProcess';
-import { AwsOptions } from '@/templates/aws';
 import { requireAWSModules } from '@/templates/core/dependencies';
 import { awsModules } from '@/templates/core/types';
 
@@ -45,21 +44,9 @@ export default class InstallAddon extends Command {
         provider: flags.provider,
       };
 
-      const projectName =
-        options.projectName === '.' ? 'current' : options.projectName;
       switch (options.provider) {
         case 'aws':
-          const awsOptions: AwsOptions = {
-            ...options,
-            awsRegion: 'ap-southeast-1',
-          };
-
-          await requireAWSModules(
-            options.projectName,
-            args.moduleName,
-            awsOptions,
-            { skipConfirmation: true }
-          );
+          await this.applyModule(args.moduleName, options);
 
           break;
         default:
@@ -68,6 +55,8 @@ export default class InstallAddon extends Command {
 
       await postProcess(options);
 
+      const projectName =
+        options.projectName === '.' ? 'current' : options.projectName;
       ux.info(
         `The \`${args.moduleName}\` module has been installed to \`${projectName}\` project successfully!`
       );
@@ -77,5 +66,11 @@ export default class InstallAddon extends Command {
 
       ux.error(message);
     }
+  }
+
+  private async applyModule(moduleName: string, options: GeneralOptions) {
+    await requireAWSModules(options.projectName, moduleName, options, {
+      skipConfirmation: true,
+    });
   }
 }

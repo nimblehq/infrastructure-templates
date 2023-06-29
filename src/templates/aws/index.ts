@@ -39,7 +39,7 @@ const awsChoices = [
 
 type AwsOptions = GeneralOptions & {
   infrastructureType?: 'blank' | 'advanced';
-  awsRegion: string;
+  awsRegion?: string;
 };
 
 const applyCommonModules = async (options: AwsOptions) => {
