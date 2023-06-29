@@ -113,15 +113,12 @@ const applyAWSModule = async (
   } else {
     const isProject = !AWS_MODULES[currentAwsModule];
     const currentName = currentAwsModule === '.' ? 'current' : currentAwsModule;
+    const type = isProject ? 'project' : 'module';
 
     result = await prompt({
       type: 'confirm',
       name: 'apply',
-      message: `The \`${currentName}\` ${
-        isProject ? 'project' : 'module'
-      } requires \`${awsModule.name}\` module. Do you want to add \`${
-        awsModule.name
-      }\` module?`,
+      message: `The '${currentName}' ${type} requires '${awsModule.name}' module. Do you want to add '${awsModule.name}' module?`,
       default: true,
     });
   }
