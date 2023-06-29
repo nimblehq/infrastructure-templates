@@ -4,7 +4,7 @@ on:
   push:
 
 env:
-  TERRAFORM_VERSION: "1.3.9"
+  TERRAFORM_VERSION: "1.5.2"
   TFSEC_VERSION: "v1.28.1"
 
 concurrency:
