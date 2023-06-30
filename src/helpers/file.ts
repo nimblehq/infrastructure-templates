@@ -1,20 +1,23 @@
-import { renameSync } from 'fs';
-import path = require('path');
-
 import {
   appendFileSync,
-  copySync,
   existsSync,
   readFileSync,
-  removeSync,
+  renameSync,
   writeFileSync,
-} from 'fs-extra';
+} from 'fs';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+
+import fse from 'fs-extra';
+const { copySync, removeSync } = fse;
 
 interface InjectToFileOptions {
   insertBefore?: string;
   insertAfter?: string;
 }
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.join(__dirname, '..', '..');
 
 const getProjectPath = (projectName: string): string => {

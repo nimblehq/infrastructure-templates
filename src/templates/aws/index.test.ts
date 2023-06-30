@@ -1,4 +1,4 @@
-import { prompt } from 'inquirer';
+import inquirer from 'inquirer';
 
 import { generateAwsTemplate } from '.';
 import { GeneralOptions } from '../../commands/generate';
@@ -33,7 +33,7 @@ describe('AWS template', () => {
 
     describe('given infrastructureType is advanced', () => {
       beforeAll(() => {
-        (prompt as unknown as jest.Mock).mockResolvedValue({
+        (inquirer.prompt as unknown as jest.Mock).mockResolvedValue({
           infrastructureType: infrastructureType,
           awsRegion: region,
         });

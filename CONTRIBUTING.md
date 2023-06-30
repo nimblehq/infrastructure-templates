@@ -30,7 +30,7 @@ npm install
 Run the following command and follow the instructions:
 
 ```bash
-bin/dev generate {project-name}
+bin/dev.js generate {project-name}
 ```
 
 ### Project structure

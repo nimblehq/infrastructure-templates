@@ -2,12 +2,22 @@
   "compilerOptions": {
     "declaration": true,
     "importHelpers": true,
-    "module": "commonjs",
+    "module": "ES2020",
+    "moduleResolution": "node",
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,
-    "target": "es2020",
+    "lib": ["ES2020"],
+    "target": "ES2020",
+    "allowSyntheticDefaultImports": true,
     "composite": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    },
+  },
+  "ts-node": {
+    "esm": true
   },
   "include": [
     "src/**/*",

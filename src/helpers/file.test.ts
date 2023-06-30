@@ -1,8 +1,8 @@
 import * as legacyFs from 'fs';
-import path = require('path');
+import { readFileSync } from 'fs';
+import * as path from 'path';
 
 import * as fs from 'fs-extra';
-import { readFileSync } from 'fs-extra';
 
 import {
   appendToFile,
