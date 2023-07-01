@@ -1,6 +1,6 @@
 import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
-import { applyCore } from '@/templates/core';
+import { applyTerraformCore } from '@/templates/core';
 
 import applyCommon from './common';
 import applyVpc, { vpcModuleContent, vpcOutputsContent } from './vpc';
@@ -16,7 +16,7 @@ describe('VPC add-on', () => {
         infrastructureType: 'advanced',
       };
 
-      await applyCore(awsOptions);
+      await applyTerraformCore(awsOptions);
       await applyCommon(awsOptions);
       await applyVpc(awsOptions);
     });

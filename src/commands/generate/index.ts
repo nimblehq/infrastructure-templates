@@ -8,7 +8,7 @@ import {
   applyVersionControl,
   versionControlChoices,
 } from '@/templates/addons/versionControl';
-import { applyCore } from '@/templates/core';
+import { applyTerraformCore } from '@/templates/core';
 
 type GeneralOptions = {
   projectName: string;
@@ -90,7 +90,7 @@ export default class Generator extends Command {
   }
 
   private async applyGeneralParts(generalOptions: GeneralOptions) {
-    await applyCore(generalOptions);
+    await applyTerraformCore(generalOptions);
     await applyVersionControl(generalOptions);
   }
 }

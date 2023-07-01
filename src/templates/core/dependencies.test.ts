@@ -4,7 +4,7 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyCommon, applyVpc } from '@/templates/addons/aws/modules';
 
-import { applyCore } from '.';
+import { applyTerraformCore } from '.';
 import { isAWSModuleAdded, requireAWSModules } from './dependencies';
 
 jest.mock('inquirer');
@@ -26,7 +26,7 @@ describe('Dependencies', () => {
           infrastructureType: 'advanced',
         };
 
-        applyCore(options);
+        applyTerraformCore(options);
         applyVpc(options);
 
         expect(isAWSModuleAdded('vpc', options.projectName)).toBe(true);
@@ -69,7 +69,7 @@ describe('Dependencies', () => {
           infrastructureType: 'advanced',
         };
 
-        await applyCore(options);
+        await applyTerraformCore(options);
         await applyCommon(options);
         await applyVpc(options);
 
@@ -87,7 +87,7 @@ describe('Dependencies', () => {
               infrastructureType: 'advanced',
             };
 
-            await applyCore(options);
+            await applyTerraformCore(options);
             await applyCommon(options);
 
             (prompt as unknown as jest.Mock).mockResolvedValue({
@@ -106,7 +106,7 @@ describe('Dependencies', () => {
               infrastructureType: 'advanced',
             };
 
-            await applyCore(options);
+            await applyTerraformCore(options);
             await applyCommon(options);
 
             (prompt as unknown as jest.Mock).mockResolvedValue({
@@ -130,7 +130,7 @@ describe('Dependencies', () => {
             infrastructureType: 'advanced',
           };
 
-          await applyCore(options);
+          await applyTerraformCore(options);
           await applyCommon(options);
 
           expect(
@@ -150,7 +150,7 @@ describe('Dependencies', () => {
           infrastructureType: 'advanced',
         };
 
-        await applyCore(options);
+        await applyTerraformCore(options);
         await applyCommon(options);
         await applyVpc(options);
 

@@ -1,6 +1,6 @@
 import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
-import { applyCore } from '@/templates/core';
+import { applyTerraformCore } from '@/templates/core';
 
 import applyAlb, {
   albModuleContent,
@@ -28,7 +28,7 @@ describe('ALB add-on', () => {
         infrastructureType: 'advanced',
       };
 
-      await applyCore(awsOptions);
+      await applyTerraformCore(awsOptions);
       await applyCommon(awsOptions);
       await applyAlb(awsOptions);
     });

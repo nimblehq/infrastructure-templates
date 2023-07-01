@@ -1,6 +1,6 @@
 import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
-import { applyCore } from '@/templates/core';
+import { applyTerraformCore } from '@/templates/core';
 
 import applyBastion, {
   bastionModuleContent,
@@ -27,7 +27,7 @@ describe('Bastion add-on', () => {
         infrastructureType: 'advanced',
       };
 
-      await applyCore(awsOptions);
+      await applyTerraformCore(awsOptions);
       await applyCommon(awsOptions);
       await applyBastion(awsOptions);
     });

@@ -1,6 +1,6 @@
 import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
-import { applyCore } from '@/templates/core';
+import { applyTerraformCore } from '@/templates/core';
 
 import applyCommon from './common';
 import applyIamUserAndGroup, {
@@ -22,7 +22,7 @@ describe('IAM add-on', () => {
         infrastructureType: 'advanced',
       };
 
-      applyCore(awsOptions);
+      applyTerraformCore(awsOptions);
       applyCommon(awsOptions);
       applyIamUserAndGroup(awsOptions);
     });

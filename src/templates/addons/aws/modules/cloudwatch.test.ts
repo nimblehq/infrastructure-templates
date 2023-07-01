@@ -1,6 +1,6 @@
 import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
-import { applyCore } from '@/templates/core';
+import { applyTerraformCore } from '@/templates/core';
 
 import applyCloudwatch, {
   cloudwatchModuleContent,
@@ -25,7 +25,7 @@ describe('Cloudwatch add-on', () => {
         infrastructureType: 'advanced',
       };
 
-      await applyCore(awsOptions);
+      await applyTerraformCore(awsOptions);
       await applyCommon(awsOptions);
       await applyCloudwatch(awsOptions);
     });

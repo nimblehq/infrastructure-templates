@@ -1,7 +1,7 @@
 import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 
-import { applyCore } from '.';
+import { applyTerraformCore } from '.';
 
 describe('Core codebase', () => {
   describe('given valid AwsOptions', () => {
@@ -14,7 +14,7 @@ describe('Core codebase', () => {
         infrastructureType: 'advanced',
       };
 
-      applyCore(awsOptions);
+      applyTerraformCore(awsOptions);
     });
 
     afterAll(() => {
