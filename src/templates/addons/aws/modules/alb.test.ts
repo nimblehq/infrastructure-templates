@@ -2,14 +2,14 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformCore } from '@/templates/core';
 
-import applyAlb, {
+import applyAwsAlb, {
   albModuleContent,
   albOutputsContent,
   albSGMainContent,
   albSGOutputsContent,
   albVariablesContent,
 } from './alb';
-import applyTerraformAWS from './core/common';
+import applyTerraformAws from './core/common';
 
 jest.mock('inquirer', () => {
   return {
@@ -29,8 +29,8 @@ describe('ALB add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyTerraformAWS(awsOptions);
-      await applyAlb(awsOptions);
+      await applyTerraformAws(awsOptions);
+      await applyAwsAlb(awsOptions);
     });
 
     afterAll(() => {

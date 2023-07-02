@@ -3,14 +3,14 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '.';
 import { applyAdvancedTemplate } from './advanced';
 import {
-  applyAlb,
-  applyBastion,
-  applyEcr,
-  applyEcs,
-  applyCloudwatch,
-  applyRds,
-  applyS3,
-  applySsm,
+  applyAwsAlb,
+  applyAwsBastion,
+  applyAwsEcr,
+  applyAwsEcs,
+  applyAwsCloudwatch,
+  applyAwsRds,
+  applyAwsS3,
+  applyAwsSsm,
 } from './modules';
 
 jest.mock('./modules');
@@ -35,35 +35,35 @@ describe('AWS advanced template', () => {
     });
 
     it('applies ECR add-on', () => {
-      expect(applyEcr).toHaveBeenCalledWith(options);
+      expect(applyAwsEcr).toHaveBeenCalledWith(options);
     });
 
     it('applies cloudwatch add-on', () => {
-      expect(applyCloudwatch).toHaveBeenCalledWith(options);
+      expect(applyAwsCloudwatch).toHaveBeenCalledWith(options);
     });
 
     it('applies S3 add-on', () => {
-      expect(applyS3).toHaveBeenCalledWith(options);
+      expect(applyAwsS3).toHaveBeenCalledWith(options);
     });
 
     it('applies ALB add-on', () => {
-      expect(applyAlb).toHaveBeenCalledWith(options);
+      expect(applyAwsAlb).toHaveBeenCalledWith(options);
     });
 
     it('applies RDS add-on', () => {
-      expect(applyRds).toHaveBeenCalledWith(options);
+      expect(applyAwsRds).toHaveBeenCalledWith(options);
     });
 
     it('applies bastion add-on', () => {
-      expect(applyBastion).toHaveBeenCalledWith(options);
+      expect(applyAwsBastion).toHaveBeenCalledWith(options);
     });
 
     it('applies SSM add-on', () => {
-      expect(applySsm).toHaveBeenCalledWith(options);
+      expect(applyAwsSsm).toHaveBeenCalledWith(options);
     });
 
     it('applies ECS add-on', () => {
-      expect(applyEcs).toHaveBeenCalledWith(options);
+      expect(applyAwsEcs).toHaveBeenCalledWith(options);
     });
   });
 });

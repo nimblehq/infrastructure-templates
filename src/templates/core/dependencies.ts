@@ -4,86 +4,87 @@ import { prompt } from 'inquirer';
 import { containsContent, isExisting } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import {
-  applyAlb,
-  applyBastion,
-  applyEcr,
-  applyEcs,
-  applyCloudwatch,
-  applyRds,
-  applyS3,
-  applySecurityGroup,
-  applySsm,
-  applyVpc,
+  applyAwsAlb,
+  applyAwsBastion,
+  applyAwsEcr,
+  applyAwsEcs,
+  applyAwsCloudwatch,
+  applyAwsRds,
+  applyAwsS3,
+  applyAwsSecurityGroup,
+  applyAwsSsm,
+  applyAwsVpc,
 } from '@/templates/addons/aws/modules';
 
 import { INFRA_BASE_MAIN_PATH } from './constants';
-import { AWSModule, AWSModuleName, InstallationOptions } from './types';
+import { AwsModule, AwsModuleName, InstallationOptions } from './types';
 
-const AWS_MODULES: Record<AWSModuleName | string, AWSModule> = {
+const AWS_MODULES: Record<AwsModuleName | string, AwsModule> = {
   vpc: {
     name: 'vpc',
     path: 'modules/vpc',
     mainContent: 'module "vpc"',
-    applyModuleFunction: (options: AwsOptions) => applyVpc(options),
+    applyModuleFunction: (options: AwsOptions) => applyAwsVpc(options),
   },
   securityGroup: {
     name: 'securityGroup',
     path: 'modules/security_group',
     mainContent: 'module "security_group"',
-    applyModuleFunction: (options: AwsOptions) => applySecurityGroup(options),
+    applyModuleFunction: (options: AwsOptions) =>
+      applyAwsSecurityGroup(options),
   },
   alb: {
     name: 'alb',
     path: 'modules/alb',
     mainContent: 'module "alb"',
-    applyModuleFunction: (options: AwsOptions) => applyAlb(options),
+    applyModuleFunction: (options: AwsOptions) => applyAwsAlb(options),
   },
   bastion: {
     name: 'bastion',
     path: 'modules/bastion',
     mainContent: 'module "bastion"',
-    applyModuleFunction: (options: AwsOptions) => applyBastion(options),
+    applyModuleFunction: (options: AwsOptions) => applyAwsBastion(options),
   },
   ecr: {
     name: 'ecr',
     path: 'modules/ecr',
     mainContent: 'module "ecr"',
-    applyModuleFunction: (options: AwsOptions) => applyEcr(options),
+    applyModuleFunction: (options: AwsOptions) => applyAwsEcr(options),
   },
   ecs: {
     name: 'ecs',
     path: 'modules/ecs',
     mainContent: 'module "ecs"',
-    applyModuleFunction: (options: AwsOptions) => applyEcs(options),
+    applyModuleFunction: (options: AwsOptions) => applyAwsEcs(options),
   },
   cloudwatch: {
     name: 'cloudwatch',
     path: 'modules/cloudwatch',
     mainContent: 'module "cloudwatch"',
-    applyModuleFunction: (options: AwsOptions) => applyCloudwatch(options),
+    applyModuleFunction: (options: AwsOptions) => applyAwsCloudwatch(options),
   },
   rds: {
     name: 'rds',
     path: 'modules/rds',
     mainContent: 'module "rds"',
-    applyModuleFunction: (options: AwsOptions) => applyRds(options),
+    applyModuleFunction: (options: AwsOptions) => applyAwsRds(options),
   },
   s3: {
     name: 's3',
     path: 'modules/s3',
     mainContent: 'module "s3"',
-    applyModuleFunction: (options: AwsOptions) => applyS3(options),
+    applyModuleFunction: (options: AwsOptions) => applyAwsS3(options),
   },
   ssm: {
     name: 'ssm',
     path: 'modules/ssm',
     mainContent: 'module "ssm"',
-    applyModuleFunction: (options: AwsOptions) => applySsm(options),
+    applyModuleFunction: (options: AwsOptions) => applyAwsSsm(options),
   },
 };
 
-const isAWSModuleAdded = (
-  dependency: AWSModuleName | string,
+const isAwsModuleAdded = (
+  dependency: AwsModuleName | string,
   projectName: string
 ): boolean => {
   const module = AWS_MODULES[dependency];
@@ -101,9 +102,9 @@ const isAWSModuleAdded = (
   return isModuleExisting && isModuleAdded;
 };
 
-const applyAWSModule = async (
-  currentModule: AWSModuleName,
-  awsModule: AWSModule,
+const applyAwsModule = async (
+  currentModule: AwsModuleName,
+  awsModule: AwsModule,
   awsOptions: AwsOptions,
   options: InstallationOptions
 ): Promise<boolean> => {
@@ -140,20 +141,20 @@ const applyAWSModule = async (
   return false;
 };
 
-const requireAWSModules = async (
-  currentModule: AWSModuleName,
-  modules: Array<AWSModuleName | string> | AWSModuleName | string,
+const requireAwsModules = async (
+  currentModule: AwsModuleName,
+  modules: Array<AwsModuleName | string> | AwsModuleName | string,
   awsOptions: AwsOptions,
   options: InstallationOptions = { skipConfirmation: false }
 ): Promise<boolean> => {
   const awsModules = Array.isArray(modules) ? modules : [modules];
 
   for (const awsModule of awsModules) {
-    if (isAWSModuleAdded(awsModule, awsOptions.projectName)) {
+    if (isAwsModuleAdded(awsModule, awsOptions.projectName)) {
       continue;
     }
 
-    const result = await applyAWSModule(
+    const result = await applyAwsModule(
       currentModule,
       AWS_MODULES[awsModule],
       awsOptions,
@@ -177,4 +178,4 @@ const requireAWSModules = async (
   return true;
 };
 
-export { requireAWSModules, isAWSModuleAdded };
+export { requireAwsModules, isAwsModuleAdded };

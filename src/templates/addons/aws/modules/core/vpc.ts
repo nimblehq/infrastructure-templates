@@ -7,7 +7,7 @@ import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_OUTPUTS_PATH,
 } from '@/templates/core/constants';
-import { isAWSModuleAdded } from '@/templates/core/dependencies';
+import { isAwsModuleAdded } from '@/templates/core/dependencies';
 
 const vpcOutputsContent = dedent`
   output "vpc_id" {
@@ -22,8 +22,8 @@ const vpcModuleContent = dedent`
     namespace = var.namespace
   }`;
 
-const applyVpc = async (options: AwsOptions) => {
-  if (isAWSModuleAdded('vpc', options.projectName)) {
+const applyAwsVpc = async (options: AwsOptions) => {
+  if (isAwsModuleAdded('vpc', options.projectName)) {
     return;
   }
 
@@ -32,5 +32,5 @@ const applyVpc = async (options: AwsOptions) => {
   appendToFile(INFRA_BASE_OUTPUTS_PATH, vpcOutputsContent, options.projectName);
 };
 
-export default applyVpc;
+export default applyAwsVpc;
 export { vpcModuleContent, vpcOutputsContent };

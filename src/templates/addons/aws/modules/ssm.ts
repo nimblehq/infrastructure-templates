@@ -7,8 +7,8 @@ import {
   INFRA_BASE_VARIABLES_PATH,
 } from '@/templates/core/constants';
 import {
-  isAWSModuleAdded,
-  requireAWSModules,
+  isAwsModuleAdded,
+  requireAwsModules,
 } from '@/templates/core/dependencies';
 
 import { AWS_SKELETON_PATH } from '../constants';
@@ -31,11 +31,11 @@ const ssmModuleContent = dedent`
     }
   }`;
 
-const applySsm = async (options: AwsOptions) => {
-  if (isAWSModuleAdded('ssm', options.projectName)) {
+const applyAwsSsm = async (options: AwsOptions) => {
+  if (isAwsModuleAdded('ssm', options.projectName)) {
     return;
   }
-  await requireAWSModules('ssm', 'ecs', options);
+  await requireAwsModules('ssm', 'ecs', options);
 
   copy(`${AWS_SKELETON_PATH}/modules/ssm`, 'modules/ssm', options.projectName);
   appendToFile(
@@ -46,5 +46,5 @@ const applySsm = async (options: AwsOptions) => {
   appendToFile(INFRA_BASE_MAIN_PATH, ssmModuleContent, options.projectName);
 };
 
-export default applySsm;
+export default applyAwsSsm;
 export { ssmVariablesContent, ssmModuleContent };

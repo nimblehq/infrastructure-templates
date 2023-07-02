@@ -6,7 +6,7 @@ import {
   INFRA_SHARED_MAIN_PATH,
   INFRA_SHARED_VARIABLES_PATH,
 } from '@/templates/core/constants';
-import { isAWSModuleAdded } from '@/templates/core/dependencies';
+import { isAwsModuleAdded } from '@/templates/core/dependencies';
 
 import { AWS_SKELETON_PATH } from '../constants';
 
@@ -24,8 +24,8 @@ const ecrModuleContent = dedent`
     image_limit = var.image_limit
   }`;
 
-const applyEcr = async (options: AwsOptions) => {
-  if (isAWSModuleAdded('ecr', options.projectName)) {
+const applyAwsEcr = async (options: AwsOptions) => {
+  if (isAwsModuleAdded('ecr', options.projectName)) {
     return;
   }
 
@@ -38,5 +38,5 @@ const applyEcr = async (options: AwsOptions) => {
   appendToFile(INFRA_SHARED_MAIN_PATH, ecrModuleContent, options.projectName);
 };
 
-export default applyEcr;
+export default applyAwsEcr;
 export { ecrVariablesContent, ecrModuleContent };

@@ -2,10 +2,10 @@ import { prompt } from 'inquirer';
 
 import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
-import { applyTerraformAWS, applyVpc } from '@/templates/addons/aws/modules';
+import { applyTerraformAws, applyAwsVpc } from '@/templates/addons/aws/modules';
 
 import { applyTerraformCore } from '.';
-import { isAWSModuleAdded, requireAWSModules } from './dependencies';
+import { isAwsModuleAdded, requireAwsModules } from './dependencies';
 
 jest.mock('inquirer');
 
@@ -17,7 +17,7 @@ describe('Dependencies', () => {
     remove('/', projectDir);
   });
 
-  describe('.isAWSModuleAdded', () => {
+  describe('.isAwsModuleAdded', () => {
     describe('given an installed module name', () => {
       it('returns true', () => {
         const options: AwsOptions = {
@@ -27,9 +27,9 @@ describe('Dependencies', () => {
         };
 
         applyTerraformCore(options);
-        applyVpc(options);
+        applyAwsVpc(options);
 
-        expect(isAWSModuleAdded('vpc', options.projectName)).toBe(true);
+        expect(isAwsModuleAdded('vpc', options.projectName)).toBe(true);
       });
     });
 
@@ -41,7 +41,7 @@ describe('Dependencies', () => {
           infrastructureType: 'advanced',
         };
 
-        expect(isAWSModuleAdded('vpc', options.projectName)).toBe(false);
+        expect(isAwsModuleAdded('vpc', options.projectName)).toBe(false);
       });
     });
 
@@ -53,14 +53,14 @@ describe('Dependencies', () => {
           infrastructureType: 'advanced',
         };
 
-        expect(() => isAWSModuleAdded('azure', options.projectName)).toThrow(
+        expect(() => isAwsModuleAdded('azure', options.projectName)).toThrow(
           "Module 'azure' is not supported"
         );
       });
     });
   });
 
-  describe('.requireAWSModule', () => {
+  describe('.requireAwsModule', () => {
     describe('given a valid module name that is already installed', () => {
       it('returns true', async () => {
         const options: AwsOptions = {
@@ -70,10 +70,10 @@ describe('Dependencies', () => {
         };
 
         await applyTerraformCore(options);
-        await applyTerraformAWS(options);
-        await applyVpc(options);
+        await applyTerraformAws(options);
+        await applyAwsVpc(options);
 
-        expect(await requireAWSModules('alb', 'vpc', options)).toBe(true);
+        expect(await requireAwsModules('alb', 'vpc', options)).toBe(true);
       });
     });
 
@@ -88,13 +88,13 @@ describe('Dependencies', () => {
             };
 
             await applyTerraformCore(options);
-            await applyTerraformAWS(options);
+            await applyTerraformAws(options);
 
             (prompt as unknown as jest.Mock).mockResolvedValue({
               apply: true,
             });
 
-            expect(await requireAWSModules('alb', 'vpc', options)).toBe(true);
+            expect(await requireAwsModules('alb', 'vpc', options)).toBe(true);
           });
         });
 
@@ -107,14 +107,14 @@ describe('Dependencies', () => {
             };
 
             await applyTerraformCore(options);
-            await applyTerraformAWS(options);
+            await applyTerraformAws(options);
 
             (prompt as unknown as jest.Mock).mockResolvedValue({
               apply: false,
             });
 
             await expect(
-              requireAWSModules('alb', 'vpc', options)
+              requireAwsModules('alb', 'vpc', options)
             ).rejects.toThrow(
               `Module 'vpc' is required before adding 'alb' module`
             );
@@ -131,10 +131,10 @@ describe('Dependencies', () => {
           };
 
           await applyTerraformCore(options);
-          await applyTerraformAWS(options);
+          await applyTerraformAws(options);
 
           expect(
-            await requireAWSModules('alb', 'vpc', options, {
+            await requireAwsModules('alb', 'vpc', options, {
               skipConfirmation: true,
             })
           ).toBe(true);
@@ -151,11 +151,11 @@ describe('Dependencies', () => {
         };
 
         await applyTerraformCore(options);
-        await applyTerraformAWS(options);
-        await applyVpc(options);
+        await applyTerraformAws(options);
+        await applyAwsVpc(options);
 
         await expect(
-          requireAWSModules('alb', ['vpc', 'azure'], options)
+          requireAwsModules('alb', ['vpc', 'azure'], options)
         ).rejects.toThrow(`Module 'azure' is not supported`);
       });
     });

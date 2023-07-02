@@ -1,7 +1,7 @@
 import { Args, Flags, Command, ux } from '@oclif/core';
 
 import { postProcess } from '@/hooks/postProcess';
-import { requireAWSModules } from '@/templates/core/dependencies';
+import { requireAwsModules } from '@/templates/core/dependencies';
 import { awsModules } from '@/templates/core/types';
 
 import { GeneralOptions } from '../generate';
@@ -67,7 +67,7 @@ export default class InstallAddon extends Command {
   }
 
   private async applyModule(moduleName: string, options: GeneralOptions) {
-    await requireAWSModules(options.projectName, moduleName, options, {
+    await requireAwsModules(options.projectName, moduleName, options, {
       skipConfirmation: true,
     });
   }

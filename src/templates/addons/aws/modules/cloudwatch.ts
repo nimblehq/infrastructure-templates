@@ -6,7 +6,7 @@ import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
 } from '@/templates/core/constants';
-import { isAWSModuleAdded } from '@/templates/core/dependencies';
+import { isAwsModuleAdded } from '@/templates/core/dependencies';
 
 import { AWS_SKELETON_PATH } from '../constants';
 
@@ -25,8 +25,8 @@ const cloudwatchModuleContent = dedent`
     log_retention_in_days = var.cloudwatch_log_retention_in_days
   }`;
 
-const applyCloudwatch = async (options: AwsOptions) => {
-  if (isAWSModuleAdded('cloudwatch', options.projectName)) {
+const applyAwsCloudwatch = async (options: AwsOptions) => {
+  if (isAwsModuleAdded('cloudwatch', options.projectName)) {
     return;
   }
 
@@ -47,5 +47,5 @@ const applyCloudwatch = async (options: AwsOptions) => {
   );
 };
 
-export default applyCloudwatch;
+export default applyAwsCloudwatch;
 export { cloudwatchVariablesContent, cloudwatchModuleContent };

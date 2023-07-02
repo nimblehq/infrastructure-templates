@@ -8,8 +8,8 @@ import {
   INFRA_BASE_VARIABLES_PATH,
 } from '@/templates/core/constants';
 import {
-  isAWSModuleAdded,
-  requireAWSModules,
+  isAwsModuleAdded,
+  requireAwsModules,
 } from '@/templates/core/dependencies';
 
 import {
@@ -97,11 +97,11 @@ const albSGOutputsContent = dedent`
     value       = [aws_security_group.alb.id]
   }`;
 
-const applyAlb = async (options: AwsOptions) => {
-  if (isAWSModuleAdded('alb', options.projectName)) {
+const applyAwsAlb = async (options: AwsOptions) => {
+  if (isAwsModuleAdded('alb', options.projectName)) {
     return;
   }
-  await requireAWSModules('alb', 'securityGroup', options);
+  await requireAwsModules('alb', 'securityGroup', options);
 
   copy(`${AWS_SKELETON_PATH}/modules/alb`, 'modules/alb', options.projectName);
   appendToFile(INFRA_BASE_MAIN_PATH, albModuleContent, options.projectName);
@@ -123,7 +123,7 @@ const applyAlb = async (options: AwsOptions) => {
   );
 };
 
-export default applyAlb;
+export default applyAwsAlb;
 export {
   albVariablesContent,
   albModuleContent,

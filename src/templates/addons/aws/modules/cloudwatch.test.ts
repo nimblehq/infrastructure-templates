@@ -2,11 +2,11 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformCore } from '@/templates/core';
 
-import applyCloudwatch, {
+import applyAwsCloudwatch, {
   cloudwatchModuleContent,
   cloudwatchVariablesContent,
 } from './cloudwatch';
-import applyTerraformAWS from './core/common';
+import applyTerraformAws from './core/common';
 
 jest.mock('inquirer', () => {
   return {
@@ -26,8 +26,8 @@ describe('Cloudwatch add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyTerraformAWS(awsOptions);
-      await applyCloudwatch(awsOptions);
+      await applyTerraformAws(awsOptions);
+      await applyAwsCloudwatch(awsOptions);
     });
 
     afterAll(() => {

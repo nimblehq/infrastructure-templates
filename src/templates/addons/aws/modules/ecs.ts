@@ -7,8 +7,8 @@ import {
   INFRA_BASE_VARIABLES_PATH,
 } from '@/templates/core/constants';
 import {
-  isAWSModuleAdded,
-  requireAWSModules,
+  isAwsModuleAdded,
+  requireAwsModules,
 } from '@/templates/core/dependencies';
 
 import {
@@ -156,11 +156,11 @@ const ecsSGOutputsContent = dedent`
     value       = [aws_security_group.ecs_fargate.id]
   }`;
 
-const applyEcs = async (options: AwsOptions) => {
-  if (isAWSModuleAdded('ecs', options.projectName)) {
+const applyAwsEcs = async (options: AwsOptions) => {
+  if (isAwsModuleAdded('ecs', options.projectName)) {
     return;
   }
-  await requireAWSModules('ecs', 'securityGroup', options);
+  await requireAwsModules('ecs', 'securityGroup', options);
 
   copy(`${AWS_SKELETON_PATH}/modules/ecs`, 'modules/ecs', options.projectName);
   appendToFile(
@@ -181,7 +181,7 @@ const applyEcs = async (options: AwsOptions) => {
   );
 };
 
-export default applyEcs;
+export default applyAwsEcs;
 export {
   ecsVariablesContent,
   ecsModuleContent,

@@ -90,7 +90,7 @@ const iamOutputsContent = dedent`
     value       = module.iam_bot_users.temporary_passwords
   }`;
 
-const applyIamUserAndGroup = async ({ projectName }: AwsOptions) => {
+const applyAwsIamUserAndGroup = async ({ projectName }: AwsOptions) => {
   copy(
     `${AWS_SKELETON_PATH}/modules/iam_groups`,
     'modules/iam_groups',
@@ -119,7 +119,7 @@ const applyIamUserAndGroup = async ({ projectName }: AwsOptions) => {
   appendToFile(INFRA_SHARED_OUTPUTS_PATH, iamOutputsContent, projectName);
 };
 
-export default applyIamUserAndGroup;
+export default applyAwsIamUserAndGroup;
 export {
   iamVariablesContent,
   iamGroupsModuleContent,

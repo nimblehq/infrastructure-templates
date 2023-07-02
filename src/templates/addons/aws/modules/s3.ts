@@ -6,7 +6,7 @@ import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_OUTPUTS_PATH,
 } from '@/templates/core/constants';
-import { isAWSModuleAdded } from '@/templates/core/dependencies';
+import { isAwsModuleAdded } from '@/templates/core/dependencies';
 
 import { AWS_SKELETON_PATH } from '../constants';
 
@@ -23,8 +23,8 @@ const s3ModuleContent = dedent`
     namespace   = var.namespace
   }`;
 
-const applyS3 = async (options: AwsOptions) => {
-  if (isAWSModuleAdded('s3', options.projectName)) {
+const applyAwsS3 = async (options: AwsOptions) => {
+  if (isAwsModuleAdded('s3', options.projectName)) {
     return;
   }
 
@@ -33,5 +33,5 @@ const applyS3 = async (options: AwsOptions) => {
   appendToFile(INFRA_BASE_MAIN_PATH, s3ModuleContent, options.projectName);
 };
 
-export default applyS3;
+export default applyAwsS3;
 export { s3ModuleContent, s3OutputsContent };

@@ -2,8 +2,8 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformCore } from '@/templates/core';
 
-import applyTerraformAWS from './common';
-import applyRegion, { regionVariablesContent } from './region';
+import applyTerraformAws from './common';
+import applyAwsRegion, { regionVariablesContent } from './region';
 
 jest.mock('inquirer', () => {
   return {
@@ -25,8 +25,8 @@ describe('Region add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyTerraformAWS(awsOptions);
-      await applyRegion(awsOptions);
+      await applyTerraformAws(awsOptions);
+      await applyAwsRegion(awsOptions);
     });
 
     afterAll(() => {

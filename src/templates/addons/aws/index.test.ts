@@ -6,10 +6,10 @@ import { remove } from '@/helpers/file';
 import { generateAwsTemplate } from '.';
 import { applyAdvancedTemplate } from './advanced';
 import {
-  applyTerraformAWS,
-  applyRegion,
-  applySecurityGroup,
-  applyVpc,
+  applyTerraformAws,
+  applyAwsRegion,
+  applyAwsSecurityGroup,
+  applyAwsVpc,
 } from './modules';
 
 jest.mock('./advanced');
@@ -48,19 +48,19 @@ describe('AWS template', () => {
       });
 
       it('applies common add-on', () => {
-        expect(applyTerraformAWS).toHaveBeenCalledWith(awsOptions);
+        expect(applyTerraformAws).toHaveBeenCalledWith(awsOptions);
       });
 
       it('applies region add-on', () => {
-        expect(applyRegion).toHaveBeenCalledWith(awsOptions);
+        expect(applyAwsRegion).toHaveBeenCalledWith(awsOptions);
       });
 
       it('applies VPC add-on', () => {
-        expect(applyVpc).toHaveBeenCalledWith(awsOptions);
+        expect(applyAwsVpc).toHaveBeenCalledWith(awsOptions);
       });
 
       it('applies security group add-on', () => {
-        expect(applySecurityGroup).toHaveBeenCalledWith(awsOptions);
+        expect(applyAwsSecurityGroup).toHaveBeenCalledWith(awsOptions);
       });
 
       it('applies advanced add-ons', async () => {

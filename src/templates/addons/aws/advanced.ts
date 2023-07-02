@@ -1,24 +1,24 @@
 import { AwsOptions } from '.';
 import {
-  applyAlb,
-  applyBastion,
-  applyEcr,
-  applyEcs,
-  applyCloudwatch,
-  applyRds,
-  applyS3,
-  applySsm,
+  applyAwsAlb,
+  applyAwsBastion,
+  applyAwsEcr,
+  applyAwsEcs,
+  applyAwsCloudwatch,
+  applyAwsRds,
+  applyAwsS3,
+  applyAwsSsm,
 } from './modules';
 
 const applyAdvancedTemplate = async (options: AwsOptions) => {
-  await applyEcr(options);
-  await applyBastion(options);
-  await applyRds(options);
-  await applyEcs(options);
-  await applyAlb(options);
-  await applyCloudwatch(options);
-  await applyS3(options);
-  await applySsm(options);
+  await applyAwsEcr(options);
+  await applyAwsBastion(options);
+  await applyAwsRds(options);
+  await applyAwsEcs(options);
+  await applyAwsAlb(options);
+  await applyAwsCloudwatch(options);
+  await applyAwsS3(options);
+  await applyAwsSsm(options);
 };
 
 export { applyAdvancedTemplate };

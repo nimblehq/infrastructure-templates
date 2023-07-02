@@ -7,8 +7,8 @@ import {
   INFRA_BASE_VARIABLES_PATH,
 } from '@/templates/core/constants';
 import {
-  isAWSModuleAdded,
-  requireAWSModules,
+  isAwsModuleAdded,
+  requireAwsModules,
 } from '@/templates/core/dependencies';
 
 import {
@@ -96,11 +96,11 @@ const bastionSGOutputsContent = dedent`
     value       = [aws_security_group.bastion.id]
   }`;
 
-const applyBastion = async (options: AwsOptions) => {
-  if (isAWSModuleAdded('bastion', options.projectName)) {
+const applyAwsBastion = async (options: AwsOptions) => {
+  if (isAwsModuleAdded('bastion', options.projectName)) {
     return;
   }
-  await requireAWSModules('bastion', 'securityGroup', options);
+  await requireAwsModules('bastion', 'securityGroup', options);
 
   copy(
     `${AWS_SKELETON_PATH}/modules/bastion`,
@@ -125,7 +125,7 @@ const applyBastion = async (options: AwsOptions) => {
   );
 };
 
-export default applyBastion;
+export default applyAwsBastion;
 export {
   bastionVariablesContent,
   bastionModuleContent,

@@ -8,8 +8,8 @@ import {
   INFRA_BASE_VARIABLES_PATH,
 } from '@/templates/core/constants';
 import {
-  isAWSModuleAdded,
-  requireAWSModules,
+  isAwsModuleAdded,
+  requireAwsModules,
 } from '@/templates/core/dependencies';
 
 const securityGroupVariablesContent = dedent`
@@ -29,11 +29,11 @@ const securityGroupModuleContent = dedent`
     nimble_office_ip = var.nimble_office_ip
   }`;
 
-const applySecurityGroup = async (options: AwsOptions) => {
-  if (isAWSModuleAdded('securityGroup', options.projectName)) {
+const applyAwsSecurityGroup = async (options: AwsOptions) => {
+  if (isAwsModuleAdded('securityGroup', options.projectName)) {
     return;
   }
-  await requireAWSModules('securityGroup', 'vpc', options);
+  await requireAwsModules('securityGroup', 'vpc', options);
 
   copy(
     `${AWS_SKELETON_PATH}/modules/security_group`,
@@ -52,5 +52,5 @@ const applySecurityGroup = async (options: AwsOptions) => {
   );
 };
 
-export default applySecurityGroup;
+export default applyAwsSecurityGroup;
 export { securityGroupModuleContent, securityGroupVariablesContent };

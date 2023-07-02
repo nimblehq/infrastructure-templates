@@ -1,7 +1,7 @@
 import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 
-import applyTerraformAWS from './common';
+import applyTerraformAws from './common';
 
 describe('Common add-on', () => {
   describe('given valid AwsOptions', () => {
@@ -14,7 +14,7 @@ describe('Common add-on', () => {
         infrastructureType: 'advanced',
       };
 
-      await applyTerraformAWS(awsOptions);
+      await applyTerraformAws(awsOptions);
     });
 
     afterAll(() => {

@@ -2,8 +2,8 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformCore } from '@/templates/core';
 
-import applyTerraformAWS from './core/common';
-import applyRds, {
+import applyTerraformAws from './core/common';
+import applyAwsRds, {
   rdsModuleContent,
   rdsSGMainContent,
   rdsSGOutputsContent,
@@ -28,8 +28,8 @@ describe('RDS add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyTerraformAWS(awsOptions);
-      await applyRds(awsOptions);
+      await applyTerraformAws(awsOptions);
+      await applyAwsRds(awsOptions);
     });
 
     afterAll(() => {

@@ -2,13 +2,13 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformCore } from '@/templates/core';
 
-import applyBastion, {
+import applyAwsBastion, {
   bastionModuleContent,
   bastionSGMainContent,
   bastionSGOutputsContent,
   bastionVariablesContent,
 } from './bastion';
-import applyTerraformAWS from './core/common';
+import applyTerraformAws from './core/common';
 
 jest.mock('inquirer', () => {
   return {
@@ -28,8 +28,8 @@ describe('Bastion add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyTerraformAWS(awsOptions);
-      await applyBastion(awsOptions);
+      await applyTerraformAws(awsOptions);
+      await applyAwsBastion(awsOptions);
     });
 
     afterAll(() => {

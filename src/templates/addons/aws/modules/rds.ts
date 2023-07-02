@@ -7,8 +7,8 @@ import {
   INFRA_BASE_VARIABLES_PATH,
 } from '@/templates/core/constants';
 import {
-  isAWSModuleAdded,
-  requireAWSModules,
+  isAwsModuleAdded,
+  requireAwsModules,
 } from '@/templates/core/dependencies';
 
 import {
@@ -105,11 +105,11 @@ const rdsSGOutputsContent = dedent`
     value       = [aws_security_group.rds.id]
   }`;
 
-const applyRds = async (options: AwsOptions) => {
-  if (isAWSModuleAdded('rds', options.projectName)) {
+const applyAwsRds = async (options: AwsOptions) => {
+  if (isAwsModuleAdded('rds', options.projectName)) {
     return;
   }
-  await requireAWSModules('rds', 'securityGroup', options);
+  await requireAwsModules('rds', 'securityGroup', options);
 
   copy(`${AWS_SKELETON_PATH}/modules/rds`, 'modules/rds', options.projectName);
   appendToFile(
@@ -130,7 +130,7 @@ const applyRds = async (options: AwsOptions) => {
   );
 };
 
-export default applyRds;
+export default applyAwsRds;
 export {
   rdsVariablesContent,
   rdsModuleContent,

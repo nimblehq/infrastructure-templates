@@ -5,11 +5,11 @@ import { GeneralOptions } from '@/commands/generate';
 import { applyAdvancedTemplate } from './advanced';
 import { AWS_DEFAULT_REGION } from './constants';
 import {
-  applyTerraformAWS,
-  applyIamUserAndGroup,
-  applyRegion,
-  applySecurityGroup,
-  applyVpc,
+  applyTerraformAws,
+  applyAwsIamUserAndGroup,
+  applyAwsRegion,
+  applyAwsSecurityGroup,
+  applyAwsVpc,
 } from './modules';
 
 const awsChoices = [
@@ -44,8 +44,8 @@ type AwsOptions = GeneralOptions & {
 };
 
 const applyCommonModules = async (options: AwsOptions) => {
-  await applyTerraformAWS(options);
-  await applyRegion(options);
+  await applyTerraformAws(options);
+  await applyAwsRegion(options);
 };
 
 const generateAwsTemplate = async (
@@ -66,9 +66,9 @@ const generateAwsTemplate = async (
 
     case 'advanced':
       await applyCommonModules(awsOptions);
-      await applyVpc(awsOptions);
-      await applySecurityGroup(awsOptions);
-      await applyIamUserAndGroup(awsOptions);
+      await applyAwsVpc(awsOptions);
+      await applyAwsSecurityGroup(awsOptions);
+      await applyAwsIamUserAndGroup(awsOptions);
       await applyAdvancedTemplate(awsOptions);
 
       break;

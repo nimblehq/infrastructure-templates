@@ -12,7 +12,7 @@ const regionVariablesContent = (awsRegion: string) => dedent`
     default     = "${awsRegion}"
   }`;
 
-const applyRegion = async (options: AwsOptions) => {
+const applyAwsRegion = async (options: AwsOptions) => {
   appendToFile(
     INFRA_BASE_VARIABLES_PATH,
     regionVariablesContent(options.awsRegion || AWS_DEFAULT_REGION),
@@ -20,5 +20,5 @@ const applyRegion = async (options: AwsOptions) => {
   );
 };
 
-export default applyRegion;
+export default applyAwsRegion;
 export { regionVariablesContent };

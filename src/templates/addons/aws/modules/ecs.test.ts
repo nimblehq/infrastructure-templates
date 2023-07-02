@@ -2,8 +2,8 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformCore } from '@/templates/core';
 
-import applyTerraformAWS from './core/common';
-import applyEcs, {
+import applyTerraformAws from './core/common';
+import applyAwsEcs, {
   ecsModuleContent,
   ecsSGMainContent,
   ecsSGOutputsContent,
@@ -28,8 +28,8 @@ describe('ECS add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyTerraformAWS(awsOptions);
-      await applyEcs(awsOptions);
+      await applyTerraformAws(awsOptions);
+      await applyAwsEcs(awsOptions);
     });
 
     afterAll(() => {

@@ -13,10 +13,10 @@ const awsModules = [
   'ssm',
 ] as const;
 
-type AWSModuleName = typeof awsModules[number] | string;
+type AwsModuleName = typeof awsModules[number] | string;
 
-type AWSModule = {
-  name: AWSModuleName;
+type AwsModule = {
+  name: AwsModuleName;
   path: string;
   mainContent: string;
   applyModuleFunction: (options: AwsOptions) => void | Promise<void>;
@@ -26,4 +26,4 @@ type InstallationOptions = {
   skipConfirmation: boolean;
 };
 
-export { AWSModuleName, AWSModule, InstallationOptions, awsModules };
+export { AwsModuleName, AwsModule, InstallationOptions, awsModules };
