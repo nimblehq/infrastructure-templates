@@ -2,7 +2,7 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformCore } from '@/templates/core';
 
-import applyCommon from './core/common';
+import applyTerraformAWS from './core/common';
 import applyEcr, { ecrModuleContent, ecrVariablesContent } from './ecr';
 
 jest.mock('inquirer', () => {
@@ -23,7 +23,7 @@ describe('ECR add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyCommon(awsOptions);
+      await applyTerraformAWS(awsOptions);
       await applyEcr(awsOptions);
     });
 

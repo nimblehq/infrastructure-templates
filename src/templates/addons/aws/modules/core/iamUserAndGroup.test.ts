@@ -2,7 +2,7 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformCore } from '@/templates/core';
 
-import applyCommon from './common';
+import applyTerraformAWS from './common';
 import applyIamUserAndGroup, {
   iamVariablesContent,
   iamGroupsModuleContent,
@@ -23,7 +23,7 @@ describe('IAM add-on', () => {
       };
 
       applyTerraformCore(awsOptions);
-      applyCommon(awsOptions);
+      applyTerraformAWS(awsOptions);
       applyIamUserAndGroup(awsOptions);
     });
 

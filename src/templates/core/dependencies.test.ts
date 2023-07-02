@@ -2,7 +2,7 @@ import { prompt } from 'inquirer';
 
 import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
-import { applyCommon, applyVpc } from '@/templates/addons/aws/modules';
+import { applyTerraformAWS, applyVpc } from '@/templates/addons/aws/modules';
 
 import { applyTerraformCore } from '.';
 import { isAWSModuleAdded, requireAWSModules } from './dependencies';
@@ -70,7 +70,7 @@ describe('Dependencies', () => {
         };
 
         await applyTerraformCore(options);
-        await applyCommon(options);
+        await applyTerraformAWS(options);
         await applyVpc(options);
 
         expect(await requireAWSModules('alb', 'vpc', options)).toBe(true);
@@ -88,7 +88,7 @@ describe('Dependencies', () => {
             };
 
             await applyTerraformCore(options);
-            await applyCommon(options);
+            await applyTerraformAWS(options);
 
             (prompt as unknown as jest.Mock).mockResolvedValue({
               apply: true,
@@ -107,7 +107,7 @@ describe('Dependencies', () => {
             };
 
             await applyTerraformCore(options);
-            await applyCommon(options);
+            await applyTerraformAWS(options);
 
             (prompt as unknown as jest.Mock).mockResolvedValue({
               apply: false,
@@ -131,7 +131,7 @@ describe('Dependencies', () => {
           };
 
           await applyTerraformCore(options);
-          await applyCommon(options);
+          await applyTerraformAWS(options);
 
           expect(
             await requireAWSModules('alb', 'vpc', options, {
@@ -151,7 +151,7 @@ describe('Dependencies', () => {
         };
 
         await applyTerraformCore(options);
-        await applyCommon(options);
+        await applyTerraformAWS(options);
         await applyVpc(options);
 
         await expect(

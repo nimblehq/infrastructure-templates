@@ -1,7 +1,7 @@
 import applyAlb from './alb';
 import applyBastion from './bastion';
 import applyCloudwatch from './cloudwatch';
-import applyCommon from './core/common';
+import applyTerraformAWS from './core/common';
 import applyIamUserAndGroup from './core/iamUserAndGroup';
 import applyRegion from './core/region';
 import applySecurityGroup from './core/securityGroup';
@@ -15,7 +15,7 @@ import applySsm from './ssm';
 export {
   applyAlb,
   applyBastion,
-  applyCommon,
+  applyTerraformAWS,
   applyCloudwatch,
   applyEcr,
   applyEcs,

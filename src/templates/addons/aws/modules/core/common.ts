@@ -3,7 +3,7 @@ import { AwsOptions } from '@/templates/addons/aws';
 import { AWS_SKELETON_PATH } from '@/templates/addons/aws/constants';
 import { INFRA_BASE_PATH, INFRA_SHARED_PATH } from '@/templates/core/constants';
 
-const applyCommon = async (options: AwsOptions) => {
+const applyTerraformAWS = async (options: AwsOptions) => {
   copy(
     `${AWS_SKELETON_PATH}/providers.tf`,
     `${INFRA_BASE_PATH}/providers.tf`,
@@ -16,4 +16,4 @@ const applyCommon = async (options: AwsOptions) => {
   );
 };
 
-export default applyCommon;
+export default applyTerraformAWS;
