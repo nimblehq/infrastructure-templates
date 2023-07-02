@@ -2,11 +2,11 @@ import { dedent } from 'ts-dedent';
 
 import { appendToFile, copy } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
+import { isAwsModuleAdded } from '@/templates/addons/aws/dependencies';
 import {
   INFRA_SHARED_MAIN_PATH,
   INFRA_SHARED_VARIABLES_PATH,
 } from '@/templates/core/constants';
-import { isAwsModuleAdded } from '@/templates/core/dependencies';
 
 import { AWS_SKELETON_PATH } from '../constants';
 

@@ -3,8 +3,8 @@ import { prompt } from 'inquirer';
 import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformAws, applyAwsVpc } from '@/templates/addons/aws/modules';
+import { applyTerraformCore } from '@/templates/core';
 
-import { applyTerraformCore } from '.';
 import { isAwsModuleAdded, requireAwsModules } from './dependencies';
 
 jest.mock('inquirer');

@@ -3,13 +3,13 @@ import { dedent } from 'ts-dedent';
 import { appendToFile, copy } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import {
+  isAwsModuleAdded,
+  requireAwsModules,
+} from '@/templates/addons/aws/dependencies';
+import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
 } from '@/templates/core/constants';
-import {
-  isAwsModuleAdded,
-  requireAwsModules,
-} from '@/templates/core/dependencies';
 
 import { AWS_SKELETON_PATH } from '../constants';
 

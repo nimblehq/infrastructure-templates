@@ -16,8 +16,12 @@ import {
   applyAwsVpc,
 } from '@/templates/addons/aws/modules';
 
-import { INFRA_BASE_MAIN_PATH } from './constants';
-import { AwsModule, AwsModuleName, InstallationOptions } from './types';
+import { INFRA_BASE_MAIN_PATH } from '../../core/constants';
+import {
+  AwsModule,
+  AwsModuleName,
+  InstallationOptions,
+} from '../../core/types';
 
 const AWS_MODULES: Record<AwsModuleName | string, AwsModule> = {
   vpc: {

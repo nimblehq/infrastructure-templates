@@ -4,13 +4,13 @@ import { appendToFile, copy } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { AWS_SKELETON_PATH } from '@/templates/addons/aws/constants';
 import {
+  isAwsModuleAdded,
+  requireAwsModules,
+} from '@/templates/addons/aws/dependencies';
+import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
 } from '@/templates/core/constants';
-import {
-  isAwsModuleAdded,
-  requireAwsModules,
-} from '@/templates/core/dependencies';
 
 const securityGroupVariablesContent = dedent`
   variable "nimble_office_ip" {
