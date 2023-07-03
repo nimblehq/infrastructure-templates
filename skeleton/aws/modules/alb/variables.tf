@@ -27,15 +27,3 @@ variable "app_port" {
   description = "Application running port"
   type        = number
 }
-
-variable "enable_stickiness" {
-  description = "Enable stickiness"
-  type        = bool
-  default     = false
-}
-
-variable "stickiness_type" {
-  description = "Stickiness type"
-  type        = string
-  default     = "lb_cookie"
-}

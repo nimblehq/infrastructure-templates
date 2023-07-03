@@ -6,12 +6,12 @@ module "vpc" {
   version = "3.0.0"
 
   name                   = "${var.namespace}-vpc"
-  cidr                   = var.cidr
+  cidr                   = "10.0.0.0/16"
   azs                    = data.aws_availability_zones.available.names
-  private_subnets        = var.private_subnet_cidrs
-  public_subnets         = var.public_subnet_cidrs
-  enable_nat_gateway     = var.enable_nat_gateway
-  single_nat_gateway     = var.single_nat_gateway
-  one_nat_gateway_per_az = var.one_nat_gateway_per_az
-  enable_dns_hostnames   = var.enable_dns_hostnames
+  private_subnets        = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnets         = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+  enable_nat_gateway     = true
+  single_nat_gateway     = true
+  one_nat_gateway_per_az = false
+  enable_dns_hostnames   = true
 }

@@ -4,8 +4,8 @@ module "db" {
 
   name = "${var.namespace}-aurora-db"
 
-  engine         = var.engine
-  engine_version = var.engine_version
+  engine         = "aurora-postgresql"
+  engine_version = 15.3
 
   vpc_id                 = var.vpc_id
   subnets                = var.subnet_ids
@@ -20,7 +20,7 @@ module "db" {
   autoscaling_min_capacity = var.autoscaling_min_capacity
   autoscaling_max_capacity = var.autoscaling_max_capacity
 
-  create_monitoring_role = var.create_monitoring_role
+  create_monitoring_role = false
   create_random_password = false
   create_security_group  = false
   storage_encrypted      = true
@@ -30,8 +30,8 @@ module "db" {
   database_name       = var.database_name
   master_username     = var.username
   master_password     = var.password
-  port                = var.port
+  port                = 5432
   deletion_protection = true
 
-  enabled_cloudwatch_logs_exports = var.cloudwatch_logs_exports
+  enabled_cloudwatch_logs_exports = ["postgresql"]
 }
