@@ -1,7 +1,10 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
 import { applyCore } from '../../core';
-import applyCloudwatch, { cloudwatchModuleContent } from './cloudwatch';
+import applyCloudwatch, {
+  cloudwatchModuleContent,
+  cloudwatchVariablesContent,
+} from './cloudwatch';
 import applyCommon from './core/common';
 
 describe('Cloudwatch add-on', () => {
@@ -44,6 +47,13 @@ describe('Cloudwatch add-on', () => {
       expect(projectDir).toHaveContentInFile(
         'base/main.tf',
         cloudwatchModuleContent
+      );
+    });
+
+    it('adds cloudwatch variables to variables.tf', () => {
+      expect(projectDir).toHaveContentInFile(
+        'base/variables.tf',
+        cloudwatchVariablesContent
       );
     });
   });
