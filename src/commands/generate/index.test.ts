@@ -36,7 +36,7 @@ describe('Generator command', () => {
             'modules/bastion/',
             'modules/ecr/',
             'modules/ecs/',
-            'modules/log/',
+            'modules/cloudwatch/',
             'modules/rds/',
             'modules/s3/',
             'modules/security_group/',
@@ -52,10 +52,10 @@ describe('Generator command', () => {
           const expectedFiles = [
             '.gitignore',
             '.tool-versions',
-            'main.tf',
-            'variables.tf',
-            'providers.tf',
-            'outputs.tf',
+            'base/main.tf',
+            'base/variables.tf',
+            'base/providers.tf',
+            'base/outputs.tf',
           ];
 
           expect(projectDir).toHaveFiles(expectedFiles);
@@ -63,7 +63,7 @@ describe('Generator command', () => {
 
         it('displays the success message', () => {
           expect(stdoutSpy).toHaveBeenCalledWith(
-            'The infrastructure has been generated!\n'
+            "The infrastructure code was generated at 'aws-advanced-test'\n"
           );
         });
       });

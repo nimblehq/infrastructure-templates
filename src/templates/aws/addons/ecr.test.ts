@@ -1,7 +1,7 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
 import { applyCore } from '../../core';
-import applyCommon from './common';
+import applyCommon from './core/common';
 import applyEcr, { ecrModuleContent, ecrVariablesContent } from './ecr';
 
 describe('ECR add-on', () => {
@@ -28,10 +28,10 @@ describe('ECR add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'main.tf',
-        'providers.tf',
-        'outputs.tf',
-        'variables.tf',
+        'shared/main.tf',
+        'shared/providers.tf',
+        'shared/outputs.tf',
+        'shared/variables.tf',
         'modules/ecr/main.tf',
         'modules/ecr/variables.tf',
       ];
@@ -40,12 +40,15 @@ describe('ECR add-on', () => {
     });
 
     it('adds ECR module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('main.tf', ecrModuleContent);
+      expect(projectDir).toHaveContentInFile(
+        'shared/main.tf',
+        ecrModuleContent
+      );
     });
 
     it('adds ECR variables to variables.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'variables.tf',
+        'shared/variables.tf',
         ecrVariablesContent
       );
     });

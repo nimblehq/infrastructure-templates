@@ -1,5 +1,5 @@
-import { AwsOptions } from '..';
-import { remove } from '../../../helpers/file';
+import { AwsOptions } from '../../';
+import { remove } from '../../../../helpers/file';
 import applyCommon from './common';
 
 describe('Common add-on', () => {
@@ -23,7 +23,7 @@ describe('Common add-on', () => {
     });
 
     it('creates the expected file', () => {
-      expect(projectDir).toHaveFile('providers.tf');
+      expect(projectDir).toHaveFile('base/providers.tf');
     });
   });
 });

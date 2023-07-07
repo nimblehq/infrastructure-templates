@@ -1,23 +1,25 @@
 import applyAlb from './alb';
 import applyBastion from './bastion';
-import applyCommon from './common';
+import applyCloudwatch from './cloudwatch';
+import applyCommon from './core/common';
+import applyIamUserAndGroup from './core/iamUserAndGroup';
+import applyRegion from './core/region';
+import applySecurityGroup from './core/securityGroup';
+import applyVpc from './core/vpc';
 import applyEcr from './ecr';
 import applyEcs from './ecs';
-import applyLog from './log';
 import applyRds from './rds';
-import applyRegion from './region';
 import applyS3 from './s3';
-import applySecurityGroup from './securityGroup';
 import applySsm from './ssm';
-import applyVpc from './vpc';
 
 export {
   applyAlb,
   applyBastion,
   applyCommon,
+  applyCloudwatch,
   applyEcr,
   applyEcs,
-  applyLog,
+  applyIamUserAndGroup,
   applyRds,
   applyRegion,
   applyS3,

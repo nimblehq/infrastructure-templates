@@ -1,7 +1,7 @@
 import { AwsOptions } from '..';
 import { remove } from '../../../helpers/file';
 import { applyCore } from '../../core';
-import applyCommon from './common';
+import applyCommon from './core/common';
 import applyS3, { s3ModuleContent, s3OutputsContent } from './s3';
 
 describe('S3 add-on', () => {
@@ -28,10 +28,10 @@ describe('S3 add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'main.tf',
-        'providers.tf',
-        'outputs.tf',
-        'variables.tf',
+        'base/main.tf',
+        'base/providers.tf',
+        'base/outputs.tf',
+        'base/variables.tf',
         'modules/s3/main.tf',
         'modules/s3/variables.tf',
         'modules/s3/outputs.tf',
@@ -41,11 +41,14 @@ describe('S3 add-on', () => {
     });
 
     it('adds S3 module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('main.tf', s3ModuleContent);
+      expect(projectDir).toHaveContentInFile('base/main.tf', s3ModuleContent);
     });
 
     it('adds S3 outputs to outputs.tf', () => {
-      expect(projectDir).toHaveContentInFile('outputs.tf', s3OutputsContent);
+      expect(projectDir).toHaveContentInFile(
+        'base/outputs.tf',
+        s3OutputsContent
+      );
     });
   });
 });

@@ -170,7 +170,7 @@ describe('File helpers', () => {
 
   describe('appendToFile', () => {
     describe('given target file and content', () => {
-      it('appends content to the target file', () => {
+      it('appends content to the target file with trailing newlines', () => {
         const target = 'targetFile.txt';
         const content = 'appending content';
         const projectName = 'projectName';
@@ -182,7 +182,7 @@ describe('File helpers', () => {
 
         expect(appendSpy).toHaveBeenCalledWith(
           path.join(targetPath, target),
-          content
+          `\n${content}\n`
         );
       });
     });

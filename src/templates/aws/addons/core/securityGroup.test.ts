@@ -1,6 +1,6 @@
-import { AwsOptions } from '..';
-import { remove } from '../../../helpers/file';
-import { applyCore } from '../../core';
+import { AwsOptions } from '../..';
+import { remove } from '../../../../helpers/file';
+import { applyCore } from '../../../core';
 import applyCommon from './common';
 import applySecurityGroup, {
   securityGroupModuleContent,
@@ -31,10 +31,10 @@ describe('Security group add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'main.tf',
-        'providers.tf',
-        'outputs.tf',
-        'variables.tf',
+        'base/main.tf',
+        'base/providers.tf',
+        'base/outputs.tf',
+        'base/variables.tf',
         'modules/security_group/main.tf',
         'modules/security_group/variables.tf',
         'modules/security_group/outputs.tf',
@@ -45,14 +45,14 @@ describe('Security group add-on', () => {
 
     it('adds security group module to main.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'main.tf',
+        'base/main.tf',
         securityGroupModuleContent
       );
     });
 
     it('adds security group variables to variables.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'variables.tf',
+        'base/variables.tf',
         securityGroupVariablesContent
       );
     });

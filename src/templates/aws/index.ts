@@ -1,6 +1,13 @@
-import * as inquirer from 'inquirer';
+import { prompt } from 'inquirer';
 
 import { GeneralOptions } from '../../commands/generate';
+import {
+  applyCommon,
+  applyIamUserAndGroup,
+  applyRegion,
+  applySecurityGroup,
+  applyVpc,
+} from './addons';
 import { applyAdvancedTemplate } from './advanced';
 
 const awsChoices = [
@@ -12,7 +19,7 @@ const awsChoices = [
       {
         key: 'advanced',
         value: 'advanced',
-        name: 'Complete infrastructure (VPC + ECR + RDS + S3 + FARGATE + LOG + Security groups + ALB)',
+        name: 'Complete infrastructure (VPC + ECR + RDS + S3 + FARGATE + Cloudwatch + Security groups + ALB)',
       },
     ],
   },
@@ -29,10 +36,15 @@ type AwsOptions = GeneralOptions & {
   awsRegion: string;
 };
 
+const applyCommonModules = (options: AwsOptions): void => {
+  applyCommon(options);
+  applyRegion(options);
+};
+
 const generateAwsTemplate = async (
   generalOptions: GeneralOptions
 ): Promise<void> => {
-  const awsOptionsPrompt = await inquirer.prompt(awsChoices);
+  const awsOptionsPrompt = await prompt(awsChoices);
   const awsOptions: AwsOptions = {
     ...generalOptions,
     infrastructureType: awsOptionsPrompt.infrastructureType,
@@ -41,6 +53,10 @@ const generateAwsTemplate = async (
 
   switch (awsOptions.infrastructureType) {
     case 'advanced':
+      applyCommonModules(awsOptions);
+      applyVpc(awsOptions);
+      applySecurityGroup(awsOptions);
+      applyIamUserAndGroup(awsOptions);
       applyAdvancedTemplate(awsOptions);
 
       break;

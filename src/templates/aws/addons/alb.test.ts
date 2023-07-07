@@ -4,9 +4,12 @@ import { applyCore } from '../../core';
 import applyAlb, {
   albModuleContent,
   albOutputsContent,
+  albSGMainContent,
+  albSGOutputsContent,
   albVariablesContent,
 } from './alb';
-import applyCommon from './common';
+import applyCommon from './core/common';
+import applySecurityGroup from './core/securityGroup';
 
 describe('ALB add-on', () => {
   describe('given valid AWS options', () => {
@@ -22,6 +25,7 @@ describe('ALB add-on', () => {
 
       applyCore(awsOptions);
       applyCommon(awsOptions);
+      applySecurityGroup(awsOptions); // TODO: Add test to require this
       applyAlb(awsOptions);
     });
 
@@ -32,10 +36,10 @@ describe('ALB add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'main.tf',
-        'providers.tf',
-        'outputs.tf',
-        'variables.tf',
+        'base/main.tf',
+        'base/providers.tf',
+        'base/outputs.tf',
+        'base/variables.tf',
         'modules/alb/main.tf',
         'modules/alb/variables.tf',
       ];
@@ -44,18 +48,35 @@ describe('ALB add-on', () => {
     });
 
     it('adds ALB module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('main.tf', albModuleContent);
+      expect(projectDir).toHaveContentInFile('base/main.tf', albModuleContent);
     });
 
     it('adds ALB variables to variables.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'variables.tf',
+        'base/variables.tf',
         albVariablesContent
       );
     });
 
     it('adds ALB outputs to outputs.tf', () => {
-      expect(projectDir).toHaveContentInFile('outputs.tf', albOutputsContent);
+      expect(projectDir).toHaveContentInFile(
+        'base/outputs.tf',
+        albOutputsContent
+      );
+    });
+
+    it('adds ALB security group main content to security group main.tf', () => {
+      expect(projectDir).toHaveContentInFile(
+        'modules/security_group/main.tf',
+        albSGMainContent
+      );
+    });
+
+    it('adds ALB security group outputs content to security group main.tf', () => {
+      expect(projectDir).toHaveContentInFile(
+        'modules/security_group/outputs.tf',
+        albSGOutputsContent
+      );
     });
   });
 });

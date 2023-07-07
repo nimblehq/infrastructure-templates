@@ -1,3 +1,4 @@
+# tfsec:ignore:aws-ec2-no-public-ip
 resource "aws_launch_configuration" "bastion_instance" {
   name_prefix                 = "${var.namespace}-bastion-"
   image_id                    = var.image_id
@@ -8,6 +9,14 @@ resource "aws_launch_configuration" "bastion_instance" {
 
   lifecycle {
     create_before_destroy = true
+  }
+
+  metadata_options {
+    http_tokens = "required"
+  }
+
+  root_block_device {
+    encrypted = true
   }
 }
 
