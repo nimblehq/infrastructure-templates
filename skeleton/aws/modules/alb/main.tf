@@ -1,8 +1,8 @@
-# tfsec:ignore:aws-elb-alb-not-public
 locals {
   enable_stickiness = false
 }
 
+# tfsec:ignore:aws-elb-alb-not-public
 resource "aws_lb" "main" {
   name               = "${var.namespace}-alb"
   internal           = false
