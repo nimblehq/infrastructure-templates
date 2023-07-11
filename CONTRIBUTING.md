@@ -35,28 +35,39 @@ bin/dev generate {project-name}
 
 ### Project structure
 
-The project has the following main folders:
+The project has the following main files and folders:
 
-- `bin` - contains the executable file for the CLI
-  - `dev` - the executable file for the CLI in development mode
-  - `run` - the executable file for the CLI in production mode
-
-- `src` - contains the source code of the CLI
-  - `index.ts` - the entry point of the CLI
-  - `commands` - contains the commands of the CLI
-  - `helpers` - contains the helper functions of the CLI
-    - `childProcess` - contains the helper functions for child process
-    - `file` - contains the helper functions for file interaction
-    - `terraform` - contains the helper functions for Terraform
-  - `templates` - contains the code to generate the templates
-    - `addons` - contains the code to generate the common addons e.g. version control, CI/CD, etc.
-    - `aws` - contains the code to generate the AWS modules e.g. VPC, RDS, etc.
-    - `core` - contains the code to generate the main Terraform files e.g. `main.tf`, `variables.tf`, etc.
-  - `skeleton` - contains the skeleton files for the project
-    - `addons` - contains the skeleton files for common addons e.g. version control, CI/CD, etc.
-    - `aws` - contains the skeleton files for AWS modules
-    - `core` - contains the skeleton files for common files e.g. `main.tf`, `variables.tf`, `.gitignore`, etc.
-  - `test` - contains the test helpers and configurations
+```bash
+├── bin # the executable file for the CLI
+│   ├── dev # the executable file for the CLI in development mode
+│   └── run # the executable file for the CLI in production mode
+├── skeleton # the skeleton files for the project
+│   ├── addons # the skeleton files for common addons e.g. version control, CI/CD, etc.
+│   │   ├── aws # the skeleton files for AWS modules
+│   │   └── versionControl # the skeleton files for version control
+│   └── core # the skeleton folders
+│       ├── base # the skeleton files for the base folder
+│       └── shared # the skeleton files for the shared folder
+├── src # the source code of the CLI
+│   ├── commands # the commands of the CLI
+│   │   ├── generate
+│   │   └── installAddon
+│   ├── helpers # the helper functions of the CLI
+│   │   ├── childProcess.ts
+│   │   ├── file.ts
+│   │   └── terraform.ts
+│   ├── hooks # the hooks of the CLI
+│   │   └── postProcess.ts
+│   ├── index.ts # the entry point of the CLI
+│   └── templates # the code to generate the templates
+│       ├── addons # the code to generate the common addons e.g. version control, CI/CD, AWS, etc.
+│       └── core # the code to generate the main Terraform files e.g. `main.tf`, `variables.tf`, etc.
+└── test # the test helpers and configurations
+    └── matchers # the custom matchers for Jest
+        ├── file.ts
+        ├── index.d.ts
+        └── index.ts
+```
 
 ### Add a new command
 
