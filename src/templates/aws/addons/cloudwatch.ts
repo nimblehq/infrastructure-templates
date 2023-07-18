@@ -10,7 +10,7 @@ import {
 const cloudwatchVariablesContent = dedent`
   variable "cloudwatch_log_retention_in_days" {
     description = "How long (days) to retain the cloudwatch log data"
-    default     = 14
+    default     = 365
   }`;
 
 const cloudwatchModuleContent = dedent`
