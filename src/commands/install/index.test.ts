@@ -29,7 +29,7 @@ describe('Install add-on command', () => {
         await InstallAddon.run([
           'vpc',
           `--provider=${provider}`,
-          `--projectName=${projectDir}`,
+          `--project=${projectDir}`,
         ]);
       });
 
@@ -97,7 +97,7 @@ describe('Install add-on command', () => {
         await InstallAddon.run([
           'invalid',
           `--provider=${provider}`,
-          `--projectName=${projectDir}`,
+          `--project=${projectDir}`,
         ]);
       });
 

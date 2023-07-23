@@ -20,7 +20,7 @@ export default class InstallAddon extends Command {
       default: 'aws',
       options: ['aws'],
     }),
-    projectName: Flags.string({
+    project: Flags.string({
       required: true,
       description: 'Project name',
       default: '.',
@@ -40,7 +40,7 @@ export default class InstallAddon extends Command {
       const { args, flags } = await this.parse(InstallAddon);
 
       const options: GeneralOptions = {
-        projectName: flags.projectName,
+        projectName: flags.project,
         provider: flags.provider,
       };
 
