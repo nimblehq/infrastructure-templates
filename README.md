@@ -5,24 +5,42 @@ An infrastructure template for web applications powered by Terraform.
 **Supported cloud:** AWS. We are looking for contributions to implement support for GCP, Heroku, and Azure!
 
 **Supported flavors:**
-- A `Basic` flavor is in the plan, but not available yet
+- A `Blank` flavor that generates a blank Terraform project.
 - The `Complete` flavor generates the following infrastructure:
 
 ![Diagram of the Complete Infrastructure](/img/diagram_complete.svg?raw=true)
 
 ## Usage
 
+The CLI can be installed globally or run directly with `npx`:
+
 ```bash
 npm install -g @nimblehq/infra-template
+nimble-infra generate {project-name}
 
+# or
+
+npx @nimblehq/infra-template generate {project-name}
+```
+
+The CLI supports the following commands:
+- `generate` - to generate a new Terraform project:
+
+```bash
 nimble-infra generate {project-name}
 ```
 
-or
+- `install` - to install a new addon/module to an existing Terraform project:
 
 ```bash
-npx @nimblehq/infra-template generate {project-name}
+nimble-infra install {addon-name} --project {project-name}
 ```
+
+### Reference as a template
+
+> Note This template can be used for reference to add an addon/module to an existing Terraform project
+
+
 
 ## Contributing
 

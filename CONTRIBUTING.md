@@ -27,10 +27,18 @@ npm install
 
 ### Run the CLI locally
 
-Run the following command and follow the instructions:
+The CLI supports the following commands:
+
+1. `generate` - to generate a new Terraform project
 
 ```bash
 bin/dev generate {project-name}
+```
+
+2. `install` - to install a new addon/module to an existing Terraform project
+
+```bash
+bin/dev install {addon-name} --project {project-name}
 ```
 
 ### Project structure
@@ -76,13 +84,38 @@ The command documentation can be found [here](https://oclif.io/docs/commands).
 
 ### Add a new addon/module
 
-To add a new addon/module, you need to create a new folder in the `src/templates` folder depending on the type of the addon/module:
+#### Adding a New Addon/Module
 
-- For common addons, create a new folder in the `src/templates/addons` folder
-- For AWS modules, create a new folder in the `src/templates/aws` folder
-- For common files, create a new folder in the `src/templates/core` folder
+To add a new addon or module, follow these steps:
 
-Check the existing addons/modules for the reference.
+1. Navigate to the `src/templates` folder in the project directory.
+2. Create a new folder depending on the type of the addon/module you want to add:
+   - For addons, create a new folder in the `src/templates/addons` directory.
+   - For the core Terraform files, create a new folder/file in the `src/templates/core` directory.
+
+Inside the newly created addon/module folder, you can include the code required to generate the templates.
+
+3. Navigate to the `skeleton` folder at the same level as the `src` folder in the project directory.
+4. Add the skeleton folders/files for the addon/module that you are adding inside the corresponding folder in the `skeleton` directory.
+
+> Note Before adding a new addon/module, it is recommended to check the existing ones for reference.
+
+#### Using the Template as a Reference
+
+To copy and include supporting modules from the template, you can follow these steps:
+
+1. Open the `src/templates` directory in your project.
+2. Explore the code and structure of the existing addon or module that you want to reference.
+
+Inside each addon or module folder, you will find the necessary files and directories needed for that specific functionality.
+
+3. Once you have identified the supporting modules or files you want to include in your own project, mirror the folder structure and file naming conventions of the existing addon or module that you are referencing.
+
+4. Copy and paste the relevant files from the existing addon or module into your new addon/module folder.
+
+> Note Make sure to update any necessary configuration or code inside the copied files to fit your specific requirements.
+
+By following this process, you can use the existing templates as a reference to create your own addons or modules based on the provided structure and functionality.
 
 ## Testing
 
@@ -104,9 +137,7 @@ npm run lint:fix // to fix linting
 
 - This project will be published to NPM automatically when a new release is created in GitHub. Therefore, the package version in `package.json` should be updated before creating a new release.
 
-- The release should be created in the `main` branch.
-
-- The release should be created with the following format: `{version}` e.g. `1.0.0`
+- The release should be created in the `main` branch and created with the following format: `{major}.{minor}.{patch}`, e.g. `1.0.0`.
 
 ### Manual publishing
 
