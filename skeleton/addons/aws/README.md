@@ -32,7 +32,7 @@ In the source code:
 For Terraform to push your changes into AWS, it needs an access key. There are 2 options for that:
 
 - Using Terraform Cloud: configure the `aws_access_key` and `aws_secret_key` as sensitive variables in your Terraform Cloud Workspaces. Then add the reference into the source code:
-  
+
   ```hcl
   // base/main.tf && shared/main.tf
   provider "aws" {
@@ -67,42 +67,41 @@ _Workspaces can be managed in the Terraform cloud or using the CLI._
   - When inputting the variables, adjust the `namespace` and `environment` with the `-staging` suffix.
 - Last, create the `{project-slug}-prod` workspace. Follow the steps for the `{project-slug}-staging` workspace but use the `-prod` suffix instead of the `-staging` one.
 
-> 💡 Other variables might change from `staging` to `prod`, such as the DB credentials. Consider reviewing all the available variables and their descriptions.
+> [!NOTE]\
+> Other variables might change from `staging` to `prod`, such as the DB credentials. Consider reviewing all the available variables and their descriptions.
 
 ### Step 4: Environment Variables and Secrets
 
 To provision a new environment variable, it needs to be configured in the Terraform workspace.
 
-> 💡 Editing the environment variables requires planning and applying changes in the Terraform project.
+> [!NOTE]\
+> Editing the environment variables requires planning and applying changes in the Terraform project.
 
 #### Non Sensitive Variable
 
 Non-sensitive variables do not require code changes in the `*-infra` project.
 
-Edit the variable named `environment_variables` directly in the Terraform workspace.
+Edit the variable named `environment_variables` directly in the Terraform Cloud workspace.
 This variable is an object and it can be extended just by editing its content and appending a new item to it.
 
 Example of the `environment_variables` object as displayed in Terraform:
 
 ```hcl
 [
-    {
-      name = "AVAILABLE_LOCALES"
-      value = "en,th"
-    },
-    {
-      name = "DEFAULT_LOCALE"
-      value = "th"
-    },
-   {
-     name = "FALLBACK_LOCALES"
-     value = "th"
-   }
+  {
+    name = "AVAILABLE_LOCALES"
+    value = "en,th"
+  },
+  {
+    name = "DEFAULT_LOCALE"
+    value = "th"
+  },
+  {
+    name = "FALLBACK_LOCALES"
+    value = "th"
+  }
 ]
 ```
-
-> ⚠️ A wrong indentation will break the object.
-> Make sure to carefully apply the right indent when editing this variable.
 
 #### Sensitive Variable
 
@@ -115,7 +114,7 @@ First, edit the `*-infra` source code:
 
 - Declare a new variable in `base/variables.tf` with the name `my_new_var`
 - Edit the `base/main.tf` file, add the name of the variable under the `secrets` section in the `ssm` module:
-  
+
   ```terraform
   module "ssm" {
     source = "../modules/ssm"
@@ -145,7 +144,8 @@ The new variable `MY_NEW_VAR` will be available in the ECS task definition.
 - If the variable is sensitive, edit the variable directly in the Terraform workspace.
 - Once the variable is updated, run a Terraform plan and apply it if it ran successfully.
 
-**Note:** Re-deploying the application is required when updating sensitive variables.
+> [!NOTE]\
+> Re-deploying the application is required when updating sensitive variables.
 
 ### Step 5: Adjust the ALB Target Group Health Check to your need
 

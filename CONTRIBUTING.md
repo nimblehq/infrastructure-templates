@@ -107,7 +107,8 @@ Inside the newly created addon/module folder, you can include the code required 
 3. Navigate to the `skeleton` folder at the same level as the `src` folder in the project directory.
 4. Add the skeleton folders/files for the addon/module that you are adding inside the corresponding folder in the `skeleton` directory.
 
-> Note Before adding a new addon/module, it is recommended to check the existing ones for reference.
+> [!NOTE]\
+> Before adding a new addon/module, it is recommended to check the existing ones for reference.
 
 #### Using the Template as a Reference
 
@@ -122,7 +123,8 @@ Inside each addon or module folder, you will find the necessary files and direct
 
 4. Copy and paste the relevant files from the existing addon or module into your new addon/module folder.
 
-> Note Make sure to update any necessary configuration or code inside the copied files to fit your specific requirements.
+> [!NOTE]\
+> Make sure to update any necessary configuration or code inside the copied files to fit your specific requirements.
 
 By following this process, you can use the existing templates as a reference to create your own addons or modules based on the provided structure and functionality.
 
