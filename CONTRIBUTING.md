@@ -77,6 +77,15 @@ The project has the following main files and folders:
         └── index.ts
 ```
 
+> [!NOTE]\
+> The `skeleton` folder and the `templates` folder are the two main folders that are used to generate the project files
+
+- The `skeleton` folder contains the addon's files and folders ready to be directly copy-pasted into the generated project if the related addon has been selected. These files serve as a starting point or "skeleton" for the specific addon.
+
+- On the other hand, the `templates` folder houses the logic for determining which files need to be copied from the templates folder into the core project files. It includes instructions on what files should be formed based on the type of addon/module being added (common addons, AWS modules, or standard files).
+
+In summary, while the `skeleton` folder provides the files and folders needed for the addon, the `templates` folder handles the dynamic copying and integration of those files within the core project structure.
+
 ### Add a new command
 
 To add a new command, create a new folder in the `src/commands` and add the `index.ts` file.
@@ -147,4 +156,5 @@ npm run lint:fix // to fix linting
 npm run publish
 ```
 
-**Note:** NPM credentials are required to publish the project. Ensure that the version in `package.json` is updated.
+> [!IMPORTANT]\
+> NPM credentials are required to publish the project. Ensure that the version in `package.json` is updated.
