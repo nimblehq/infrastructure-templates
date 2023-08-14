@@ -1,3 +1,7 @@
+locals {
+  enable_stickiness = false
+}
+
 # tfsec:ignore:aws-elb-alb-not-public
 resource "aws_lb" "main" {
   name               = "${var.namespace}-alb"
@@ -35,11 +39,11 @@ resource "aws_lb_target_group" "target_group" {
   }
 
   dynamic "stickiness" {
-    for_each = var.enable_stickiness ? [1] : []
+    for_each = local.enable_stickiness ? [1] : []
 
     content {
-      enabled = var.enable_stickiness
-      type    = var.stickiness_type
+      enabled = local.enable_stickiness
+      type    = "lb_cookie"
     }
   }
 }

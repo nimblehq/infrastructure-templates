@@ -3,6 +3,10 @@ data "aws_ecr_repository" "repo" {
 }
 
 locals {
+  # The minimum time (in seconds) between two scaling-in/out activities
+  scale_in_cooldown_period  = 300
+  scale_out_cooldown_period = 300
+
   # Environment variables from other variables
   environment_variables = toset([
     {
@@ -194,8 +198,8 @@ resource "aws_appautoscaling_policy" "memory_policy" {
       predefined_metric_type = "ECSServiceAverageMemoryUtilization"
     }
 
-    scale_in_cooldown  = var.scale_in_cooldown_period
-    scale_out_cooldown = var.scale_out_cooldown_period
+    scale_in_cooldown  = local.scale_in_cooldown_period
+    scale_out_cooldown = local.scale_out_cooldown_period
 
     target_value = var.autoscaling_target_memory_percentage
   }
@@ -213,8 +217,8 @@ resource "aws_appautoscaling_policy" "cpu_policy" {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
 
-    scale_in_cooldown  = var.scale_in_cooldown_period
-    scale_out_cooldown = var.scale_out_cooldown_period
+    scale_in_cooldown  = local.scale_in_cooldown_period
+    scale_out_cooldown = local.scale_out_cooldown_period
 
     target_value = var.autoscaling_target_cpu_percentage
   }
