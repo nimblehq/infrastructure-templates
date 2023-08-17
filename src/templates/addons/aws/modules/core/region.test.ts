@@ -50,6 +50,10 @@ describe('Region add-on', () => {
         'base/variables.tf',
         regionVariablesContent(awsRegion)
       );
+      expect(projectDir).toHaveContentInFile(
+        'shared/variables.tf',
+        regionVariablesContent(awsRegion)
+      );
     });
   });
 });

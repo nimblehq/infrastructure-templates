@@ -24,6 +24,7 @@ describe('Provider add-on', () => {
 
     it('creates the expected file', () => {
       expect(projectDir).toHaveFile('base/providers.tf');
+      expect(projectDir).toHaveFile('shared/providers.tf');
     });
   });
 });
