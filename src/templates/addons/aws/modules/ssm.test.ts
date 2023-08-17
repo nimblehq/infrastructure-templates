@@ -2,7 +2,7 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformCore } from '@/templates/core';
 
-import applyTerraformAws from './core/common';
+import applyTerraformAwsProvider from './core/provider';
 import applyAwsSsm, { ssmModuleContent, ssmVariablesContent } from './ssm';
 
 jest.mock('inquirer', () => {
@@ -23,7 +23,7 @@ describe('SSM add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyTerraformAws(awsOptions);
+      await applyTerraformAwsProvider(awsOptions);
       await applyAwsSsm(awsOptions);
     });
 

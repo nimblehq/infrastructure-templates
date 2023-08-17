@@ -2,7 +2,7 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformCore } from '@/templates/core';
 
-import applyTerraformAws from './core/common';
+import applyTerraformAwsProvider from './core/provider';
 import applyAwsS3, { s3ModuleContent, s3OutputsContent } from './s3';
 
 jest.mock('inquirer', () => {
@@ -23,7 +23,7 @@ describe('S3 add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyTerraformAws(awsOptions);
+      await applyTerraformAwsProvider(awsOptions);
       await applyAwsS3(awsOptions);
     });
 

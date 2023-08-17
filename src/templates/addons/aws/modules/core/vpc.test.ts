@@ -2,7 +2,7 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformCore } from '@/templates/core';
 
-import applyTerraformAws from './common';
+import applyTerraformAwsProvider from './provider';
 import applyAwsVpc, { vpcModuleContent, vpcOutputsContent } from './vpc';
 
 describe('VPC add-on', () => {
@@ -17,7 +17,7 @@ describe('VPC add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyTerraformAws(awsOptions);
+      await applyTerraformAwsProvider(awsOptions);
       await applyAwsVpc(awsOptions);
     });
 

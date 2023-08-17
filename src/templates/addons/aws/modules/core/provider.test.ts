@@ -1,11 +1,11 @@
 import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 
-import applyTerraformAws from './common';
+import applyTerraformAwsProvider from './provider';
 
-describe('Common add-on', () => {
+describe('Provider add-on', () => {
   describe('given valid AwsOptions', () => {
-    const projectDir = 'common-addon-test';
+    const projectDir = 'provider-addon-test';
 
     beforeAll(async () => {
       const awsOptions: AwsOptions = {
@@ -14,7 +14,7 @@ describe('Common add-on', () => {
         infrastructureType: 'advanced',
       };
 
-      await applyTerraformAws(awsOptions);
+      await applyTerraformAwsProvider(awsOptions);
     });
 
     afterAll(() => {

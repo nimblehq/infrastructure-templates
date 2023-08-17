@@ -5,7 +5,7 @@ import { GeneralOptions } from '@/commands/generate';
 import { applyAdvancedTemplate } from './advanced';
 import { AWS_DEFAULT_REGION } from './constants';
 import {
-  applyTerraformAws,
+  applyTerraformAwsProvider,
   applyAwsIamUserAndGroup,
   applyAwsRegion,
   applyAwsSecurityGroup,
@@ -44,7 +44,7 @@ type AwsOptions = GeneralOptions & {
 };
 
 const applyCommonModules = async (options: AwsOptions) => {
-  await applyTerraformAws(options);
+  await applyTerraformAwsProvider(options);
   await applyAwsRegion(options);
 };
 

@@ -9,7 +9,7 @@ import applyAwsAlb, {
   albSGOutputsContent,
   albVariablesContent,
 } from './alb';
-import applyTerraformAws from './core/common';
+import applyTerraformAwsProvider from './core/provider';
 
 jest.mock('inquirer', () => {
   return {
@@ -29,7 +29,7 @@ describe('ALB add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyTerraformAws(awsOptions);
+      await applyTerraformAwsProvider(awsOptions);
       await applyAwsAlb(awsOptions);
     });
 

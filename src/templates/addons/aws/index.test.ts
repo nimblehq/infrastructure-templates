@@ -6,7 +6,7 @@ import { remove } from '@/helpers/file';
 import { generateAwsTemplate } from '.';
 import { applyAdvancedTemplate } from './advanced';
 import {
-  applyTerraformAws,
+  applyTerraformAwsProvider,
   applyAwsRegion,
   applyAwsSecurityGroup,
   applyAwsVpc,
@@ -48,7 +48,7 @@ describe('AWS template', () => {
       });
 
       it('applies common add-on', () => {
-        expect(applyTerraformAws).toHaveBeenCalledWith(awsOptions);
+        expect(applyTerraformAwsProvider).toHaveBeenCalledWith(awsOptions);
       });
 
       it('applies region add-on', () => {

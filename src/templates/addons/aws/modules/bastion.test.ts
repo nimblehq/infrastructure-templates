@@ -8,7 +8,7 @@ import applyAwsBastion, {
   bastionSGOutputsContent,
   bastionVariablesContent,
 } from './bastion';
-import applyTerraformAws from './core/common';
+import applyTerraformAwsProvider from './core/provider';
 
 jest.mock('inquirer', () => {
   return {
@@ -28,7 +28,7 @@ describe('Bastion add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyTerraformAws(awsOptions);
+      await applyTerraformAwsProvider(awsOptions);
       await applyAwsBastion(awsOptions);
     });
 

@@ -2,7 +2,7 @@ import { remove } from '@/helpers/file';
 import { AwsOptions } from '@/templates/addons/aws';
 import { applyTerraformCore } from '@/templates/core';
 
-import applyTerraformAws from './common';
+import applyTerraformAwsProvider from './provider';
 import applyAwsSecurityGroup, {
   securityGroupModuleContent,
   securityGroupVariablesContent,
@@ -26,7 +26,7 @@ describe('Security group add-on', () => {
       };
 
       await applyTerraformCore(awsOptions);
-      await applyTerraformAws(awsOptions);
+      await applyTerraformAwsProvider(awsOptions);
       await applyAwsSecurityGroup(awsOptions);
     });
 
