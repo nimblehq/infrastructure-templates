@@ -108,6 +108,29 @@ const rename = (target: string, newName: string, projectName: string): void => {
   renameSync(targetPath, newTargetPath);
 };
 
+const isExisting = (target: string, projectName: string): boolean => {
+  const targetPath = getProjectFilePath(target, projectName);
+
+  return existsSync(targetPath);
+};
+
+const containsContent = (
+  target: string,
+  content: string,
+  projectName: string
+): boolean => {
+  if (!isExisting(target, projectName)) {
+    return false;
+  }
+
+  const targetPath = getProjectFilePath(target, projectName);
+  const data = readFileSync(targetPath, 'utf8');
+  const lines = data.toString().split('\n');
+  const index = lines.findIndex((line) => line.includes(content));
+
+  return index !== -1;
+};
+
 export {
   appendToFile,
   copy,
@@ -119,4 +142,6 @@ export {
   injectToFile,
   remove,
   rename,
+  isExisting,
+  containsContent,
 };

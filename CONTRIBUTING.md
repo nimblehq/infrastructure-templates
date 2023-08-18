@@ -27,36 +27,64 @@ npm install
 
 ### Run the CLI locally
 
-Run the following command and follow the instructions:
+The CLI supports the following commands:
+
+1. `generate` - to generate a new Terraform project
 
 ```bash
 bin/dev generate {project-name}
 ```
 
+2. `install` - to install a new addon/module to an existing Terraform project
+
+```bash
+bin/dev install {addon-name} --project {project-name}
+```
+
 ### Project structure
 
-The project has the following main folders:
+The project has the following main files and folders:
 
-- `bin` - contains the executable file for the CLI
-  - `dev` - the executable file for the CLI in development mode
-  - `run` - the executable file for the CLI in production mode
+```bash
+├── bin # the executable file for the CLI
+│   ├── dev # the executable file for the CLI in development mode
+│   └── run # the executable file for the CLI in production mode
+├── skeleton # the skeleton files for the project
+│   ├── addons # the skeleton files for common addons e.g. version control, CI/CD, etc.
+│   │   ├── aws # the skeleton files for AWS modules
+│   │   └── versionControl # the skeleton files for version control
+│   └── core # the skeleton folders
+│       ├── base # the skeleton files for the base folder
+│       └── shared # the skeleton files for the shared folder
+├── src # the source code of the CLI
+│   ├── commands # the commands of the CLI
+│   │   ├── generate
+│   │   └── installAddon
+│   ├── helpers # the helper functions of the CLI
+│   │   ├── childProcess.ts
+│   │   ├── file.ts
+│   │   └── terraform.ts
+│   ├── hooks # the hooks of the CLI
+│   │   └── postProcess.ts
+│   ├── index.ts # the entry point of the CLI
+│   └── templates # the code to generate the templates
+│       ├── addons # the code to generate the common addons e.g. version control, CI/CD, AWS, etc.
+│       └── core # the code to generate the main Terraform files e.g. `main.tf`, `variables.tf`, etc.
+└── test # the test helpers and configurations
+    └── matchers # the custom matchers for Jest
+        ├── file.ts
+        ├── index.d.ts
+        └── index.ts
+```
 
-- `src` - contains the source code of the CLI
-  - `index.ts` - the entry point of the CLI
-  - `commands` - contains the commands of the CLI
-  - `helpers` - contains the helper functions of the CLI
-    - `childProcess` - contains the helper functions for child process
-    - `file` - contains the helper functions for file interaction
-    - `terraform` - contains the helper functions for Terraform
-  - `templates` - contains the code to generate the templates
-    - `addons` - contains the code to generate the common addons e.g. version control, CI/CD, etc.
-    - `aws` - contains the code to generate the AWS modules e.g. VPC, RDS, etc.
-    - `core` - contains the code to generate the main Terraform files e.g. `main.tf`, `variables.tf`, etc.
-  - `skeleton` - contains the skeleton files for the project
-    - `addons` - contains the skeleton files for common addons e.g. version control, CI/CD, etc.
-    - `aws` - contains the skeleton files for AWS modules
-    - `core` - contains the skeleton files for common files e.g. `main.tf`, `variables.tf`, `.gitignore`, etc.
-  - `test` - contains the test helpers and configurations
+> [!NOTE]\
+> The `skeleton` folder and the `templates` folder are the two main folders that are used to generate the project files
+
+- The `skeleton` folder contains the addon's files and folders ready to be directly copy-pasted into the generated project if the related addon has been selected. These files serve as a starting point or "skeleton" for the specific addon.
+
+- On the other hand, the `templates` folder houses the logic for determining which files need to be copied from the templates folder into the core project files. It includes instructions on what files should be formed based on the type of addon/module being added (common addons, AWS modules, or standard files).
+
+In summary, while the `skeleton` folder provides the files and folders needed for the addon, the `templates` folder handles the dynamic copying and integration of those files within the core project structure.
 
 ### Add a new command
 
@@ -65,13 +93,40 @@ The command documentation can be found [here](https://oclif.io/docs/commands).
 
 ### Add a new addon/module
 
-To add a new addon/module, you need to create a new folder in the `src/templates` folder depending on the type of the addon/module:
+#### Adding a New Addon/Module
 
-- For common addons, create a new folder in the `src/templates/addons` folder
-- For AWS modules, create a new folder in the `src/templates/aws` folder
-- For common files, create a new folder in the `src/templates/core` folder
+To add a new addon or module, follow these steps:
 
-Check the existing addons/modules for the reference.
+1. Navigate to the `src/templates` folder in the project directory.
+2. Create a new folder depending on the type of the addon/module you want to add:
+   - For addons, create a new folder in the `src/templates/addons` directory.
+   - For the core Terraform files, create a new folder/file in the `src/templates/core` directory.
+
+Inside the newly created addon/module folder, you can include the code required to generate the templates.
+
+3. Navigate to the `skeleton` folder at the same level as the `src` folder in the project directory.
+4. Add the skeleton folders/files for the addon/module that you are adding inside the corresponding folder in the `skeleton` directory.
+
+> [!NOTE]\
+> Before adding a new addon/module, it is recommended to check the existing ones for reference.
+
+#### Using the Template as a Reference
+
+To copy and include supporting modules from the template, you can follow these steps:
+
+1. Open the `src/templates` directory in your project.
+2. Explore the code and structure of the existing addon or module that you want to reference.
+
+Inside each addon or module folder, you will find the necessary files and directories needed for that specific functionality.
+
+3. Once you have identified the supporting modules or files you want to include in your own project, mirror the folder structure and file naming conventions of the existing addon or module that you are referencing.
+
+4. Copy and paste the relevant files from the existing addon or module into your new addon/module folder.
+
+> [!NOTE]\
+> Make sure to update any necessary configuration or code inside the copied files to fit your specific requirements.
+
+By following this process, you can use the existing templates as a reference to create your own addons or modules based on the provided structure and functionality.
 
 ## Testing
 
@@ -93,9 +148,7 @@ npm run lint:fix // to fix linting
 
 - This project will be published to NPM automatically when a new release is created in GitHub. Therefore, the package version in `package.json` should be updated before creating a new release.
 
-- The release should be created in the `main` branch.
-
-- The release should be created with the following format: `{version}` e.g. `1.0.0`
+- The release should be created in the `main` branch and created with the following format: `{major}.{minor}.{patch}`, e.g. `1.0.0`.
 
 ### Manual publishing
 
@@ -105,4 +158,5 @@ npm run lint:fix // to fix linting
 npm run publish
 ```
 
-**Note:** NPM credentials are required to publish the project. Ensure that the version in `package.json` is updated.
+> [!IMPORTANT]\
+> NPM credentials are required to publish the project. Ensure that the version in `package.json` is updated.

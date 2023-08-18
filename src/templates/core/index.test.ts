@@ -1,6 +1,7 @@
-import { applyCore } from '.';
-import { remove } from '../../helpers/file';
-import { AwsOptions } from '../aws';
+import { remove } from '@/helpers/file';
+import { AwsOptions } from '@/templates/addons/aws';
+
+import { applyTerraformCore } from '.';
 
 describe('Core codebase', () => {
   describe('given valid AwsOptions', () => {
@@ -11,10 +12,9 @@ describe('Core codebase', () => {
         projectName: projectDir,
         provider: 'aws',
         infrastructureType: 'advanced',
-        awsRegion: 'ap-southeast-1',
       };
 
-      applyCore(awsOptions);
+      applyTerraformCore(awsOptions);
     });
 
     afterAll(() => {

@@ -15,6 +15,8 @@ import {
   injectToFile,
   remove,
   rename,
+  isExisting,
+  containsContent,
 } from './file';
 
 jest.mock('fs-extra');
@@ -320,6 +322,86 @@ describe('File helpers', () => {
         rename(target, newName, projectName);
 
         expect(renameSpy).toHaveBeenCalledWith(targetPath, newPath);
+      });
+    });
+  });
+
+  describe('isExisting', () => {
+    describe('given an existing file', () => {
+      it('returns true', () => {
+        const target = 'targetFile.txt';
+        const projectName = 'projectName';
+        const targetPath = getProjectFilePath(target, projectName);
+        const existSpy = jest.spyOn(fs, 'existsSync');
+
+        (fs.existsSync as jest.Mock).mockReturnValue(true);
+
+        expect(isExisting(target, projectName)).toBe(true);
+        expect(existSpy).toHaveBeenCalledWith(targetPath);
+      });
+    });
+
+    describe('given a non-existing file', () => {
+      it('returns false', () => {
+        const target = 'targetFile.txt';
+        const projectName = 'projectName';
+        const targetPath = getProjectFilePath(target, projectName);
+        const existSpy = jest.spyOn(fs, 'existsSync');
+
+        (fs.existsSync as jest.Mock).mockReturnValue(false);
+
+        expect(isExisting(target, projectName)).toBe(false);
+        expect(existSpy).toHaveBeenCalledWith(targetPath);
+      });
+    });
+  });
+
+  describe('containsContent', () => {
+    describe('given an existing target file', () => {
+      describe('given the target file contains the content', () => {
+        it('returns true', () => {
+          const target = 'targetFile.txt';
+          const content = 'content';
+          const projectName = 'projectName';
+          const targetPath = getProjectFilePath(target, projectName);
+          const readSpy = jest.spyOn(fs, 'readFileSync');
+
+          (fs.existsSync as jest.Mock).mockReturnValue(true);
+          (fs.readFileSync as jest.Mock).mockReturnValue([content]);
+
+          expect(containsContent(target, content, projectName)).toBe(true);
+          expect(readSpy).toHaveBeenCalledWith(targetPath, 'utf8');
+        });
+      });
+
+      describe('given the target file does NOT contain the content', () => {
+        it('returns false', () => {
+          const target = 'targetFile.txt';
+          const content = 'content';
+          const projectName = 'projectName';
+          const targetPath = getProjectFilePath(target, projectName);
+          const readSpy = jest.spyOn(fs, 'readFileSync');
+
+          (fs.existsSync as jest.Mock).mockReturnValue(true);
+          (fs.readFileSync as jest.Mock).mockReturnValue(['']);
+
+          expect(containsContent(target, content, projectName)).toBe(false);
+          expect(readSpy).toHaveBeenCalledWith(targetPath, 'utf8');
+        });
+      });
+    });
+
+    describe('given a non-existing target file', () => {
+      it('returns false', () => {
+        const target = 'targetFile.txt';
+        const content = 'content';
+        const projectName = 'projectName';
+        const readSpy = jest.spyOn(fs, 'readFileSync');
+
+        (fs.existsSync as jest.Mock).mockReturnValue(false);
+
+        expect(containsContent(target, content, projectName)).toBe(false);
+        expect(readSpy).not.toHaveBeenCalled();
       });
     });
   });

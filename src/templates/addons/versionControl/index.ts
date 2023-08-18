@@ -1,5 +1,5 @@
-import { GeneralOptions } from '../../../commands/generate';
-import { copy } from '../../../helpers/file';
+import { GeneralOptions } from '@/commands/generate';
+import { copy } from '@/helpers/file';
 
 const versionControlChoices = [
   {
@@ -19,7 +19,7 @@ const versionControlChoices = [
   },
 ];
 
-const applyVersionControl = (generalOptions: GeneralOptions): void => {
+const applyVersionControl = async (generalOptions: GeneralOptions) => {
   const { versionControl, projectName } = generalOptions;
 
   if (versionControl === 'github') {

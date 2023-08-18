@@ -1,7 +1,7 @@
-import { GeneralOptions } from '../../commands/generate';
-import { copy, rename } from '../../helpers/file';
+import { GeneralOptions } from '@/commands/generate';
+import { copy, rename } from '@/helpers/file';
 
-const applyCore = (generalOptions: GeneralOptions): void => {
+const applyTerraformCore = async (generalOptions: GeneralOptions) => {
   const { projectName } = generalOptions;
 
   copy('core/', '.', projectName);
@@ -11,4 +11,4 @@ const applyCore = (generalOptions: GeneralOptions): void => {
   rename('gitignore', '.gitignore', projectName);
 };
 
-export { applyCore };
+export { applyTerraformCore };

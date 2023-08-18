@@ -25,3 +25,11 @@ jobs:
 
       - name: Run linters
         run: npm run lint
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.5
+
+      - name: Terraform fmt
+        run: terraform fmt -check -recursive
