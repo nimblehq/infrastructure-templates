@@ -2,6 +2,7 @@ import { Args, Command, ux } from '@oclif/core';
 import { prompt } from 'inquirer';
 
 import { generateAwsTemplate } from '@/generators/addons/aws';
+import { applyTerraformCloud } from '@/generators/addons/terraformCloud';
 import {
   applyVersionControl,
   versionControlChoices,
@@ -91,6 +92,7 @@ export default class Generator extends Command {
 
   private async applyGeneralParts(generalOptions: GeneralOptions) {
     await applyTerraformCore(generalOptions);
+    await applyTerraformCloud(generalOptions);
     await applyVersionControl(generalOptions);
   }
 }
