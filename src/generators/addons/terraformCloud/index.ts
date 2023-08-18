@@ -20,7 +20,7 @@ const getTerraformCloudOptions = async (): Promise<TerraformCloudOptions> => {
       type: 'confirm',
       name: 'enabled',
       message: 'Would you like to enable Terraform Cloud?',
-      default: true,
+      default: false,
     },
   ]);
 
