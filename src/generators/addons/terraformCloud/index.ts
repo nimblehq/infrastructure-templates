@@ -9,7 +9,7 @@ import {
 import { injectToFile } from '@/helpers/file';
 
 type TerraformCloudOptions = {
-  enabled: boolean;
+  terraformCloudEnabled: boolean;
   organization: string;
   workspace: string;
 };
@@ -18,13 +18,13 @@ const getTerraformCloudOptions = async (): Promise<TerraformCloudOptions> => {
   const terraformCloudPrompt = await prompt([
     {
       type: 'confirm',
-      name: 'enabled',
+      name: 'terraformCloudEnabled',
       message: 'Would you like to enable Terraform Cloud?',
       default: false,
     },
   ]);
 
-  if (terraformCloudPrompt.enabled) {
+  if (terraformCloudPrompt.terraformCloudEnabled) {
     const terraformCloudOptions = await prompt([
       {
         type: 'input',
@@ -39,13 +39,13 @@ const getTerraformCloudOptions = async (): Promise<TerraformCloudOptions> => {
     ]);
 
     return {
-      enabled: true,
+      terraformCloudEnabled: true,
       ...terraformCloudOptions,
     };
   }
 
   return {
-    enabled: false,
+    terraformCloudEnabled: false,
     organization: '',
     workspace: '',
   };
@@ -67,7 +67,7 @@ const applyTerraformCloud = async ({
 }: GeneralOptions): Promise<void> => {
   const terraformCloudOptions = await getTerraformCloudOptions();
 
-  if (terraformCloudOptions.enabled) {
+  if (terraformCloudOptions.terraformCloudEnabled) {
     [INFRA_CORE_MAIN_PATH, INFRA_SHARED_MAIN_PATH].forEach((path) => {
       injectToFile(
         path,
