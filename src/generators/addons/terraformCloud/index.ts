@@ -10,8 +10,8 @@ import { injectToFile } from '@/helpers/file';
 
 type TerraformCloudOptions = {
   terraformCloudEnabled: boolean;
-  organization: string;
-  workspace: string;
+  terraformCloudOrganization: string;
+  terraformCloudWorkspace: string;
 };
 
 const getTerraformCloudOptions = async (): Promise<TerraformCloudOptions> => {
@@ -28,12 +28,12 @@ const getTerraformCloudOptions = async (): Promise<TerraformCloudOptions> => {
     const terraformCloudOptions = await prompt([
       {
         type: 'input',
-        name: 'organization',
+        name: 'terraformCloudOrganization',
         message: 'What is your Terraform Cloud organization?',
       },
       {
         type: 'input',
-        name: 'workspace',
+        name: 'terraformCloudWorkspace',
         message: 'What is your Terraform Cloud workspace?',
       },
     ]);
@@ -46,8 +46,8 @@ const getTerraformCloudOptions = async (): Promise<TerraformCloudOptions> => {
 
   return {
     terraformCloudEnabled: false,
-    organization: '',
-    workspace: '',
+    terraformCloudOrganization: '',
+    terraformCloudWorkspace: '',
   };
 };
 
@@ -55,9 +55,9 @@ const terraformCloudMainContent = (
   terraformCloudOptions: TerraformCloudOptions
 ) => dedent`
   cloud {
-    organization = "${terraformCloudOptions.organization}"
+    organization = "${terraformCloudOptions.terraformCloudOrganization}"
     workspaces {
-      name = "${terraformCloudOptions.workspace}"
+      name = "${terraformCloudOptions.terraformCloudWorkspace}"
     }
   }
 `;

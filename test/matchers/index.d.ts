@@ -8,7 +8,8 @@ declare global {
       toHaveDirectories: (expectedDirectories: string[]) => R;
       toHaveContentInFile: (
         expectedFile: string,
-        expectedContent: string | string[]
+        expectedContent: string | string[],
+        options?: { ignoreSpaces?: boolean }
       ) => R;
     }
   }

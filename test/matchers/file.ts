@@ -84,7 +84,8 @@ const toHaveDirectories = (
 const toHaveContentInFile = (
   projectDir: string,
   expectedFile: string,
-  expectedContent: string | string[]
+  expectedContent: string | string[],
+  options?: { ignoreSpaces?: boolean }
 ) => {
   let expectedContentArray: string[];
   if (!Array.isArray(expectedContent)) {
@@ -94,9 +95,15 @@ const toHaveContentInFile = (
   }
 
   const actualContent = readFileSync(`${projectDir}/${expectedFile}`, 'utf8');
-  const pass = expectedContentArray.every((content) =>
-    actualContent.includes(content)
-  );
+  const pass = expectedContentArray.every((content) => {
+    if (options?.ignoreSpaces) {
+      return actualContent
+        .replace(/\s/g, '')
+        .includes(content.replace(/\s/g, ''));
+    }
+
+    return actualContent.includes(content);
+  });
 
   return {
     pass,
