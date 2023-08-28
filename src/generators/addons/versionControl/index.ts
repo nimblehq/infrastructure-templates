@@ -4,7 +4,7 @@ import { GeneralOptions } from '@/commands/generate';
 import { copy } from '@/helpers/file';
 
 type VersionControlOptions = {
-  enabled: boolean;
+  versionControlEnabled: boolean;
   versionControlService: string;
 };
 
@@ -12,13 +12,13 @@ const getVersionControlOptions = async (): Promise<VersionControlOptions> => {
   const versionControlPrompt = await prompt([
     {
       type: 'confirm',
-      name: 'enabled',
+      name: 'versionControlEnabled',
       message: 'Would you like to enable version control?',
       default: false,
     },
   ]);
 
-  if (versionControlPrompt.enabled) {
+  if (versionControlPrompt.versionControlEnabled) {
     const versionControlOptions = await prompt([
       {
         type: 'list',
@@ -39,13 +39,13 @@ const getVersionControlOptions = async (): Promise<VersionControlOptions> => {
     ]);
 
     return {
-      enabled: true,
+      versionControlEnabled: true,
       ...versionControlOptions,
     };
   }
 
   return {
-    enabled: false,
+    versionControlEnabled: false,
     versionControlService: '',
   };
 };
@@ -53,7 +53,7 @@ const getVersionControlOptions = async (): Promise<VersionControlOptions> => {
 const applyVersionControl = async ({ projectName }: GeneralOptions) => {
   const versionControlOptions = await getVersionControlOptions();
 
-  if (versionControlOptions.enabled) {
+  if (versionControlOptions.versionControlEnabled) {
     if (versionControlOptions.versionControlService === 'github') {
       copy('addons/versionControl/github', '.', projectName);
     }
