@@ -14,7 +14,9 @@ type TerraformCloudOptions = {
   terraformCloudWorkspace: string;
 };
 
-const getTerraformCloudOptions = async (): Promise<TerraformCloudOptions> => {
+const getTerraformCloudOptions = async (
+  projectName: string
+): Promise<TerraformCloudOptions> => {
   const terraformCloudPrompt = await prompt([
     {
       type: 'confirm',
@@ -30,11 +32,13 @@ const getTerraformCloudOptions = async (): Promise<TerraformCloudOptions> => {
         type: 'input',
         name: 'terraformCloudOrganization',
         message: 'What is your Terraform Cloud organization?',
+        default: 'nimble',
       },
       {
         type: 'input',
         name: 'terraformCloudWorkspace',
         message: 'What is your Terraform Cloud workspace?',
+        default: projectName,
       },
     ]);
 
@@ -65,7 +69,7 @@ const terraformCloudMainContent = (
 const applyTerraformCloud = async ({
   projectName,
 }: GeneralOptions): Promise<void> => {
-  const terraformCloudOptions = await getTerraformCloudOptions();
+  const terraformCloudOptions = await getTerraformCloudOptions(projectName);
 
   if (terraformCloudOptions.terraformCloudEnabled) {
     [INFRA_CORE_MAIN_PATH, INFRA_SHARED_MAIN_PATH].forEach((path) => {
