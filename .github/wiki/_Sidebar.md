@@ -8,3 +8,5 @@
 
 ## Contributing
 - [[Contributing guidelines]]
+- [[Testing]]
+- [[Publishing]]

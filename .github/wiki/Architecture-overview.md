@@ -1,11 +1,6 @@
 This project uses TypeScript and [OCLIF](https://oclif.io/) to build the CLI, Jest for testing, and ESLint for code formatting and linting.
 
-### Dependencies and Prerequisites
-
-- [Node.js](https://nodejs.org/en/download/) 12.x or higher - 18.x LTS is recommended
-- NPM is preferred to use with this project
-
-### Project structure
+## Project structure
 
 The project has the following main files and folders:
 
