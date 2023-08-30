@@ -10,5 +10,5 @@ To add a new addon or module, follow these steps:
 3. Navigate to the `skeleton` folder at the same level as the `src` folder in the project directory.
 4. Add the skeleton folders/files for the addon/module that you are adding inside the corresponding folder in the `skeleton` directory.
 
-> [!NOTE]\
+> **Note**!\ 
 > Before adding a new addon/module, it is recommended to check the existing ones for reference.

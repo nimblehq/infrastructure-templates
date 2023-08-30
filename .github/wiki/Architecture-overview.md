@@ -39,7 +39,7 @@ The project has the following main files and folders:
         └── index.ts
 ```
 
-> [!NOTE]\
+> **Note**!\
 > The `skeleton` folder and the `templates` folder are the two main folders that are used to generate the project files
 
 - The `skeleton` folder contains the addon's files and folders ready to be directly copy-pasted into the generated project if the related addon has been selected. These files serve as a starting point or "skeleton" for the specific addon.

@@ -9,7 +9,7 @@ Inside each addon or module folder, you will find the necessary files and direct
 
 4. Copy and paste the relevant files from the existing addon or module into your new addon/module folder.
 
-> [!NOTE]\
+> **Note**!\
 > Make sure to update any necessary configuration or code inside the copied files to fit your specific requirements.
 
 By following this process, you can use the existing templates as a reference to create your own addons or modules based on the provided structure and functionality.

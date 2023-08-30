@@ -24,11 +24,11 @@ nimble-infra generate {project-name}
 nimble-infra install {addon-name} --project {project-name}
 ```
 
-> [!NOTE]\
+> **Note**!\
 > Terraform Cloud is supported by default. You need to set the `organization` and `workspace` in the `terraform` block of the `main.tf` file to use it.
 > If you don't want to use Terraform Cloud, you can remove the `cloud` block in the `main.tf` file.
 
 ### Reference as a template
 
-> [!NOTE]\
+> **Note**!\
 > This template can be used for reference to add an addon/module to an existing Terraform project
