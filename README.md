@@ -1,3 +1,6 @@
+![Publish Wiki Status](https://github.com/nimblehq/infrastructure-templates/actions/workflows/publish-wiki.yml/badge.svg)
+![Publish to NPM Status](https://github.com/nimblehq/infrastructure-templates/actions/workflows/publish.yml/badge.svg)
+
 # Nimble Infrastructure Template
 
 An infrastructure template for web applications powered by Terraform.
