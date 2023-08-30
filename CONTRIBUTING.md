@@ -49,13 +49,13 @@ The project has the following main files and folders:
 ├── bin # the executable file for the CLI
 │   ├── dev # the executable file for the CLI in development mode
 │   └── run # the executable file for the CLI in production mode
-├── skeleton # the skeleton files for the project
-│   ├── addons # the skeleton files for common addons e.g. version control, CI/CD, etc.
-│   │   ├── aws # the skeleton files for AWS modules
-│   │   └── versionControl # the skeleton files for version control
-│   └── core # the skeleton folders
-│       ├── base # the skeleton files for the base folder
-│       └── shared # the skeleton files for the shared folder
+├── templates # the templates files for the project
+│   ├── addons # the templates files for common addons e.g. version control, CI/CD, etc.
+│   │   ├── aws # the templates files for AWS modules
+│   │   └── versionControl # the templates files for version control
+│   └── core # the templates folders
+│       ├── base # the templates files for the base folder
+│       └── shared # the templates files for the shared folder
 ├── src # the source code of the CLI
 │   ├── commands # the commands of the CLI
 │   │   ├── generate
@@ -78,13 +78,13 @@ The project has the following main files and folders:
 ```
 
 > [!NOTE]\
-> The `skeleton` folder and the `templates` folder are the two main folders that are used to generate the project files
+> The `templates` folder and the `templates` folder are the two main folders that are used to generate the project files
 
-- The `skeleton` folder contains the addon's files and folders ready to be directly copy-pasted into the generated project if the related addon has been selected. These files serve as a starting point or "skeleton" for the specific addon.
+- The `templates` folder contains the addon's files and folders ready to be directly copy-pasted into the generated project if the related addon has been selected. These files serve as a starting point or "templates" for the specific addon.
 
 - On the other hand, the `templates` folder houses the logic for determining which files need to be copied from the templates folder into the core project files. It includes instructions on what files should be formed based on the type of addon/module being added (common addons, AWS modules, or standard files).
 
-In summary, while the `skeleton` folder provides the files and folders needed for the addon, the `templates` folder handles the dynamic copying and integration of those files within the core project structure.
+In summary, while the `templates` folder provides the files and folders needed for the addon, the `templates` folder handles the dynamic copying and integration of those files within the core project structure.
 
 ### Add a new command
 
@@ -104,8 +104,8 @@ To add a new addon or module, follow these steps:
 
 Inside the newly created addon/module folder, you can include the code required to generate the templates.
 
-3. Navigate to the `skeleton` folder at the same level as the `src` folder in the project directory.
-4. Add the skeleton folders/files for the addon/module that you are adding inside the corresponding folder in the `skeleton` directory.
+3. Navigate to the `templates` folder at the same level as the `src` folder in the project directory.
+4. Add the templates folders/files for the addon/module that you are adding inside the corresponding folder in the `templates` directory.
 
 > [!NOTE]\
 > Before adding a new addon/module, it is recommended to check the existing ones for reference.
