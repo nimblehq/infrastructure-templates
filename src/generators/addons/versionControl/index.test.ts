@@ -9,7 +9,7 @@ jest.mock('inquirer');
 
 describe('Version control add-on', () => {
   describe('given versionControlEnabled is true', () => {
-    describe('given github service', () => {
+    describe('given GitHub service', () => {
       const projectDir = 'version-control-github-addon-test';
 
       beforeAll(() => {
