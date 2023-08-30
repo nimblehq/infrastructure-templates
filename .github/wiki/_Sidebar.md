@@ -13,4 +13,5 @@
 - [[Add New Addon or Module | Add new addon module]]
 - [[Using The Template As Reference]]
 - [[Testing]]
+- [[Modify the Infrastructure Diagram | Modify infra diagram]]
 - [[Publishing]]
