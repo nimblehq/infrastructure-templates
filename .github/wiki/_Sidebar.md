@@ -8,5 +8,9 @@
 
 ## Contributing
 - [[Contributing guidelines]]
+- [[Setup Development Environment]]
+- [[Add a new CLI command | Add new command]]
+- [[Add New Addon or Module | Add new addon module]]
+- [[Using The Template As Reference]]
 - [[Testing]]
 - [[Publishing]]
