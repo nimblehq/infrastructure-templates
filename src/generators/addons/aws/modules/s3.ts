@@ -5,7 +5,7 @@ import { isAwsModuleAdded } from '@/generators/addons/aws/dependencies';
 import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_OUTPUTS_PATH,
-} from '@/generators/core/constants';
+} from '@/generators/terraform/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
 import { AWS_TEMPLATE_PATH } from '../constants';

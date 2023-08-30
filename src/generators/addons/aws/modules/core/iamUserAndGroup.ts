@@ -6,7 +6,7 @@ import {
   INFRA_SHARED_MAIN_PATH,
   INFRA_SHARED_VARIABLES_PATH,
   INFRA_SHARED_OUTPUTS_PATH,
-} from '@/generators/core/constants';
+} from '@/generators/terraform/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
 const iamVariablesContent = dedent`

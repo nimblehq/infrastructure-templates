@@ -1,5 +1,5 @@
 import { AwsOptions } from '@/generators/addons/aws';
-import { applyTerraformCore } from '@/generators/core';
+import { applyTerraformCore } from '@/generators/terraform';
 import { remove } from '@/helpers/file';
 
 import applyAwsAlb, {

@@ -29,6 +29,9 @@ describe('Core codebase', () => {
         'base/main.tf',
         'base/outputs.tf',
         'base/variables.tf',
+        'shared/main.tf',
+        'shared/outputs.tf',
+        'shared/variables.tf',
       ];
 
       expect(projectDir).toHaveFiles(expectedFiles);

@@ -16,12 +16,12 @@ import {
 } from '@/generators/addons/aws/modules';
 import { containsContent, isExisting } from '@/helpers/file';
 
-import { INFRA_BASE_MAIN_PATH } from '../../core/constants';
+import { INFRA_BASE_MAIN_PATH } from '../../terraform/constants';
 import {
   AwsModule,
   AwsModuleName,
   InstallationOptions,
-} from '../../core/types';
+} from '../../terraform/types';
 
 const AWS_MODULES: Record<AwsModuleName | string, AwsModule> = {
   vpc: {

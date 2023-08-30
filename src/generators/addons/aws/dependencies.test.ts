@@ -5,7 +5,7 @@ import {
   applyTerraformAwsProvider,
   applyAwsVpc,
 } from '@/generators/addons/aws/modules';
-import { applyTerraformCore } from '@/generators/core';
+import { applyTerraformCore } from '@/generators/terraform';
 import { remove } from '@/helpers/file';
 
 import { isAwsModuleAdded, requireAwsModules } from './dependencies';

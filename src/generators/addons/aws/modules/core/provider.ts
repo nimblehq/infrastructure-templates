@@ -3,7 +3,7 @@ import { AWS_TEMPLATE_PATH } from '@/generators/addons/aws/constants';
 import {
   INFRA_BASE_PATH,
   INFRA_SHARED_PATH,
-} from '@/generators/core/constants';
+} from '@/generators/terraform/constants';
 import { copy } from '@/helpers/file';
 
 const applyTerraformAwsProvider = async (options: AwsOptions) => {

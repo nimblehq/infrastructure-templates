@@ -5,7 +5,7 @@ import { AWS_DEFAULT_REGION } from '@/generators/addons/aws/constants';
 import {
   INFRA_BASE_VARIABLES_PATH,
   INFRA_SHARED_VARIABLES_PATH,
-} from '@/generators/core/constants';
+} from '@/generators/terraform/constants';
 import { appendToFile } from '@/helpers/file';
 
 const regionVariablesContent = (awsRegion: string) => dedent`

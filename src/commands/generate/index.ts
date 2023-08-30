@@ -6,7 +6,7 @@ import {
   applyVersionControl,
   versionControlChoices,
 } from '@/generators/addons/versionControl';
-import { applyTerraformCore } from '@/generators/core';
+import { applyTerraformCore } from '@/generators/terraform';
 import { remove } from '@/helpers/file';
 import { postProcess } from '@/hooks/postProcess';
 

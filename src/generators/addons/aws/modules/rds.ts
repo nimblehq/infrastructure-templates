@@ -8,7 +8,7 @@ import {
 import {
   INFRA_BASE_MAIN_PATH,
   INFRA_BASE_VARIABLES_PATH,
-} from '@/generators/core/constants';
+} from '@/generators/terraform/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
 import {
