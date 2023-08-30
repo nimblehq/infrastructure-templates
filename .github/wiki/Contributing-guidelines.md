@@ -1,5 +1,3 @@
-# Contributing guidelines for the project
-
 First off, thank you for considering contributing to this project. It's people like you that make this project such a great tool. We appreciate your help!
 
 The following is a set of guidelines for contributing to this project. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
