@@ -5,6 +5,9 @@ This project uses TypeScript and [OCLIF](https://oclif.io/) to build the CLI, Je
 The project has the following main files and folders:
 
 ```bash
+├── .github
+│   ├── workflows # Contains the Github Action workflows
+│   └── wiki # Houses the content for the Wiki of this project. The Wiki will be published automatically upon merging to the `develop` branch.
 ├── bin # the executable file for the CLI
 │   ├── dev # the executable file for the CLI in development mode
 │   └── run # the executable file for the CLI in production mode
