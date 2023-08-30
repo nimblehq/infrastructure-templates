@@ -21,7 +21,8 @@ describe('Terrafom Cloud add-on', () => {
       (prompt as unknown as jest.Mock).mockResolvedValue({
         terraformCloudEnabled: true,
         terraformCloudOrganization: 'YOUR_ORGANIZATION',
-        terraformCloudWorkspace: 'YOUR_WORKSPACE',
+        terraformCloudBaseWorkspace: 'YOUR_BASE_WORKSPACE',
+        terraformCloudSharedWorkspace: 'YOUR_SHARED_WORKSPACE',
       });
 
       applyTerraformCore(generalOptions);
@@ -39,21 +40,30 @@ describe('Terrafom Cloud add-on', () => {
     });
 
     it('adds the cloud block to main.tf files', () => {
-      const expectedContent = `
-        cloud {
-          organization = "YOUR_ORGANIZATION"
-          workspaces {
-            name = "YOUR_WORKSPACE"
+      expect(projectDir).toHaveContentInFile(
+        'base/main.tf',
+        `
+          cloud {
+            organization = "YOUR_ORGANIZATION"
+            workspaces {
+              name = "YOUR_BASE_WORKSPACE"
+            }
           }
+        `,
+        {
+          ignoreSpaces: true,
         }
-      `;
-
-      expect(projectDir).toHaveContentInFile('base/main.tf', expectedContent, {
-        ignoreSpaces: true,
-      });
+      );
       expect(projectDir).toHaveContentInFile(
         'shared/main.tf',
-        expectedContent,
+        `
+          cloud {
+            organization = "YOUR_ORGANIZATION"
+            workspaces {
+              name = "YOUR_SHARED_WORKSPACE"
+            }
+          }
+        `,
         { ignoreSpaces: true }
       );
     });

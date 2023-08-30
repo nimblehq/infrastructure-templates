@@ -11,7 +11,8 @@ import { injectToFile } from '@/helpers/file';
 type TerraformCloudOptions = {
   terraformCloudEnabled: boolean;
   terraformCloudOrganization: string;
-  terraformCloudWorkspace: string;
+  terraformCloudCoreWorkspace: string;
+  terraformCloudSharedWorkspace: string;
 };
 
 const getTerraformCloudOptions = async (
@@ -21,7 +22,8 @@ const getTerraformCloudOptions = async (
     {
       type: 'confirm',
       name: 'terraformCloudEnabled',
-      message: 'Would you like to enable Terraform Cloud?',
+      message:
+        'Would you like to enable Terraform Cloud?\nIf yes, the generated project will require 2 workspaces. One for the "shared" services, such as ERC, that will be used across all environments. The other workspace will be for the "core" services that will be created independently for each environment.',
       default: false,
     },
   ]);
@@ -36,8 +38,14 @@ const getTerraformCloudOptions = async (
       },
       {
         type: 'input',
-        name: 'terraformCloudWorkspace',
-        message: 'What is your Terraform Cloud workspace?',
+        name: 'terraformCloudCoreWorkspace',
+        message: 'What is your Terraform Cloud for the `core` workspace?',
+        default: projectName,
+      },
+      {
+        type: 'input',
+        name: 'terraformCloudSharedWorkspace',
+        message: 'What is your Terraform Cloud for the `shared` workspace?',
         default: projectName,
       },
     ]);
@@ -51,38 +59,49 @@ const getTerraformCloudOptions = async (
   return {
     terraformCloudEnabled: false,
     terraformCloudOrganization: '',
-    terraformCloudWorkspace: '',
+    terraformCloudCoreWorkspace: '',
+    terraformCloudSharedWorkspace: '',
   };
 };
-
-const terraformCloudMainContent = (
-  terraformCloudOptions: TerraformCloudOptions
-) => dedent`
-  cloud {
-    organization = "${terraformCloudOptions.terraformCloudOrganization}"
-    workspaces {
-      name = "${terraformCloudOptions.terraformCloudWorkspace}"
-    }
-  }
-`;
 
 const applyTerraformCloud = async ({
   projectName,
 }: GeneralOptions): Promise<void> => {
   const terraformCloudOptions = await getTerraformCloudOptions(projectName);
 
-  if (terraformCloudOptions.terraformCloudEnabled) {
-    [INFRA_CORE_MAIN_PATH, INFRA_SHARED_MAIN_PATH].forEach((path) => {
-      injectToFile(
-        path,
-        terraformCloudMainContent(terraformCloudOptions),
-        projectName,
-        {
-          insertAfter: 'terraform {',
-        }
-      );
-    });
+  if (!terraformCloudOptions.terraformCloudEnabled) {
+    return;
   }
+
+  injectToFile(
+    INFRA_CORE_MAIN_PATH,
+    dedent`
+      cloud {
+        organization = "${terraformCloudOptions.terraformCloudOrganization}"
+        workspaces {
+          name = "${terraformCloudOptions.terraformCloudCoreWorkspace}"
+        }
+      }`,
+    projectName,
+    {
+      insertAfter: 'terraform {',
+    }
+  );
+
+  injectToFile(
+    INFRA_SHARED_MAIN_PATH,
+    dedent`
+      cloud {
+        organization = "${terraformCloudOptions.terraformCloudOrganization}"
+        workspaces {
+          name = "${terraformCloudOptions.terraformCloudSharedWorkspace}"
+        }
+      }`,
+    projectName,
+    {
+      insertAfter: 'terraform {',
+    }
+  );
 };
 
 export { applyTerraformCloud };
