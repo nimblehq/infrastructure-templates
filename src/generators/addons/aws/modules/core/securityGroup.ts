@@ -1,7 +1,7 @@
 import { dedent } from 'ts-dedent';
 
 import { AwsOptions } from '@/generators/addons/aws';
-import { AWS_SKELETON_PATH } from '@/generators/addons/aws/constants';
+import { AWS_TEMPLATE_PATH } from '@/generators/addons/aws/constants';
 import {
   isAwsModuleAdded,
   requireAwsModules,
@@ -36,7 +36,7 @@ const applyAwsSecurityGroup = async (options: AwsOptions) => {
   await requireAwsModules('securityGroup', 'vpc', options);
 
   copy(
-    `${AWS_SKELETON_PATH}/modules/security_group`,
+    `${AWS_TEMPLATE_PATH}/modules/security_group`,
     'modules/security_group',
     options.projectName
   );

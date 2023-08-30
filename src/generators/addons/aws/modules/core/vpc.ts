@@ -1,7 +1,7 @@
 import { dedent } from 'ts-dedent';
 
 import { AwsOptions } from '@/generators/addons/aws';
-import { AWS_SKELETON_PATH } from '@/generators/addons/aws/constants';
+import { AWS_TEMPLATE_PATH } from '@/generators/addons/aws/constants';
 import { isAwsModuleAdded } from '@/generators/addons/aws/dependencies';
 import {
   INFRA_BASE_MAIN_PATH,
@@ -27,7 +27,7 @@ const applyAwsVpc = async (options: AwsOptions) => {
     return;
   }
 
-  copy(`${AWS_SKELETON_PATH}/modules/vpc`, 'modules/vpc', options.projectName);
+  copy(`${AWS_TEMPLATE_PATH}/modules/vpc`, 'modules/vpc', options.projectName);
   appendToFile(INFRA_BASE_MAIN_PATH, vpcModuleContent, options.projectName);
   appendToFile(INFRA_BASE_OUTPUTS_PATH, vpcOutputsContent, options.projectName);
 };

@@ -8,7 +8,7 @@ import {
 } from '@/generators/core/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
-import { AWS_SKELETON_PATH } from '../constants';
+import { AWS_TEMPLATE_PATH } from '../constants';
 
 const ecrVariablesContent = dedent`
   variable "image_limit" {
@@ -29,7 +29,7 @@ const applyAwsEcr = async (options: AwsOptions) => {
     return;
   }
 
-  copy(`${AWS_SKELETON_PATH}/modules/ecr`, 'modules/ecr', options.projectName);
+  copy(`${AWS_TEMPLATE_PATH}/modules/ecr`, 'modules/ecr', options.projectName);
   appendToFile(
     INFRA_SHARED_VARIABLES_PATH,
     ecrVariablesContent,

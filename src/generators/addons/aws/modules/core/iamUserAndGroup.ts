@@ -1,7 +1,7 @@
 import { dedent } from 'ts-dedent';
 
 import { AwsOptions } from '@/generators/addons/aws';
-import { AWS_SKELETON_PATH } from '@/generators/addons/aws/constants';
+import { AWS_TEMPLATE_PATH } from '@/generators/addons/aws/constants';
 import {
   INFRA_SHARED_MAIN_PATH,
   INFRA_SHARED_VARIABLES_PATH,
@@ -92,17 +92,17 @@ const iamOutputsContent = dedent`
 
 const applyAwsIamUserAndGroup = async ({ projectName }: AwsOptions) => {
   copy(
-    `${AWS_SKELETON_PATH}/modules/iam_groups`,
+    `${AWS_TEMPLATE_PATH}/modules/iam_groups`,
     'modules/iam_groups',
     projectName
   );
   copy(
-    `${AWS_SKELETON_PATH}/modules/iam_users`,
+    `${AWS_TEMPLATE_PATH}/modules/iam_users`,
     'modules/iam_users',
     projectName
   );
   copy(
-    `${AWS_SKELETON_PATH}/modules/iam_group_membership`,
+    `${AWS_TEMPLATE_PATH}/modules/iam_group_membership`,
     'modules/iam_group_membership',
     projectName
   );

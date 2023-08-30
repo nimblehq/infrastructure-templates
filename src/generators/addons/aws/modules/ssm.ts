@@ -11,7 +11,7 @@ import {
 } from '@/generators/core/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
-import { AWS_SKELETON_PATH } from '../constants';
+import { AWS_TEMPLATE_PATH } from '../constants';
 
 const ssmVariablesContent = dedent`
   variable "secret_key_base" {
@@ -37,7 +37,7 @@ const applyAwsSsm = async (options: AwsOptions) => {
   }
   await requireAwsModules('ssm', 'ecs', options);
 
-  copy(`${AWS_SKELETON_PATH}/modules/ssm`, 'modules/ssm', options.projectName);
+  copy(`${AWS_TEMPLATE_PATH}/modules/ssm`, 'modules/ssm', options.projectName);
   appendToFile(
     INFRA_BASE_VARIABLES_PATH,
     ssmVariablesContent,

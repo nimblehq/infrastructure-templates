@@ -8,7 +8,7 @@ import {
 } from '@/generators/core/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
-import { AWS_SKELETON_PATH } from '../constants';
+import { AWS_TEMPLATE_PATH } from '../constants';
 
 const cloudwatchVariablesContent = dedent`
   variable "cloudwatch_log_retention_in_days" {
@@ -31,7 +31,7 @@ const applyAwsCloudwatch = async (options: AwsOptions) => {
   }
 
   copy(
-    `${AWS_SKELETON_PATH}/modules/cloudwatch`,
+    `${AWS_TEMPLATE_PATH}/modules/cloudwatch`,
     'modules/cloudwatch',
     options.projectName
   );

@@ -14,7 +14,7 @@ import { appendToFile, copy } from '@/helpers/file';
 import {
   AWS_SECURITY_GROUP_MAIN_PATH,
   AWS_SECURITY_GROUP_OUTPUTS_PATH,
-  AWS_SKELETON_PATH,
+  AWS_TEMPLATE_PATH,
 } from '../constants';
 
 const bastionVariablesContent = dedent`
@@ -103,7 +103,7 @@ const applyAwsBastion = async (options: AwsOptions) => {
   await requireAwsModules('bastion', 'securityGroup', options);
 
   copy(
-    `${AWS_SKELETON_PATH}/modules/bastion`,
+    `${AWS_TEMPLATE_PATH}/modules/bastion`,
     'modules/bastion',
     options.projectName
   );
