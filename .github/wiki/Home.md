@@ -6,4 +6,4 @@ An infrastructure template for web applications powered by Terraform.
 - A `Blank` flavor that generates a blank Terraform project.
 - The `Complete` flavor generates the following infrastructure:
 
-![Diagram of the Complete Infrastructure](/assets/images/diagram_complete.svg?raw=true)
+![Diagram of the Complete Infrastructure](assets/images/architecture/diagram_complete.svg?raw=true)

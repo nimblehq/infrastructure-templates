@@ -1,5 +1,10 @@
 ## Table of Contents
 
 - [[Home]]
-- [[Getting-Started]]
-- [[Contributing|Contributing-guidelines]]
+- [[Getting Started]]
+
+## Architecture
+- [[Architecture Overview]]
+
+## Contributing
+- [[Contributing guidelines]]
