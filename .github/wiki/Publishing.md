@@ -10,5 +10,5 @@
 npm run publish
 ```
 
-> [!IMPORTANT]\
+> **IMPORTANT**!\
 > NPM credentials are required to publish the project. Ensure that the version in `package.json` is updated.

@@ -6,7 +6,6 @@ on:
       - .github/wiki/**
     branches:
       - develop
-      - feature/20-create-project-wiki
   workflow_dispatch:
 
 jobs:
