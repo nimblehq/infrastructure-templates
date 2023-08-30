@@ -40,10 +40,10 @@ describe('ALB add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'base/main.tf',
-        'base/providers.tf',
-        'base/outputs.tf',
-        'base/variables.tf',
+        'core/main.tf',
+        'core/providers.tf',
+        'core/outputs.tf',
+        'core/variables.tf',
         'modules/alb/main.tf',
         'modules/alb/variables.tf',
       ];
@@ -52,19 +52,19 @@ describe('ALB add-on', () => {
     });
 
     it('adds ALB module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('base/main.tf', albModuleContent);
+      expect(projectDir).toHaveContentInFile('core/main.tf', albModuleContent);
     });
 
     it('adds ALB variables to variables.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'base/variables.tf',
+        'core/variables.tf',
         albVariablesContent
       );
     });
 
     it('adds ALB outputs to outputs.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'base/outputs.tf',
+        'core/outputs.tf',
         albOutputsContent
       );
     });

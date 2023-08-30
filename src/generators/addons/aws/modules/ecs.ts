@@ -6,8 +6,8 @@ import {
   requireAwsModules,
 } from '@/generators/addons/aws/dependencies';
 import {
-  INFRA_BASE_MAIN_PATH,
-  INFRA_BASE_VARIABLES_PATH,
+  INFRA_CORE_MAIN_PATH,
+  INFRA_CORE_VARIABLES_PATH,
 } from '@/generators/terraform/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
@@ -164,11 +164,11 @@ const applyAwsEcs = async (options: AwsOptions) => {
 
   copy(`${AWS_TEMPLATE_PATH}/modules/ecs`, 'modules/ecs', options.projectName);
   appendToFile(
-    INFRA_BASE_VARIABLES_PATH,
+    INFRA_CORE_VARIABLES_PATH,
     ecsVariablesContent,
     options.projectName
   );
-  appendToFile(INFRA_BASE_MAIN_PATH, ecsModuleContent, options.projectName);
+  appendToFile(INFRA_CORE_MAIN_PATH, ecsModuleContent, options.projectName);
   appendToFile(
     AWS_SECURITY_GROUP_MAIN_PATH,
     ecsSGMainContent,

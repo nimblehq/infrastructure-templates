@@ -6,9 +6,9 @@ import {
   requireAwsModules,
 } from '@/generators/addons/aws/dependencies';
 import {
-  INFRA_BASE_MAIN_PATH,
-  INFRA_BASE_OUTPUTS_PATH,
-  INFRA_BASE_VARIABLES_PATH,
+  INFRA_CORE_MAIN_PATH,
+  INFRA_CORE_OUTPUTS_PATH,
+  INFRA_CORE_VARIABLES_PATH,
 } from '@/generators/terraform/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
@@ -104,13 +104,13 @@ const applyAwsAlb = async (options: AwsOptions) => {
   await requireAwsModules('alb', 'securityGroup', options);
 
   copy(`${AWS_TEMPLATE_PATH}/modules/alb`, 'modules/alb', options.projectName);
-  appendToFile(INFRA_BASE_MAIN_PATH, albModuleContent, options.projectName);
+  appendToFile(INFRA_CORE_MAIN_PATH, albModuleContent, options.projectName);
   appendToFile(
-    INFRA_BASE_VARIABLES_PATH,
+    INFRA_CORE_VARIABLES_PATH,
     albVariablesContent,
     options.projectName
   );
-  appendToFile(INFRA_BASE_OUTPUTS_PATH, albOutputsContent, options.projectName);
+  appendToFile(INFRA_CORE_OUTPUTS_PATH, albOutputsContent, options.projectName);
   appendToFile(
     AWS_SECURITY_GROUP_MAIN_PATH,
     albSGMainContent,

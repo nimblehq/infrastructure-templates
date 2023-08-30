@@ -26,9 +26,9 @@ describe('Core codebase', () => {
       const expectedFiles = [
         '.gitignore',
         '.tool-versions',
-        'base/main.tf',
-        'base/outputs.tf',
-        'base/variables.tf',
+        'core/main.tf',
+        'core/outputs.tf',
+        'core/variables.tf',
         'shared/main.tf',
         'shared/outputs.tf',
         'shared/variables.tf',

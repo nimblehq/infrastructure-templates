@@ -34,10 +34,10 @@ describe('S3 add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'base/main.tf',
-        'base/providers.tf',
-        'base/outputs.tf',
-        'base/variables.tf',
+        'core/main.tf',
+        'core/providers.tf',
+        'core/outputs.tf',
+        'core/variables.tf',
         'modules/s3/main.tf',
         'modules/s3/variables.tf',
         'modules/s3/outputs.tf',
@@ -47,12 +47,12 @@ describe('S3 add-on', () => {
     });
 
     it('adds S3 module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('base/main.tf', s3ModuleContent);
+      expect(projectDir).toHaveContentInFile('core/main.tf', s3ModuleContent);
     });
 
     it('adds S3 outputs to outputs.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'base/outputs.tf',
+        'core/outputs.tf',
         s3OutputsContent
       );
     });

@@ -3,8 +3,8 @@ import { dedent } from 'ts-dedent';
 import { AwsOptions } from '@/generators/addons/aws';
 import { isAwsModuleAdded } from '@/generators/addons/aws/dependencies';
 import {
-  INFRA_BASE_MAIN_PATH,
-  INFRA_BASE_VARIABLES_PATH,
+  INFRA_CORE_MAIN_PATH,
+  INFRA_CORE_VARIABLES_PATH,
 } from '@/generators/terraform/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
@@ -36,12 +36,12 @@ const applyAwsCloudwatch = async (options: AwsOptions) => {
     options.projectName
   );
   appendToFile(
-    INFRA_BASE_VARIABLES_PATH,
+    INFRA_CORE_VARIABLES_PATH,
     cloudwatchVariablesContent,
     options.projectName
   );
   appendToFile(
-    INFRA_BASE_MAIN_PATH,
+    INFRA_CORE_MAIN_PATH,
     cloudwatchModuleContent,
     options.projectName
   );

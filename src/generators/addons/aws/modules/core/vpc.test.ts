@@ -28,10 +28,10 @@ describe('VPC add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'base/main.tf',
-        'base/providers.tf',
-        'base/outputs.tf',
-        'base/variables.tf',
+        'core/main.tf',
+        'core/providers.tf',
+        'core/outputs.tf',
+        'core/variables.tf',
         'modules/vpc/main.tf',
         'modules/vpc/variables.tf',
         'modules/vpc/outputs.tf',
@@ -41,12 +41,12 @@ describe('VPC add-on', () => {
     });
 
     it('adds VPC module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('base/main.tf', vpcModuleContent);
+      expect(projectDir).toHaveContentInFile('core/main.tf', vpcModuleContent);
     });
 
     it('adds VPC variables to outputs.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'base/outputs.tf',
+        'core/outputs.tf',
         vpcOutputsContent
       );
     });

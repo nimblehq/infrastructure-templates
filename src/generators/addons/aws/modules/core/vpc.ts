@@ -4,8 +4,8 @@ import { AwsOptions } from '@/generators/addons/aws';
 import { AWS_TEMPLATE_PATH } from '@/generators/addons/aws/constants';
 import { isAwsModuleAdded } from '@/generators/addons/aws/dependencies';
 import {
-  INFRA_BASE_MAIN_PATH,
-  INFRA_BASE_OUTPUTS_PATH,
+  INFRA_CORE_MAIN_PATH,
+  INFRA_CORE_OUTPUTS_PATH,
 } from '@/generators/terraform/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
@@ -28,8 +28,8 @@ const applyAwsVpc = async (options: AwsOptions) => {
   }
 
   copy(`${AWS_TEMPLATE_PATH}/modules/vpc`, 'modules/vpc', options.projectName);
-  appendToFile(INFRA_BASE_MAIN_PATH, vpcModuleContent, options.projectName);
-  appendToFile(INFRA_BASE_OUTPUTS_PATH, vpcOutputsContent, options.projectName);
+  appendToFile(INFRA_CORE_MAIN_PATH, vpcModuleContent, options.projectName);
+  appendToFile(INFRA_CORE_OUTPUTS_PATH, vpcOutputsContent, options.projectName);
 };
 
 export default applyAwsVpc;

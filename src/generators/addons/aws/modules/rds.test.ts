@@ -39,10 +39,10 @@ describe('RDS add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'base/main.tf',
-        'base/providers.tf',
-        'base/outputs.tf',
-        'base/variables.tf',
+        'core/main.tf',
+        'core/providers.tf',
+        'core/outputs.tf',
+        'core/variables.tf',
         'modules/rds/main.tf',
         'modules/rds/variables.tf',
         'modules/rds/outputs.tf',
@@ -52,12 +52,12 @@ describe('RDS add-on', () => {
     });
 
     it('adds RDS module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('base/main.tf', rdsModuleContent);
+      expect(projectDir).toHaveContentInFile('core/main.tf', rdsModuleContent);
     });
 
     it('adds RDS variables to variables.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'base/variables.tf',
+        'core/variables.tf',
         rdsVariablesContent
       );
     });

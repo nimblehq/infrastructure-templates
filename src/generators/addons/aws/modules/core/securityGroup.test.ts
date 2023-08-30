@@ -37,10 +37,10 @@ describe('Security group add-on', () => {
 
     it('creates expected files', () => {
       const expectedFiles = [
-        'base/main.tf',
-        'base/providers.tf',
-        'base/outputs.tf',
-        'base/variables.tf',
+        'core/main.tf',
+        'core/providers.tf',
+        'core/outputs.tf',
+        'core/variables.tf',
         'modules/security_group/main.tf',
         'modules/security_group/variables.tf',
         'modules/security_group/outputs.tf',
@@ -51,14 +51,14 @@ describe('Security group add-on', () => {
 
     it('adds security group module to main.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'base/main.tf',
+        'core/main.tf',
         securityGroupModuleContent
       );
     });
 
     it('adds security group variables to variables.tf', () => {
       expect(projectDir).toHaveContentInFile(
-        'base/variables.tf',
+        'core/variables.tf',
         securityGroupVariablesContent
       );
     });

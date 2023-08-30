@@ -16,7 +16,7 @@ import {
 } from '@/generators/addons/aws/modules';
 import { containsContent, isExisting } from '@/helpers/file';
 
-import { INFRA_BASE_MAIN_PATH } from '../../terraform/constants';
+import { INFRA_CORE_MAIN_PATH } from '../../terraform/constants';
 import {
   AwsModule,
   AwsModuleName,
@@ -98,7 +98,7 @@ const isAwsModuleAdded = (
 
   const isModuleExisting = isExisting(module.path, projectName);
   const isModuleAdded = containsContent(
-    INFRA_BASE_MAIN_PATH,
+    INFRA_CORE_MAIN_PATH,
     module.mainContent,
     projectName
   );

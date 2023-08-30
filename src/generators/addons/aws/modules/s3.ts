@@ -3,8 +3,8 @@ import { dedent } from 'ts-dedent';
 import { AwsOptions } from '@/generators/addons/aws';
 import { isAwsModuleAdded } from '@/generators/addons/aws/dependencies';
 import {
-  INFRA_BASE_MAIN_PATH,
-  INFRA_BASE_OUTPUTS_PATH,
+  INFRA_CORE_MAIN_PATH,
+  INFRA_CORE_OUTPUTS_PATH,
 } from '@/generators/terraform/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
@@ -29,8 +29,8 @@ const applyAwsS3 = async (options: AwsOptions) => {
   }
 
   copy(`${AWS_TEMPLATE_PATH}/modules/s3`, 'modules/s3', options.projectName);
-  appendToFile(INFRA_BASE_OUTPUTS_PATH, s3OutputsContent, options.projectName);
-  appendToFile(INFRA_BASE_MAIN_PATH, s3ModuleContent, options.projectName);
+  appendToFile(INFRA_CORE_OUTPUTS_PATH, s3OutputsContent, options.projectName);
+  appendToFile(INFRA_CORE_MAIN_PATH, s3ModuleContent, options.projectName);
 };
 
 export default applyAwsS3;

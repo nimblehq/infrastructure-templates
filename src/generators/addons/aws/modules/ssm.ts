@@ -6,8 +6,8 @@ import {
   requireAwsModules,
 } from '@/generators/addons/aws/dependencies';
 import {
-  INFRA_BASE_MAIN_PATH,
-  INFRA_BASE_VARIABLES_PATH,
+  INFRA_CORE_MAIN_PATH,
+  INFRA_CORE_VARIABLES_PATH,
 } from '@/generators/terraform/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
@@ -39,11 +39,11 @@ const applyAwsSsm = async (options: AwsOptions) => {
 
   copy(`${AWS_TEMPLATE_PATH}/modules/ssm`, 'modules/ssm', options.projectName);
   appendToFile(
-    INFRA_BASE_VARIABLES_PATH,
+    INFRA_CORE_VARIABLES_PATH,
     ssmVariablesContent,
     options.projectName
   );
-  appendToFile(INFRA_BASE_MAIN_PATH, ssmModuleContent, options.projectName);
+  appendToFile(INFRA_CORE_MAIN_PATH, ssmModuleContent, options.projectName);
 };
 
 export default applyAwsSsm;

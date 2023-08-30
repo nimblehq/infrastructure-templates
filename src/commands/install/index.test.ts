@@ -41,7 +41,7 @@ describe('Install add-on command', () => {
       it('creates expected directories', () => {
         const expectedDirectories = [
           '.github/',
-          'base/',
+          'core/',
           'shared/',
           'modules/',
         ];
@@ -53,10 +53,10 @@ describe('Install add-on command', () => {
         const expectedFiles = [
           '.gitignore',
           '.tool-versions',
-          'base/main.tf',
-          'base/variables.tf',
-          'base/providers.tf',
-          'base/outputs.tf',
+          'core/main.tf',
+          'core/variables.tf',
+          'core/providers.tf',
+          'core/outputs.tf',
           'shared/main.tf',
           'shared/variables.tf',
           'shared/providers.tf',
