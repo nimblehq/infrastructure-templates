@@ -33,20 +33,22 @@ const getTerraformCloudOptions = async (
       {
         type: 'input',
         name: 'terraformCloudOrganization',
-        message: 'What is your Terraform Cloud organization?',
+        message: 'What is your Terraform Cloud organization name?',
         default: 'nimble',
       },
       {
         type: 'input',
         name: 'terraformCloudCoreWorkspace',
-        message: 'What is your Terraform Cloud for the `core` workspace?',
-        default: projectName,
+        message:
+          'What is your Terraform Cloud workspace name for the `core` workspace?',
+        default: `${projectName}`,
       },
       {
         type: 'input',
         name: 'terraformCloudSharedWorkspace',
-        message: 'What is your Terraform Cloud for the `shared` workspace?',
-        default: projectName,
+        message:
+          'What is your Terraform Cloud workspace name for the `shared` workspace?',
+        default: `${projectName}-shared`,
       },
     ]);
 
