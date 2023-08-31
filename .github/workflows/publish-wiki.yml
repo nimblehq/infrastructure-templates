@@ -6,7 +6,7 @@ on:
       - .github/wiki/**
     branches:
       - develop
-      - chore/gh-208-rename-folders
+      - feature/20-create-project-wiki
   workflow_dispatch:
 
 jobs:
