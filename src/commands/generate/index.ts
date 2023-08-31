@@ -1,26 +1,23 @@
-import { Args, Command } from '@oclif/core';
+import { Args, Command, ux } from '@oclif/core';
 import { prompt } from 'inquirer';
 
-import { getProjectPath, remove } from '../../helpers/file';
-import { detectTerraform, formatCode } from '../../helpers/terraform';
-import {
-  applyVersionControl,
-  versionControlChoices,
-} from '../../templates/addons/versionControl';
-import { generateAwsTemplate } from '../../templates/aws';
-import { applyCore } from '../../templates/core';
+import { generateAwsTemplate } from '@/generators/addons/aws';
+import { applyTerraformCloud } from '@/generators/addons/terraformCloud';
+import { applyVersionControl } from '@/generators/addons/versionControl';
+import { applyTerraformCore } from '@/generators/terraform';
+import { remove } from '@/helpers/file';
+import { postProcess } from '@/hooks/postProcess';
 
 type GeneralOptions = {
   projectName: string;
-  versionControl?: 'github' | 'none';
-  provider: 'aws' | 'other';
+  provider: 'aws' | 'other' | string;
 };
 
 const providerChoices = [
   {
     type: 'list',
     name: 'provider',
-    message: 'Which cloud provider would you like to use?',
+    message: 'Which cloud provider would you like to use? [AWS]',
     choices: [
       {
         value: 'aws',
@@ -48,18 +45,24 @@ export default class Generator extends Command {
   async run(): Promise<void> {
     const { args } = await this.parse(Generator);
 
-    const generalPrompt = await prompt<GeneralOptions>([
-      ...versionControlChoices,
-      ...providerChoices,
-    ]);
+    const generalPrompt = await prompt<GeneralOptions>([...providerChoices]);
+
     const generalOptions: GeneralOptions = {
       projectName: args.projectName,
       provider: generalPrompt.provider,
-      versionControl: generalPrompt.versionControl,
     };
 
+    await this.generate(generalOptions);
+    await postProcess(generalOptions);
+
+    ux.info(
+      `The infrastructure code was generated at '${generalOptions.projectName}'`
+    );
+  }
+
+  private async generate(generalOptions: GeneralOptions) {
     try {
-      this.applyGeneralParts(generalOptions);
+      await this.applyGeneralParts(generalOptions);
 
       switch (generalOptions.provider) {
         case 'aws':
@@ -67,33 +70,22 @@ export default class Generator extends Command {
 
           break;
         default:
-          this.error('This provider has not been implemented!');
+          ux.error('This provider has not been implemented!');
       }
-
-      await this.postProcess(generalOptions);
-
-      this.log(
-        `The infrastructure code was generated at '${generalOptions.projectName}'`
-      );
     } catch (error) {
       remove('/', generalOptions.projectName);
-      console.error(error);
+
+      let message = 'Unknown Error';
+      if (error instanceof Error) message = error.message;
+
+      ux.error(message);
     }
   }
 
-  private applyGeneralParts(generalOptions: GeneralOptions): void {
-    applyCore(generalOptions);
-    applyVersionControl(generalOptions);
-  }
-
-  private async postProcess(generalOptions: GeneralOptions): Promise<void> {
-    try {
-      if (await detectTerraform()) {
-        await formatCode(getProjectPath(generalOptions.projectName));
-      }
-    } catch (error) {
-      console.error(error);
-    }
+  private async applyGeneralParts(generalOptions: GeneralOptions) {
+    await applyTerraformCore(generalOptions);
+    await applyTerraformCloud(generalOptions);
+    await applyVersionControl(generalOptions);
   }
 }
 

@@ -1,32 +1,18 @@
+![Publish Wiki Status](https://github.com/nimblehq/infrastructure-templates/actions/workflows/publish-wiki.yml/badge.svg)
+![Publish to NPM Status](https://github.com/nimblehq/infrastructure-templates/actions/workflows/publish.yml/badge.svg)
+
 # Nimble Infrastructure Template
 
 An infrastructure template for web applications powered by Terraform.
 
 **Supported cloud:** AWS. We are looking for contributions to implement support for GCP, Heroku, and Azure!
 
-**Supported flavors:**
-- A `Basic` flavor is in the plan, but not available yet
-- The `Complete` flavor generates the following infrastructure:
-
-![Diagram of the Complete Infrastructure](/img/diagram_complete.svg?raw=true)
-
-## Usage
-
-```bash
-npm install -g @nimblehq/infra-template
-
-nimble-infra generate {project-name}
-```
-
-or
-
-```bash
-npx @nimblehq/infra-template generate {project-name}
-```
+## Documentation
+For [usage instructions](../../wiki/getting-started) and documentation, please check out the [Wiki](../../wiki).
 
 ## Contributing
 
-Check out our [contributing guidelines](/CONTRIBUTING.md) to get started.
+Check out our [contributing guidelines](../../wiki/contributing-guidelines) to get started.
 
 ## License
 

@@ -8,9 +8,13 @@
     "strict": true,
     "target": "es2020",
     "composite": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    }
   },
   "include": [
     "src/**/*",
-    "test/**/*.d.ts",
+    "test/**/*.d.ts"
   ]
 }
