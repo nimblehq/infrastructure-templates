@@ -8,10 +8,10 @@
 
 ## Contributing
 - [[Contributing guidelines]]
-- [[Setup Development Environment]]
+- [[Set up the Development Environment]]
 - [[Add a new CLI command | Add new command]]
 - [[Add New Addon or Module | Add new addon module]]
-- [[Using The Template As Reference]]
+- [[Using The Generator As Reference]]
 - [[Testing]]
 - [[Modify the Infrastructure Diagram | Modify infra diagram]]
 - [[Publishing]]

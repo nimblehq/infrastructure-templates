@@ -1,6 +1,6 @@
-Follow these steps to copy and include supporting modules from the template:
+Follow these steps to copy and include supporting modules from the generator:
 
-1. Open the `src/templates` directory in your project.
+1. Open the `./src/generators` directory in your project.
 2. Explore the code and structure of the existing addon or module that you want to reference.
 
 Inside each addon or module folder, you will find the necessary files and directories needed for that specific functionality.
