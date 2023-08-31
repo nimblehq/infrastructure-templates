@@ -12,7 +12,7 @@ For [usage instructions](../../wiki/getting-started) and documentation, please c
 
 ## Contributing
 
-Check out our [contributing guidelines](../../wiki/contributing) to get started.
+Check out our [contributing guidelines](../../wiki/contributing-guidelines) to get started.
 
 ## License
 

@@ -1,1 +1,1 @@
-Check out our [contributing guidelines](../../wiki/contributing) to get started.
+Check out our [contributing guidelines](../../wiki/contributing-guidelines) to get started.
