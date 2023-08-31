@@ -1,25 +1,32 @@
+import { prompt } from 'inquirer';
+
 import { GeneralOptions } from '@/commands/generate';
 import { remove } from '@/helpers/file';
 
 import { applyVersionControl } from '.';
 
+jest.mock('inquirer');
+
 describe('Version control add-on', () => {
-  describe('given valid GeneralOptions', () => {
-    describe('given github version control', () => {
+  describe('given versionControlEnabled is true', () => {
+    describe('given GitHub service', () => {
       const projectDir = 'version-control-github-addon-test';
 
       beforeAll(() => {
         const generalOptions: GeneralOptions = {
           projectName: projectDir,
           provider: 'aws',
-          versionControl: 'github',
         };
+
+        (prompt as unknown as jest.Mock).mockResolvedValue({
+          versionControlEnabled: true,
+          versionControlService: 'github',
+        });
 
         applyVersionControl(generalOptions);
       });
 
       afterAll(() => {
-        jest.clearAllMocks();
         remove('/', projectDir);
       });
 
@@ -38,21 +45,23 @@ describe('Version control add-on', () => {
       });
     });
 
-    describe('given none version control', () => {
+    describe('given versionControlEnabled is false', () => {
       const projectDir = 'version-control-none-addon-test';
 
       beforeAll(() => {
         const generalOptions: GeneralOptions = {
           projectName: projectDir,
           provider: 'aws',
-          versionControl: 'none',
         };
+
+        (prompt as unknown as jest.Mock).mockResolvedValueOnce({
+          versionControlEnabled: false,
+        });
 
         applyVersionControl(generalOptions);
       });
 
       afterAll(() => {
-        jest.clearAllMocks();
         remove('/', projectDir);
       });
 

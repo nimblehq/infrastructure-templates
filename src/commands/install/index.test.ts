@@ -18,12 +18,12 @@ describe('Install add-on command', () => {
       const stdoutSpy = jest.spyOn(process.stdout, 'write');
 
       beforeAll(async () => {
-        (prompt as unknown as jest.Mock)
-          .mockResolvedValueOnce({
-            provider: provider,
-            versionControl: 'github',
-          })
-          .mockResolvedValueOnce({ infrastructureType: 'blank' });
+        (prompt as unknown as jest.Mock).mockResolvedValue({
+          provider: provider,
+          infrastructureType: 'blank',
+          versionControlEnabled: false,
+          terraformCloudEnabled: false,
+        });
 
         await Generator.run([projectDir]);
         await InstallAddon.run([
@@ -39,13 +39,7 @@ describe('Install add-on command', () => {
       });
 
       it('creates expected directories', () => {
-        const expectedDirectories = [
-          '.github/',
-          'core/',
-          'shared/',
-          'modules/',
-        ];
-
+        const expectedDirectories = ['core/', 'shared/', 'modules/'];
         expect(projectDir).toHaveDirectories(expectedDirectories);
       });
 
@@ -86,12 +80,12 @@ describe('Install add-on command', () => {
       const stdoutSpy = jest.spyOn(process.stdout, 'write');
 
       beforeAll(async () => {
-        (prompt as unknown as jest.Mock)
-          .mockResolvedValueOnce({
-            provider: provider,
-            versionControl: 'github',
-          })
-          .mockResolvedValueOnce({ infrastructureType: 'blank' });
+        (prompt as unknown as jest.Mock).mockResolvedValue({
+          provider: provider,
+          infrastructureType: 'blank',
+          versionControlEnabled: false,
+          terraformCloudEnabled: false,
+        });
 
         await Generator.run([projectDir]);
         await InstallAddon.run([

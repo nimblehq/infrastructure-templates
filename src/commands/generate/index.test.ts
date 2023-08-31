@@ -16,23 +16,23 @@ describe('Generator command', () => {
         const stdoutSpy = jest.spyOn(process.stdout, 'write');
 
         beforeAll(async () => {
-          (prompt as unknown as jest.Mock)
-            .mockResolvedValueOnce({
-              provider: 'aws',
-              versionControl: 'github',
-            })
-            .mockResolvedValueOnce({ infrastructureType: 'blank' });
+          (prompt as unknown as jest.Mock).mockResolvedValue({
+            provider: 'aws',
+            infrastructureType: 'blank',
+            versionControlEnabled: false,
+            terraformCloudEnabled: false,
+          });
 
           await Generator.run([projectDir]);
         });
 
         afterAll(() => {
-          jest.resetAllMocks();
+          jest.clearAllMocks();
           remove('/', projectDir);
         });
 
         it('creates expected directories', () => {
-          const expectedDirectories = ['.github/', 'core/', 'shared/'];
+          const expectedDirectories = ['core/', 'shared/'];
 
           expect(projectDir).toHaveDirectories(expectedDirectories);
         });
@@ -70,18 +70,18 @@ describe('Generator command', () => {
         const stdoutSpy = jest.spyOn(process.stdout, 'write');
 
         beforeAll(async () => {
-          (prompt as unknown as jest.Mock)
-            .mockResolvedValueOnce({
-              provider: 'aws',
-              versionControl: 'github',
-            })
-            .mockResolvedValueOnce({ infrastructureType: 'advanced' });
+          (prompt as unknown as jest.Mock).mockResolvedValue({
+            provider: 'aws',
+            infrastructureType: 'advanced',
+            versionControlEnabled: false,
+            terraformCloudEnabled: false,
+          });
 
           await Generator.run([projectDir]);
         });
 
         afterAll(() => {
-          jest.resetAllMocks();
+          jest.clearAllMocks();
           remove('/', projectDir);
         });
 
@@ -97,7 +97,6 @@ describe('Generator command', () => {
             'modules/security_group/',
             'modules/ssm/',
             'modules/vpc/',
-            '.github/',
           ];
 
           expect(projectDir).toHaveDirectories(expectedDirectories);
@@ -133,6 +132,8 @@ describe('Generator command', () => {
       beforeAll(async () => {
         (prompt as unknown as jest.Mock).mockResolvedValueOnce({
           provider: 'other',
+          versionControlEnabled: false,
+          terraformCloudEnabled: false,
         });
       });
 

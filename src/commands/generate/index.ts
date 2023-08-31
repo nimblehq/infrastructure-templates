@@ -2,17 +2,14 @@ import { Args, Command, ux } from '@oclif/core';
 import { prompt } from 'inquirer';
 
 import { generateAwsTemplate } from '@/generators/addons/aws';
-import {
-  applyVersionControl,
-  versionControlChoices,
-} from '@/generators/addons/versionControl';
+import { applyTerraformCloud } from '@/generators/addons/terraformCloud';
+import { applyVersionControl } from '@/generators/addons/versionControl';
 import { applyTerraformCore } from '@/generators/terraform';
 import { remove } from '@/helpers/file';
 import { postProcess } from '@/hooks/postProcess';
 
 type GeneralOptions = {
   projectName: string;
-  versionControl?: 'github' | 'none';
   provider: 'aws' | 'other' | string;
 };
 
@@ -20,7 +17,7 @@ const providerChoices = [
   {
     type: 'list',
     name: 'provider',
-    message: 'Which cloud provider would you like to use?',
+    message: 'Which cloud provider would you like to use? [AWS]',
     choices: [
       {
         value: 'aws',
@@ -48,15 +45,11 @@ export default class Generator extends Command {
   async run(): Promise<void> {
     const { args } = await this.parse(Generator);
 
-    const generalPrompt = await prompt<GeneralOptions>([
-      ...versionControlChoices,
-      ...providerChoices,
-    ]);
+    const generalPrompt = await prompt<GeneralOptions>([...providerChoices]);
 
     const generalOptions: GeneralOptions = {
       projectName: args.projectName,
       provider: generalPrompt.provider,
-      versionControl: generalPrompt.versionControl,
     };
 
     await this.generate(generalOptions);
@@ -91,6 +84,7 @@ export default class Generator extends Command {
 
   private async applyGeneralParts(generalOptions: GeneralOptions) {
     await applyTerraformCore(generalOptions);
+    await applyTerraformCloud(generalOptions);
     await applyVersionControl(generalOptions);
   }
 }
