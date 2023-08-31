@@ -42,8 +42,8 @@ The project has the following main files and folders:
 > **Note**!\
 > The `./templates` and the `./src/generators` folder are the two main folders that are used to generate the project files
 
-- The `./template` folder contains the addon's files and folders ready to be directly copy-pasted into the generated project if the related addon has been selected. These files serve as a starting point or "template" for the specific addon.
+- The `./templates` folder contains the addon's files and folders ready to be directly copy-pasted into the generated project if the related addon has been selected. These files serve as a starting point or "template" for the specific addon.
 
 - On the other hand, the `./src/generators` folder houses the logic for determining which files need to be copied from this folder into the core project files. It includes instructions on what files should be formed based on the type of addon/module being added (common addons, AWS modules, or standard files).
 
-In summary, while the `./template` folder provides the files and folders needed for the addon, the `./src/generators` folder handles the dynamic copying and integration of those files within the core project structure.
+In summary, while the `./templates` folder provides the files and folders needed for the addon, the `./src/generators` folder handles the dynamic copying and integration of those files within the core project structure.
