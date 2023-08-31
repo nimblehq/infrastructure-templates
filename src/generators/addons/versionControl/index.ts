@@ -13,7 +13,7 @@ const getVersionControlOptions = async (): Promise<VersionControlOptions> => {
     {
       type: 'confirm',
       name: 'versionControlEnabled',
-      message: 'Would you like to enable version control?',
+      message: 'Would you like to enable git version control?',
       default: false,
     },
   ]);
@@ -23,7 +23,7 @@ const getVersionControlOptions = async (): Promise<VersionControlOptions> => {
       {
         type: 'list',
         name: 'versionControlService',
-        message: 'Which version control hosting would you like to use?',
+        message: 'Which git version control hosting would you like to use?',
         choices: [
           {
             name: 'GitHub',
@@ -32,7 +32,7 @@ const getVersionControlOptions = async (): Promise<VersionControlOptions> => {
           {
             name: 'GitLab',
             value: 'gitlab',
-            disabled: '(Coming soon)',
+            disabled: 'Coming soon',
           },
         ],
       },
