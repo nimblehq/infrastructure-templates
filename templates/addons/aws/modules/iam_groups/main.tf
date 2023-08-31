@@ -18,6 +18,8 @@ resource "aws_iam_group_policy_attachment" "admin_access" {
   policy_arn = data.aws_iam_policy.admin_access.arn
 }
 
+# Policy from https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_my-sec-creds-self-manage.html
+# tfsec:ignore:aws-iam-no-policy-wildcards
 resource "aws_iam_group_policy" "developer_allow_manage_own_credentials" {
   group  = aws_iam_group.developer.name
   policy = local.allow_manage_own_credentials
