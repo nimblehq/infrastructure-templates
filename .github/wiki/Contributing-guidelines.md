@@ -9,4 +9,4 @@ If you encounter any issues or have feature requests, please create an issue on 
 ## Development
 
 - Please refer to the [[Architecture Overview]] to understand the project's architecture first. 
-- Then, go through the guidelines under the "Contributing" menu on the right sidebar to set up the Development Environment, understading the way to create new modules, running tests, and publishing an new release to NPM.
+- Then, go through the guidelines under the "Contributing" menu on the right sidebar to set up the Development Environment, understand the way to create new modules, run tests, and publish a new release to NPM.
