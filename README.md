@@ -1,55 +1,18 @@
+![Publish Wiki Status](https://github.com/nimblehq/infrastructure-templates/actions/workflows/publish-wiki.yml/badge.svg)
+![Publish to NPM Status](https://github.com/nimblehq/infrastructure-templates/actions/workflows/publish.yml/badge.svg)
+
 # Nimble Infrastructure Template
 
 An infrastructure template for web applications powered by Terraform.
 
 **Supported cloud:** AWS. We are looking for contributions to implement support for GCP, Heroku, and Azure!
 
-**Supported flavors:**
-- A `Blank` flavor that generates a blank Terraform project.
-- The `Complete` flavor generates the following infrastructure:
-
-![Diagram of the Complete Infrastructure](/img/diagram_complete.svg?raw=true)
-
-## Usage
-
-The CLI can be installed globally or run directly with `npx`:
-
-```bash
-npm install -g @nimblehq/infra-template
-nimble-infra generate {project-name}
-
-# or
-
-npx @nimblehq/infra-template generate {project-name}
-```
-
-The CLI supports the following commands:
-- `generate` - to generate a new Terraform project:
-
-```bash
-nimble-infra generate {project-name}
-```
-
-- `install` - to install a new addon/module to an existing Terraform project:
-
-```bash
-nimble-infra install {addon-name} --project {project-name}
-```
-
-> [!NOTE]\
-> Terraform Cloud is supported by default. You need to set the `organization` and `workspace` in the `terraform` block of the `main.tf` file to use it.
-> If you don't want to use Terraform Cloud, you can remove the `cloud` block in the `main.tf` file.
-
-### Reference as a template
-
-> [!NOTE]\
-> This template can be used for reference to add an addon/module to an existing Terraform project
-
-
+## Documentation
+For [usage instructions](../../wiki/getting-started) and documentation, please check out the [Wiki](../../wiki).
 
 ## Contributing
 
-Check out our [contributing guidelines](/CONTRIBUTING.md) to get started.
+Check out our [contributing guidelines](../../wiki/contributing-guidelines) to get started.
 
 ## License
 
