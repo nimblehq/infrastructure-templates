@@ -68,7 +68,7 @@ describe('File helpers', () => {
       it('returns the correct source path', () => {
         const sourcePath = getTemplatePath();
 
-        expect(sourcePath).toContain('/dist/skeleton');
+        expect(sourcePath).toContain('/dist/templates');
       });
     });
 
@@ -88,7 +88,7 @@ describe('File helpers', () => {
       it('returns the correct source path', () => {
         const sourcePath = getTemplatePath();
 
-        expect(sourcePath).toContain('/skeleton');
+        expect(sourcePath).toContain('/templates');
       });
     });
   });
