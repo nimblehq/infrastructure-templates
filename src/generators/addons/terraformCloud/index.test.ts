@@ -21,7 +21,7 @@ describe('Terrafom Cloud add-on', () => {
       (prompt as unknown as jest.Mock).mockResolvedValue({
         terraformCloudEnabled: true,
         terraformCloudOrganization: 'YOUR_ORGANIZATION',
-        terraformCloudBaseWorkspace: 'YOUR_BASE_WORKSPACE',
+        terraformCloudCoreWorkspace: 'YOUR_CORE_WORKSPACE',
         terraformCloudSharedWorkspace: 'YOUR_SHARED_WORKSPACE',
       });
 
@@ -34,19 +34,19 @@ describe('Terrafom Cloud add-on', () => {
     });
 
     it('creates expected files', () => {
-      const expectedFiles = ['base/main.tf', 'shared/main.tf'];
+      const expectedFiles = ['core/main.tf', 'shared/main.tf'];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });
 
     it('adds the cloud block to main.tf files', () => {
       expect(projectDir).toHaveContentInFile(
-        'base/main.tf',
+        'core/main.tf',
         `
           cloud {
             organization = "YOUR_ORGANIZATION"
             workspaces {
-              name = "YOUR_BASE_WORKSPACE"
+              name = "YOUR_CORE_WORKSPACE"
             }
           }
         `,
@@ -91,7 +91,7 @@ describe('Terrafom Cloud add-on', () => {
     });
 
     it('creates expected files', () => {
-      const expectedFiles = ['base/main.tf', 'shared/main.tf'];
+      const expectedFiles = ['core/main.tf', 'shared/main.tf'];
 
       expect(projectDir).toHaveFiles(expectedFiles);
     });
@@ -100,7 +100,7 @@ describe('Terrafom Cloud add-on', () => {
       const expectedContent = 'cloud {';
 
       expect(projectDir).not.toHaveContentInFile(
-        'base/main.tf',
+        'core/main.tf',
         expectedContent
       );
       expect(projectDir).not.toHaveContentInFile(
