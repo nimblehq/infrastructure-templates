@@ -13,7 +13,7 @@ const getVersionControlOptions = async (): Promise<VersionControlOptions> => {
     {
       type: 'confirm',
       name: 'versionControlEnabled',
-      message: 'Would you like to enable git version control?',
+      message: 'Would you like to enable git version control? [GitHub]',
       default: false,
     },
   ]);

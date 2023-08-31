@@ -17,7 +17,7 @@ const providerChoices = [
   {
     type: 'list',
     name: 'provider',
-    message: 'Which cloud provider would you like to use?',
+    message: 'Which cloud provider would you like to use? [AWS]',
     choices: [
       {
         value: 'aws',
