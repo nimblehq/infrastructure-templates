@@ -58,7 +58,7 @@
     "topics": {}
   },
   "scripts": {
-    "build": "shx rm -rf dist && tsc -b && shx cp -r skeleton dist",
+    "build": "shx rm -rf dist && tsc -b && shx cp -r templates dist",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postpack": "shx rm -f oclif.manifest.json",

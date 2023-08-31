@@ -32,7 +32,7 @@ describe('Generator command', () => {
         });
 
         it('creates expected directories', () => {
-          const expectedDirectories = ['.github/', 'base/', 'shared/'];
+          const expectedDirectories = ['.github/', 'core/', 'shared/'];
 
           expect(projectDir).toHaveDirectories(expectedDirectories);
         });
@@ -41,10 +41,10 @@ describe('Generator command', () => {
           const expectedFiles = [
             '.gitignore',
             '.tool-versions',
-            'base/main.tf',
-            'base/variables.tf',
-            'base/providers.tf',
-            'base/outputs.tf',
+            'core/main.tf',
+            'core/variables.tf',
+            'core/providers.tf',
+            'core/outputs.tf',
             'shared/main.tf',
             'shared/variables.tf',
             'shared/providers.tf',
@@ -107,10 +107,10 @@ describe('Generator command', () => {
           const expectedFiles = [
             '.gitignore',
             '.tool-versions',
-            'base/main.tf',
-            'base/variables.tf',
-            'base/providers.tf',
-            'base/outputs.tf',
+            'core/main.tf',
+            'core/variables.tf',
+            'core/providers.tf',
+            'core/outputs.tf',
           ];
 
           expect(projectDir).toHaveFiles(expectedFiles);
