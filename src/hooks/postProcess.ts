@@ -8,7 +8,7 @@ const postProcess = async (generalOptions: GeneralOptions) => {
       await formatCode(getProjectPath(generalOptions.projectName));
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

@@ -34,7 +34,7 @@ describe('Terraform helper', () => {
         (runCommand as jest.Mock).mockRejectedValueOnce(
           new Error('terraform not found')
         );
-        const consoleSpy = jest.spyOn(global.console, 'error');
+        const consoleSpy = jest.spyOn(global.console, 'log');
 
         await detectTerraform();
 
@@ -65,11 +65,13 @@ describe('Terraform helper', () => {
         (runCommand as jest.Mock).mockRejectedValueOnce(
           new Error('terraform not found')
         );
-        const consoleSpy = jest.spyOn(global.console, 'error');
+        const consoleSpy = jest.spyOn(global.console, 'log');
 
         await formatCode('/');
 
-        expect(consoleSpy).toHaveBeenCalledWith(Error('terraform not found'));
+        expect(consoleSpy).toHaveBeenCalledWith(
+          "Couldn't format terraform code."
+        );
       });
     });
   });
