@@ -34,7 +34,7 @@ const albModuleContent = dedent`
     source = "../modules/alb"
 
     vpc_id             = module.vpc.vpc_id
-    namespace          = var.namespace
+    env_namespace      = local.env_namespace
     app_port           = var.app_port
     subnet_ids         = module.vpc.public_subnet_ids
     security_group_ids = module.security_group.alb_security_group_ids
@@ -49,12 +49,12 @@ const albOutputsContent = dedent`
 
 const albSGMainContent = dedent`
   resource "aws_security_group" "alb" {
-    name        = "\${var.namespace}-alb-sg"
+    name        = "\${local.env_namespace}-alb-sg"
     description = "ALB Security Group"
     vpc_id      = var.vpc_id
 
     tags = {
-      Name = "\${var.namespace}-alb-sg"
+      Name = "\${local.env_namespace}-alb-sg"
     }
   }
 

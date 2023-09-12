@@ -1,9 +1,9 @@
 # tfsec:ignore:aws-ec2-no-public-ip
 resource "aws_launch_configuration" "bastion_instance" {
-  name_prefix                 = "${var.namespace}-bastion-"
+  name_prefix                 = "${var.env_namespace}-bastion-"
   image_id                    = var.image_id
   instance_type               = var.instance_type
-  key_name                    = "${var.namespace}-bastion"
+  key_name                    = "${var.env_namespace}-bastion"
   security_groups             = var.instance_security_group_ids
   associate_public_ip_address = true
 
@@ -21,7 +21,7 @@ resource "aws_launch_configuration" "bastion_instance" {
 }
 
 resource "aws_autoscaling_group" "bastion_instance" {
-  name                 = "${var.namespace}-bastion"
+  name                 = "${var.env_namespace}-bastion"
   launch_configuration = aws_launch_configuration.bastion_instance.name
   min_size             = var.min_instance_count
   max_size             = var.max_instance_count
@@ -30,7 +30,7 @@ resource "aws_autoscaling_group" "bastion_instance" {
 
   tag {
     key                 = "Name"
-    value               = "${var.namespace}-bastion"
+    value               = "${var.env_namespace}-bastion"
     propagate_at_launch = true
   }
 }

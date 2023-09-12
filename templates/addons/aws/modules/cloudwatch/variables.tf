@@ -1,5 +1,5 @@
-variable "namespace" {
-  description = "The namespace for the CloudWatch"
+variable "env_namespace" {
+  description = "The namespace with environment for the CloudWatch"
   type        = string
 }
 

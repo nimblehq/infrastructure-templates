@@ -20,7 +20,7 @@ const cloudwatchModuleContent = dedent`
   module "cloudwatch" {
     source = "../modules/cloudwatch"
 
-    namespace = var.namespace
+    env_namespace = local.env_namespace
 
     log_retention_in_days = var.cloudwatch_log_retention_in_days
   }`;

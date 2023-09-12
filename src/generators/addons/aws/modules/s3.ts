@@ -20,7 +20,7 @@ const s3ModuleContent = dedent`
   module "s3" {
     source = "../modules/s3"
 
-    namespace   = var.namespace
+    env_namespace = local.env_namespace
   }`;
 
 const applyAwsS3 = async (options: AwsOptions) => {

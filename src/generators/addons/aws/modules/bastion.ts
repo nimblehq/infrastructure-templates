@@ -50,7 +50,7 @@ const bastionModuleContent = dedent`
     subnet_ids                  = module.vpc.public_subnet_ids
     instance_security_group_ids = module.security_group.bastion_security_group_ids
 
-    namespace     = var.namespace
+    env_namespace = local.env_namespace
     image_id      = var.bastion_image_id
     instance_type = var.bastion_instance_type
 
@@ -61,12 +61,12 @@ const bastionModuleContent = dedent`
 
 const bastionSGMainContent = dedent`
   resource "aws_security_group" "bastion" {
-    name        = "\${var.namespace}-bastion"
+    name        = "\${local.env_namespace}-bastion"
     description = "Bastion Security Group"
     vpc_id      = var.vpc_id
 
     tags = {
-      Name = "\${var.namespace}-bastion-sg"
+      Name = "\${local.env_namespace}-bastion-sg"
     }
   }
 

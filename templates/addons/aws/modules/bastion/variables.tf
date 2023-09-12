@@ -1,5 +1,5 @@
-variable "namespace" {
-  description = "The namespace for the bastion instance"
+variable "env_namespace" {
+  description = "The namespace with environment for the bastion instance"
   type        = string
 }
 
