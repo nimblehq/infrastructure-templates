@@ -3,12 +3,12 @@
 The CLI can be installed globally or run directly with `npx`:
 
 ```bash
-npm install -g @nimblehq/infra-template
+npm install -g @nimblehq/infra-template@latest
 nimble-infra generate {project-name}
 
 # or
 
-npx @nimblehq/infra-template generate {project-name}
+npx @nimblehq/infra-template@latest generate {project-name}
 ```
 
 The CLI supports the following commands:
