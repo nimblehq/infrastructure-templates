@@ -1,5 +1,5 @@
-import dedent = require('dedent');
 import { prompt } from 'inquirer';
+import { dedent } from 'ts-dedent';
 
 import { GeneralOptions } from '@/commands/generate';
 import {
