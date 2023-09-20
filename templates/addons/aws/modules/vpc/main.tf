@@ -25,12 +25,12 @@ data "aws_route_tables" "private_route_table" {
   }
 }
 
-resource "aws_vpc_endpoint" "s3" {
+resource "aws_vpc_endpoint" "logs" {
   vpc_id          = module.vpc.vpc_id
-  service_name    = "com.amazonaws.${var.region}.s3"
+  service_name    = "com.amazonaws.${var.region}.logs"
   route_table_ids = data.aws_route_tables.private_route_table.ids
 
   tags = {
-    Name = "${var.env_namespace}-vpc-endpoint-s3"
+    Name = "${var.env_namespace}-vpc-endpoint-logs"
   }
 }
