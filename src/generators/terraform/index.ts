@@ -15,8 +15,7 @@ const applyTerraformCore = async (generalOptions: GeneralOptions) => {
   // Use projectName to append the Namespace local in the main.tf file
   const coreLocalsContent = dedent`
       locals {
-        namespace = "${projectName}"
-        env_namespace = "\${namespace}-\${var.environment}"
+        env_namespace = "${projectName}-\${var.environment}"
       }`;
 
   appendToFile(INFRA_CORE_MAIN_PATH, coreLocalsContent, projectName);
