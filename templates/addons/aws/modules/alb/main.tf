@@ -4,7 +4,7 @@ locals {
 
 # tfsec:ignore:aws-elb-alb-not-public
 resource "aws_lb" "main" {
-  name               = "${var.namespace}-alb"
+  name               = "${var.env_namespace}-alb"
   internal           = false
   subnets            = var.subnet_ids
   load_balancer_type = "application"
@@ -14,13 +14,13 @@ resource "aws_lb" "main" {
   drop_invalid_header_fields = true
 
   access_logs {
-    bucket  = "${var.namespace}-alb-log"
+    bucket  = "${var.env_namespace}-alb-log"
     enabled = true
   }
 }
 
 resource "aws_lb_target_group" "target_group" {
-  name                 = "${var.namespace}-alb-tg"
+  name                 = "${var.env_namespace}-alb-tg"
   port                 = var.app_port
   protocol             = "HTTP"
   vpc_id               = var.vpc_id

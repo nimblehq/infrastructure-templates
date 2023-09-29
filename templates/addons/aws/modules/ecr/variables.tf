@@ -1,5 +1,5 @@
-variable "namespace" {
-  description = "The namespace for the ECR"
+variable "env_namespace" {
+  description = "The namespace with environment for the ECR"
   type        = string
 }
 

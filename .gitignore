@@ -11,7 +11,12 @@ yarn.lock
 .DS_Store
 tsconfig.tsbuildinfo
 
-# IDE
-.vscode
+# IDEA
 .idea
 *.iml
+
+# Vscode
+.vscode
+
+# Emacs
+.dir-locals.el

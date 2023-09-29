@@ -2,7 +2,7 @@ data "aws_elb_service_account" "elb_service_account" {}
 
 # tfsec:ignore:aws-s3-enable-versioning tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-encryption-customer-key tfsec:ignore:aws-s3-enable-bucket-encryption
 resource "aws_s3_bucket" "alb_log" {
-  bucket        = "${var.namespace}-alb-log"
+  bucket        = "${var.env_namespace}-alb-log"
   force_destroy = true
 }
 

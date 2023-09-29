@@ -19,7 +19,7 @@ const vpcModuleContent = dedent`
   module "vpc" {
     source    = "../modules/vpc"
 
-    namespace = var.namespace
+    env_namespace = local.env_namespace
   }`;
 
 const applyAwsVpc = async (options: AwsOptions) => {

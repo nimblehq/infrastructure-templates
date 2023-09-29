@@ -81,7 +81,7 @@ const ecsModuleContent = dedent`
     source = "../modules/ecs"
 
     subnets                            = module.vpc.private_subnet_ids
-    namespace                          = var.namespace
+    env_namespace                      = local.env_namespace
     region                             = var.region
     app_host                           = module.alb.alb_dns_name
     app_port                           = var.app_port
@@ -110,12 +110,12 @@ const ecsModuleContent = dedent`
 
 const ecsSGMainContent = dedent`
   resource "aws_security_group" "ecs_fargate" {
-    name        = "\${var.namespace}-ecs-fargate-sg"
+    name        = "\${var.env_namespace}-ecs-fargate-sg"
     description = "ECS Fargate Security Group"
     vpc_id      = var.vpc_id
 
     tags = {
-      Name = "\${var.namespace}-ecs-fargate-sg"
+      Name = "\${var.env_namespace}-ecs-fargate-sg"
     }
   }
 
