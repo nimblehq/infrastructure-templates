@@ -49,12 +49,12 @@ const albOutputsContent = dedent`
 
 const albSGMainContent = dedent`
   resource "aws_security_group" "alb" {
-    name        = "\${local.env_namespace}-alb-sg"
+    name        = "\${var.env_namespace}-alb-sg"
     description = "ALB Security Group"
     vpc_id      = var.vpc_id
 
     tags = {
-      Name = "\${local.env_namespace}-alb-sg"
+      Name = "\${var.env_namespace}-alb-sg"
     }
   }
 

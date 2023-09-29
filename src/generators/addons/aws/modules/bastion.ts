@@ -61,12 +61,12 @@ const bastionModuleContent = dedent`
 
 const bastionSGMainContent = dedent`
   resource "aws_security_group" "bastion" {
-    name        = "\${local.env_namespace}-bastion"
+    name        = "\${var.env_namespace}-bastion"
     description = "Bastion Security Group"
     vpc_id      = var.vpc_id
 
     tags = {
-      Name = "\${local.env_namespace}-bastion-sg"
+      Name = "\${var.env_namespace}-bastion-sg"
     }
   }
 

@@ -16,7 +16,7 @@
       "logDriver": "awslogs",
       "options": {
         "awslogs-region": "${region}",
-        "awslogs-stream-prefix": "${namespace}-service-web",
+        "awslogs-stream-prefix": "${env_namespace}-service-web",
         "awslogs-group": "${aws_cloudwatch_log_group_name}"
       }
     },

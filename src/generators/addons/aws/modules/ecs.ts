@@ -110,12 +110,12 @@ const ecsModuleContent = dedent`
 
 const ecsSGMainContent = dedent`
   resource "aws_security_group" "ecs_fargate" {
-    name        = "\${local.env_namespace}-ecs-fargate-sg"
+    name        = "\${var.env_namespace}-ecs-fargate-sg"
     description = "ECS Fargate Security Group"
     vpc_id      = var.vpc_id
 
     tags = {
-      Name = "\${local.env_namespace}-ecs-fargate-sg"
+      Name = "\${var.env_namespace}-ecs-fargate-sg"
     }
   }
 
