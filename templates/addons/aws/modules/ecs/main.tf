@@ -16,7 +16,7 @@ locals {
   ])
 
   container_vars = {
-    namespace                          = var.namespace
+    env_namespace                      = var.env_namespace
     region                             = var.region
     app_host                           = var.app_host
     app_port                           = var.app_port
@@ -98,18 +98,18 @@ data "aws_ecs_task_definition" "task" {
 }
 
 resource "aws_iam_policy" "ecs_task_execution_ssm" {
-  name   = "${var.namespace}-ECSTaskExecutionAccessSSMPolicy"
+  name   = "${var.env_namespace}-ECSTaskExecutionAccessSSMPolicy"
   policy = local.ecs_task_execution_ssm_policy
 }
 
 # tfsec:ignore:aws-iam-no-policy-wildcards
 resource "aws_iam_policy" "ecs_task_excution_service_scaling" {
-  name   = "${var.namespace}-ECSAutoScalingPolicy"
+  name   = "${var.env_namespace}-ECSAutoScalingPolicy"
   policy = local.ecs_service_scaling_policy
 }
 
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name               = "${var.namespace}-ecs-execution-role"
+  name               = "${var.env_namespace}-ecs-execution-role"
   assume_role_policy = local.ecs_task_execution_assume_role_policy
 }
 
@@ -129,7 +129,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_excution_service_scaling_pol
 }
 
 resource "aws_ecs_cluster" "main" {
-  name = "${var.namespace}-ecs-cluster"
+  name = "${var.env_namespace}-ecs-cluster"
 
   setting {
     name  = "containerInsights"
@@ -138,7 +138,7 @@ resource "aws_ecs_cluster" "main" {
 }
 
 resource "aws_ecs_task_definition" "main" {
-  family                   = "${var.namespace}-service"
+  family                   = "${var.env_namespace}-service"
   cpu                      = var.cpu
   memory                   = var.memory
   network_mode             = "awsvpc"
@@ -148,7 +148,7 @@ resource "aws_ecs_task_definition" "main" {
 }
 
 resource "aws_ecs_service" "main" {
-  name                               = "${var.namespace}-ecs-service"
+  name                               = "${var.env_namespace}-ecs-service"
   cluster                            = aws_ecs_cluster.main.id
   launch_type                        = "FARGATE"
   deployment_maximum_percent         = var.deployment_maximum_percent
@@ -168,7 +168,7 @@ resource "aws_ecs_service" "main" {
 
   load_balancer {
     target_group_arn = var.alb_target_group_arn
-    container_name   = var.namespace
+    container_name   = var.env_namespace
     container_port   = var.app_port
   }
 
@@ -187,7 +187,7 @@ resource "aws_appautoscaling_target" "main" {
 }
 
 resource "aws_appautoscaling_policy" "memory_policy" {
-  name               = "${var.namespace}-appautoscaling-memory-policy"
+  name               = "${var.env_namespace}-appautoscaling-memory-policy"
   policy_type        = "TargetTrackingScaling"
   resource_id        = aws_appautoscaling_target.main.resource_id
   scalable_dimension = aws_appautoscaling_target.main.scalable_dimension
@@ -206,7 +206,7 @@ resource "aws_appautoscaling_policy" "memory_policy" {
 }
 
 resource "aws_appautoscaling_policy" "cpu_policy" {
-  name               = "${var.namespace}-appautoscaling-cpu-policy"
+  name               = "${var.env_namespace}-appautoscaling-cpu-policy"
   policy_type        = "TargetTrackingScaling"
   resource_id        = aws_appautoscaling_target.main.resource_id
   scalable_dimension = aws_appautoscaling_target.main.scalable_dimension

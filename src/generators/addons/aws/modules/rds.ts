@@ -52,7 +52,7 @@ const rdsModuleContent = dedent`
   module "rds" {
     source = "../modules/rds"
 
-    namespace = var.namespace
+    env_namespace = local.env_namespace
 
     vpc_security_group_ids = module.security_group.rds_security_group_ids
     vpc_id                 = module.vpc.vpc_id
@@ -70,12 +70,12 @@ const rdsModuleContent = dedent`
 
 const rdsSGMainContent = dedent`
   resource "aws_security_group" "rds" {
-    name        = "\${var.namespace}-rds"
+    name        = "\${var.env_namespace}-rds"
     description = "RDS Security Group"
     vpc_id      = var.vpc_id
 
     tags = {
-      Name = "\${var.namespace}-rds-sg"
+      Name = "\${var.env_namespace}-rds-sg"
     }
   }
 

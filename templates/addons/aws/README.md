@@ -119,7 +119,7 @@ First, edit the `*-infra` source code:
   module "ssm" {
     source = "../modules/ssm"
 
-    namespace = var.namespace
+    env_namespace = local.env_namespace
 
     secrets = {
       secret_key_base = var.secret_key_base,

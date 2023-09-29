@@ -23,7 +23,7 @@ const ssmModuleContent = dedent`
   module "ssm" {
     source = "../modules/ssm"
 
-    namespace = var.namespace
+    env_namespace = local.env_namespace
 
     secrets = {
       database_url = "postgres://\${var.rds_username}:\${var.rds_password}@\${module.rds.db_endpoint}/\${var.rds_database_name}"

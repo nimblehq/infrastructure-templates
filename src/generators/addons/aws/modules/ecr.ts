@@ -20,8 +20,8 @@ const ecrModuleContent = dedent`
   module "ecr" {
     source = "../modules/ecr"
 
-    namespace   = var.namespace
-    image_limit = var.image_limit
+    env_namespace = local.env_namespace
+    image_limit   = var.image_limit
   }`;
 
 const applyAwsEcr = async (options: AwsOptions) => {
