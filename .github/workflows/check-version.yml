@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - feature/gh-234-add-version-management-workflows
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -71,7 +70,6 @@ jobs:
           delete-branch: true
           title: "[Chore] Bump version to ${{ steps.next_version.outputs.version }}"
           commit-message: "Bump version to ${{ steps.next_version.outputs.version }}"
-          draft: true
           labels: |
             type : chore
           body: |
