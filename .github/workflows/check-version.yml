@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - develop
-  pull_request:
+      - feature/gh-234-add-version-management-workflows
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -62,9 +62,8 @@ jobs:
           echo "version=$nextVersion" >> $GITHUB_OUTPUT
 
           sed -i "s/\"version\": \".*\"/\"version\": \"$nextVersion\"/" ${{ env.VERSION_FILE }}
-          cat ${{ env.VERSION_FILE }}
 
-      - name: Create a new pull request
+      - name: Create a new pull request to bump the version
         if: steps.compare_versions.outcome == 'failure'
         uses: peter-evans/create-pull-request@v5
         with:
