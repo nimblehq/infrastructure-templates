@@ -20,8 +20,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    strategy:
-      fail-fast: false
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,7 +48,7 @@ jobs:
           fi
 
       - name: Bump version to the next minor version
-        if: steps.compare_versions.outcome == 'failure'
+        if: always() && steps.compare_versions.outcome == 'failure'
         id: next_version
         run: |
           delimiter=.
@@ -65,7 +63,7 @@ jobs:
           jq ".version = \"$nextVersion\"" ${{ env.VERSION_FILE }} > ${{ env.VERSION_FILE }}.tmp && mv ${{ env.VERSION_FILE }}.tmp ${{ env.VERSION_FILE }}
 
       - name: Create a new pull request to bump the version
-        if: steps.compare_versions.outcome == 'failure'
+        if: always() && steps.compare_versions.outcome == 'failure'
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ github.token }}
