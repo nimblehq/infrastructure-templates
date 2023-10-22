@@ -64,6 +64,7 @@ jobs:
           sed -i "s/\"version\": \".*\"/\"version\": \"$nextVersion\"/" ${{ env.VERSION_FILE }}
 
       - name: Create a new pull request
+        if: steps.compare_versions.outcome == 'failure'
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ github.token }}
