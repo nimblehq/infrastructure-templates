@@ -1,0 +1,88 @@
+name: Check version
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  VERSION_FILE: ./package.json
+
+jobs:
+  check-version:
+    name: Run linters
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get current version
+        id: current_version
+        run: |
+          currentVersion=$(node -p -e "require('${{ env.VERSION_FILE }}').version")
+
+          echo "version=$currentVersion" >> $GITHUB_OUTPUT
+
+      - name: Get latest version
+        id: latest_version
+        uses: pozetroninc/github-action-get-latest-release@v0.7.0
+        with:
+          repository: nimblehq/infrastructure-templates
+
+      - name: Compare versions
+        id: compare_versions
+        run: |
+          if [[ "${{ steps.latest_version.outputs.release }}" != "${{ steps.current_version.outputs.version }}" ]]; then
+            exit 0
+          else
+            echo "The latest version is the same as the current version."
+            exit 1
+          fi
+        continue-on-error: true
+
+      - name: Bump version to the next minor version
+        if: steps.compare_versions.outcome == 'failure'
+        id: next_version
+        run: |
+          delimiter=.
+          array=($(echo "${{ steps.current_version.outputs.version }}" | tr $delimiter '\n'))
+
+          array[1]=$((array[1]+1))
+          array[2]=0
+
+          nextVersion=$(IFS=$delimiter ; echo "${array[*]}")
+          echo "version=$nextVersion" >> $GITHUB_OUTPUT
+
+          sed -i "s/\"version\": \".*\"/\"version\": \"$nextVersion\"/" ${{ env.VERSION_FILE }}
+
+      - name: Create a new pull request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ github.token }}
+          branch: chore/bump-version-to-${{ steps.next_version.outputs.version }}
+          delete-branch: true
+          title: "[Chore] Bump version to ${{ steps.next_version.outputs.version }}"
+          commit-message: "Bump version to ${{ steps.next_version.outputs.version }}"
+          draft: false
+          labels: |
+            type : chore
+          body: |
+            ## What happened 👀
+
+            Bump version to ${{ steps.next_version.outputs.version }}
+
+            ## Insight 📝
+
+            Automatically created by the GitHub Actions workflow.
+
+            ## Proof Of Work 📹
+
+            On the Files changed tab
