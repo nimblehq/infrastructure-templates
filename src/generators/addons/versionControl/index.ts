@@ -4,59 +4,41 @@ import { GeneralOptions } from '@/commands/generate';
 import { copy } from '@/helpers/file';
 
 type VersionControlOptions = {
-  versionControlEnabled: boolean;
-  versionControlService: string;
+  versionControlService: 'github' | 'gitlab' | 'none';
 };
 
 const getVersionControlOptions = async (): Promise<VersionControlOptions> => {
-  const versionControlPrompt = await prompt([
+  const versionControlOptions = await prompt([
     {
-      type: 'confirm',
-      name: 'versionControlEnabled',
-      message: 'Would you like to enable git version control? [GitHub]',
-      default: false,
+      type: 'list',
+      name: 'versionControlService',
+      message: 'Which version control service would you like to use?',
+      choices: [
+        {
+          name: 'GitHub',
+          value: 'github',
+        },
+        {
+          name: 'GitLab',
+          value: 'gitlab',
+          disabled: 'Coming soon',
+        },
+        {
+          name: 'None',
+          value: 'none',
+        },
+      ],
     },
   ]);
 
-  if (versionControlPrompt.versionControlEnabled) {
-    const versionControlOptions = await prompt([
-      {
-        type: 'list',
-        name: 'versionControlService',
-        message: 'Which git version control hosting would you like to use?',
-        choices: [
-          {
-            name: 'GitHub',
-            value: 'github',
-          },
-          {
-            name: 'GitLab',
-            value: 'gitlab',
-            disabled: 'Coming soon',
-          },
-        ],
-      },
-    ]);
-
-    return {
-      versionControlEnabled: true,
-      ...versionControlOptions,
-    };
-  }
-
-  return {
-    versionControlEnabled: false,
-    versionControlService: '',
-  };
+  return versionControlOptions;
 };
 
 const applyVersionControl = async ({ projectName }: GeneralOptions) => {
   const versionControlOptions = await getVersionControlOptions();
 
-  if (versionControlOptions.versionControlEnabled) {
-    if (versionControlOptions.versionControlService === 'github') {
-      copy('addons/versionControl/github', '.', projectName);
-    }
+  if (versionControlOptions.versionControlService === 'github') {
+    copy('addons/versionControl/github', '.', projectName);
   }
 };
 

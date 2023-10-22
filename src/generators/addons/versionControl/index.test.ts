@@ -8,7 +8,7 @@ import { applyVersionControl } from '.';
 jest.mock('inquirer');
 
 describe('Version control add-on', () => {
-  describe('given versionControlEnabled is true', () => {
+  describe('given versionControlService is github', () => {
     describe('given GitHub service', () => {
       const projectDir = 'version-control-github-addon-test';
 
@@ -19,8 +19,7 @@ describe('Version control add-on', () => {
         };
 
         (prompt as unknown as jest.Mock).mockResolvedValue({
-          versionControlEnabled: true,
-          versionControlService: 'github',
+          versionControlService: 'none',
         });
 
         applyVersionControl(generalOptions);
@@ -45,7 +44,7 @@ describe('Version control add-on', () => {
       });
     });
 
-    describe('given versionControlEnabled is false', () => {
+    describe('given versionControlService is none', () => {
       const projectDir = 'version-control-none-addon-test';
 
       beforeAll(() => {
@@ -55,7 +54,7 @@ describe('Version control add-on', () => {
         };
 
         (prompt as unknown as jest.Mock).mockResolvedValueOnce({
-          versionControlEnabled: false,
+          versionControlService: 'none',
         });
 
         applyVersionControl(generalOptions);
