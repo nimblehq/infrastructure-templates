@@ -1,6 +1,6 @@
 {
   "name": "@nimblehq/infra-template",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Nimble Infrastructure Template generator",
   "author": "Nimblehq",
   "bin": {
@@ -68,7 +68,7 @@
     "prepack": "npm run build && oclif manifest && oclif readme",
     "test": "jest",
     "test:watch": "jest --watch",
-    "version": "oclif readme && git add README.md"
+    "version": "2.2.0"
   },
   "engines": {
     "node": ">=16.0.0"
