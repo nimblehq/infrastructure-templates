@@ -61,7 +61,7 @@ jobs:
           nextVersion=$(IFS=$delimiter ; echo "${array[*]}")
           echo "version=$nextVersion" >> $GITHUB_OUTPUT
 
-          sed -i "s/\"version\": \".*\"/\"version\": \"$nextVersion\"/" ${{ env.VERSION_FILE }}
+          jq ".version = \"$nextVersion\"" ${{ env.VERSION_FILE }} > ${{ env.VERSION_FILE }}.tmp && mv ${{ env.VERSION_FILE }}.tmp ${{ env.VERSION_FILE }}
 
       - name: Create a new pull request to bump the version
         if: steps.compare_versions.outcome == 'failure'
@@ -72,7 +72,7 @@ jobs:
           delete-branch: true
           title: "[Chore] Bump version to ${{ steps.next_version.outputs.version }}"
           commit-message: "Bump version to ${{ steps.next_version.outputs.version }}"
-          draft: false
+          draft: true
           labels: |
             type : chore
           body: |
