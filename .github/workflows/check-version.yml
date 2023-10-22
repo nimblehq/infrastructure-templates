@@ -15,7 +15,7 @@ env:
 
 jobs:
   check-version:
-    name: Run linters
+    name: Check version
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -62,6 +62,7 @@ jobs:
           echo "version=$nextVersion" >> $GITHUB_OUTPUT
 
           sed -i "s/\"version\": \".*\"/\"version\": \"$nextVersion\"/" ${{ env.VERSION_FILE }}
+          cat ${{ env.VERSION_FILE }}
 
       - name: Create a new pull request
         if: steps.compare_versions.outcome == 'failure'
