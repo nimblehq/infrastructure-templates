@@ -19,7 +19,7 @@ describe('Version control add-on', () => {
         };
 
         (prompt as unknown as jest.Mock).mockResolvedValue({
-          versionControlService: 'none',
+          versionControlService: 'github',
         });
 
         applyVersionControl(generalOptions);

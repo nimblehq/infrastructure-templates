@@ -8,7 +8,7 @@ type VersionControlOptions = {
 };
 
 const getVersionControlOptions = async (): Promise<VersionControlOptions> => {
-  const versionControlOptions = await prompt([
+  const versionControlPrompt = await prompt([
     {
       type: 'list',
       name: 'versionControlService',
@@ -31,7 +31,7 @@ const getVersionControlOptions = async (): Promise<VersionControlOptions> => {
     },
   ]);
 
-  return versionControlOptions;
+  return versionControlPrompt;
 };
 
 const applyVersionControl = async ({ projectName }: GeneralOptions) => {
