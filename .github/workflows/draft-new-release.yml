@@ -3,7 +3,7 @@ name: Draft a new release
 on:
   push:
     branches:
-      - feature/gh-145-add-draft-new-release-workflow
+      - main
 
 env:
   VERSION_FILE: ./package.json
