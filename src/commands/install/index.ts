@@ -1,4 +1,5 @@
 import { Args, Flags, Command, ux } from '@oclif/core';
+import { prompt } from 'inquirer';
 
 import { requireAwsModules } from '@/generators/addons/aws/dependencies';
 import { awsModules } from '@/generators/terraform/types';
@@ -29,8 +30,7 @@ export default class InstallAddon extends Command {
 
   static args = {
     moduleName: Args.string({
-      required: true,
-      description: 'Module name',
+      description: 'AWS module name',
       options: [...awsModules],
     }),
   };
@@ -39,6 +39,7 @@ export default class InstallAddon extends Command {
     try {
       const { args, flags } = await this.parse(InstallAddon);
 
+      let moduleNameOption;
       const options: GeneralOptions = {
         projectName: flags.project,
         provider: flags.provider,
@@ -46,7 +47,13 @@ export default class InstallAddon extends Command {
 
       switch (options.provider) {
         case 'aws':
-          await this.applyModule(args.moduleName, options);
+          if (typeof args.moduleName === 'string') {
+            moduleNameOption = args.moduleName;
+          } else {
+            moduleNameOption = await this.getAWSModuleNameOption();
+          }
+
+          await this.applyModule(moduleNameOption, options);
 
           break;
         default:
@@ -59,11 +66,29 @@ export default class InstallAddon extends Command {
         options.projectName === '.' ? 'current' : options.projectName;
 
       ux.info(
-        `The '${args.moduleName}' module has been installed to '${projectName}' project successfully!`
+        `The '${moduleNameOption}' module has been installed to '${projectName}' project successfully!`
       );
     } catch (error: any) { // eslint-disable-line
       ux.info(error.message);
     }
+  }
+
+  private async getAWSModuleNameOption() {
+    const moduleNameOptions = awsModules.map((module) => ({
+      name: module,
+      value: module,
+    }));
+
+    const moduleNamePrompt = await prompt([
+      {
+        type: 'list',
+        name: 'moduleName',
+        message: 'Which AWS module would you like to install?',
+        choices: moduleNameOptions,
+      },
+    ]);
+
+    return moduleNamePrompt.moduleName;
   }
 
   private async applyModule(moduleName: string, options: GeneralOptions) {
