@@ -9,6 +9,7 @@
   "homepage": "https://github.com/nimblehq/infrastructure-templates",
   "license": "MIT",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nimblehq/infrastructure-templates.git"
@@ -16,7 +17,8 @@
   "files": [
     "/bin",
     "/dist",
-    "/oclif.manifest.json"
+    "/oclif.manifest.json",
+    "/templates"
   ],
   "dependencies": {
     "@oclif/core": "^2",
@@ -60,7 +62,7 @@
     "topics": {}
   },
   "scripts": {
-    "build": "shx rm -rf dist && ttsc -b && shx cp -r templates dist",
+    "build": "shx rm -rf dist && ttsc -b",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postpack": "shx rm -f oclif.manifest.json",
@@ -79,7 +81,6 @@
   "keywords": [
     "oclif"
   ],
-  "types": "dist/index.d.ts",
   "directories": {
     "test": "test"
   }
