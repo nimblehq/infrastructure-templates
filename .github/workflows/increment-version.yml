@@ -1,4 +1,4 @@
-name: Bump version
+name: Increment version
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       newVersion:
-        description: Version to bump
+        description: Version to increment
         required: true
         default: auto
         type: string
@@ -52,8 +52,10 @@ jobs:
 
       - name: Set next version
         id: set-next-version
+        env:
+          VERSION_DELIMITER: .
         run: |
-          function ver { printf "%03d%03d%03d%03d" $(echo "$1" | tr '.' ' '); }
+          function ver { printf "%03d%03d%03d" $(echo "$1" | tr '${VERSION_DELIMITER}' ' '); }
 
           echo "main version: $(ver ${{ steps.get-main-version.outputs.version }})"
           echo "develop version: $(ver ${{ steps.get-develop-version.outputs.version }})"
@@ -65,13 +67,12 @@ jobs:
           else
             echo "develop version is greater or equal to main version"
 
-            delimiter=.
-            array=($(echo "${{ steps.get-develop-version.outputs.version }}" | tr $delimiter '\n'))
+            versionComponents=($(echo "${{ steps.get-develop-version.outputs.version }}" | tr ${VERSION_DELIMITER} '\n'))
 
-            array[1]=$((array[1]+1))
-            array[2]=0
+            versionComponents[1]=$((versionComponents[1]+1))
+            versionComponents[2]=0
 
-            nextVersion=$(IFS=$delimiter ; echo "${array[*]}")
+            nextVersion=$(IFS=${VERSION_DELIMITER} ; echo "${versionComponents[*]}")
 
             echo "version=$nextVersion" >> $GITHUB_OUTPUT
           fi
@@ -80,8 +81,8 @@ jobs:
         run: |
           echo "Next version: ${{ steps.set-next-version.outputs.version }}"
 
-  bump-version:
-    name: Bump version
+  increment-version:
+    name: Increment version
     runs-on: ubuntu-latest
     needs: [set-next-version]
     permissions:
