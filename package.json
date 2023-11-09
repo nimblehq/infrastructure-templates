@@ -9,6 +9,7 @@
   "homepage": "https://github.com/nimblehq/infrastructure-templates",
   "license": "MIT",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nimblehq/infrastructure-templates.git"
@@ -16,7 +17,8 @@
   "files": [
     "/bin",
     "/dist",
-    "/oclif.manifest.json"
+    "/oclif.manifest.json",
+    "/templates"
   ],
   "dependencies": {
     "@oclif/core": "^2",
@@ -28,14 +30,14 @@
     "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
-    "@nimblehq/eslint-config-nimble-core": "2.6.0",
+    "@nimblehq/eslint-config-nimble-core": "^2.7.0",
     "@types/fs-extra": "^11.0.1",
     "@types/glob": "^8.0.1",
     "@types/inquirer": "^8.2.1",
     "@types/jest": "^29.4.0",
     "@types/node": "^18.13.0",
-    "@typescript-eslint/parser": "^5.60.1",
-    "eslint": "^8.47.0",
+    "@typescript-eslint/parser": "^6.9.1",
+    "eslint": "^8.53.0",
     "fs-extra": "^11.1.0",
     "glob": "^8.1.0",
     "jest": "^29.4.3",
@@ -60,7 +62,7 @@
     "topics": {}
   },
   "scripts": {
-    "build": "shx rm -rf dist && ttsc -b && shx cp -r templates dist",
+    "build": "shx rm -rf dist && ttsc -b",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postpack": "shx rm -f oclif.manifest.json",
@@ -79,7 +81,6 @@
   "keywords": [
     "oclif"
   ],
-  "types": "dist/index.d.ts",
   "directories": {
     "test": "test"
   }

@@ -3,8 +3,6 @@
 process.env.NODE_ENV = 'production';
 
 (async () => {
-  // Register tsconfig-paths to allow importing without relative paths
-  await import('tsconfig-paths').then((m) => m.register());
   const oclif = await import('@oclif/core');
   await oclif.execute({ type: 'cjs', dir: __dirname });
 })();
