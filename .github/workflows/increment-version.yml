@@ -55,7 +55,7 @@ jobs:
         env:
           VERSION_DELIMITER: .
         run: |
-          function ver { printf "%03d%03d%03d" $(echo "$1" | tr '${VERSION_DELIMITER}' ' '); }
+          function ver { printf "%03d%03d%03d%03d" $(echo "$1" | tr '${VERSION_DELIMITER}' ' '); }
 
           echo "main version: $(ver ${{ steps.get-main-version.outputs.version }})"
           echo "develop version: $(ver ${{ steps.get-develop-version.outputs.version }})"
