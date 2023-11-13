@@ -13,7 +13,7 @@ const awsModules = [
   'ssm',
 ] as const;
 
-type AwsModuleName = typeof awsModules[number] | string;
+type AwsModuleName = (typeof awsModules)[number] | string;
 
 type AwsModule = {
   name: AwsModuleName;

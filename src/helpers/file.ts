@@ -26,8 +26,8 @@ const getProjectFilePath = (file: string, projectName: string): string => {
 };
 
 const getTemplatePath = (): string => {
-  const templateDir =
-    process.env.NODE_ENV === 'production' ? 'dist/templates' : 'templates';
+  const templateDir = 'templates';
+
   return path.join(ROOT_DIR, templateDir);
 };
 

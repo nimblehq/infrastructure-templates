@@ -52,44 +52,10 @@ describe('File helpers', () => {
   });
 
   describe('getTemplatePath', () => {
-    describe('given NODE_ENV is production', () => {
-      const OLD_ENV = process.env;
+    it('returns the correct source path', () => {
+      const sourcePath = getTemplatePath();
 
-      beforeEach(() => {
-        jest.resetModules();
-        process.env = { ...OLD_ENV };
-        process.env.NODE_ENV = 'production';
-      });
-
-      afterAll(() => {
-        process.env = OLD_ENV;
-      });
-
-      it('returns the correct source path', () => {
-        const sourcePath = getTemplatePath();
-
-        expect(sourcePath).toContain('/dist/templates');
-      });
-    });
-
-    describe('given NODE_ENV is not production', () => {
-      const OLD_ENV = process.env;
-
-      beforeEach(() => {
-        jest.resetModules();
-        process.env = { ...OLD_ENV };
-        process.env.NODE_ENV = 'development';
-      });
-
-      afterAll(() => {
-        process.env = OLD_ENV;
-      });
-
-      it('returns the correct source path', () => {
-        const sourcePath = getTemplatePath();
-
-        expect(sourcePath).toContain('/templates');
-      });
+      expect(sourcePath).toContain('/templates');
     });
   });
 

@@ -1,0 +1,32 @@
+name: Draft a new release
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  VERSION_FILE: ./package.json
+
+jobs:
+  draft-new-release:
+    name: Draft a new release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get current version
+        id: current_version
+        run: |
+          currentVersion=$(node -p -e "require('${{ env.VERSION_FILE }}').version")
+          echo "version=$currentVersion" >> $GITHUB_OUTPUT
+
+      - name: Draft a new release
+        uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          version: ${{ steps.current_version.outputs.version }}
