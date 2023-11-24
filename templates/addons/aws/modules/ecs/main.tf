@@ -102,7 +102,7 @@ resource "aws_iam_policy" "ecs_task_execution_ssm" {
   policy = local.ecs_task_execution_ssm_policy
 }
 
-# tfsec:ignore:aws-iam-no-policy-wildcards
+# trivy:ignore:AVD-AWS-0057
 resource "aws_iam_policy" "ecs_task_excution_service_scaling" {
   name   = "${var.env_namespace}-ECSAutoScalingPolicy"
   policy = local.ecs_service_scaling_policy
