@@ -35,7 +35,10 @@ resource "aws_iam_group_policy_attachment" "bot_power_user_access" {
   policy_arn = data.aws_iam_policy.power_user_access.arn
 }
 
+# This IAM policy is needed for the bot account to manage IAM users & groups
+# tfsec:ignore:aws-iam-no-policy-wildcards
 resource "aws_iam_group_policy" "bot_full_iam_access" {
+  name   = "AllowFullIamAccess"
   group  = aws_iam_group.bot.name
   policy = local.full_iam_access_policy
 }
