@@ -108,6 +108,9 @@ jobs:
         run: |
           jq ".version = \"${{ steps.next-version.outputs.version }}\"" ${{ env.VERSION_FILE }} > ${{ env.VERSION_FILE }}.tmp && mv ${{ env.VERSION_FILE }}.tmp ${{ env.VERSION_FILE }}
 
+      - name: Update package-lock.json
+        run: npm install
+
       - name: Create a new pull request
         uses: peter-evans/create-pull-request@v5
         with:
