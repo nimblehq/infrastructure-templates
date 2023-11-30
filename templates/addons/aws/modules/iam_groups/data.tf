@@ -1,10 +1,10 @@
 locals {
   # Comes from https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_my-sec-creds-self-manage.html
-  # This policy allows users to view and edit their own passwords, access keys, MFA devices, X.509 certificates, SSH keys, and Git credentials. 
-  # In addition, users are required to set up and authenticate using MFA before performing any other operations in AWS. 
-  # It also means this policy does NOT allow users to reset a password while signing in to the AWS Management Console for the first time. 
+  # This policy allows users to view and edit their own passwords, access keys, MFA devices, X.509 certificates, SSH keys, and Git credentials.
+  # In addition, users are required to set up and authenticate using MFA before performing any other operations in AWS.
+  # It also means this policy does NOT allow users to reset a password while signing in to the AWS Management Console for the first time.
   # They must first set up their MFA because allowing users to change their password without MFA can be a security risk.
-  # 
+  #
   # The following actions are added to the initial policy from AWS
   # - iam:GetLoginProfile: allows the IAM user to view their account information on the security page.
   # - iam:GetAccessKeyLastUsed: allows the IAM user to view the last time their access key was used.
@@ -123,13 +123,13 @@ locals {
   # For the bot account
   # It must be able to manage policies during terraform apply & create/delete users, permissions, etc. during terraform apply
   full_iam_access_policy = jsonencode({
-    version = "2012-10-17"
-    statement = [
+    Version = "2012-10-17"
+    Statement = [
       {
-        sid       = "AllowManageRoleAndPolicy"
-        effect    = "Allow"
-        resources = ["arn:aws:iam::*"]
-        actions   = ["iam:*"]
+        Sid      = "AllowManageRoleAndPolicy"
+        Effect   = "Allow"
+        Resource = ["arn:aws:iam::*"]
+        Action   = ["iam:*"]
       }
     ]
   })
