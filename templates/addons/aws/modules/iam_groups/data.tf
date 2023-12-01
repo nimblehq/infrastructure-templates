@@ -120,7 +120,7 @@ locals {
     ]
   })
 
-  # For the bot account
+  # For the infra-service-account account
   # It must be able to manage policies during terraform apply & create/delete users, permissions, etc. during terraform apply
   full_iam_access_policy = jsonencode({
     Version = "2012-10-17"
