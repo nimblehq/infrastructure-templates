@@ -8,7 +8,7 @@ output "developer_group" {
   value       = aws_iam_group.developer.name
 }
 
-output "bot_group" {
-  description = "IAM Group with bot permissions"
-  value       = aws_iam_group.bot.name
+output "infra_service_account_group" {
+  description = "IAM Group with infra-service-account permissions"
+  value       = aws_iam_group.infra-service-account.name
 }

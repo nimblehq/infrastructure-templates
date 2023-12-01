@@ -15,8 +15,8 @@ const iamVariablesContent = dedent`
     type        = list(string)
   }
 
-  variable "iam_bot_emails" {
-    description = "List of bot emails to provision IAM user account"
+  variable "iam_infra_service_account_emails" {
+    description = "List of infra service account emails to provision IAM user account"
     type        = list(string)
   }
 
@@ -43,35 +43,33 @@ const iamUsersModuleContent = dedent`
     usernames = var.iam_developer_emails
   }
 
-  module "iam_bot_users" {
+  module "iam_infra_service_account_users" {
     source = "../modules/iam_users"
 
-    usernames = var.iam_bot_emails
+    usernames = var.iam_infra_service_account_emails
+    has_login = false
   }`;
 
 const iamGroupMembershipModuleContent = dedent`
-  module "iam_admin_group_membership" {
+  module "iam_group_membership" {
     source = "../modules/iam_group_membership"
 
-    name  = "admin-group-membership"
-    group = module.iam_groups.admin_group
-    users = var.iam_admin_emails
-  }
+    for_each = {
+      admin                 = { group = module.iam_groups.admin_group, users = var.iam_admin_emails },
+      infra_service_account = { group = module.iam_groups.infra_service_account_group, users = var.iam_infra_service_account_emails },
+      developer             = { group = module.iam_groups.developer_group, users = var.iam_developer_emails }
+    }
 
-  module "iam_bot_group_membership" {
-    source = "../modules/iam_group_membership"
+    name  = "\${each.key}-group-membership"
+    group = each.value.group
+    users = each.value.users
 
-    name  = "bot-group-membership"
-    group = module.iam_groups.bot_group
-    users = var.iam_bot_emails
-  }
-
-  module "iam_developer_group_membership" {
-    source = "../modules/iam_group_membership"
-
-    name  = "developer-group-membership"
-    group = module.iam_groups.developer_group
-    users = var.iam_developer_emails
+    depends_on = [
+      module.iam_groups,
+      module.iam_admin_users,
+      module.iam_developer_users,
+      module.iam_infra_service_account_users,
+    ]
   }`;
 
 const iamOutputsContent = dedent`
@@ -83,11 +81,6 @@ const iamOutputsContent = dedent`
   output "iam_developer_temporary_passwords" {
     description = "List of first time passwords for developer accounts. Must be changed at first time login and will no longer be valid."
     value       = module.iam_developer_users.temporary_passwords
-  }
-
-  output "iam_bot_temporary_passwords" {
-    description = "List of first time passwords for bot accounts. Must be changed at first time login and will no longer be valid."
-    value       = module.iam_bot_users.temporary_passwords
   }`;
 
 const applyAwsIamUserAndGroup = async ({ projectName }: AwsOptions) => {
