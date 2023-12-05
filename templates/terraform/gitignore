@@ -42,3 +42,6 @@ terraform.rc
 
 # Emacs
 .dir-locals.el
+
+# Trivy
+trivy-output.json
