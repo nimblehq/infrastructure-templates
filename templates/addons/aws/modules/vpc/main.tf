@@ -15,3 +15,22 @@ module "vpc" {
   one_nat_gateway_per_az = false
   enable_dns_hostnames   = true
 }
+
+data "aws_route_tables" "private_route_table" {
+  vpc_id = module.vpc.vpc_id
+
+  filter {
+    name   = "tag:Name"
+    values = ["${var.env_namespace}-vpc-private"]
+  }
+}
+
+resource "aws_vpc_endpoint" "logs" {
+  vpc_id          = module.vpc.vpc_id
+  service_name    = "com.amazonaws.${var.region}.logs"
+  route_table_ids = data.aws_route_tables.private_route_table.ids
+
+  tags = {
+    Name = "${var.env_namespace}-vpc-endpoint-logs"
+  }
+}

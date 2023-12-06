@@ -1,0 +1,136 @@
+name: Increment version
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      newVersion:
+        description: Version to increment
+        required: true
+        default: auto
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  VERSION_FILE: ./package.json
+
+jobs:
+  set-next-version:
+    name: Set next version automatically
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch' || github.event.inputs.newVersion == 'auto'
+    outputs:
+      version: ${{ steps.set-next-version.outputs.version }}
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Get version on main
+        id: get-main-version
+        run: |
+          currentVersion=$(node -p -e "require('${{ env.VERSION_FILE }}').version")
+          echo "version=$currentVersion" >> $GITHUB_OUTPUT
+
+      - name: Checkout develop
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+
+      - name: Get version on develop
+        id: get-develop-version
+        run: |
+          currentVersion=$(node -p -e "require('${{ env.VERSION_FILE }}').version")
+          echo "version=$currentVersion" >> $GITHUB_OUTPUT
+
+      - name: Set next version
+        id: set-next-version
+        env:
+          VERSION_DELIMITER: .
+        run: |
+          function ver { printf "%03d%03d%03d%03d" $(echo "$1" | tr '${VERSION_DELIMITER}' ' '); }
+
+          echo "main version: $(ver ${{ steps.get-main-version.outputs.version }})"
+          echo "develop version: $(ver ${{ steps.get-develop-version.outputs.version }})"
+
+          if [[ $(ver ${{ steps.get-main-version.outputs.version }}) -gt $(ver ${{ steps.get-develop-version.outputs.version }}) ]]; then
+            echo "main version is greater than develop version"
+
+            echo "version=${{ steps.get-main-version.outputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "develop version is greater or equal to main version"
+
+            versionComponents=($(echo "${{ steps.get-develop-version.outputs.version }}" | tr ${VERSION_DELIMITER} '\n'))
+
+            versionComponents[1]=$((versionComponents[1]+1))
+            versionComponents[2]=0
+
+            nextVersion=$(IFS=${VERSION_DELIMITER} ; echo "${versionComponents[*]}")
+
+            echo "version=$nextVersion" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Print next version
+        run: |
+          echo "Next version: ${{ steps.set-next-version.outputs.version }}"
+
+  increment-version:
+    name: Increment version
+    runs-on: ubuntu-latest
+    needs: [set-next-version]
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+
+      - name: Set next version
+        id: next-version
+        run: |
+          if [ ${{ github.event_name }} != 'workflow_dispatch' ] || [ ${{ github.event.inputs.newVersion }} == 'auto' ]; then
+            echo "version=${{ needs.set-next-version.outputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ github.event.inputs.newVersion }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Change version in ${{ env.VERSION_FILE }}
+        run: |
+          jq ".version = \"${{ steps.next-version.outputs.version }}\"" ${{ env.VERSION_FILE }} > ${{ env.VERSION_FILE }}.tmp && mv ${{ env.VERSION_FILE }}.tmp ${{ env.VERSION_FILE }}
+
+      - name: Update package-lock.json
+        run: npm install
+
+      - name: Create a new pull request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ github.token }}
+          branch: chore/bump-version-to-${{ steps.next-version.outputs.version }}
+          base: develop
+          delete-branch: true
+          title: "[Chore] Bump version to ${{ steps.next-version.outputs.version }}"
+          commit-message: "Bump version to ${{ steps.next-version.outputs.version }}"
+          labels: |
+            type : chore
+          body: |
+            ## What happened 👀
+
+            Bump version to ${{ steps.next-version.outputs.version }}
+
+            ## Insight 📝
+
+            Automatically created by the GitHub Actions workflow.
+
+            ## Proof Of Work 📹
+
+            On the Files changed tab
