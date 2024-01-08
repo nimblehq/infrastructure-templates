@@ -28,6 +28,8 @@ const iamVariablesContent = dedent`
 const iamGroupsModuleContent = dedent`
   module "iam_groups" {
     source = "../modules/iam_groups"
+
+    project_name = local.project_name
   }`;
 
 const iamUsersModuleContent = dedent`

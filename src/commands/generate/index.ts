@@ -47,17 +47,16 @@ export default class Generator extends Command {
 
     const generalPrompt = await prompt<GeneralOptions>([...providerChoices]);
 
+    const projectName = args.projectName.toLowerCase().replace(/\s/g, '-');
     const generalOptions: GeneralOptions = {
-      projectName: args.projectName,
+      projectName: projectName,
       provider: generalPrompt.provider,
     };
 
     await this.generate(generalOptions);
     await postProcess(generalOptions);
 
-    ux.info(
-      `The infrastructure code was generated at '${generalOptions.projectName}'`
-    );
+    ux.info(`The infrastructure code was generated at '${args.projectName}'`);
   }
 
   private async generate(generalOptions: GeneralOptions) {
