@@ -40,11 +40,6 @@ jobs:
       - name: Generate project
         run: . ./scripts/generateAdvancedAWS.sh
 
-      - name: Checkout the repository
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
         with:
