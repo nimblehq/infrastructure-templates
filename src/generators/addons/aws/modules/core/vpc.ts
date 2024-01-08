@@ -17,7 +17,7 @@ const vpcOutputsContent = dedent`
 
 const vpcModuleContent = dedent`
   module "vpc" {
-    source    = "../modules/vpc"
+    source = "../modules/vpc"
 
     env_namespace = local.env_namespace
     region        = var.region
