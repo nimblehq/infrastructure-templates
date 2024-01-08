@@ -1,0 +1,61 @@
+name: Test Generated Project
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+env:
+  TERRAFORM_VERSION: "1.5.5"
+  TFSEC_VERSION: "v1.28.1"
+
+jobs:
+  test:
+    name: Run Tests Generated Project
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Cache Node npm
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-infrastructure-templates-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-infrastructure-templates
+
+      - name: Install modules
+        run: npm ci
+
+      - name: Generate project
+        run: . ./scripts/generateAdvancedAWS.sh
+
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+      - name: Run Terraform format
+        run: terraform fmt -recursive -check
+
+      - name: Run tfsec linter
+        id: tfsec
+        uses: aquasecurity/tfsec-action@v1.0.3
+        with:
+          version: ${{ env.TFSEC_VERSION }}
+

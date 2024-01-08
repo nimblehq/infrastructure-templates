@@ -62,7 +62,7 @@
     "topics": {}
   },
   "scripts": {
-    "build": "shx rm -rf dist && ttsc -b",
+    "build": "shx rm -rf dist tsconfig.tsbuildinfo && ttsc -b",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postpack": "shx rm -f oclif.manifest.json",
