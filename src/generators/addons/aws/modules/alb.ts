@@ -21,7 +21,7 @@ import {
 const albVariablesContent = dedent`
   variable "health_check_path" {
     description = "Application health check path"
-    type = string
+    type        = string
   }
 
   variable "domain" {

@@ -20,12 +20,12 @@ import {
 const ecsVariablesContent = dedent`
   variable "ecr_repo_name" {
     description = "ECR repo name"
-    type = string
+    type        = string
   }
 
   variable "ecr_tag" {
     description = "ECR tag to deploy"
-    type     = string
+    type        = string
   }
 
   variable "ecs_config" {
