@@ -58,7 +58,6 @@ const albSGMainContent = dedent`
     }
   }
 
-  # trivy:ignore:AVD-AWS-0107
   resource "aws_security_group_rule" "alb_ingress_https" {
     type              = "ingress"
     security_group_id = aws_security_group.alb.id
@@ -69,7 +68,6 @@ const albSGMainContent = dedent`
     description       = "From HTTPS to ALB"
   }
 
-  # trivy:ignore:AVD-AWS-0107
   resource "aws_security_group_rule" "alb_ingress_http" {
     type              = "ingress"
     security_group_id = aws_security_group.alb.id
