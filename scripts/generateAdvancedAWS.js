@@ -1,4 +1,7 @@
 const {
+  applyTerraformCore
+} = require('../dist/generators/terraform/index.js');
+const {
   applyTerraformAwsProvider,
   applyAwsIamUserAndGroup,
   applyAwsRegion,
@@ -10,6 +13,7 @@ const { applyAdvancedTemplate } = require('../dist/generators/addons/aws/advance
 (async () => {
     const options = { projectName: 'aws-advanced-test'}
 
+    await applyTerraformCore(options);
     await applyTerraformAwsProvider(options);
     await applyAwsRegion(options);
     await applyAwsVpc(options);
