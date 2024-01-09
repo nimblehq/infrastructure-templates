@@ -6,7 +6,6 @@ on:
 
 env:
   TERRAFORM_VERSION: "1.5.5"
-  TFSEC_VERSION: "v1.28.1"
 
 jobs:
   test:
@@ -47,9 +46,10 @@ jobs:
       - name: Run Terraform format
         run: terraform fmt -recursive -check
 
-      - name: Run tfsec linter
-        id: tfsec
-        uses: aquasecurity/tfsec-action@v1.0.3
+      - name: Run trivy linter
+        uses: aquasecurity/trivy-action@0.12.0
         with:
-          version: ${{ env.TFSEC_VERSION }}
-
+          image-ref: '.'
+          scan-type: 'fs'
+          scan-ref: '.'
+          trivy-config: trivy.yaml
