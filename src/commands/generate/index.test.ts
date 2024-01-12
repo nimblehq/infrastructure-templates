@@ -12,7 +12,8 @@ describe('Generator command', () => {
   describe('given valid options', () => {
     describe('given provider is AWS', () => {
       describe('given infrastructure type is blank', () => {
-        const projectDir = 'aws-blank-test';
+        const originalDirectoryName = 'AWS blank test';
+        const processedDirectoryName = 'aws-blank-test';
         const stdoutSpy = jest.spyOn(process.stdout, 'write');
 
         beforeAll(async () => {
@@ -23,18 +24,18 @@ describe('Generator command', () => {
             terraformCloudEnabled: false,
           });
 
-          await Generator.run([projectDir]);
+          await Generator.run([originalDirectoryName]);
         });
 
         afterAll(() => {
           jest.clearAllMocks();
-          remove('/', projectDir);
+          remove('/', processedDirectoryName);
         });
 
         it('creates expected directories', () => {
           const expectedDirectories = ['core/', 'shared/'];
 
-          expect(projectDir).toHaveDirectories(expectedDirectories);
+          expect(processedDirectoryName).toHaveDirectories(expectedDirectories);
         });
 
         it('creates expected files', () => {
@@ -51,7 +52,7 @@ describe('Generator command', () => {
             'shared/outputs.tf',
           ];
 
-          expect(projectDir).toHaveFiles(expectedFiles);
+          expect(processedDirectoryName).toHaveFiles(expectedFiles);
         });
 
         it('displays the success message', () => {
@@ -62,6 +63,17 @@ describe('Generator command', () => {
 
         it('calls postProcess hook', () => {
           expect(postProcess).toHaveBeenCalledTimes(1);
+        });
+
+        it('contains processed project name in main files', () => {
+          const mainFiles = ['shared/main.tf', 'core/main.tf'];
+          mainFiles.forEach((fileName) => {
+            expect(processedDirectoryName).toHaveContentInFile(
+              fileName,
+              `project_name = "${processedDirectoryName}"`,
+              { ignoreSpaces: true }
+            );
+          });
         });
       });
 
