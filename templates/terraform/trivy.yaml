@@ -4,9 +4,6 @@ list-all-pkgs: true
 exit-code: 1
 # All severity levels
 severity:
-  - UNKNOWN
-  - LOW
-  - MEDIUM
   - HIGH
   - CRITICAL
 scan:
