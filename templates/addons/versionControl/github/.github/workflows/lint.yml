@@ -3,9 +3,6 @@ name: Lint
 on:
   push:
 
-env:
-  TERRAFORM_VERSION: "1.5.5"
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -24,18 +21,11 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Install Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: ${{ env.TERRAFORM_VERSION }}
+      - name: Install dependencies in .tool-versions
+        uses: asdf-vm/actions/install@v2
 
       - name: Run Terraform format
         run: terraform fmt -recursive -check
 
       - name: Run trivy linter
-        uses: aquasecurity/trivy-action@0.12.0
-        with:
-          image-ref: '.'
-          scan-type: 'fs'
-          scan-ref: '.'
-          trivy-config: trivy.yaml
+        run: trivy config .

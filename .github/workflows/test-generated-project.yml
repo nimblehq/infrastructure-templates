@@ -4,11 +4,8 @@ on:
   pull_request:
     types: [opened, synchronize]
 
-env:
-  TERRAFORM_VERSION: "1.5.5"
-
 jobs:
-  test:
+  test-generated-project:
     name: Run Tests Generated Project
     runs-on: ubuntu-latest
 
@@ -38,18 +35,11 @@ jobs:
       - name: Generate project
         run: . ./scripts/generateAdvancedAWS.sh
 
-      - name: Install Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: ${{ env.TERRAFORM_VERSION }}
+      - name: Install dependencies in .tool-versions
+        uses: asdf-vm/actions/install@v2
 
       - name: Run Terraform format
         run: terraform fmt -recursive -check
 
       - name: Run trivy linter
-        uses: aquasecurity/trivy-action@0.12.0
-        with:
-          image-ref: '.'
-          scan-type: 'fs'
-          scan-ref: '.'
-          trivy-config: trivy.yaml
+        run: cd aws-advanced-test && trivy config .
