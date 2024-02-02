@@ -11,9 +11,6 @@ env:
 jobs:
   test:
     name: Run Tests Generated Project
-    strategy:
-      matrix:
-        node-version: [16.x, 18.x]
     runs-on: ubuntu-latest
 
     steps:
@@ -23,12 +20,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '18.x'
           cache: 'npm'
 
       - name: Cache Node npm
         id: cache-nodemodules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ runner.os }}-infrastructure-templates-node-${{ hashFiles('**/package-lock.json') }}
