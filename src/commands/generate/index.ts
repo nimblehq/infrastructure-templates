@@ -46,9 +46,9 @@ export default class Generator extends Command {
     const { args } = await this.parse(Generator);
 
     const generalPrompt = await prompt<GeneralOptions>([...providerChoices]);
-
+    const projectName = args.projectName.toLowerCase().replace(/\s/g, '-');
     const generalOptions: GeneralOptions = {
-      projectName: args.projectName,
+      projectName: projectName,
       provider: generalPrompt.provider,
     };
 
