@@ -1,17 +1,21 @@
-name: Test
+name: Test Generated Project
 
 on:
   pull_request:
     types: [opened, synchronize]
 
+env:
+  TERRAFORM_VERSION: "1.5.5"
+  TFSEC_VERSION: "v1.28.1"
+
 jobs:
   test:
-    name: Run Tests
+    name: Run Tests Generated Project
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -32,12 +36,20 @@ jobs:
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Run tests
-        shell: bash
-        run: npm run test '--ignore-scripts' -- --coverage --ci
+      - name: Generate project
+        run: . ./scripts/generateAdvancedAWS.sh
 
-      - name: Upload test coverage
-        uses: actions/upload-artifact@v3
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
         with:
-          name: jest-coverage
-          path: coverage/coverage-final.json
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+      - name: Run Terraform format
+        run: terraform fmt -recursive -check
+
+      - name: Run tfsec linter
+        id: tfsec
+        uses: aquasecurity/tfsec-action@v1.0.3
+        with:
+          version: ${{ env.TFSEC_VERSION }}
+

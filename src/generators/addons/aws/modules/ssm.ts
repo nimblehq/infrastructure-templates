@@ -16,7 +16,7 @@ import { AWS_TEMPLATE_PATH } from '../constants';
 const ssmVariablesContent = dedent`
   variable "secret_key_base" {
     description = "The Secret key base for the application"
-    type = string
+    type        = string
   }`;
 
 const ssmModuleContent = dedent`
@@ -26,7 +26,7 @@ const ssmModuleContent = dedent`
     env_namespace = local.env_namespace
 
     secrets = {
-      database_url = "postgres://\${var.rds_username}:\${var.rds_password}@\${module.rds.db_endpoint}/\${var.rds_database_name}"
+      database_url    = "postgres://\${var.rds_username}:\${var.rds_password}@\${module.rds.db_endpoint}/\${var.rds_database_name}"
       secret_key_base = var.secret_key_base
     }
   }`;
