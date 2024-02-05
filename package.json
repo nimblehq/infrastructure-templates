@@ -23,7 +23,7 @@
   "dependencies": {
     "@oclif/core": "^2",
     "@oclif/plugin-help": "^6",
-    "@oclif/plugin-plugins": "^2",
+    "@oclif/plugin-plugins": "^4",
     "@types/dedent": "^0.7.0",
     "inquirer": "^8.2.4",
     "ts-dedent": "^2.2.0",
