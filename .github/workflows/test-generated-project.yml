@@ -39,12 +39,12 @@ jobs:
       - name: Generate project
         run: . ./scripts/generateAdvancedAWS.sh
 
-      - name: Install dependencies in .tool-versions
+      - name: Install dependencies from .tool-versions
         uses: asdf-vm/actions/install@v2
 
       - name: Run Terraform format
         run: terraform fmt -recursive -check
 
-      - name: Run trivy linter
+      - name: Run trivy scanner
         working-directory: aws-advanced-test
         run: trivy config .

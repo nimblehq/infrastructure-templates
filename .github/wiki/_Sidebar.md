@@ -15,4 +15,4 @@
 - [[Testing]]
 - [[Modify the Infrastructure Diagram | Modify infra diagram]]
 - [[Publishing]]
-- [[Trivy Local Running]]
+- [[Running Trivy Locally]]

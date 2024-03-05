@@ -21,11 +21,11 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Install dependencies in .tool-versions
+      - name: Install dependencies from .tool-versions
         uses: asdf-vm/actions/install@v2
 
       - name: Run Terraform format
         run: terraform fmt -recursive -check
 
-      - name: Run trivy linter
+      - name: Run trivy scanner
         run: trivy config .

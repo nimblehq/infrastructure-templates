@@ -3,6 +3,7 @@ This project is using Trivy as a vulnerability scanner to replace the role of `t
 2. Access to more integrations with tools and services through the rich ecosystem around Trivy.
 
 ## Trivy Local Scan
+
 ```bash
 # Project root directory
 trivy config .
