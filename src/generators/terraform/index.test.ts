@@ -26,6 +26,7 @@ describe('Core codebase', () => {
       const expectedFiles = [
         '.gitignore',
         '.tool-versions',
+        'trivy.yaml',
         'core/main.tf',
         'core/outputs.tf',
         'core/variables.tf',

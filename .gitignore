@@ -20,3 +20,6 @@ tsconfig.tsbuildinfo
 
 # Emacs
 .dir-locals.el
+
+# Trivy
+trivy-output.json

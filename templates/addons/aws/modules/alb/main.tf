@@ -2,7 +2,7 @@ locals {
   enable_stickiness = false
 }
 
-# tfsec:ignore:aws-elb-alb-not-public
+# trivy:ignore:AVD-AWS-0053
 resource "aws_lb" "main" {
   name               = "${var.env_namespace}-alb"
   internal           = false
@@ -48,7 +48,7 @@ resource "aws_lb_target_group" "target_group" {
   }
 }
 
-# tfsec:ignore:aws-elb-http-not-used
+# trivy:ignore:AVD-AWS-0054
 resource "aws_lb_listener" "app_http" {
   load_balancer_arn = aws_lb.main.arn
   port              = "80"

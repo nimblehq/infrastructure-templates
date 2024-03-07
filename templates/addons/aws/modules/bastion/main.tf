@@ -1,4 +1,4 @@
-# tfsec:ignore:aws-ec2-no-public-ip
+# trivy:ignore:AVD-AWS-0009
 resource "aws_launch_configuration" "bastion_instance" {
   name_prefix                 = "${var.env_namespace}-bastion-"
   image_id                    = var.image_id

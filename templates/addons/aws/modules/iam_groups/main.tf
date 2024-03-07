@@ -1,14 +1,14 @@
-#tfsec:ignore:aws-iam-enforce-group-mfa
+# trivy:ignore:AVD-AWS-0123
 resource "aws_iam_group" "admin" {
   name = "${var.project_name}-admin-group"
 }
 
-#tfsec:ignore:aws-iam-enforce-group-mfa
+# trivy:ignore:AVD-AWS-0123
 resource "aws_iam_group" "infra-service-account" {
   name = "${var.project_name}-infra-service-account-group"
 }
 
-#tfsec:ignore:aws-iam-enforce-group-mfa
+# trivy:ignore:AVD-AWS-0123
 resource "aws_iam_group" "developer" {
   name = "${var.project_name}-developer-group"
 }
@@ -19,7 +19,7 @@ resource "aws_iam_group_policy_attachment" "admin_access" {
 }
 
 # Policy from https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_my-sec-creds-self-manage.html
-# tfsec:ignore:aws-iam-no-policy-wildcards
+# trivy:ignore:AVD-AWS-0057
 resource "aws_iam_group_policy" "developer_allow_manage_own_credentials" {
   group  = aws_iam_group.developer.name
   policy = local.allow_manage_own_credentials

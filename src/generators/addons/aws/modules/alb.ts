@@ -58,7 +58,7 @@ const albSGMainContent = dedent`
     }
   }
 
-  # tfsec:ignore:aws-ec2-no-public-ingress-sgr
+  # trivy:ignore:AVD-AWS-0107
   resource "aws_security_group_rule" "alb_ingress_https" {
     type              = "ingress"
     security_group_id = aws_security_group.alb.id
@@ -69,7 +69,7 @@ const albSGMainContent = dedent`
     description       = "From HTTPS to ALB"
   }
 
-  # tfsec:ignore:aws-ec2-no-public-ingress-sgr
+  # trivy:ignore:AVD-AWS-0107
   resource "aws_security_group_rule" "alb_ingress_http" {
     type              = "ingress"
     security_group_id = aws_security_group.alb.id
@@ -80,7 +80,7 @@ const albSGMainContent = dedent`
     description       = "From HTTP to ALB"
   }
 
-  # tfsec:ignore:aws-ec2-no-public-egress-sgr
+  # trivy:ignore:AVD-AWS-0104
   resource "aws_security_group_rule" "alb_egress" {
     type              = "egress"
     security_group_id = aws_security_group.alb.id

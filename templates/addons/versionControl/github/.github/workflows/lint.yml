@@ -3,10 +3,6 @@ name: Lint
 on:
   push:
 
-env:
-  TERRAFORM_VERSION: "1.5.5"
-  TFSEC_VERSION: "v1.28.1"
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -25,16 +21,11 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Install Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: ${{ env.TERRAFORM_VERSION }}
+      - name: Install dependencies from .tool-versions
+        uses: asdf-vm/actions/install@v2
 
       - name: Run Terraform format
         run: terraform fmt -recursive -check
 
-      - name: Run tfsec linter
-        id: tfsec
-        uses: aquasecurity/tfsec-action@v1.0.3
-        with:
-          version: ${{ env.TFSEC_VERSION }}
+      - name: Run trivy scanner
+        run: trivy config .

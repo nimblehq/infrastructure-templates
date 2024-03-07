@@ -11,4 +11,3 @@ npm run lint // to check linting
 
 npm run lint:fix // to fix linting
 ```
-

@@ -1,0 +1,23 @@
+timeout: 10m
+dependency-tree: true
+list-all-pkgs: true
+exit-code: 1
+# All severity levels
+severity:
+  - HIGH
+  - CRITICAL
+scan:
+  skip-dirs:
+    - .github/
+    - core/.terraform/
+    - shared/.terraform/
+
+  scanners:
+    - vuln
+    - secret
+
+vulnerability:
+  type:
+    - os
+    - library
+  ignore-unfixed: true

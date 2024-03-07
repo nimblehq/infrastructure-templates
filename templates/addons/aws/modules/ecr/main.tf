@@ -1,4 +1,4 @@
-# tfsec:ignore:aws-ecr-enforce-immutable-repository tfsec:ignore:aws-ecr-repository-customer-key
+# trivy:ignore:AVD-AWS-0031 trivy:ignore:AVD-AWS-0033
 resource "aws_ecr_repository" "main" {
   name = var.env_namespace
 
