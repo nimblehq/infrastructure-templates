@@ -41,3 +41,4 @@ jobs:
         with:
           name: jest-coverage
           path: coverage/coverage-final.json
+          retention-days: 3
