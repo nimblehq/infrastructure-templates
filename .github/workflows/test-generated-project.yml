@@ -4,10 +4,6 @@ on:
   pull_request:
     types: [opened, synchronize]
 
-env:
-  TERRAFORM_VERSION: "1.5.5"
-  TFSEC_VERSION: "v1.28.1"
-
 jobs:
   test:
     name: Run Tests Generated Project
@@ -17,11 +13,8 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18.x'
-          cache: 'npm'
+      - name: Install dependencies in .tool-versions
+        uses: asdf-vm/actions/install@v3
 
       - name: Cache Node npm
         id: cache-nodemodules
@@ -38,9 +31,6 @@ jobs:
 
       - name: Generate project
         run: . ./scripts/generateAdvancedAWS.sh
-
-      - name: Install dependencies from .tool-versions
-        uses: asdf-vm/actions/install@v2
 
       - name: Run Terraform format
         run: terraform fmt -recursive -check
