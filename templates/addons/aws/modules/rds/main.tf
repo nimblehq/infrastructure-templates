@@ -1,6 +1,6 @@
 module "db" {
   source  = "terraform-aws-modules/rds-aurora/aws"
-  version = "6.2.0"
+  version = "9.16.0"
 
   name = "${var.env_namespace}-aurora-db"
 
@@ -21,7 +21,6 @@ module "db" {
   autoscaling_max_capacity = var.autoscaling_max_capacity
 
   create_monitoring_role = false
-  create_random_password = false
   create_security_group  = false
   storage_encrypted      = true
 

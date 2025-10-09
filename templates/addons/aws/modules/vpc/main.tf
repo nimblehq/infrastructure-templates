@@ -3,7 +3,7 @@ data "aws_availability_zones" "available" {}
 # trivy:ignore:AVD-AWS-0178 trivy:ignore:AVD-AWS-0164
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "3.0.0"
+  version = "6.4.0"
 
   name                   = "${var.env_namespace}-vpc"
   cidr                   = "10.0.0.0/16"
