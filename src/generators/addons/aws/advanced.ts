@@ -8,6 +8,7 @@ import {
   applyAwsRds,
   applyAwsS3,
   applyAwsSsm,
+  applyAwsVpcFlowLog,
 } from './modules';
 
 const applyAdvancedTemplate = async (options: AwsOptions) => {
@@ -19,6 +20,10 @@ const applyAdvancedTemplate = async (options: AwsOptions) => {
   await applyAwsCloudwatch(options);
   await applyAwsS3(options);
   await applyAwsSsm(options);
+
+  if (options.enabledSecurityFeatures) {
+    await applyAwsVpcFlowLog(options);
+  }
 };
 
 export { applyAdvancedTemplate };

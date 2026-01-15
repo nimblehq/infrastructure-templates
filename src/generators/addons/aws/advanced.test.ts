@@ -11,6 +11,7 @@ import {
   applyAwsRds,
   applyAwsS3,
   applyAwsSsm,
+  applyAwsVpcFlowLog,
 } from './modules';
 
 jest.mock('./modules');
@@ -64,6 +65,38 @@ describe('AWS advanced template', () => {
 
     it('applies ECS add-on', () => {
       expect(applyAwsEcs).toHaveBeenCalledWith(options);
+    });
+
+    describe('given enabledSecurityFeatures is not set', () => {
+      it('does NOT apply VPC Flow Log add-on', () => {
+        expect(applyAwsVpcFlowLog).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('given enabledSecurityFeatures is true', () => {
+      const optionsEnabledSecurityFeatures: AwsOptions = {
+        projectName: projectDir,
+        provider: 'aws',
+        infrastructureType: 'advanced',
+        awsRegion: 'ap-southeast-1',
+        enabledSecurityFeatures: true,
+      };
+
+      beforeAll(async () => {
+        jest.clearAllMocks();
+        await applyAdvancedTemplate(optionsEnabledSecurityFeatures);
+      });
+
+      afterAll(() => {
+        jest.clearAllMocks();
+        remove('/', projectDir);
+      });
+
+      it('applies VPC Flow Log add-on when flag is set', () => {
+        expect(applyAwsVpcFlowLog).toHaveBeenCalledWith(
+          optionsEnabledSecurityFeatures
+        );
+      });
     });
   });
 });

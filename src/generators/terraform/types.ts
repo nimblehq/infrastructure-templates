@@ -11,6 +11,7 @@ const awsModules = [
   'rds',
   's3',
   'ssm',
+  'vpcFlowLog',
 ] as const;
 
 type AwsModuleName = (typeof awsModules)[number] | string;

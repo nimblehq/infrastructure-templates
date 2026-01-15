@@ -12,6 +12,7 @@
 - [[Add a new CLI command | Add new command]]
 - [[Add New Addon or Module | Add new addon module]]
 - [[Using The Generator As Reference]]
+- [[Security]]
 - [[Testing]]
 - [[Modify the Infrastructure Diagram | Modify infra diagram]]
 - [[Publishing]]

@@ -12,6 +12,12 @@ import {
   applyAwsVpc,
 } from './modules';
 
+type AwsOptions = GeneralOptions & {
+  infrastructureType?: 'blank' | 'advanced';
+  awsRegion?: string;
+  enabledSecurityFeatures?: boolean;
+};
+
 const awsChoices = [
   {
     type: 'list',
@@ -31,17 +37,20 @@ const awsChoices = [
     ],
   },
   {
+    type: 'confirm',
+    name: 'enabledSecurityFeatures',
+    message:
+      'Do you want to create (VPC Flow Logs + CloudTrail) to enhance security posture and compliance?',
+    default: false,
+    when: (answers: AwsOptions) => answers.infrastructureType === 'advanced',
+  },
+  {
     type: 'input',
     name: 'awsRegion',
     default: AWS_DEFAULT_REGION,
     message: 'Which AWS Region do you choose?',
   },
 ];
-
-type AwsOptions = GeneralOptions & {
-  infrastructureType?: 'blank' | 'advanced';
-  awsRegion?: string;
-};
 
 const applyProviderAndRegion = async (options: AwsOptions) => {
   await applyTerraformAwsProvider(options);
@@ -52,10 +61,12 @@ const generateAwsTemplate = async (
   generalOptions: GeneralOptions
 ): Promise<void> => {
   const awsOptionsPrompt = await prompt(awsChoices);
+
   const awsOptions: AwsOptions = {
     ...generalOptions,
     infrastructureType: awsOptionsPrompt.infrastructureType,
     awsRegion: awsOptionsPrompt.awsRegion,
+    enabledSecurityFeatures: awsOptionsPrompt.enabledSecurityFeatures,
   };
 
   switch (awsOptions.infrastructureType) {
