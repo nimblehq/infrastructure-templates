@@ -5,7 +5,6 @@ import {
   INFRA_CORE_LOCALS_PATH,
   INFRA_SHARED_LOCALS_PATH,
   INFRA_CORE_DATA_PATH,
-  MODULES_LOCALS_INDICATOR,
 } from '@/generators/terraform/constants';
 import { copy, rename, appendToFile } from '@/helpers/file';
 
@@ -18,8 +17,6 @@ const applyTerraformCore = async (generalOptions: GeneralOptions) => {
   locals {
     project_name  = "${projectName}"
     env_namespace = "\${local.project_name}-\${var.environment}"
-
-    ${MODULES_LOCALS_INDICATOR}
   }`;
 
   const coreDatContent = dedent`

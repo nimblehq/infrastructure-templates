@@ -11,9 +11,8 @@ import {
   INFRA_CORE_MAIN_PATH,
   INFRA_CORE_OUTPUTS_PATH,
   INFRA_CORE_VARIABLES_PATH,
-  MODULES_LOCALS_INDICATOR,
 } from '@/generators/terraform/constants';
-import { appendToFile, copy, injectToFile } from '@/helpers/file';
+import { appendToFile, copy } from '@/helpers/file';
 
 import {
   AWS_SECURITY_GROUP_MAIN_PATH,
@@ -21,8 +20,9 @@ import {
   AWS_TEMPLATE_PATH,
 } from '../constants';
 
-const albLocalesContent = dedent`
-    ###ALB Locals###
+const albLocalsContent = dedent`
+  ### Begin ALB ###
+  locals {
     alb_s3_bucket_policy = {
       Version = "2012-10-17"
       Statement = [
@@ -58,11 +58,14 @@ const albLocalesContent = dedent`
           Resource = "arn:aws:s3:::\${module.s3_alb_access_log.aws_s3_bucket_name}"
         }
       ]
-    }`;
+    }
+  }
+  ### End ALB ###`;
 
 const albDataContent = dedent`
-  ###ALB Locals###
-  data "aws_elb_service_account" "elb_service_account" {}`;
+  ### Begin ALB ###
+  data "aws_elb_service_account" "elb_service_account" {}
+  ### End ALB ###`;
 
 const albVariablesContent = dedent`
   variable "health_check_path" {
@@ -99,7 +102,7 @@ const albModuleContent = dedent`
   module "s3_bucket_access_log_policy" {
     source = "../modules/s3/bucket_policy"
 
-    s3_bucket_name = module.s3_alb_access_log.aws_s3_bucket_name
+    s3_bucket_name   = module.s3_alb_access_log.aws_s3_bucket_name
     s3_bucket_policy = local.alb_s3_bucket_policy
   }`;
 
@@ -166,9 +169,7 @@ const applyAwsAlb = async (options: AwsOptions) => {
   await requireAwsModules('alb', 'securityGroup', options);
 
   copy(`${AWS_TEMPLATE_PATH}/modules/alb`, 'modules/alb', options.projectName);
-  injectToFile(INFRA_CORE_LOCALS_PATH, albLocalesContent, options.projectName, {
-    insertAfter: MODULES_LOCALS_INDICATOR,
-  });
+  appendToFile(INFRA_CORE_LOCALS_PATH, albLocalsContent, options.projectName);
   appendToFile(INFRA_CORE_DATA_PATH, albDataContent, options.projectName);
   appendToFile(INFRA_CORE_MAIN_PATH, albModuleContent, options.projectName);
   appendToFile(
