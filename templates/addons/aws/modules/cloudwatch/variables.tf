@@ -1,5 +1,5 @@
-variable "env_namespace" {
-  description = "The namespace with environment for the CloudWatch"
+variable "cloud_watch_name" {
+  description = "The name of the CloudWatch log group"
   type        = string
 }
 

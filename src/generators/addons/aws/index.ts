@@ -12,11 +12,16 @@ import {
   applyAwsVpc,
 } from './modules';
 
+enum AwsAddonModules {
+  VPC_FLOW_LOG = 'vpcFlowLog',
+  CLOUDTRAIL = 'cloudtrail',
+}
+
 type AwsOptions = GeneralOptions & {
   infrastructureType?: 'blank' | 'advanced';
   awsRegion?: string;
   enabledSecurityFeatures?: boolean;
-  addonModules?: string[];
+  addonModules?: AwsAddonModules[];
 };
 
 const awsChoices = [
@@ -50,13 +55,13 @@ const awsChoices = [
     message: 'Which security features do you want to add?',
     choices: [
       {
-        key: 'vpcFlowLog',
-        value: 'vpcFlowLog',
+        key: AwsAddonModules.VPC_FLOW_LOG,
+        value: AwsAddonModules.VPC_FLOW_LOG,
         name: 'VPC Flow Logs',
       },
       {
-        key: 'cloudTrail',
-        value: 'cloudTrail',
+        key: AwsAddonModules.CLOUDTRAIL,
+        value: AwsAddonModules.CLOUDTRAIL,
         name: 'CloudTrail',
       },
     ],
@@ -107,4 +112,4 @@ const generateAwsTemplate = async (
 };
 
 export type { AwsOptions };
-export { generateAwsTemplate };
+export { generateAwsTemplate, AwsAddonModules };

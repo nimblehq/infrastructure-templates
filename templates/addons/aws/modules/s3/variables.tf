@@ -19,3 +19,24 @@ variable "object_ownership" {
   type        = string
   default     = "ObjectWriter"
 }
+
+variable "versioning_enabled" {
+  description = "Whether to enable versioning for the S3 bucket."
+  type        = bool
+  default     = false
+}
+
+variable "lifecycle_configuration" {
+  description = "The lifecycle configuration for the S3 bucket."
+  type = object({
+    id     = string
+    status = string
+    filter = object({
+      prefix = string
+    })
+    expiration = object({
+      days = number
+    })
+  })
+  default = null
+}

@@ -4,6 +4,20 @@ This document provides an overview of the security modules available in the infr
 
 ## Available Security Modules
 
+### CloudTrail
+
+The CloudTrail module provides comprehensive API activity logging and monitoring for your AWS infrastructure to enhance security auditing and compliance.
+
+#### Overview
+
+AWS CloudTrail records API calls and events across your AWS account. This module:
+
+- **Comprehensive event logging**: Captures management events, data events, and insight events based on configuration
+- **Multi-region support**: Can be configured to log events across all AWS regions for complete visibility
+- **CloudWatch integration**: Sends logs to CloudWatch for real-time monitoring and alerting
+- **SNS notifications**: Integrates with SNS topics for immediate alerting on critical events
+- **S3 storage**: Stores all CloudTrail logs securely in Amazon S3 with configurable key prefix organization
+
 ### VPC Flow Log
 
 The VPC Flow Log module captures network traffic information in your VPC to help with security monitoring and network analysis.

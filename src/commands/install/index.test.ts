@@ -103,7 +103,7 @@ describe('Install add-on command', () => {
       it('throws an error', async () => {
         expect(stdoutSpy).toHaveBeenCalledWith(
           expect.stringContaining(
-            'Expected invalid to be one of: vpc, securityGroup, alb, bastion, ecr, ecs, cloudwatch, rds, s3, ssm'
+            'Expected invalid to be one of: vpc, securityGroup, alb, bastion, cloudtrail, ecr, ecs, cloudwatch, rds, s3, ssm, vpcFlowLog'
           )
         );
       });

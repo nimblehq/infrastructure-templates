@@ -11,9 +11,8 @@ import {
   INFRA_CORE_MAIN_PATH,
   INFRA_CORE_OUTPUTS_PATH,
   INFRA_CORE_VARIABLES_PATH,
-  MODULES_LOCALS_INDICATOR,
 } from '@/generators/terraform/constants';
-import { appendToFile, copy, injectToFile } from '@/helpers/file';
+import { appendToFile, copy } from '@/helpers/file';
 
 import {
   AWS_SECURITY_GROUP_MAIN_PATH,

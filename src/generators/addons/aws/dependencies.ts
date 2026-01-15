@@ -5,6 +5,7 @@ import { AwsOptions } from '@/generators/addons/aws';
 import {
   applyAwsAlb,
   applyAwsBastion,
+  applyAwsCloudtrail,
   applyAwsEcr,
   applyAwsEcs,
   applyAwsCloudwatch,
@@ -49,6 +50,12 @@ const AWS_MODULES: Record<AwsModuleName | string, AwsModule> = {
     path: 'modules/bastion',
     mainContent: 'module "bastion"',
     applyModuleFunction: (options: AwsOptions) => applyAwsBastion(options),
+  },
+  cloudtrail: {
+    name: 'cloudtrail',
+    path: 'modules/cloudtrail',
+    mainContent: 'module "cloudtrail"',
+    applyModuleFunction: (options: AwsOptions) => applyAwsCloudtrail(options),
   },
   ecr: {
     name: 'ecr',
