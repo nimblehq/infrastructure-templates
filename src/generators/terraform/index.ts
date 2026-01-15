@@ -2,8 +2,10 @@ import { dedent } from 'ts-dedent';
 
 import { GeneralOptions } from '@/commands/generate';
 import {
-  INFRA_CORE_MAIN_PATH,
-  INFRA_SHARED_MAIN_PATH,
+  INFRA_CORE_LOCALS_PATH,
+  INFRA_SHARED_LOCALS_PATH,
+  INFRA_CORE_DATA_PATH,
+  MODULES_LOCALS_INDICATOR,
 } from '@/generators/terraform/constants';
 import { copy, rename, appendToFile } from '@/helpers/file';
 
@@ -13,13 +15,20 @@ const applyTerraformCore = async (generalOptions: GeneralOptions) => {
   copy('terraform/', '.', projectName);
 
   const coreLocalsContent = dedent`
-      locals {
-        project_name  = "${projectName}"
-        env_namespace = "\${local.project_name}-\${var.environment}"
-      }`;
+  locals {
+    project_name  = "${projectName}"
+    env_namespace = "\${local.project_name}-\${var.environment}"
 
-  appendToFile(INFRA_CORE_MAIN_PATH, coreLocalsContent, projectName);
-  appendToFile(INFRA_SHARED_MAIN_PATH, coreLocalsContent, projectName);
+    ${MODULES_LOCALS_INDICATOR}
+  }`;
+
+  const coreDatContent = dedent`
+  data "aws_caller_identity" "current" {}
+  data "aws_partition" "current" {}`;
+
+  appendToFile(INFRA_CORE_LOCALS_PATH, coreLocalsContent, projectName);
+  appendToFile(INFRA_SHARED_LOCALS_PATH, coreLocalsContent, projectName);
+  appendToFile(INFRA_CORE_DATA_PATH, coreDatContent, projectName);
 
   // Need to rename .gitignore to gitignore because NPN package doesn't include .gitignore
   // https://github.com/npm/npm/issues/3763

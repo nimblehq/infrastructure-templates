@@ -1,75 +1,30 @@
-data "aws_elb_service_account" "elb_service_account" {}
-
 # trivy:ignore:AVD-AWS-0089 trivy:ignore:AVD-AWS-0132 trivy:ignore:AVD-AWS-0088 trivy:ignore:AVD-AWS-0090
-resource "aws_s3_bucket" "alb_log" {
-  bucket        = "${var.env_namespace}-alb-log"
-  force_destroy = true
+resource "aws_s3_bucket" "s3_bucket" {
+  bucket        = var.bucket_name
+  force_destroy = var.force_destroy
 }
 
-resource "aws_s3_bucket_ownership_controls" "alb_log" {
-  bucket = aws_s3_bucket.alb_log.id
+resource "aws_s3_bucket_ownership_controls" "s3_bucket_ownership_controls" {
+  bucket = aws_s3_bucket.s3_bucket.id
   rule {
-    object_ownership = "ObjectWriter"
+    object_ownership = var.object_ownership
   }
 }
 
-resource "aws_s3_bucket_acl" "alb_log_bucket_acl" {
-  bucket = aws_s3_bucket.alb_log.id
+resource "aws_s3_bucket_acl" "s3_bucket_acl" {
+  count  = var.object_ownership == "ObjectWriter" ? 1 : 0
+  bucket = aws_s3_bucket.s3_bucket.id
   acl    = "private"
 
   depends_on = [
-    aws_s3_bucket_ownership_controls.alb_log
+    aws_s3_bucket_ownership_controls.s3_bucket_ownership_controls
   ]
 }
 
-resource "aws_s3_bucket_public_access_block" "alb_log" {
-  bucket                  = aws_s3_bucket.alb_log.id
+resource "aws_s3_bucket_public_access_block" "s3_bucket_public_access_block" {
+  bucket                  = aws_s3_bucket.s3_bucket.id
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
-}
-
-locals {
-  aws_s3_bucket_policy = {
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = {
-          AWS = [
-            "${data.aws_elb_service_account.elb_service_account.arn}"
-          ]
-        }
-        Action   = "s3:PutObject"
-        Resource = "arn:aws:s3:::${aws_s3_bucket.alb_log.id}/AWSLogs/*"
-      },
-      {
-        Effect = "Allow",
-        Principal = {
-          Service = "delivery.logs.amazonaws.com"
-        }
-        Action   = "s3:PutObject"
-        Resource = "arn:aws:s3:::${aws_s3_bucket.alb_log.id}/AWSLogs/*",
-        Condition = {
-          StringEquals = {
-            "s3:x-amz-acl" = "bucket-owner-full-control"
-          }
-        }
-      },
-      {
-        Effect = "Allow",
-        Principal = {
-          Service = "delivery.logs.amazonaws.com"
-        }
-        Action   = "s3:GetBucketAcl"
-        Resource = "arn:aws:s3:::${aws_s3_bucket.alb_log.id}"
-      }
-    ]
-  }
-}
-
-resource "aws_s3_bucket_policy" "allow_elb_logging" {
-  bucket = aws_s3_bucket.alb_log.id
-  policy = jsonencode(local.aws_s3_bucket_policy)
 }

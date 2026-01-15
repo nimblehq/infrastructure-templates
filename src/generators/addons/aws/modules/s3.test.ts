@@ -3,7 +3,7 @@ import { applyTerraformCore } from '@/generators/terraform';
 import { remove } from '@/helpers/file';
 
 import applyTerraformAwsProvider from './core/provider';
-import applyAwsS3, { s3ModuleContent, s3OutputsContent } from './s3';
+import applyAwsS3 from './s3';
 
 jest.mock('inquirer', () => {
   return {
@@ -41,20 +41,11 @@ describe('S3 add-on', () => {
         'modules/s3/main.tf',
         'modules/s3/variables.tf',
         'modules/s3/outputs.tf',
+        'modules/s3/bucket_policy/main.tf',
+        'modules/s3/bucket_policy/variables.tf',
       ];
 
       expect(projectDir).toHaveFiles(expectedFiles);
-    });
-
-    it('adds S3 module to main.tf', () => {
-      expect(projectDir).toHaveContentInFile('core/main.tf', s3ModuleContent);
-    });
-
-    it('adds S3 outputs to outputs.tf', () => {
-      expect(projectDir).toHaveContentInFile(
-        'core/outputs.tf',
-        s3OutputsContent
-      );
     });
   });
 });

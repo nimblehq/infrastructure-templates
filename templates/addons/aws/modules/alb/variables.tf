@@ -8,6 +8,11 @@ variable "subnet_ids" {
   type        = list(string)
 }
 
+variable "bucket_access_log_name" {
+  description = "The name of the S3 bucket for ALB access logs"
+  type        = string
+}
+
 variable "security_group_ids" {
   description = "A list of security group IDs to assign to the LB"
   type        = list(string)
