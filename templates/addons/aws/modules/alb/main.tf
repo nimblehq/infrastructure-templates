@@ -1,7 +1,3 @@
-locals {
-  enable_stickiness = false
-}
-
 # trivy:ignore:AVD-AWS-0053
 resource "aws_lb" "main" {
   name               = "${var.env_namespace}-alb"
@@ -14,7 +10,7 @@ resource "aws_lb" "main" {
   drop_invalid_header_fields = true
 
   access_logs {
-    bucket  = "${var.env_namespace}-alb-log"
+    bucket  = var.bucket_access_log_name
     enabled = true
   }
 }

@@ -46,6 +46,7 @@ describe('ALB add-on', () => {
         'core/variables.tf',
         'modules/alb/main.tf',
         'modules/alb/variables.tf',
+        'modules/alb/outputs.tf',
       ];
 
       expect(projectDir).toHaveFiles(expectedFiles);

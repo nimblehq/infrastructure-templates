@@ -65,9 +65,9 @@ describe('Generator command', () => {
           expect(postProcess).toHaveBeenCalledTimes(1);
         });
 
-        it('contains processed project name in main files', () => {
-          const mainFiles = ['shared/main.tf', 'core/main.tf'];
-          mainFiles.forEach((fileName) => {
+        it('contains processed project name in locals files', () => {
+          const localsFiles = ['shared/locals.tf', 'core/locals.tf'];
+          localsFiles.forEach((fileName) => {
             expect(processedDirectoryName).toHaveContentInFile(
               fileName,
               `project_name = "${processedDirectoryName}"`,
