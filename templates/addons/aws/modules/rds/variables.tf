@@ -47,3 +47,16 @@ variable "autoscaling_max_capacity" {
   description = "Maximum number of read replicas when autoscaling is enabled (0 or more, 5 recommended)"
   default     = 0
 }
+
+variable "publicly_accessible" {
+  description = "Allow RDS instances to have public IP addresses"
+  type        = bool
+  default     = false
+}
+
+variable "password_version" {
+  description = "The version of the password stored in SSM Parameter Store, Increase this value when you want to update the password."
+  type        = string
+  default     = 1
+}
+
