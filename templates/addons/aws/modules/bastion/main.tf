@@ -1,36 +1,48 @@
 # trivy:ignore:AVD-AWS-0009
-resource "aws_launch_configuration" "bastion_instance" {
-  name_prefix                 = "${var.env_namespace}-bastion-"
-  image_id                    = var.image_id
-  instance_type               = var.instance_type
-  key_name                    = "${var.env_namespace}-bastion"
-  security_groups             = var.instance_security_group_ids
-  associate_public_ip_address = true
+resource "aws_launch_template" "bastion_instance" {
+  name_prefix   = "${local.name_prefix}-"
+  image_id      = var.image_id
+  instance_type = var.instance_type
+  key_name      = var.key_name
+
+  metadata_options {
+    http_tokens = local.metadata_options.http_tokens
+  }
+
+  block_device_mappings {
+    device_name = var.device_name
+
+    ebs {
+      encrypted   = local.ebs_encrypted
+      volume_size = var.volume_size
+    }
+  }
+
+  network_interfaces {
+    associate_public_ip_address = local.associate_public_ip_address
+    security_groups             = var.instance_security_group_ids
+  }
 
   lifecycle {
     create_before_destroy = true
   }
-
-  metadata_options {
-    http_tokens = "required"
-  }
-
-  root_block_device {
-    encrypted = true
-  }
 }
 
 resource "aws_autoscaling_group" "bastion_instance" {
-  name                 = "${var.env_namespace}-bastion"
-  launch_configuration = aws_launch_configuration.bastion_instance.name
-  min_size             = var.min_instance_count
-  max_size             = var.max_instance_count
-  desired_capacity     = var.instance_desired_count
-  vpc_zone_identifier  = var.subnet_ids
+  name                = local.name_prefix
+  min_size            = var.min_instance_count
+  max_size            = var.max_instance_count
+  desired_capacity    = var.instance_desired_count
+  vpc_zone_identifier = var.subnet_ids
+
+  launch_template {
+    id      = aws_launch_template.bastion_instance.id
+    version = "$Latest"
+  }
 
   tag {
     key                 = "Name"
-    value               = "${var.env_namespace}-bastion"
+    value               = local.tags.Name
     propagate_at_launch = true
   }
 }
