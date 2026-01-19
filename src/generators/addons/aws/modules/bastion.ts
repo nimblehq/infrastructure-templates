@@ -6,6 +6,7 @@ import {
   requireAwsModules,
 } from '@/generators/addons/aws/dependencies';
 import {
+  INFRA_CORE_LOCALS_PATH,
   INFRA_CORE_MAIN_PATH,
   INFRA_CORE_VARIABLES_PATH,
 } from '@/generators/terraform/constants';
@@ -16,6 +17,13 @@ import {
   AWS_SECURITY_GROUP_OUTPUTS_PATH,
   AWS_TEMPLATE_PATH,
 } from '../constants';
+
+const bastionLocalContent = dedent`
+  ### Begin Bastion Host ###
+  locals {
+    enable_bastion = true
+  }
+  ### End Bastion Host ###`;
 
 const bastionVariablesContent = dedent`
   variable "bastion_image_id" {
@@ -45,6 +53,7 @@ const bastionVariablesContent = dedent`
 
 const bastionModuleContent = dedent`
   module "bastion" {
+    count  = local.enable_bastion ? 1 : 0
     source = "../modules/bastion"
 
     subnet_ids                  = module.vpc.public_subnet_ids
@@ -105,6 +114,11 @@ const applyAwsBastion = async (options: AwsOptions) => {
   copy(
     `${AWS_TEMPLATE_PATH}/modules/bastion`,
     'modules/bastion',
+    options.projectName
+  );
+  appendToFile(
+    INFRA_CORE_LOCALS_PATH,
+    bastionLocalContent,
     options.projectName
   );
   appendToFile(
