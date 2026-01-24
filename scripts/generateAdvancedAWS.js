@@ -7,6 +7,7 @@ const {
   applyAwsRegion,
   applyAwsSecurityGroup,
   applyAwsVpc,
+  applyAwsIamRole,
 } = require('../dist/generators/addons/aws/modules/index.js');
 const { applyAdvancedTemplate } = require('../dist/generators/addons/aws/advanced.js');
 
@@ -19,5 +20,6 @@ const { applyAdvancedTemplate } = require('../dist/generators/addons/aws/advance
     await applyAwsVpc(options);
     await applyAwsSecurityGroup(options);
     await applyAwsIamUserAndGroup(options);
+    await applyAwsIamRole(options);
     await applyAdvancedTemplate(options);
 })();

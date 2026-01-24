@@ -10,6 +10,7 @@ import {
   applyAwsRegion,
   applyAwsSecurityGroup,
   applyAwsVpc,
+  applyAwsIamRole,
 } from './modules';
 
 const awsChoices = [
@@ -69,6 +70,7 @@ const generateAwsTemplate = async (
       await applyAwsVpc(awsOptions);
       await applyAwsSecurityGroup(awsOptions);
       await applyAwsIamUserAndGroup(awsOptions);
+      await applyAwsIamRole(awsOptions);
       await applyAdvancedTemplate(awsOptions);
 
       break;

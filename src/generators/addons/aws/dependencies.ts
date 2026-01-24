@@ -13,6 +13,7 @@ import {
   applyAwsSecurityGroup,
   applyAwsSsm,
   applyAwsVpc,
+  applyAwsIamRole,
 } from '@/generators/addons/aws/modules';
 import { containsContent, isExisting } from '@/helpers/file';
 
@@ -84,6 +85,12 @@ const AWS_MODULES: Record<AwsModuleName | string, AwsModule> = {
     path: 'modules/ssm',
     mainContent: 'module "ssm"',
     applyModuleFunction: (options: AwsOptions) => applyAwsSsm(options),
+  },
+  iamRole: {
+    name: 'iamRole',
+    path: 'modules/iam_role',
+    mainContent: 'module "iam_role"',
+    applyModuleFunction: (options: AwsOptions) => applyAwsIamRole(options),
   },
 };
 

@@ -13,11 +13,6 @@ variable "instance_security_group_ids" {
   type        = list(string)
 }
 
-variable "image_id" {
-  description = "The AMI image ID"
-  default     = "ami-0801a1e12f4a9ccc0"
-}
-
 variable "instance_type" {
   description = "The instance type"
   default     = "t3.nano"
@@ -52,6 +47,12 @@ variable "device_name" {
 
 variable "key_name" {
   description = "The name of the key pair to use for the instance"
+  type        = string
+  default     = "" // Set empty to disable key pair
+}
+
+variable "iam_instance_profile" {
+  description = "The name of the IAM instance profile for the instance"
   type        = string
   default     = ""
 }

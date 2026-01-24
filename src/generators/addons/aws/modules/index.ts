@@ -1,6 +1,7 @@
 import applyAwsAlb from './alb';
 import applyAwsBastion from './bastion';
 import applyAwsCloudwatch from './cloudwatch';
+import applyAwsIamRole from './core/iamRole';
 import applyAwsIamUserAndGroup from './core/iamUserAndGroup';
 import applyTerraformAwsProvider from './core/provider';
 import applyAwsRegion from './core/region';
@@ -14,6 +15,7 @@ import applyAwsSsm from './ssm';
 
 export {
   applyAwsAlb,
+  applyAwsIamRole,
   applyAwsBastion,
   applyTerraformAwsProvider,
   applyAwsCloudwatch,
