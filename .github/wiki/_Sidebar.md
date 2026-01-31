@@ -16,3 +16,4 @@
 - [[Modify the Infrastructure Diagram | Modify infra diagram]]
 - [[Publishing]]
 - [[Running Trivy Locally]]
+- [[Connect to Bastion via SSM]]
