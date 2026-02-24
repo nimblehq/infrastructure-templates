@@ -56,7 +56,7 @@ variable "publicly_accessible" {
 
 variable "password_version" {
   description = "The version of the password stored in SSM Parameter Store, Increase this value when you want to update the password."
-  type        = string
+  type        = number
   default     = 1
 }
 
