@@ -4,7 +4,7 @@ variable "env_namespace" {
 }
 
 variable "subnet_ids" {
-  description = "The public setnet IsD for the instance"
+  description = "The public subnet IDs for the instance"
   type        = list(string)
 }
 

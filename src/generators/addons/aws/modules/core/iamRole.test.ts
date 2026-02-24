@@ -34,6 +34,7 @@ describe('IAM Role add-on', () => {
         'shared/variables.tf',
 
         'modules/iam_role/data.tf',
+        'modules/iam_role/variables.tf',
         'modules/iam_role/main.tf',
         'modules/iam_role/outputs.tf',
       ];
