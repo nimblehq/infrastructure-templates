@@ -37,3 +37,21 @@ variable "min_instance_count" {
   description = "The minimum number of the instance"
   default     = 1
 }
+
+variable "volume_size" {
+  description = "The size of the EBS volume in GB"
+  type        = number
+  default     = 100
+}
+
+variable "device_name" {
+  description = "The device name for the EBS volume"
+  type        = string
+  default     = "/dev/sdf"
+}
+
+variable "key_name" {
+  description = "The name of the key pair to use for the instance"
+  type        = string
+  default     = ""
+}
