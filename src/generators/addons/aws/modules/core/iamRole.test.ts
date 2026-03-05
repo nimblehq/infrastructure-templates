@@ -9,16 +9,16 @@ describe('IAM Role add-on', () => {
   describe('given valid AWS options', () => {
     const projectDir = 'iam-addon-test';
 
-    beforeAll(() => {
+    beforeAll(async () => {
       const awsOptions: AwsOptions = {
         projectName: projectDir,
         provider: 'aws',
         infrastructureType: 'advanced',
       };
 
-      applyTerraformCore(awsOptions);
-      applyTerraformAwsProvider(awsOptions);
-      applyAwsIamRole(awsOptions);
+      await applyTerraformCore(awsOptions);
+      await applyTerraformAwsProvider(awsOptions);
+      await applyAwsIamRole(awsOptions);
     });
 
     afterAll(() => {
