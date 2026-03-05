@@ -42,13 +42,7 @@ variable "volume_size" {
 variable "device_name" {
   description = "The device name for the EBS volume"
   type        = string
-  default     = "/dev/sdf"
-}
-
-variable "key_name" {
-  description = "The name of the key pair to use for the instance"
-  type        = string
-  default     = "" // Set empty to disable key pair
+  default     = "/dev/xvda"
 }
 
 variable "iam_instance_profile" {

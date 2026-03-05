@@ -1,2 +1,2 @@
 terraform 1.13.3
-trivy 0.47.0
+trivy 0.69.2

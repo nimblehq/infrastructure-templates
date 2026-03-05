@@ -3,7 +3,6 @@ resource "aws_launch_template" "bastion_instance" {
   name_prefix   = "${local.name_prefix}-"
   image_id      = data.aws_ami.amazon_linux_2023.id
   instance_type = var.instance_type
-  key_name      = var.key_name
 
   iam_instance_profile {
     name = var.iam_instance_profile
