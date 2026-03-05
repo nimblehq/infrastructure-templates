@@ -11,6 +11,20 @@ Traditional SSH key pairs have several drawbacks:
 - **Rigid Access Control:** Revoking access requires deleting the entire key pair, affecting all users.
 - **Management Overhead:** AWS doesn't store key pairs after creation - if lost, recovery is impossible.
 
+## Benefits of SSM
+
+- **Centralized Access Control:** Manage access via IAM policies - grant/revoke access without touching the instance.
+- **Quick Response:** Immediately terminate all sessions in case of security incidents.
+- **No Public IP Required:** Connect to instances in private subnets via VPC Endpoints.
+- **Full Auditing:** Log every session and command to CloudWatch Logs or S3 for compliance.
+
+## Considerations
+
+- **Latency:** Session Manager tunnels traffic through AWS APIs, which may introduce slight lag compared to direct SSH connections.
+- **Logging Costs:** While SSM is free, storing session logs in CloudWatch or S3 incurs costs. Consider configuring lifecycle rules or retention periods to manage costs.
+
+For more information, refer to the [AWS Session Manager documentation](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html).
+
 ## Prerequisites
 
 Before connecting via SSM, ensure the following requirements are met:
@@ -69,17 +83,3 @@ aws ssm start-session \
   --document-name AWS-StartPortForwardingSessionToRemoteHost \
   --parameters '{"host":["your-rds-endpoint"],"portNumber":["5432"],"localPortNumber":["5432"]}'
 ```
-
-## Benefits of SSM
-
-- **Centralized Access Control:** Manage access via IAM policies - grant/revoke access without touching the instance.
-- **Quick Response:** Immediately terminate all sessions in case of security incidents.
-- **No Public IP Required:** Connect to instances in private subnets via VPC Endpoints.
-- **Full Auditing:** Log every session and command to CloudWatch Logs or S3 for compliance.
-
-## Considerations
-
-- **Latency:** Session Manager tunnels traffic through AWS APIs, which may introduce slight lag compared to direct SSH connections.
-- **Logging Costs:** While SSM is free, storing session logs in CloudWatch or S3 incurs costs. Consider configuring lifecycle rules or retention periods to manage costs.
-
-For more information, refer to the [AWS Session Manager documentation](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html).
