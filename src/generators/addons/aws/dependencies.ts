@@ -13,6 +13,7 @@ import {
   applyAwsSecurityGroup,
   applyAwsSsm,
   applyAwsVpc,
+  applyAwsVpcFlowLog,
 } from '@/generators/addons/aws/modules';
 import { containsContent, isExisting } from '@/helpers/file';
 
@@ -84,6 +85,12 @@ const AWS_MODULES: Record<AwsModuleName | string, AwsModule> = {
     path: 'modules/ssm',
     mainContent: 'module "ssm"',
     applyModuleFunction: (options: AwsOptions) => applyAwsSsm(options),
+  },
+  vpcFlowLog: {
+    name: 'vpcFlowLog',
+    path: 'modules/vpc_flow_log',
+    mainContent: 'module "vpc_flow_log"',
+    applyModuleFunction: (options: AwsOptions) => applyAwsVpcFlowLog(options),
   },
 };
 

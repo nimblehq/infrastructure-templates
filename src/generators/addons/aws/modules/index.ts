@@ -11,6 +11,7 @@ import applyAwsEcs from './ecs';
 import applyAwsRds from './rds';
 import applyAwsS3 from './s3';
 import applyAwsSsm from './ssm';
+import applyAwsVpcFlowLog from './vpcFlowLog';
 
 export {
   applyAwsAlb,
@@ -26,4 +27,5 @@ export {
   applyAwsSecurityGroup,
   applyAwsSsm,
   applyAwsVpc,
+  applyAwsVpcFlowLog,
 };

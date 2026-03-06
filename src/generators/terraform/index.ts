@@ -21,7 +21,8 @@ const applyTerraformCore = async (generalOptions: GeneralOptions) => {
 
   const coreDatContent = dedent`
   data "aws_caller_identity" "current" {}
-  data "aws_partition" "current" {}`;
+  data "aws_partition" "current" {}
+  data "aws_region" "current" {}`;
 
   appendToFile(INFRA_CORE_LOCALS_PATH, coreLocalsContent, projectName);
   appendToFile(INFRA_SHARED_LOCALS_PATH, coreLocalsContent, projectName);

@@ -8,6 +8,7 @@ import {
   applyAwsRds,
   applyAwsS3,
   applyAwsSsm,
+  applyAwsVpcFlowLog,
 } from './modules';
 
 const applyAdvancedTemplate = async (options: AwsOptions) => {
@@ -19,6 +20,19 @@ const applyAdvancedTemplate = async (options: AwsOptions) => {
   await applyAwsCloudwatch(options);
   await applyAwsS3(options);
   await applyAwsSsm(options);
+
+  if (options?.addonModules && options?.addonModules.length > 0) {
+    await Promise.all(
+      options.addonModules.map((module) => {
+        switch (module) {
+          case 'vpcFlowLog':
+            return applyAwsVpcFlowLog(options);
+          default:
+            throw new Error(`Module ${module} has not been implemented!`);
+        }
+      })
+    );
+  }
 };
 
 export { applyAdvancedTemplate };
