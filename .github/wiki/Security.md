@@ -23,4 +23,3 @@ To add security features to your infrastructure:
 1. Run the infrastructure generator
 2. Select "Complete infrastructure (VPC + ECR + RDS + S3 + FARGATE + Cloudwatch + Security groups + ALB)" when prompted for infrastructure type
 3. Choose "Yes" when asked "Do you want to create (VPC Flow Logs + CloudTrail) to enhance security posture and compliance?"
-

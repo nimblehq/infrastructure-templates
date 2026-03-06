@@ -21,8 +21,17 @@ const applyAdvancedTemplate = async (options: AwsOptions) => {
   await applyAwsS3(options);
   await applyAwsSsm(options);
 
-  if (options.enabledSecurityFeatures) {
-    await applyAwsVpcFlowLog(options);
+  if (options?.addonModules && options?.addonModules.length > 0) {
+    await Promise.all(
+      options.addonModules.map((module) => {
+        switch (module) {
+          case 'vpcFlowLog':
+            return applyAwsVpcFlowLog(options);
+          default:
+            throw new Error(`Module ${module} has not been implemented!`);
+        }
+      })
+    );
   }
 };
 

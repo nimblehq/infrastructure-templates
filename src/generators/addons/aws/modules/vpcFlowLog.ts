@@ -14,7 +14,7 @@ import { appendToFile, copy } from '@/helpers/file';
 
 import { AWS_TEMPLATE_PATH } from '../constants';
 
-const vpcFlowLogLocalesContent = dedent`
+const vpcFlowLogLocalsContent = dedent`
   ### Begin VPC Flow Log ###
   locals {
     vpc_flow_log_s3_bucket_policy = {
@@ -74,6 +74,7 @@ const vpcFlowLogLocalesContent = dedent`
         }
       ]
     }
+    vpc_flow_log_query_year_ranges = "\${formatdate("YYYY", timestamp())},\${formatdate("YYYY", timestamp()) + 5}"
   }
   ### End VPC Flow Log ###`;
 
@@ -81,7 +82,7 @@ const vpcFlowLogVariablesContent = dedent`
   variable "vpc_flow_log_retention_days" {
     description = "The number of days to retain VPC Flow Logs in S3"
     type        = number
-    default     = 90
+    default     = 30
   }`;
 
 const vpcFlowLogModuleContent = dedent`
@@ -90,7 +91,7 @@ const vpcFlowLogModuleContent = dedent`
 
     env_namespace    = local.env_namespace
     bucket_name      = "\${local.env_namespace}-flow-logs-\${data.aws_caller_identity.current.account_id}"
-    force_destroy    = true
+    force_destroy    = false
     object_ownership = "BucketOwnerPreferred"
   }
 
@@ -108,6 +109,7 @@ const vpcFlowLogModuleContent = dedent`
     vpc_id             = module.vpc.vpc_id
     s3_bucket_name     = module.s3_flow_log.aws_s3_bucket_name
     log_retention_days = var.vpc_flow_log_retention_days
+    query_year_ranges  = local.vpc_flow_log_query_year_ranges
   }`;
 
 const applyAwsVpcFlowLog = async (options: AwsOptions) => {
@@ -123,7 +125,7 @@ const applyAwsVpcFlowLog = async (options: AwsOptions) => {
   );
   appendToFile(
     INFRA_CORE_LOCALS_PATH,
-    vpcFlowLogLocalesContent,
+    vpcFlowLogLocalsContent,
     options.projectName
   );
   appendToFile(

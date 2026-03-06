@@ -16,6 +16,7 @@ type AwsOptions = GeneralOptions & {
   infrastructureType?: 'blank' | 'advanced';
   awsRegion?: string;
   enabledSecurityFeatures?: boolean;
+  addonModules?: string[];
 };
 
 const awsChoices = [
@@ -39,10 +40,27 @@ const awsChoices = [
   {
     type: 'confirm',
     name: 'enabledSecurityFeatures',
-    message:
-      'Do you want to create (VPC Flow Logs + CloudTrail) to enhance security posture and compliance?',
+    message: 'Do you want to add more modules(VPC Flow Logs, CloudTrail)?',
     default: false,
     when: (answers: AwsOptions) => answers.infrastructureType === 'advanced',
+  },
+  {
+    type: 'checkbox',
+    name: 'addonModules',
+    message: 'Which security features do you want to add?',
+    choices: [
+      {
+        key: 'vpcFlowLog',
+        value: 'vpcFlowLog',
+        name: 'VPC Flow Logs',
+      },
+      {
+        key: 'cloudTrail',
+        value: 'cloudTrail',
+        name: 'CloudTrail',
+      },
+    ],
+    when: (answers: AwsOptions) => answers.enabledSecurityFeatures,
   },
   {
     type: 'input',
@@ -66,7 +84,7 @@ const generateAwsTemplate = async (
     ...generalOptions,
     infrastructureType: awsOptionsPrompt.infrastructureType,
     awsRegion: awsOptionsPrompt.awsRegion,
-    enabledSecurityFeatures: awsOptionsPrompt.enabledSecurityFeatures,
+    addonModules: awsOptionsPrompt.addonModules,
   };
 
   switch (awsOptions.infrastructureType) {

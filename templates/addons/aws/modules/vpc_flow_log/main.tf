@@ -65,7 +65,7 @@ resource "aws_glue_catalog_table" "vpc_flow_log_table" {
   table_type    = "EXTERNAL_TABLE"
 
   storage_descriptor {
-    location      = "s3://${var.s3_bucket_name}/AWSLogs/"
+    location      = "s3://${var.s3_bucket_name}/AWSLogs/${var.s3_key_prefix}/"
     input_format  = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
     output_format = "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat"
 
@@ -106,7 +106,7 @@ resource "aws_glue_catalog_table" "vpc_flow_log_table" {
     "projection.aws_region.type"       = "enum"
     "projection.aws_region.values"     = "${data.aws_region.current.region}"
     "projection.year.type"             = "integer"
-    "projection.year.range"            = "2025,2030" # Update the range as needed
+    "projection.year.range"            = var.query_year_ranges
     "projection.year.digits"           = "4"
     "projection.month.type"            = "integer"
     "projection.month.range"           = "01,12"

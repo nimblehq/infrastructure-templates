@@ -24,6 +24,8 @@ describe('AWS advanced template', () => {
       provider: 'aws',
       infrastructureType: 'advanced',
       awsRegion: 'ap-southeast-1',
+      addonModules: [],
+      enabledSecurityFeatures: false,
     };
 
     beforeAll(async () => {
@@ -74,28 +76,53 @@ describe('AWS advanced template', () => {
     });
 
     describe('given enabledSecurityFeatures is true', () => {
-      const optionsEnabledSecurityFeatures: AwsOptions = {
-        projectName: projectDir,
-        provider: 'aws',
-        infrastructureType: 'advanced',
-        awsRegion: 'ap-southeast-1',
-        enabledSecurityFeatures: true,
-      };
+      describe('given addonModules includes vpcFlowLog', () => {
+        const optionsEnabledSecurityFeatures: AwsOptions = {
+          projectName: projectDir,
+          provider: 'aws',
+          infrastructureType: 'advanced',
+          awsRegion: 'ap-southeast-1',
+          enabledSecurityFeatures: true,
+          addonModules: ['vpcFlowLog'],
+        };
 
-      beforeAll(async () => {
-        jest.clearAllMocks();
-        await applyAdvancedTemplate(optionsEnabledSecurityFeatures);
+        beforeAll(async () => {
+          jest.clearAllMocks();
+          await applyAdvancedTemplate(optionsEnabledSecurityFeatures);
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+          remove('/', projectDir);
+        });
+
+        it('applies VPC Flow Log add-on when flag is set', () => {
+          expect(applyAwsVpcFlowLog).toHaveBeenCalledWith(
+            optionsEnabledSecurityFeatures
+          );
+        });
       });
+      describe('given addonModules does NOT include vpcFlowLog', () => {
+        const optionsEnabledSecurityFeaturesWithoutVpcFlowLog: AwsOptions = {
+          projectName: projectDir,
+          provider: 'aws',
+          infrastructureType: 'advanced',
+          awsRegion: 'ap-southeast-1',
+          enabledSecurityFeatures: true,
+          addonModules: [], // No vpcFlowLog
+        };
 
-      afterAll(() => {
-        jest.clearAllMocks();
-        remove('/', projectDir);
-      });
+        afterAll(() => {
+          jest.clearAllMocks();
+          remove('/', projectDir);
+        });
 
-      it('applies VPC Flow Log add-on when flag is set', () => {
-        expect(applyAwsVpcFlowLog).toHaveBeenCalledWith(
-          optionsEnabledSecurityFeatures
-        );
+        it('does NOT apply VPC Flow Log add-on when flag is set but module is not included', async () => {
+          await applyAdvancedTemplate(
+            optionsEnabledSecurityFeaturesWithoutVpcFlowLog
+          );
+          expect(applyAwsVpcFlowLog).not.toHaveBeenCalled();
+        });
       });
     });
   });
