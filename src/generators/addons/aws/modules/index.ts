@@ -1,5 +1,6 @@
 import applyAwsAlb from './alb';
 import applyAwsBastion from './bastion';
+import applyAwsCloudtrail from './cloudtrail';
 import applyAwsCloudwatch from './cloudwatch';
 import applyAwsIamUserAndGroup from './core/iamUserAndGroup';
 import applyTerraformAwsProvider from './core/provider';
@@ -16,6 +17,7 @@ import applyAwsVpcFlowLog from './vpcFlowLog';
 export {
   applyAwsAlb,
   applyAwsBastion,
+  applyAwsCloudtrail,
   applyTerraformAwsProvider,
   applyAwsCloudwatch,
   applyAwsEcr,

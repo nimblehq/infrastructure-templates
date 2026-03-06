@@ -1,7 +1,8 @@
-import { AwsOptions } from '.';
+import { AwsAddonModules, AwsOptions } from '.';
 import {
   applyAwsAlb,
   applyAwsBastion,
+  applyAwsCloudtrail,
   applyAwsEcr,
   applyAwsEcs,
   applyAwsCloudwatch,
@@ -25,8 +26,10 @@ const applyAdvancedTemplate = async (options: AwsOptions) => {
     await Promise.all(
       options.addonModules.map((module) => {
         switch (module) {
-          case 'vpcFlowLog':
+          case AwsAddonModules.VPC_FLOW_LOG:
             return applyAwsVpcFlowLog(options);
+          case AwsAddonModules.CLOUDTRAIL:
+            return applyAwsCloudtrail(options);
           default:
             throw new Error(`Module ${module} has not been implemented!`);
         }

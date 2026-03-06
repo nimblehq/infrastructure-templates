@@ -1,10 +1,11 @@
 import { remove } from '@/helpers/file';
 
-import { AwsOptions } from '.';
+import { AwsAddonModules, AwsOptions } from '.';
 import { applyAdvancedTemplate } from './advanced';
 import {
   applyAwsAlb,
   applyAwsBastion,
+  applyAwsCloudtrail,
   applyAwsEcr,
   applyAwsEcs,
   applyAwsCloudwatch,
@@ -73,6 +74,10 @@ describe('AWS advanced template', () => {
       it('does NOT apply VPC Flow Log add-on', () => {
         expect(applyAwsVpcFlowLog).not.toHaveBeenCalled();
       });
+
+      it('does NOT apply CloudTrail add-on', () => {
+        expect(applyAwsCloudtrail).not.toHaveBeenCalled();
+      });
     });
 
     describe('given enabledSecurityFeatures is true', () => {
@@ -83,7 +88,7 @@ describe('AWS advanced template', () => {
           infrastructureType: 'advanced',
           awsRegion: 'ap-southeast-1',
           enabledSecurityFeatures: true,
-          addonModules: ['vpcFlowLog'],
+          addonModules: [AwsAddonModules.VPC_FLOW_LOG],
         };
 
         beforeAll(async () => {
@@ -102,6 +107,7 @@ describe('AWS advanced template', () => {
           );
         });
       });
+
       describe('given addonModules does NOT include vpcFlowLog', () => {
         const optionsEnabledSecurityFeaturesWithoutVpcFlowLog: AwsOptions = {
           projectName: projectDir,
@@ -122,6 +128,58 @@ describe('AWS advanced template', () => {
             optionsEnabledSecurityFeaturesWithoutVpcFlowLog
           );
           expect(applyAwsVpcFlowLog).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('given addonModules includes cloudtrail', () => {
+        const optionsEnabledSecurityFeaturesWithCloudTrail: AwsOptions = {
+          projectName: projectDir,
+          provider: 'aws',
+          infrastructureType: 'advanced',
+          awsRegion: 'ap-southeast-1',
+          enabledSecurityFeatures: true,
+          addonModules: [AwsAddonModules.CLOUDTRAIL],
+        };
+
+        beforeAll(async () => {
+          jest.clearAllMocks();
+          await applyAdvancedTemplate(
+            optionsEnabledSecurityFeaturesWithCloudTrail
+          );
+        });
+
+        afterAll(() => {
+          jest.clearAllMocks();
+          remove('/', projectDir);
+        });
+
+        it('applies CloudTrail add-on when flag is set', () => {
+          expect(applyAwsCloudtrail).toHaveBeenCalledWith(
+            optionsEnabledSecurityFeaturesWithCloudTrail
+          );
+        });
+      });
+
+      describe('given addonModules does NOT include cloudtrail', () => {
+        const optionsEnabledSecurityFeaturesWithoutCloudTrail: AwsOptions = {
+          projectName: projectDir,
+          provider: 'aws',
+          infrastructureType: 'advanced',
+          awsRegion: 'ap-southeast-1',
+          enabledSecurityFeatures: true,
+          addonModules: [], // No cloudtrail
+        };
+
+        afterAll(() => {
+          jest.clearAllMocks();
+          remove('/', projectDir);
+        });
+
+        it('does NOT apply CloudTrail add-on when flag is set but module is not included', async () => {
+          await applyAdvancedTemplate(
+            optionsEnabledSecurityFeaturesWithoutCloudTrail
+          );
+          expect(applyAwsCloudtrail).not.toHaveBeenCalled();
         });
       });
     });

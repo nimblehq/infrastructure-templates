@@ -28,3 +28,34 @@ resource "aws_s3_bucket_public_access_block" "s3_bucket_public_access_block" {
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
+
+# Add versioning to S3 bucket
+resource "aws_s3_bucket_versioning" "s3_bucket_versioning" {
+  bucket = aws_s3_bucket.s3_bucket.id
+  count  = var.versioning_enabled ? 1 : 0
+
+  versioning_configuration {
+    status = var.versioning_enabled ? "Enabled" : "Disabled"
+  }
+}
+
+# Add lifecycle configuration to S3 bucket
+resource "aws_s3_bucket_lifecycle_configuration" "s3_bucket_lifecycle_configuration" {
+  #checkov:skip=CKV_AWS_300:Failed uploads rule not needed for CloudTrail logs
+  bucket = aws_s3_bucket.s3_bucket.id
+  count  = var.lifecycle_configuration != null ? 1 : 0
+
+  rule {
+    id     = var.lifecycle_configuration.id
+    status = var.lifecycle_configuration.status
+
+    # Filter is required in newer AWS provider versions
+    filter {
+      prefix = var.lifecycle_configuration.filter.prefix
+    }
+
+    expiration {
+      days = var.lifecycle_configuration.expiration.days
+    }
+  }
+}

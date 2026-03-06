@@ -5,6 +5,7 @@ const awsModules = [
   'securityGroup',
   'alb',
   'bastion',
+  'cloudtrail',
   'ecr',
   'ecs',
   'cloudwatch',
