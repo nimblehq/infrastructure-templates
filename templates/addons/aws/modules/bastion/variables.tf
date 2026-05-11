@@ -4,18 +4,13 @@ variable "env_namespace" {
 }
 
 variable "subnet_ids" {
-  description = "The public setnet IsD for the instance"
+  description = "The public subnet IDs for the instance"
   type        = list(string)
 }
 
 variable "instance_security_group_ids" {
   description = "The security group IDs for the instance"
   type        = list(string)
-}
-
-variable "image_id" {
-  description = "The AMI image ID"
-  default     = "ami-0801a1e12f4a9ccc0"
 }
 
 variable "instance_type" {
@@ -47,11 +42,11 @@ variable "volume_size" {
 variable "device_name" {
   description = "The device name for the EBS volume"
   type        = string
-  default     = "/dev/sdf"
+  default     = "/dev/xvda"
 }
 
-variable "key_name" {
-  description = "The name of the key pair to use for the instance"
+variable "iam_instance_profile" {
+  description = "The name of the IAM instance profile for the instance"
   type        = string
   default     = ""
 }

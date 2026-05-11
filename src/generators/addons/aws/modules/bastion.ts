@@ -9,6 +9,7 @@ import {
   INFRA_CORE_LOCALS_PATH,
   INFRA_CORE_MAIN_PATH,
   INFRA_CORE_VARIABLES_PATH,
+  INFRA_CORE_DATA_PATH,
 } from '@/generators/terraform/constants';
 import { appendToFile, copy } from '@/helpers/file';
 
@@ -18,19 +19,23 @@ import {
   AWS_TEMPLATE_PATH,
 } from '../constants';
 
+const bastionDataContent = dedent`
+  ### Begin Bastion Host ###
+  data "aws_iam_policy" "ssm_managed_instance_core" {
+    name = "AmazonSSMManagedInstanceCore"
+  }
+  ### End Bastion Host ###`;
+
 const bastionLocalContent = dedent`
   ### Begin Bastion Host ###
   locals {
-    enable_bastion = true
+    enable_bastion          = true
+    bastion_ssm_role_name   = "\${local.env_namespace}-SSMInstanceRole"
+    bastion_ssm_policy_arns = [data.aws_iam_policy.ssm_managed_instance_core.arn]
   }
   ### End Bastion Host ###`;
 
 const bastionVariablesContent = dedent`
-  variable "bastion_image_id" {
-    description = "The AMI image ID for the bastion instance"
-    default     = "ami-0801a1e12f4a9ccc0"
-  }
-
   variable "bastion_instance_type" {
     description = "The bastion instance type"
     default     = "t3.nano"
@@ -52,6 +57,16 @@ const bastionVariablesContent = dedent`
   }`;
 
 const bastionModuleContent = dedent`
+  module "bastion_ssm_role" {
+    count  = local.enable_bastion ? 1 : 0
+    source = "../modules/iam_role"
+
+    role_name               = local.bastion_ssm_role_name
+    assume_role_services    = ["ec2.amazonaws.com"]
+    policy_arns             = local.bastion_ssm_policy_arns
+    create_instance_profile = true
+  }
+
   module "bastion" {
     count  = local.enable_bastion ? 1 : 0
     source = "../modules/bastion"
@@ -59,9 +74,9 @@ const bastionModuleContent = dedent`
     subnet_ids                  = module.vpc.public_subnet_ids
     instance_security_group_ids = module.security_group.bastion_security_group_ids
 
-    env_namespace = local.env_namespace
-    image_id      = var.bastion_image_id
-    instance_type = var.bastion_instance_type
+    env_namespace        = local.env_namespace
+    instance_type        = var.bastion_instance_type
+    iam_instance_profile = module.bastion_ssm_role[0].instance_profile_name
 
     min_instance_count     = var.bastion_min_instance_count
     max_instance_count     = var.bastion_max_instance_count
@@ -79,16 +94,6 @@ const bastionSGMainContent = dedent`
     }
   }
 
-  resource "aws_security_group_rule" "bastion_ingress_ssh_nimble" {
-    type              = "ingress"
-    security_group_id = aws_security_group.bastion.id
-    from_port         = 22
-    to_port           = 22
-    protocol          = "tcp"
-    cidr_blocks       = ["\${var.nimble_office_ip}/32"]
-    description       = "Nimble office"
-  }
-
   resource "aws_security_group_rule" "bastion_egress_rds" {
     type                     = "egress"
     security_group_id        = aws_security_group.bastion.id
@@ -97,6 +102,17 @@ const bastionSGMainContent = dedent`
     protocol                 = "tcp"
     source_security_group_id = aws_security_group.rds.id
     description              = "From RDS to bastion"
+  }
+
+  # trivy:ignore:AVD-AWS-0104
+  resource "aws_security_group_rule" "bastion_egress_ssm" {
+    type              = "egress"
+    security_group_id = aws_security_group.bastion.id
+    from_port         = 443
+    to_port           = 443
+    protocol          = "tcp"
+    cidr_blocks       = ["0.0.0.0/0"]
+    description       = "Allow outbound HTTPS traffic for SSM"
   }`;
 
 const bastionSGOutputsContent = dedent`
@@ -121,6 +137,7 @@ const applyAwsBastion = async (options: AwsOptions) => {
     bastionLocalContent,
     options.projectName
   );
+  appendToFile(INFRA_CORE_DATA_PATH, bastionDataContent, options.projectName);
   appendToFile(
     INFRA_CORE_VARIABLES_PATH,
     bastionVariablesContent,
